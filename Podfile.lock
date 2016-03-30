@@ -1,0 +1,37 @@
+PODS:
+  - CatchingFire (0.2.0)
+  - Contentful (0.1.0):
+    - Decodable (~> 0.3.2)
+    - Interstellar (~> 1.3.0)
+    - "\U0001F555"
+  - Decodable (0.3.3)
+  - Interstellar (1.3.0):
+    - Interstellar/Core (= 1.3.0)
+    - Interstellar/Warpdrive (= 1.3.0)
+  - Interstellar/Core (1.3.0)
+  - Interstellar/Warpdrive (1.3.0):
+    - Interstellar/Core
+  - Nimble (3.2.0)
+  - Quick (0.9.1)
+  - "\U0001F555 (0.0.1)"
+
+DEPENDENCIES:
+  - CatchingFire
+  - Contentful (from `../../Projects/contentful.swift`)
+  - Nimble
+  - Quick
+
+EXTERNAL SOURCES:
+  Contentful:
+    :path: ../../Projects/contentful.swift
+
+SPEC CHECKSUMS:
+  CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
+  Contentful: 07f9ad26de428ffbaea582ac044df52c8f1bba3f
+  Decodable: 5997b5e329e651f828dfcd458216b4c8286867cf
+  Interstellar: 3d47f37eff7e81fbaa9a74bd903f362eb165b159
+  Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
+  Quick: a5221fc21788b6aeda934805e68b061839bc3165
+  "\U0001F555": 2a41c1f9b76698cb697b8ec9a1db1087f5621187
+
+COCOAPODS: 0.39.0
