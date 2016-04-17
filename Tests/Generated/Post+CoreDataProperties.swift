@@ -16,7 +16,8 @@ extension Post {
 
     @NSManaged var body: String?
     @NSManaged var comments: NSNumber?
-    @NSManaged var date: NSDate?
+    // FIXME: Needs to be handled properly by contentful.swift
+    //@NSManaged var date: NSDate?
     @NSManaged var identifier: String?
     @NSManaged var slug: String?
     @NSManaged var tags: NSData?
