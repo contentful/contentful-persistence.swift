@@ -34,9 +34,9 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
         sync.mapAssets(to: Asset.self)
         sync.mapSpaces(to: SyncInfo.self)
 
+        sync.map(contentTypeId: "1kUEViTN4EmGiEaaeC6ouY", to: Author.self)
+        sync.map(contentTypeId: "5KMiN6YPvi42icqAUQMCQe", to: Category.self)
         sync.map(contentTypeId: "2wKn6yEnZewu2SCCkus4as", to: Post.self)
-        // 1kUEViTN4EmGiEaaeC6ouY => Author.self
-        // 5KMiN6YPvi42icqAUQMCQe => Category.self
 
         return sync
     }()

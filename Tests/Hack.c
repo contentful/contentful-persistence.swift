@@ -13,5 +13,7 @@
  */
 void _TFC26ContentfulPersistenceTests5Assetm10identifierGSqSS_() {}
 void _TFC26ContentfulPersistenceTests5Assetm3urlGSqSS_() {}
+void _TFC26ContentfulPersistenceTests6Authorm10identifierGSqSS_() {}
+void _TFC26ContentfulPersistenceTests8Categorym10identifierGSqSS_() {}
 void _TFC26ContentfulPersistenceTests4Postm10identifierGSqSS_() {}
 void _TFC26ContentfulPersistenceTests8SyncInfom9syncTokenGSqSS_() {}
