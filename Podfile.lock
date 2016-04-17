@@ -1,6 +1,6 @@
 PODS:
   - CatchingFire (0.2.0)
-  - Contentful (0.1.0):
+  - Contentful (0.2.0):
     - Decodable (~> 0.3.2)
     - Interstellar (~> 1.3.0)
     - "\U0001F555"
@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
-  Contentful: 07f9ad26de428ffbaea582ac044df52c8f1bba3f
+  Contentful: 1afac7eb438e93346f6c784f16d90e21c211d080
   Decodable: 5997b5e329e651f828dfcd458216b4c8286867cf
   Interstellar: 3d47f37eff7e81fbaa9a74bd903f362eb165b159
   Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
