@@ -22,7 +22,12 @@ class ContentfulPersistenceTestBase: QuickSpec {
         let psc = NSPersistentStoreCoordinator(managedObjectModel: mom!)
 
         AssertNoThrow {
-            try NSFileManager.defaultManager().removeItemAtURL(self.storeURL!)
+            _ = try? NSFileManager.defaultManager().removeItemAtURL(self.storeURL!)
+
+            let path = self.storeURL!.path!
+            _ = try? NSFileManager.defaultManager().removeItemAtPath("\(path)-shm")
+            _ = try? NSFileManager.defaultManager().removeItemAtPath("\(path)-wal")
+
             var store = try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: self.storeURL!, options: nil)
             expect(store).toNot(beNil())
         }
