@@ -9,6 +9,10 @@
 import Contentful
 import Interstellar
 
+func predicateForIdentifier(identifier: String) -> NSPredicate {
+    return NSPredicate(format: "identifier == %@", identifier)
+}
+
 public class ContentfulSynchronizer: SyncSpaceDelegate {
     private let client: Client
     private let matching: [String: AnyObject]
@@ -92,8 +96,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     private func create(identifier: String, fields: [String: Any], type: Resource.Type, mapping: [String: String]) {
         assert(mapping.count > 0, "Empty mapping for \(type)")
 
-        let predicate = self.dynamicType.predicateForIdentifier(identifier)
-        let fetched: [Resource]? = try? store.fetchAll(type, predicate: predicate)
+        let fetched: [Resource]? = try? store.fetchAll(type, predicate: predicateForIdentifier(identifier))
         let persisted: Resource
 
         if let fetched = fetched?.first {
@@ -143,10 +146,6 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
             to.setValue(value as? NSObject, forKeyPath: key)
         }
-    }
-
-    private static func predicateForIdentifier(identifier: String) -> NSPredicate {
-        return NSPredicate(format: "identifier == '%@'", identifier)
     }
 
     private func resolveRelationships() {
@@ -225,12 +224,11 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     }
 
     public func deleteAsset(assetId: String) {
-        let predicate = self.dynamicType.predicateForIdentifier(assetId)
-        _ = try? store.delete(typeForAssets, predicate: predicate)
+        _ = try? store.delete(typeForAssets, predicate: predicateForIdentifier(assetId))
     }
 
     public func deleteEntry(entryId: String) {
-        let predicate = self.dynamicType.predicateForIdentifier(entryId)
+        let predicate = predicateForIdentifier(entryId)
 
         typeForEntries.forEach {
             _ = try? self.store.delete($0.1, predicate: predicate)

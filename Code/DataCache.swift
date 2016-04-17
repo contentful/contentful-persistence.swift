@@ -8,11 +8,53 @@
 
 import Foundation
 
-class DataCache {
+protocol DataCacheProtocol {
+    init(persistenceStore: PersistenceStore, assetType: Asset.Type, entryTypes: [Resource.Type])
+
+    func entryForIdentifier(identifier: String) -> Resource?
+    func itemForIdentifier(identifier: String) -> NSObject?
+}
+
+/// Does not actually cache anything, but directly uses the persistence store instead
+class NoDataCache: DataCacheProtocol {
+    private let assetType: Asset.Type
+    private let entryTypes: [Resource.Type]
+    private let store: PersistenceStore
+
+    required init(persistenceStore: PersistenceStore, assetType: Asset.Type, entryTypes: [Resource.Type]) {
+        self.assetType = assetType
+        self.entryTypes = entryTypes
+        self.store = persistenceStore
+    }
+
+    private func itemsOf(types: [Resource.Type], identifier: String) -> Resource? {
+        let predicate = predicateForIdentifier(identifier)
+
+        let items: [Resource] = types.flatMap {
+            if let result = try? store.fetchAll($0, predicate: predicate) as [Resource] {
+                return result.first
+            }
+            return nil
+        }
+
+        return items.first
+    }
+
+    func entryForIdentifier(identifier: String) -> Resource? {
+        return itemsOf(entryTypes, identifier: identifier)
+    }
+
+    func itemForIdentifier(identifier: String) -> NSObject? {
+        return itemsOf([assetType] + entryTypes, identifier: identifier) as? NSObject
+    }
+}
+
+/// Implemented using `NSCache`
+class DataCache: DataCacheProtocol {
     private let assetCache = NSCache()
     private let entryCache = NSCache()
 
-    init(persistenceStore: PersistenceStore, assetType: Asset.Type, entryTypes: [Resource.Type]) {
+    required init(persistenceStore: PersistenceStore, assetType: Asset.Type, entryTypes: [Resource.Type]) {
         let truePredicate = NSPredicate(value: true)
 
         let assets: [Asset]? = try? persistenceStore.fetchAll(assetType, predicate: truePredicate)
@@ -24,7 +66,7 @@ class DataCache {
         }
     }
 
-    func assetForIdentifier(identifier: String) -> Asset? {
+    private func assetForIdentifier(identifier: String) -> Asset? {
         return assetCache.objectForKey(identifier) as? Asset
     }
 
