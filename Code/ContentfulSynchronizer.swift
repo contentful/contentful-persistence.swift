@@ -14,14 +14,14 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     private let matching: [String: AnyObject]
     private let store: PersistenceStore
 
-    private var mappingForEntries = [String: [String: String]!]()
+    private var mappingForEntries = [String: [String: String]]()
     private var mappingForAssets: [String: String]!
 
     private var typeForAssets: Asset.Type!
     private var typeForEntries = [String: Resource.Type]()
     private var typeForSpaces: Space.Type!
 
-    private var relationshipsToResolve = [String: [String: String]]()
+    private var relationshipsToResolve = [String: [String: Any]]()
 
     var syncToken: String? {
         return fetchSpace().syncToken
@@ -156,12 +156,14 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         relationshipsToResolve.forEach {
             if let entry = cache.entryForIdentifier($0.0) as? NSObject {
                 $0.1.forEach {
-                    var target = cache.assetForIdentifier($0.1) as? NSObject
-                    if target == nil {
-                        target = cache.entryForIdentifier($0.1) as? NSObject
+                    if let identifier = $0.1 as? String {
+                        entry.setValue(cache.itemForIdentifier(identifier), forKey: $0.0)
                     }
 
-                    entry.setValue(target, forKey: $0.0)
+                    if let identifiers = $0.1 as? [String] {
+                        let targets = identifiers.flatMap { return cache.itemForIdentifier($0) }
+                        entry.setValue(NSOrderedSet(array: targets), forKey: $0.0)
+                    }
                 }
             }
         }
@@ -183,6 +185,18 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         create(asset.identifier, fields: asset.fields, type: typeForAssets, mapping: mappingForAssets)
     }
 
+    private func getIdentifier(target: Any) -> String? {
+        if let target = target as? Contentful.Asset {
+            return target.identifier
+        }
+
+        if let target = target as? Entry {
+            return target.identifier
+        }
+
+        return nil
+    }
+
     public func createEntry(entry: Entry) {
         let contentTypeId = ((entry.sys["contentType"] as? [String: AnyObject])?["sys"] as? [String: AnyObject])?["id"] as? String
 
@@ -194,17 +208,15 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
             create(entry.identifier, fields: entry.fields, type: type, mapping: mapping!)
 
-            var relationships = [String: String]()
+            var relationships = [String: Any]()
 
             _ = try? store.relationshipsFor(type: type).forEach {
                 let target = entry.fields[$0]
 
-                if let target = target as? Asset {
-                    relationships[$0] = target.identifier
-                }
-
-                if let target = target as? Entry {
-                    relationships[$0] = target.identifier
+                if let targets = target as? [Any] {
+                    relationships[$0] = targets.flatMap { self.getIdentifier($0) }
+                } else {
+                    relationships[$0] = getIdentifier(target)
                 }
             }
 

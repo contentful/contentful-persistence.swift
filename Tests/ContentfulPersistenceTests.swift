@@ -17,6 +17,9 @@ import Contentful
 typealias TestFunc = (() -> ()) throws -> ()
 
 class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
+    let assetPredicate = NSPredicate(format: "identifier == 'bXvdSYHB3Guy2uUmuEco8'")
+    let postPredicate = NSPredicate(format: "identifier == '1asN98Ph3mUiCYIYiiqwko'")
+
     lazy var client: Client = {
         let spaceId = "dqpnpm0n4e75" // => https://app.contentful.com/spaces/dqpnpm0n4e75
         let accessToken = "95c33f933385aa838825526c5753f3b5a7e59bb45cd6b5d78e15bfeafeef1b13"
@@ -48,7 +51,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
 
                 AssertNoThrow {
                     let posts: [Post] = try self.store.fetchAll(Post.self, predicate: NSPredicate(value: true))
-                    expect(posts.count).to(equal(3))
+                    expect(posts.count).to(equal(2))
 
                     try expectations(done)
                 }
@@ -74,7 +77,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
                     let assets: [Asset] = try self.store.fetchAll(Asset.self, predicate: NSPredicate(value: true))
                     expect(assets.count).to(equal(6))
 
-                    let alice: Asset? = try self.store.fetchAll(Asset.self, predicate: NSPredicate(format: "identifier == 'bXvdSYHB3Guy2uUmuEco8'")).first
+                    let alice: Asset? = try self.store.fetchAll(Asset.self, predicate: self.assetPredicate).first
                     expect(alice).toNot(beNil())
                     expect(alice?.title).to(equal("Alice in Wonderland"))
                     expect(alice?.url).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
@@ -86,14 +89,37 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
 
         it("can store Entries") {
             self.postTests { done in
-                let post: Post? = try self.store.fetchAll(Post.self, predicate: NSPredicate(format: "identifier == '1asN98Ph3mUiCYIYiiqwko'")).first
+                let post: Post? = try self.store.fetchAll(Post.self, predicate: self.postPredicate).first
                 expect(post).toNot(beNil())
+                expect(post?.title).to(equal("Down the Rabbit Hole"))
                 done()
             }
         }
 
-        it("can map Contentful links to CoreData relationships") {
-            // TODO: implement test
+        it("can map Contentful Asset links to CoreData relationships") {
+            self.postTests { done in
+                let post: Post? = try self.store.fetchAll(Post.self, predicate: self.postPredicate).first
+                expect(post).toNot(beNil())
+
+                expect(post?.featuredImage).toNot(beNil())
+                expect(post?.featuredImage?.url).toNot(beNil())
+
+                done()
+            }
+        }
+
+        it("can map Contentful Entry links to CoreData relationships") {
+            self.postTests { done in
+                let post: Post? = try self.store.fetchAll(Post.self, predicate: self.postPredicate).first
+                expect(post).toNot(beNil())
+
+                expect(post?.author).toNot(beNil())
+                expect(post?.author?.count).to(equal(1))
+                let author = post?.author?.firstObject as? Author
+                expect(author).toNot(beNil())
+
+                done()
+            }
         }
 
         it("can continue syncing from an existing data store") {

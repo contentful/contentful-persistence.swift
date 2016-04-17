@@ -32,6 +32,17 @@ class DataCache {
         return entryCache.objectForKey(identifier) as? Resource
     }
 
+    func itemForIdentifier(identifier: String) -> NSObject? {
+        var target = self.assetForIdentifier(identifier) as? NSObject
+
+        if target == nil {
+            print(self.entryForIdentifier(identifier))
+            target = self.entryForIdentifier(identifier) as? NSObject
+        }
+
+        return target
+    }
+
     private static func cacheResource(in cache: NSCache, resource: Resource) {
         if let id = resource.identifier, resource = resource as? AnyObject {
             cache.setObject(resource, forKey: id)
