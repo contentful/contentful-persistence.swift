@@ -136,6 +136,11 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
                 value = "https:\(string)"
             }
 
+            // handle symbol arrays
+            if let array = value as? NSArray {
+                value = NSKeyedArchiver.archivedDataWithRootObject(array)
+            }
+
             to.setValue(value as? NSObject, forKeyPath: key)
         }
     }
