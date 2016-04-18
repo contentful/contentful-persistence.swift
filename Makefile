@@ -17,7 +17,7 @@ setup:
 	bundle exec pod install --no-repo-update
 
 lint:
-	bundle exec pod lib lint ContentfulPersistence.podspec --verbose
+	bundle exec pod lib lint ContentfulPersistenceSwift.podspec --verbose
 
 coverage:
 	bundle exec slather coverage -s ContentfulPersistence.xcodeproj
