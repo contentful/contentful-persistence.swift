@@ -2,7 +2,7 @@ use_frameworks!
 
 target 'ContentfulPersistence' do
 
-podspec :path => 'ContentfulPersistence.podspec'
+podspec :path => 'ContentfulPersistenceSwift.podspec'
 #pod 'Contentful', :path => '../../Projects/contentful.swift'
 
 end
