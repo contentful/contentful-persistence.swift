@@ -78,7 +78,6 @@ class DataCache: DataCacheProtocol {
         var target = self.assetForIdentifier(identifier) as? NSObject
 
         if target == nil {
-            print(self.entryForIdentifier(identifier))
             target = self.entryForIdentifier(identifier) as? NSObject
         }
 
