@@ -13,6 +13,7 @@ func predicateForIdentifier(identifier: String) -> NSPredicate {
     return NSPredicate(format: "identifier == %@", identifier)
 }
 
+/// Provides the ability to sync content from Contentful to a persistence store.
 public class ContentfulSynchronizer: SyncSpaceDelegate {
     private let client: Client
     private let matching: [String: AnyObject]
@@ -31,26 +32,76 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         return fetchSpace().syncToken
     }
 
+    /**
+     Instantiate a new ContentfulSynchronizer.
+
+     - parameter client:           The API client to use for synchronization
+     - parameter persistenceStore: The persistence store to use for storage
+     - parameter matching:         An optional query for syncing specific content, see <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization/initial-synchronisation-of-entries-of-a-specific-content-type>
+
+     - returns: An initialised instance of ContentfulSynchronizer
+     */
     public init(client: Client, persistenceStore: PersistenceStore, matching: [String: AnyObject] = [String: AnyObject]()) {
         self.client = client
         self.matching = matching
         self.store = persistenceStore
     }
 
+    /**
+     Specify the type that Entries of a specific Content Type should be mapped to.
+
+     The given type needs to implement the `Resource` protocol. Optionally, a field mapping can be
+     provided which specifies the mapping between Contentful fields and properties of the target type.
+
+     By default, this mapping will be automatically derived through matching fields and properties which
+     share the same name. If you are using the Contentful Xcode plugin to generate your data model, the
+     assumptions of the default mapping should usually suffice.
+
+     - parameter contentTypeId:   ID of the Content Type which is being mapped
+     - parameter type:            The type Entries should be mapped to (needs to implement the `Resource` protocol)
+     - parameter propertyMapping: Optional mapping between Contentful fields and object properties
+     */
     public func map(contentTypeId contentTypeId: String, to type: Resource.Type, propertyMapping: [String:String]? = nil) {
         mappingForEntries[contentTypeId] = propertyMapping
         typeForEntries[contentTypeId] = type
     }
 
+    /**
+     Specify the type that Assets should be mapped to.
+
+     The given type needs to implement the `Asset` protocol. Optionally, a field mapping can be
+     provided which specifies the mapping between Contentful fields and properties of the target type.
+
+     By default, this mapping will be automatically derived through matching fields and properties which
+     share the same name. For this, also the sub-fields of the `file` and `file.details.image` fields
+     are being taken into consideration, e.g. if your type has a `width` property, the image width
+     provided by Contentful would be mapped to it.
+
+     - parameter type:            The type Assets should be mapped to (needs to implement the `Asset` protocol)
+     - parameter propertyMapping: Optional mapping between Contentful fields and object properties
+     */
     public func mapAssets(to type: Asset.Type, propertyMapping: [String:String]? = nil) {
         mappingForAssets = propertyMapping
         typeForAssets = type
     }
 
+    /**
+     Specify the type that Spaces are mapped to.
+
+     The given type needs to implement the `Space` protocol.
+
+     - parameter type: The type Spaces should be mapped to (needs to implement the `Space` protocol)
+     */
     public func mapSpaces(to type: Space.Type) {
         typeForSpaces = type
     }
 
+    /**
+     Perform a synchronization. This will fetch new content from Contentful and save it to the
+     persistent store.
+
+     - parameter completion: A completion handler which is called after completing the sync process.
+     */
     public func sync(completion: (Bool) -> ()) {
         assert(typeForAssets != nil, "Define a type for Assets using mapAssets(to:)")
         assert(typeForEntries.first?.1 != nil, "Define a type for Entries using map(contentTypeId:to:)")
@@ -170,6 +221,11 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
     // MARK: - SyncSpaceDelegate
 
+    /**
+     This function is public as a side-effect of implementing `SyncSpaceDelegate`.
+
+     - parameter asset: The newly created Asset
+     */
     public func createAsset(asset: Contentful.Asset) {
         if mappingForAssets == nil {
             mappingForAssets = deriveMapping(Array(asset.fields.keys), type: typeForAssets)
@@ -196,6 +252,11 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         return nil
     }
 
+    /**
+     This function is public as a side-effect of implementing `SyncSpaceDelegate`.
+
+     - parameter entry: The newly created Entry
+     */
     public func createEntry(entry: Entry) {
         let contentTypeId = ((entry.sys["contentType"] as? [String: AnyObject])?["sys"] as? [String: AnyObject])?["id"] as? String
 
@@ -223,10 +284,20 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         }
     }
 
+    /**
+     This function is public as a side-effect of implementing `SyncSpaceDelegate`.
+
+     - parameter assetId: The ID of the deleted Asset
+     */
     public func deleteAsset(assetId: String) {
         _ = try? store.delete(typeForAssets, predicate: predicateForIdentifier(assetId))
     }
 
+    /**
+     This function is public as a side-effect of implementing `SyncSpaceDelegate`.
+
+     - parameter entryId: The ID of the deleted Entry
+     */
     public func deleteEntry(entryId: String) {
         let predicate = predicateForIdentifier(entryId)
 

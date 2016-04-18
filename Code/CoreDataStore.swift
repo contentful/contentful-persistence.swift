@@ -12,13 +12,30 @@ enum Errors: ErrorType {
     case InvalidType(type: Any.Type)
 }
 
+/// Implementation fo the `PersistenceStore` protocol using CoreData
 public class CoreDataStore : PersistenceStore {
     private let context: NSManagedObjectContext
 
+    /**
+     Initialize a new CoreData persistence store
+
+     - parameter context: The managed object context used for querying and
+
+     - returns: An initialised instance of this class
+     */
     public init(context: NSManagedObjectContext) {
         self.context = context
     }
 
+    /**
+     Create a new object of the given type.
+
+     - parameter type: The type of which a new object should be created
+
+     - throws: If a invalid type was specified
+
+     - returns: A newly created object of the given type
+     */
     public func create<T>(type: Any.Type) throws -> T {
         var type = type
 
@@ -35,6 +52,14 @@ public class CoreDataStore : PersistenceStore {
         throw Errors.InvalidType(type: type)
     }
 
+    /**
+     Delete objects of the given type which also match the predicate.
+
+     - parameter type:      The type of which objects should be deleted
+     - parameter predicate: The predicate used for matching objects to delete
+
+     - throws: If an invalid type was specified
+     */
     public func delete(type: Any.Type, predicate: NSPredicate) throws {
         let objects: [NSManagedObject] = try fetchAll(type, predicate: predicate)
         objects.forEach {
@@ -42,6 +67,16 @@ public class CoreDataStore : PersistenceStore {
         }
     }
 
+    /**
+     Fetches all objects of a specific type which also match the predicate.
+
+     - parameter type:      The type of which objects should be fetched
+     - parameter predicate: The predicate used for matching object to fetch
+
+     - throws: If an invalid type was specified
+
+     - returns: An array of matching objects
+     */
     public func fetchAll<T>(type: Any.Type, predicate: NSPredicate) throws -> [T] {
         if let `class` = type as? AnyClass {
             let request = NSFetchRequest(entityName: NSStringFromClass(`class`))
@@ -52,16 +87,41 @@ public class CoreDataStore : PersistenceStore {
         throw Errors.InvalidType(type: type)
     }
 
+    /**
+     Returns an array of names of properties the given type stores persistently.
+
+     This should omit any properties returned by `relationshipsFor(type:)`.
+
+     - parameter type: The type of which properties should be returned for
+
+     - throws: If an invalid type was specified
+
+     - returns: An array of property names
+     */
     public func propertiesFor(type type: Any.Type) throws -> [String] {
         let description = try entityDescriptionFor(type: type)
         return try description.propertiesByName.map { $0.0 } - relationshipsFor(type: type)
     }
 
+    /**
+     Returns an array of names of properties for any relationship the given type stores persistently.
+
+     - parameter type: The type of which properties should be returned for
+
+     - throws: If an invalid type was specified
+
+     - returns: An array of property names
+     */
     public func relationshipsFor(type type: Any.Type) throws -> [String] {
         let description = try entityDescriptionFor(type: type)
         return description.relationshipsByName.map { $0.0 }
     }
 
+    /**
+     Performs the actual save to the persistence store.
+
+     - throws: If any error occured during the save operation
+     */
     public func save() throws {
         try context.save()
     }
