@@ -45,7 +45,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
     }()
 
     func postTests(expectations: TestFunc) {
-        waitUntil { done in
+        waitUntil(timeout: 10) { done in
             self.sync.sync() {
                 expect($0).to(beTrue())
 
@@ -60,7 +60,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
     }
 
     override func spec() {
-        it("can store SyncTokens") { waitUntil { done in
+        it("can store SyncTokens") { waitUntil(timeout: 10) { done in
             self.sync.sync() {
                 expect($0).to(beTrue())
                 expect(self.sync.syncToken?.characters.count).to(beGreaterThan(0))
@@ -69,7 +69,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
             }
         } }
 
-        it("can store Assets") { waitUntil { done in
+        it("can store Assets") { waitUntil(timeout: 10) { done in
             self.sync.sync() {
                 expect($0).to(beTrue())
 
