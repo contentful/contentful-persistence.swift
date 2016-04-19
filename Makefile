@@ -22,3 +22,6 @@ lint:
 coverage:
 	bundle exec slather coverage -s ContentfulPersistence.xcodeproj
 
+carthage:
+	carthage build --no-skip-current
+	carthage archive ContentfulPersistence
