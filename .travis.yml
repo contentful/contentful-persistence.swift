@@ -1,0 +1,6 @@
+language: objective-c
+osx_image: xcode7.1
+script:
+- xcodebuild -workspace ContentfulPersistence.xcworkspace -scheme ContentfulPersistence test -sdk iphonesimulator
+- bundle exec slather coverage --coveralls ContentfulPersistence.xcodeproj
+- pod lib lint ContentfulPersistenceSwift.podspec

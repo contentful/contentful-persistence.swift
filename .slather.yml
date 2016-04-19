@@ -1,1 +1,2 @@
-binary_basename: ContentfulPersistence
+workspace: ContentfulPersistence.xcworkspace
+scheme: ContentfulPersistence
