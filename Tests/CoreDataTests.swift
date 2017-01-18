@@ -6,13 +6,12 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
+@testable import ContentfulPersistence
+import Contentful
 import CatchingFire
-import Interstellar
 import Nimble
 import Quick
 
-import Contentful
-@testable import ContentfulPersistence
 
 class CoreDataTests: ContentfulPersistenceTestBase {
     lazy var store: CoreDataStore = {

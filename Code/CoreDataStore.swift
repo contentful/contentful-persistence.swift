@@ -27,6 +27,18 @@ public class CoreDataStore : PersistenceStore {
         self.context = context
     }
 
+    public func fetchRequest(type: Any.Type, predicate: NSPredicate) throws -> NSFetchRequest {
+        if let `class` = type as? AnyClass {
+            let request = NSFetchRequest(entityName: NSStringFromClass(`class`))
+            request.predicate = predicate
+            return request
+        }
+
+        throw Errors.InvalidType(type: type)
+    }
+
+    // MARK: <PersistenceStore>
+
     /**
      Create a new object of the given type.
 
@@ -80,16 +92,6 @@ public class CoreDataStore : PersistenceStore {
     public func fetchAll<T>(type: Any.Type, predicate: NSPredicate) throws -> [T] {
         let request = try fetchRequest(type, predicate: predicate)
         return try context.executeFetchRequest(request).flatMap { $0 as? T }
-    }
-
-    public func fetchRequest(type: Any.Type, predicate: NSPredicate) throws -> NSFetchRequest {
-        if let `class` = type as? AnyClass {
-            let request = NSFetchRequest(entityName: NSStringFromClass(`class`))
-            request.predicate = predicate
-            return request
-        }
-
-        throw Errors.InvalidType(type: type)
     }
 
     /**
