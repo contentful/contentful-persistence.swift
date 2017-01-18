@@ -121,14 +121,13 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
         relationshipsToResolve.removeAll()
 
-        signal
-        .next {
+        signal.next { syncSpace in
             var space = self.fetchSpace()
-            space.syncToken = $0.syncToken
+            space.syncToken = syncSpace.syncToken
 
             if initial {
-                $0.assets.forEach { self.createAsset($0) }
-                $0.entries.forEach { self.createEntry($0) }
+                syncSpace.assets.forEach { self.createAsset($0) }
+                syncSpace.entries.forEach { self.createEntry($0) }
             }
 
             self.resolveRelationships()
@@ -136,14 +135,15 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             _ = try? self.store.save()
             completion(true)
         }
-        .error {
-            NSLog("Error: \($0)")
+        .error { error in
+            NSLog("Error: \(error)")
             completion(false)
         }
     }
 
     // MARK: - Helpers
 
+    // Attempts to fetch the object from the the persistent store, if it exists,
     private func create(identifier: String, fields: [String: Any], type: Resource.Type, mapping: [String: String]) {
         assert(mapping.count > 0, "Empty mapping for \(type)")
 
@@ -181,21 +181,21 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     }
 
     private func map(fields: [String: Any], to: NSObject, mapping: [String: String]) {
-        mapping.forEach {
-            let key = $0.1
-            var value = valueFor(fields, keyPath: $0.0)
+        for (mapKey, mapValue) in mapping {
+
+            var fieldValue = valueFor(fields, keyPath: mapKey)
 
             // such case, much special, wow
-            if let string = value as? String where string.hasPrefix("//") && key == "url" {
-                value = "https:\(string)"
+            if let string = fieldValue as? String where string.hasPrefix("//") && mapValue == "url" {
+                fieldValue = "https:\(string)"
             }
 
             // handle symbol arrays
-            if let array = value as? NSArray {
-                value = NSKeyedArchiver.archivedDataWithRootObject(array)
+            if let array = fieldValue as? NSArray {
+                fieldValue = NSKeyedArchiver.archivedDataWithRootObject(array)
             }
 
-            to.setValue(value as? NSObject, forKeyPath: key)
+            to.setValue(fieldValue as? NSObject, forKeyPath: mapValue)
         }
     }
 
@@ -269,14 +269,16 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             create(entry.identifier, fields: entry.fields, type: type, mapping: mapping!)
 
             var relationships = [String: Any]()
+            if let relationshipNames = try? store.relationshipsFor(type: type) {
+                
+                relationshipNames.forEach { relationshipTypeName in
+                    let target = entry.fields[relationshipTypeName]
 
-            _ = try? store.relationshipsFor(type: type).forEach {
-                let target = entry.fields[$0]
-
-                if let targets = target as? [Any] {
-                    relationships[$0] = targets.flatMap { self.getIdentifier($0) }
-                } else {
-                    relationships[$0] = getIdentifier(target)
+                    if let targets = target as? [Any] {
+                        relationships[relationshipTypeName] = targets.flatMap { self.getIdentifier($0) }
+                    } else {
+                        relationships[relationshipTypeName] = getIdentifier(target)
+                    }
                 }
             }
 

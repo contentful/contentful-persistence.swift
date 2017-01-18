@@ -6,13 +6,12 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
+@testable import ContentfulPersistence
+import Contentful
 import CatchingFire
-import Interstellar
 import Nimble
 import Quick
 
-import Contentful
-@testable import ContentfulPersistence
 
 class CoreDataTests: ContentfulPersistenceTestBase {
     lazy var store: CoreDataStore = {
@@ -30,7 +29,7 @@ class CoreDataTests: ContentfulPersistenceTestBase {
             AssertNoThrow {
                 let relationships = try store.propertiesFor(type: Category.self)
 
-                expect(relationships).to(equal(["identifier", "title"]))
+                expect(relationships).to(equal(["title", "identifier"]))
             }
         }
 
@@ -40,7 +39,7 @@ class CoreDataTests: ContentfulPersistenceTestBase {
             AssertNoThrow {
                 let relationships = try store.relationshipsFor(type: Post.self)
 
-                expect(relationships).to(equal(["featuredImage", "category", "author"]))
+                expect(relationships).to(equal(["author", "category", "featuredImage"]))
             }
         }
     }

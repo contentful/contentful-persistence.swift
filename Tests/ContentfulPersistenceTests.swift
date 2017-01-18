@@ -6,13 +6,12 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
-import CatchingFire
-import Interstellar
-import Nimble
-import Quick
+@testable import ContentfulPersistence
 
 import Contentful
-@testable import ContentfulPersistence
+import CatchingFire
+import Nimble
+import Quick
 
 typealias TestFunc = (() -> ()) throws -> ()
 

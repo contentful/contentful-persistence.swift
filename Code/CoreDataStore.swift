@@ -27,6 +27,18 @@ public class CoreDataStore : PersistenceStore {
         self.context = context
     }
 
+    public func fetchRequest(type: Any.Type, predicate: NSPredicate) throws -> NSFetchRequest {
+        if let `class` = type as? AnyClass {
+            let request = NSFetchRequest(entityName: NSStringFromClass(`class`))
+            request.predicate = predicate
+            return request
+        }
+
+        throw Errors.InvalidType(type: type)
+    }
+
+    // MARK: <PersistenceStore>
+
     /**
      Create a new object of the given type.
 
@@ -82,16 +94,6 @@ public class CoreDataStore : PersistenceStore {
         return try context.executeFetchRequest(request).flatMap { $0 as? T }
     }
 
-    public func fetchRequest(type: Any.Type, predicate: NSPredicate) throws -> NSFetchRequest {
-        if let `class` = type as? AnyClass {
-            let request = NSFetchRequest(entityName: NSStringFromClass(`class`))
-            request.predicate = predicate
-            return request
-        }
-
-        throw Errors.InvalidType(type: type)
-    }
-
     /**
      Returns an array of names of properties the given type stores persistently.
 
@@ -109,7 +111,7 @@ public class CoreDataStore : PersistenceStore {
     }
 
     /**
-     Returns an array of names of properties for any relationship the given type stores persistently.
+     Returns an array of property names for any relationship the given type stores persistently.
 
      - parameter type: The type of which properties should be returned for
 

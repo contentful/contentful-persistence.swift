@@ -10,8 +10,8 @@ end
 target 'ContentfulPersistenceTests' do
 
 pod 'CatchingFire'
-pod 'Nimble'
-pod 'Quick'
+pod 'Nimble', '~> 4.1.0'
+pod 'Quick', '~> 0.9.3'
 
 end
 
