@@ -111,7 +111,7 @@ public class CoreDataStore : PersistenceStore {
     }
 
     /**
-     Returns an array of names of properties for any relationship the given type stores persistently.
+     Returns an array of property names for any relationship the given type stores persistently.
 
      - parameter type: The type of which properties should be returned for
 
