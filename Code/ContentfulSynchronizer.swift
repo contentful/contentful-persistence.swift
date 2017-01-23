@@ -23,9 +23,11 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     private var mappingForAssets: [String: String]!
 
     private var typeForAssets: Asset.Type!
+    // Dictionary mapping contentTypeId's to Types
     private var typeForEntries = [String: Resource.Type]()
     private var typeForSpaces: Space.Type!
 
+    // Dictionary mapping Entry identifier's to a dictionary with contentTypeId to types.
     private var relationshipsToResolve = [String: [String: Any]]()
 
     var syncToken: String? {
@@ -107,38 +109,49 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         assert(typeForEntries.first?.1 != nil, "Define a type for Entries using map(contentTypeId:to:)")
         assert(typeForSpaces != nil, "Define a type for Spaces using mapSpaces(to:)")
 
-        let initial: Bool
-        let signal: Signal<SyncSpace>
+        var initial: Bool?
+
+        let syncCompletion: (Result<SyncSpace>) -> () = { result in
+
+            switch result {
+            case .Success(let syncSpace):
+
+                // Fetch the current space
+                var space = self.fetchSpace()
+                space.syncToken = syncSpace.syncToken
+
+                // Delegate callback will createEntries when necessary.
+                if let initial = initial where initial == true {
+
+                    for asset in syncSpace.assets {
+                        self.createAsset(asset)
+                    }
+                    for entry in syncSpace.entries {
+                        self.createEntry(entry)
+                    }
+                }
+
+                self.resolveRelationships()
+                _ = try? self.store.save()
+                completion(true)
+
+            case .Error(let error):
+                NSLog("Error: \(error)")
+                completion(false)
+            }
+        }
 
         if let syncToken = syncToken {
             initial = false
-            let space = SyncSpace(client: client, syncToken: syncToken, delegate: self)
-            signal = space.sync(matching).1
+
+            let syncSpace = SyncSpace(client: client, syncToken: syncToken, delegate: self)
+            syncSpace.sync(matching, completion: syncCompletion)
         } else {
             initial = true
-            signal = client.initialSync(matching).1
+            client.initialSync(completion: syncCompletion)
         }
 
         relationshipsToResolve.removeAll()
-
-        signal.next { syncSpace in
-            var space = self.fetchSpace()
-            space.syncToken = syncSpace.syncToken
-
-            if initial {
-                syncSpace.assets.forEach { self.createAsset($0) }
-                syncSpace.entries.forEach { self.createEntry($0) }
-            }
-
-            self.resolveRelationships()
-
-            _ = try? self.store.save()
-            completion(true)
-        }
-        .error { error in
-            NSLog("Error: \(error)")
-            completion(false)
-        }
     }
 
     // MARK: - Helpers
@@ -170,6 +183,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     }
 
     private func fetchSpace() -> Space {
+        // FIXME: the predicate could be a bit safer and actually use the space identifier.
         let result: [Space]? = try? self.store.fetchAll(self.typeForSpaces, predicate: NSPredicate(value: true))
 
         guard let space = result?.first else {
@@ -185,7 +199,6 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
             var fieldValue = valueFor(fields, keyPath: mapKey)
 
-            // such case, much special, wow
             if let string = fieldValue as? String where string.hasPrefix("//") && mapValue == "url" {
                 fieldValue = "https:\(string)"
             }
@@ -200,19 +213,24 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     }
 
     private func resolveRelationships() {
-        let entryTypes = typeForEntries.map { $0.1 }
+        let entryTypes = typeForEntries.map { contentTypeId, type in
+            return type
+        }
         let cache = DataCache(persistenceStore: store, assetType: typeForAssets, entryTypes: entryTypes)
 
-        relationshipsToResolve.forEach {
-            if let entry = cache.entryForIdentifier($0.0) as? NSObject {
-                $0.1.forEach {
-                    if let identifier = $0.1 as? String {
-                        entry.setValue(cache.itemForIdentifier(identifier), forKey: $0.0)
+        for (entryId, dictionary) in relationshipsToResolve {
+            if let entry = cache.entryForIdentifier(entryId) as? NSObject {
+
+                for (key, value) in dictionary {
+                    if let identifier = value as? String {
+                        entry.setValue(cache.itemForIdentifier(identifier), forKey: key)
                     }
 
-                    if let identifiers = $0.1 as? [String] {
-                        let targets = identifiers.flatMap { return cache.itemForIdentifier($0) }
-                        entry.setValue(NSOrderedSet(array: targets), forKey: $0.0)
+                    if let identifiers = value as? [String] {
+                        let targets = identifiers.flatMap { id in
+                            return cache.itemForIdentifier(id)
+                        }
+                        entry.setValue(NSOrderedSet(array: targets), forKey: key)
                     }
                 }
             }
@@ -269,15 +287,18 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             create(entry.identifier, fields: entry.fields, type: type, mapping: mapping!)
 
             var relationships = [String: Any]()
-            if let relationshipNames = try? store.relationshipsFor(type: type) {
-                
-                relationshipNames.forEach { relationshipTypeName in
-                    let target = entry.fields[relationshipTypeName]
 
-                    if let targets = target as? [Any] {
-                        relationships[relationshipTypeName] = targets.flatMap { self.getIdentifier($0) }
-                    } else {
-                        relationships[relationshipTypeName] = getIdentifier(target)
+            if let relationshipNames = try? store.relationshipsFor(type: type) {
+
+                for relationshipName in relationshipNames {
+
+                    if let target = entry.fields[relationshipName] {
+
+                        if let targets = target as? [Any] {
+                            relationships[relationshipName] = targets.flatMap { self.getIdentifier($0) }
+                        } else {
+                            relationships[relationshipName] = getIdentifier(target)
+                        }
                     }
                 }
             }
