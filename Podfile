@@ -1,19 +1,20 @@
+#!/usr/bin/ruby
+
 use_frameworks!
 
 target 'ContentfulPersistence' do
 
 podspec :path => 'ContentfulPersistenceSwift.podspec'
-#pod 'Contentful', :path => '../../Projects/contentful.swift'
 
+  target 'ContentfulPersistenceTests' do
+    inherit! :search_paths
+
+    pod 'CatchingFire'
+    pod 'Nimble', '~> 4.1.0'
+    pod 'Quick', '~> 0.9.3'
+  end
 end
 
-target 'ContentfulPersistenceTests' do
-
-pod 'CatchingFire'
-pod 'Nimble', '~> 4.1.0'
-pod 'Quick', '~> 0.9.3'
-
-end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
@@ -22,3 +23,4 @@ post_install do |installer|
     end
   end
 end
+
