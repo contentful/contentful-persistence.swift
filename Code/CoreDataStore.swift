@@ -103,7 +103,7 @@ public class CoreDataStore : PersistenceStore {
 
      - throws: If an invalid type was specified
 
-     - returns: An array of property names
+     - returns: An array of property names representing system native types.
      */
     public func propertiesFor(type type: Any.Type) throws -> [String] {
         let description = try entityDescriptionFor(type: type)
@@ -117,7 +117,7 @@ public class CoreDataStore : PersistenceStore {
 
      - throws: If an invalid type was specified
 
-     - returns: An array of property names
+     - returns: An array of property names representing related entities.
      */
     public func relationshipsFor(type type: Any.Type) throws -> [String] {
         let description = try entityDescriptionFor(type: type)

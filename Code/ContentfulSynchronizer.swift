@@ -27,7 +27,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     private var typeForEntries = [String: Resource.Type]()
     private var typeForSpaces: Space.Type!
 
-    // Dictionary mapping Entry identifier's to a dictionary with contentTypeId to types.
+    // Dictionary mapping Entry identifier's to a dictionary with fieldName to related entry id's.
     private var relationshipsToResolve = [String: [String: Any]]()
 
     var syncToken: String? {
@@ -143,7 +143,6 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
         if let syncToken = syncToken {
             initial = false
-
             let syncSpace = SyncSpace(client: client, syncToken: syncToken, delegate: self)
             syncSpace.sync(matching, completion: syncCompletion)
         } else {
@@ -176,10 +175,12 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     }
 
     private func deriveMapping(fields: [String], type: Resource.Type, prefix: String = "") -> [String: String] {
-        var result = [String: String]()
-        let properties = (try! store.propertiesFor(type: type)).filter { fields.contains($0) }
-        properties.forEach { result["\(prefix)\($0)"] = $0 }
-        return result
+        var mapping = [String: String]()
+        let properties = (try! store.propertiesFor(type: type)).filter { propertyName in
+            fields.contains(propertyName)
+        }
+        properties.forEach { mapping["\(prefix)\($0)"] = $0 }
+        return mapping
     }
 
     private func fetchSpace() -> Space {
@@ -218,19 +219,19 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         }
         let cache = DataCache(persistenceStore: store, assetType: typeForAssets, entryTypes: entryTypes)
 
-        for (entryId, dictionary) in relationshipsToResolve {
+        for (entryId, field) in relationshipsToResolve {
             if let entry = cache.entryForIdentifier(entryId) as? NSObject {
 
-                for (key, value) in dictionary {
-                    if let identifier = value as? String {
-                        entry.setValue(cache.itemForIdentifier(identifier), forKey: key)
+                for (fieldName, relatedEntryId) in field {
+                    if let identifier = relatedEntryId as? String {
+                        entry.setValue(cache.itemForIdentifier(identifier), forKey: fieldName)
                     }
 
-                    if let identifiers = value as? [String] {
+                    if let identifiers = relatedEntryId as? [String] {
                         let targets = identifiers.flatMap { id in
                             return cache.itemForIdentifier(id)
                         }
-                        entry.setValue(NSOrderedSet(array: targets), forKey: key)
+                        entry.setValue(NSOrderedSet(array: targets), forKey: fieldName)
                     }
                 }
             }
@@ -267,6 +268,13 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             return target.identifier
         }
 
+        // For links that have not yet been resolved.
+        if let jsonObject = target as? [String:AnyObject],
+            let sys = jsonObject["sys"] as? [String:AnyObject],
+            let identifier = sys["id"] as? String {
+            return identifier
+        }
+
         return nil
     }
 
@@ -276,6 +284,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
      - parameter entry: The newly created Entry
      */
     public func createEntry(entry: Entry) {
+
         let contentTypeId = ((entry.sys["contentType"] as? [String: AnyObject])?["sys"] as? [String: AnyObject])?["id"] as? String
 
         if let contentTypeId = contentTypeId, type = typeForEntries[contentTypeId] {
@@ -286,17 +295,24 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
             create(entry.identifier, fields: entry.fields, type: type, mapping: mapping!)
 
+            // ContentTypeId to either a single entry id or an array of entry id's to be linked.
             var relationships = [String: Any]()
 
+            // Get fieldNames which are links/relationships/references to other types.
             if let relationshipNames = try? store.relationshipsFor(type: type) {
 
                 for relationshipName in relationshipNames {
 
                     if let target = entry.fields[relationshipName] {
-
                         if let targets = target as? [Any] {
+                            // One-to-many.
+                            relationships[relationshipName] = targets.flatMap { self.getIdentifier($0) }
+                        } else if let targets = target as? [AnyObject] {
+                            // Workaround for when cast to [Any] fails; generally when the array still contains
+                            // Dictionary respresentation of link.
                             relationships[relationshipName] = targets.flatMap { self.getIdentifier($0) }
                         } else {
+                            // One-to-one.
                             relationships[relationshipName] = getIdentifier(target)
                         }
                     }
