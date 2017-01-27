@@ -1,5 +1,9 @@
 language: objective-c
 osx_image: xcode7.3
+cache:
+  - cocoapods
+before_install:
+  - pod repo update --silent
 script:
 - xcodebuild -workspace ContentfulPersistence.xcworkspace -scheme ContentfulPersistence test -sdk iphonesimulator | xcpretty -c
 - bundle exec slather coverage --coveralls ContentfulPersistence.xcodeproj
