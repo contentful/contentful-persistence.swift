@@ -1,6 +1,8 @@
+#!/usr/bin/ruby
+
 Pod::Spec.new do |s|
   s.name             = "ContentfulPersistenceSwift"
-  s.version          = "0.2.0"
+  s.version          = "0.2.3"
   s.summary          = "Simplified persistence for the Contentful Swift SDK."
   s.homepage         = "https://github.com/contentful/contentful-persistence.swift/"
   s.social_media_url = 'https://twitter.com/contentful'
@@ -10,7 +12,7 @@ Pod::Spec.new do |s|
     :file => 'LICENSE'
   }
 
-  s.authors      = { "Boris Bügling" => "boris@buegling.com" }
+  s.authors      = { "Boris Bügling" => "boris@buegling.com", "JP Wright" => "jp@contentful.com" }
   s.source       = { :git => "https://github.com/contentful/contentful-persistence.swift.git",
                      :tag => s.version.to_s }
   s.requires_arc = true
@@ -23,5 +25,5 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target    = '9.0'
 
-  s.dependency 'Contentful', '~> 0.2.0'
+  s.dependency 'Contentful', '~> 0.2.3'
 end

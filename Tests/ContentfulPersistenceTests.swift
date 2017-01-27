@@ -102,6 +102,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
 
                 expect(post?.featuredImage).toNot(beNil())
                 expect(post?.featuredImage?.url).toNot(beNil())
+                expect(post?.featuredImage?.url).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
 
                 done()
             }

@@ -1,6 +1,6 @@
 PODS:
   - CatchingFire (0.2.0)
-  - Contentful (0.2.2):
+  - Contentful (0.2.3):
     - Decodable (~> 0.4.2)
     - Interstellar (~> 1.4.0)
     - "\U0001F555 (= 0.0.1)"
@@ -17,19 +17,19 @@ PODS:
 
 DEPENDENCIES:
   - CatchingFire
-  - Contentful (~> 0.2.0)
+  - Contentful (~> 0.2.3)
   - Nimble (~> 4.1.0)
   - Quick (~> 0.9.3)
 
 SPEC CHECKSUMS:
   CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
-  Contentful: 6d36bfcaaa655c2649b95f5da7d48b3292a4b6cb
+  Contentful: 9876b7b1b69a5298a2d4ccb98c11e5a56a57a60d
   Decodable: ab6c7d02a5df949d3ab16b2696528a3241e37c76
   Interstellar: 40fc666872436d6c1b3524c59437ebdb5dec1c6a
   Nimble: 97a0a4cae5124c117115634b2d055d8c97d0af19
   Quick: 13a2a2b19a5d8e3ed4fd0c36ee46597fd77ebf71
   "\U0001F555": 2a41c1f9b76698cb697b8ec9a1db1087f5621187
 
-PODFILE CHECKSUM: 4ed577813d0b78bbb624c746f3a5821c8ba51630
+PODFILE CHECKSUM: f3b7c7d64d427d1bc223e1466eaa0a6a2ff8bdae
 
 COCOAPODS: 1.1.1
