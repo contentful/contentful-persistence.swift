@@ -1,35 +1,29 @@
 PODS:
-  - CatchingFire (0.2.0)
-  - Contentful (0.2.3):
-    - Decodable (~> 0.4.2)
-    - Interstellar (~> 1.4.0)
-    - "\U0001F555 (= 0.0.1)"
-  - Decodable (0.4.3)
-  - Interstellar (1.4.0):
-    - Interstellar/Core (= 1.4.0)
-    - Interstellar/Warpdrive (= 1.4.0)
-  - Interstellar/Core (1.4.0)
-  - Interstellar/Warpdrive (1.4.0):
+  - Contentful (0.3.1):
+    - Decodable (~> 0.5)
+    - Interstellar (~> 2.0.0)
+  - Decodable (0.5)
+  - Interstellar (2.0.0):
+    - Interstellar/Core (= 2.0.0)
+    - Interstellar/Warpdrive (= 2.0.0)
+  - Interstellar/Core (2.0.0)
+  - Interstellar/Warpdrive (2.0.0):
     - Interstellar/Core
-  - Nimble (4.1.0)
-  - Quick (0.9.3)
-  - "\U0001F555 (0.0.1)"
+  - Nimble (5.1.1)
+  - Quick (1.0.0)
 
 DEPENDENCIES:
-  - CatchingFire
-  - Contentful (~> 0.2.3)
-  - Nimble (~> 4.1.0)
-  - Quick (~> 0.9.3)
+  - Contentful (~> 0.3.1)
+  - Nimble (~> 5.1.0)
+  - Quick (~> 1.0.0)
 
 SPEC CHECKSUMS:
-  CatchingFire: 935ecc35fc5864f12ef1c033a97e9a9affbf6056
-  Contentful: 9876b7b1b69a5298a2d4ccb98c11e5a56a57a60d
-  Decodable: ab6c7d02a5df949d3ab16b2696528a3241e37c76
-  Interstellar: 40fc666872436d6c1b3524c59437ebdb5dec1c6a
-  Nimble: 97a0a4cae5124c117115634b2d055d8c97d0af19
-  Quick: 13a2a2b19a5d8e3ed4fd0c36ee46597fd77ebf71
-  "\U0001F555": 2a41c1f9b76698cb697b8ec9a1db1087f5621187
+  Contentful: 2b3ffedfdf360e97a49f722148526c85d4f40e60
+  Decodable: 7c90acc68d357b71d0d6efc120faf9c53c644b7e
+  Interstellar: 63a760ff3a3657f791a4523de4b89727c51edec3
+  Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
+  Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
 
-PODFILE CHECKSUM: f3b7c7d64d427d1bc223e1466eaa0a6a2ff8bdae
+PODFILE CHECKSUM: 929fae544067f9876a1b9d4fb9cdecce542f1c07
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0

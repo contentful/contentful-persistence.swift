@@ -9,26 +9,26 @@
 import Contentful
 import Interstellar
 
-func predicateForIdentifier(identifier: String) -> NSPredicate {
+func predicate(for identifier: String) -> NSPredicate {
     return NSPredicate(format: "identifier == %@", identifier)
 }
 
 /// Provides the ability to sync content from Contentful to a persistence store.
 public class ContentfulSynchronizer: SyncSpaceDelegate {
-    private let client: Client
-    private let matching: [String: AnyObject]
-    private let store: PersistenceStore
+    fileprivate let client: Client
+    fileprivate let matching: [String: AnyObject]
+    fileprivate let store: PersistenceStore
 
-    private var mappingForEntries = [String: [String: String]]()
-    private var mappingForAssets: [String: String]!
+    fileprivate var mappingForEntries = [String: [String: String]]()
+    fileprivate var mappingForAssets: [String: String]!
 
-    private var typeForAssets: Asset.Type!
+    fileprivate var typeForAssets: Asset.Type!
     // Dictionary mapping contentTypeId's to Types
-    private var typeForEntries = [String: Resource.Type]()
-    private var typeForSpaces: Space.Type!
+    fileprivate var typeForEntries = [String: Resource.Type]()
+    fileprivate var typeForSpaces: Space.Type!
 
     // Dictionary mapping Entry identifier's to a dictionary with fieldName to related entry id's.
-    private var relationshipsToResolve = [String: [String: Any]]()
+    fileprivate var relationshipsToResolve = [String: [String: Any]]()
 
     var syncToken: String? {
         return fetchSpace().syncToken
@@ -63,7 +63,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
      - parameter type:            The type Entries should be mapped to (needs to implement the `Resource` protocol)
      - parameter propertyMapping: Optional mapping between Contentful fields and object properties
      */
-    public func map(contentTypeId contentTypeId: String, to type: Resource.Type, propertyMapping: [String:String]? = nil) {
+    public func map(contentTypeId: String, to type: Resource.Type, propertyMapping: [String:String]? = nil) {
         mappingForEntries[contentTypeId] = propertyMapping
         typeForEntries[contentTypeId] = type
     }
@@ -104,7 +104,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
      - parameter completion: A completion handler which is called after completing the sync process.
      */
-    public func sync(completion: (Bool) -> ()) {
+    public func sync(_ completion: @escaping (Bool) -> ()) {
         assert(typeForAssets != nil, "Define a type for Assets using mapAssets(to:)")
         assert(typeForEntries.first?.1 != nil, "Define a type for Entries using map(contentTypeId:to:)")
         assert(typeForSpaces != nil, "Define a type for Spaces using mapSpaces(to:)")
@@ -114,20 +114,22 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         let syncCompletion: (Result<SyncSpace>) -> () = { result in
 
             switch result {
-            case .Success(let syncSpace):
+            case .success(let syncSpace):
 
                 // Fetch the current space
                 var space = self.fetchSpace()
                 space.syncToken = syncSpace.syncToken
 
+                assert(space.syncToken != nil)
+
                 // Delegate callback will createEntries when necessary.
-                if let initial = initial where initial == true {
+                if let initial = initial, initial == true {
 
                     for asset in syncSpace.assets {
-                        self.createAsset(asset)
+                        self.create(asset: asset)
                     }
                     for entry in syncSpace.entries {
-                        self.createEntry(entry)
+                        self.create(entry: entry)
                     }
                 }
 
@@ -135,7 +137,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
                 _ = try? self.store.save()
                 completion(true)
 
-            case .Error(let error):
+            case .error(let error):
                 NSLog("Error: \(error)")
                 completion(false)
             }
@@ -144,7 +146,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         if let syncToken = syncToken {
             initial = false
             let syncSpace = SyncSpace(client: client, syncToken: syncToken, delegate: self)
-            syncSpace.sync(matching, completion: syncCompletion)
+            syncSpace.sync(matching: matching, completion: syncCompletion)
         } else {
             initial = true
             client.initialSync(completion: syncCompletion)
@@ -156,16 +158,16 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     // MARK: - Helpers
 
     // Attempts to fetch the object from the the persistent store, if it exists,
-    private func create(identifier: String, fields: [String: Any], type: Resource.Type, mapping: [String: String]) {
+    fileprivate func create(_ identifier: String, fields: [String: Any], type: Resource.Type, mapping: [String: String]) {
         assert(mapping.count > 0, "Empty mapping for \(type)")
 
-        let fetched: [Resource]? = try? store.fetchAll(type, predicate: predicateForIdentifier(identifier))
+        let fetched: [Resource]? = try? store.fetchAll(type: type, predicate: predicate(for: identifier))
         let persisted: Resource
 
         if let fetched = fetched?.first {
             persisted = fetched
         } else {
-            persisted = try! store.create(type)
+            persisted = try! store.create(type: type)
             persisted.identifier = identifier
         }
 
@@ -174,62 +176,68 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         }
     }
 
-    private func deriveMapping(fields: [String], type: Resource.Type, prefix: String = "") -> [String: String] {
+    fileprivate func deriveMapping(_ fields: [String], type: Resource.Type, prefix: String = "") -> [String: String] {
         var mapping = [String: String]()
-        let properties = (try! store.propertiesFor(type: type)).filter { propertyName in
+        let properties = (try! store.properties(for: type)).filter { propertyName in
             fields.contains(propertyName)
         }
         properties.forEach { mapping["\(prefix)\($0)"] = $0 }
         return mapping
     }
 
-    private func fetchSpace() -> Space {
-        // FIXME: the predicate could be a bit safer and actually use the space identifier.
-        let result: [Space]? = try? self.store.fetchAll(self.typeForSpaces, predicate: NSPredicate(value: true))
-
-        guard let space = result?.first else {
-            return try! self.store.create(self.typeForSpaces)
+    fileprivate func fetchSpace() -> Space {
+        let createNewPersistentSpace: () -> (Space) = {
+            return try! self.store.create(type: self.typeForSpaces)
         }
 
-        assert(result?.count == 1)
+        guard let fetchedResults = try? self.store.fetchAll(type: self.typeForSpaces, predicate: NSPredicate(value: true)) as [Space] else {
+            return createNewPersistentSpace()
+        }
+
+        assert(fetchedResults.count <= 1)
+
+        guard let space = fetchedResults.first else {
+            return createNewPersistentSpace()
+        }
+        
         return space
     }
 
-    private func map(fields: [String: Any], to: NSObject, mapping: [String: String]) {
+    fileprivate func map(_ fields: [String: Any], to: NSObject, mapping: [String: String]) {
         for (mapKey, mapValue) in mapping {
 
             var fieldValue = valueFor(fields, keyPath: mapKey)
 
-            if let string = fieldValue as? String where string.hasPrefix("//") && mapValue == "url" {
+            if let string = fieldValue as? String, string.hasPrefix("//") && mapValue == "url" {
                 fieldValue = "https:\(string)"
             }
 
             // handle symbol arrays
             if let array = fieldValue as? NSArray {
-                fieldValue = NSKeyedArchiver.archivedDataWithRootObject(array)
+                fieldValue = NSKeyedArchiver.archivedData(withRootObject: array)
             }
 
             to.setValue(fieldValue as? NSObject, forKeyPath: mapValue)
         }
     }
 
-    private func resolveRelationships() {
+    fileprivate func resolveRelationships() {
         let entryTypes = typeForEntries.map { contentTypeId, type in
             return type
         }
         let cache = DataCache(persistenceStore: store, assetType: typeForAssets, entryTypes: entryTypes)
 
         for (entryId, field) in relationshipsToResolve {
-            if let entry = cache.entryForIdentifier(entryId) as? NSObject {
+            if let entry = cache.entry(for: entryId) as? NSObject {
 
                 for (fieldName, relatedEntryId) in field {
                     if let identifier = relatedEntryId as? String {
-                        entry.setValue(cache.itemForIdentifier(identifier), forKey: fieldName)
+                        entry.setValue(cache.item(for: identifier), forKey: fieldName)
                     }
 
                     if let identifiers = relatedEntryId as? [String] {
                         let targets = identifiers.flatMap { id in
-                            return cache.itemForIdentifier(id)
+                            return cache.item(for: id)
                         }
                         entry.setValue(NSOrderedSet(array: targets), forKey: fieldName)
                     }
@@ -245,7 +253,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
      - parameter asset: The newly created Asset
      */
-    public func createAsset(asset: Contentful.Asset) {
+    public func create(asset: Contentful.Asset) {
         if mappingForAssets == nil {
             mappingForAssets = deriveMapping(Array(asset.fields.keys), type: typeForAssets)
 
@@ -259,7 +267,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         create(asset.identifier, fields: asset.fields, type: typeForAssets, mapping: mappingForAssets)
     }
 
-    private func getIdentifier(target: Any) -> String? {
+    fileprivate func getIdentifier(_ target: Any) -> String? {
         if let target = target as? Contentful.Asset {
             return target.identifier
         }
@@ -283,11 +291,11 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
      - parameter entry: The newly created Entry
      */
-    public func createEntry(entry: Entry) {
+    public func create(entry: Entry) {
 
         let contentTypeId = ((entry.sys["contentType"] as? [String: AnyObject])?["sys"] as? [String: AnyObject])?["id"] as? String
 
-        if let contentTypeId = contentTypeId, type = typeForEntries[contentTypeId] {
+        if let contentTypeId = contentTypeId, let type = typeForEntries[contentTypeId] {
             var mapping = mappingForEntries[contentTypeId]
             if mapping == nil {
                 mapping = deriveMapping(Array(entry.fields.keys), type: type)
@@ -299,7 +307,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             var relationships = [String: Any]()
 
             // Get fieldNames which are links/relationships/references to other types.
-            if let relationshipNames = try? store.relationshipsFor(type: type) {
+            if let relationshipNames = try? store.relationships(for: type) {
 
                 for relationshipName in relationshipNames {
 
@@ -328,8 +336,8 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
      - parameter assetId: The ID of the deleted Asset
      */
-    public func deleteAsset(assetId: String) {
-        _ = try? store.delete(typeForAssets, predicate: predicateForIdentifier(assetId))
+    public func delete(assetWithId: String) {
+        _ = try? store.delete(type: typeForAssets, predicate: predicate(for: assetWithId))
     }
 
     /**
@@ -337,11 +345,11 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
      - parameter entryId: The ID of the deleted Entry
      */
-    public func deleteEntry(entryId: String) {
-        let predicate = predicateForIdentifier(entryId)
+    public func delete(entryWithId: String) {
+        let predicate = ContentfulPersistence.predicate(for: entryWithId)
 
         typeForEntries.forEach {
-            _ = try? self.store.delete($0.1, predicate: predicate)
+            _ = try? self.store.delete(type: $0.1, predicate: predicate)
         }
     }
 }

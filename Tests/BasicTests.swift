@@ -6,7 +6,6 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
-import CatchingFire
 import Nimble
 import Quick
 

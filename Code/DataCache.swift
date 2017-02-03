@@ -11,15 +11,15 @@ import Foundation
 protocol DataCacheProtocol {
     init(persistenceStore: PersistenceStore, assetType: Asset.Type, entryTypes: [Resource.Type])
 
-    func entryForIdentifier(identifier: String) -> Resource?
-    func itemForIdentifier(identifier: String) -> NSObject?
+    func entry(for identifier: String) -> Resource?
+    func item (for identifier: String) -> NSObject?
 }
 
 /// Does not actually cache anything, but directly uses the persistence store instead
 class NoDataCache: DataCacheProtocol {
-    private let assetType: Asset.Type
-    private let entryTypes: [Resource.Type]
-    private let store: PersistenceStore
+    fileprivate let assetType: Asset.Type
+    fileprivate let entryTypes: [Resource.Type]
+    fileprivate let store: PersistenceStore
 
     required init(persistenceStore: PersistenceStore, assetType: Asset.Type, entryTypes: [Resource.Type]) {
         self.assetType = assetType
@@ -27,11 +27,11 @@ class NoDataCache: DataCacheProtocol {
         self.store = persistenceStore
     }
 
-    private func itemsOf(types: [Resource.Type], identifier: String) -> Resource? {
-        let predicate = predicateForIdentifier(identifier)
+    fileprivate func itemsOf(_ types: [Resource.Type], identifier: String) -> Resource? {
+        let predicate = ContentfulPersistence.predicate(for: identifier)
 
         let items: [Resource] = types.flatMap {
-            if let result = try? store.fetchAll($0, predicate: predicate) as [Resource] {
+            if let result = try? store.fetchAll(type: $0, predicate: predicate) as [Resource] {
                 return result.first
             }
             return nil
@@ -40,53 +40,53 @@ class NoDataCache: DataCacheProtocol {
         return items.first
     }
 
-    func entryForIdentifier(identifier: String) -> Resource? {
+    func entry(for identifier: String) -> Resource? {
         return itemsOf(entryTypes, identifier: identifier)
     }
 
-    func itemForIdentifier(identifier: String) -> NSObject? {
+    func item(for identifier: String) -> NSObject? {
         return itemsOf([assetType] + entryTypes, identifier: identifier) as? NSObject
     }
 }
 
 /// Implemented using `NSCache`
 class DataCache: DataCacheProtocol {
-    private let assetCache = NSCache()
-    private let entryCache = NSCache()
+    fileprivate let assetCache = NSCache<AnyObject, AnyObject>()
+    fileprivate let entryCache = NSCache<AnyObject, AnyObject>()
 
     required init(persistenceStore: PersistenceStore, assetType: Asset.Type, entryTypes: [Resource.Type]) {
         let truePredicate = NSPredicate(value: true)
 
-        let assets: [Asset]? = try? persistenceStore.fetchAll(assetType, predicate: truePredicate)
-        assets?.forEach { self.dynamicType.cacheResource(in: assetCache, resource: $0) }
+        let assets: [Asset]? = try? persistenceStore.fetchAll(type: assetType, predicate: truePredicate)
+        assets?.forEach { type(of: self).cacheResource(in: assetCache, resource: $0) }
 
         entryTypes.forEach {
-            let entries: [Resource]? = try? persistenceStore.fetchAll($0, predicate: truePredicate)
-            entries?.forEach { self.dynamicType.cacheResource(in: entryCache, resource: $0) }
+            let entries: [Resource]? = try? persistenceStore.fetchAll(type: $0, predicate: truePredicate)
+            entries?.forEach { type(of: self).cacheResource(in: entryCache, resource: $0) }
         }
     }
 
-    private func assetForIdentifier(identifier: String) -> Asset? {
-        return assetCache.objectForKey(identifier) as? Asset
+    fileprivate func assetForIdentifier(_ identifier: String) -> Asset? {
+        return assetCache.object(forKey: identifier as AnyObject) as? Asset
     }
 
-    func entryForIdentifier(identifier: String) -> Resource? {
-        return entryCache.objectForKey(identifier) as? Resource
+    func entry(for identifier: String) -> Resource? {
+        return entryCache.object(forKey: identifier as AnyObject) as? Resource
     }
 
-    func itemForIdentifier(identifier: String) -> NSObject? {
+    func item(for identifier: String) -> NSObject? {
         var target = self.assetForIdentifier(identifier) as? NSObject
 
         if target == nil {
-            target = self.entryForIdentifier(identifier) as? NSObject
+            target = self.entry(for: identifier) as? NSObject
         }
 
         return target
     }
 
-    private static func cacheResource(in cache: NSCache, resource: Resource) {
-        if let id = resource.identifier, resource = resource as? AnyObject {
-            cache.setObject(resource, forKey: id)
+    fileprivate static func cacheResource(in cache: NSCache<AnyObject, AnyObject>, resource: Resource) {
+        if let id = resource.identifier {
+            cache.setObject(resource as AnyObject, forKey: id as AnyObject)
         }
     }
 }

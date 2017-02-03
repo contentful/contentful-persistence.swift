@@ -54,7 +54,7 @@ public protocol PersistenceStore {
 
      - returns: An array of property names
      */
-    func propertiesFor(type type: Any.Type) throws -> [String]
+    func properties(for type: Any.Type) throws -> [String]
 
     /**
      Returns an array of names of properties for any relationship the given type stores persistently.
@@ -65,7 +65,7 @@ public protocol PersistenceStore {
 
      - returns: An array of property names
      */
-    func relationshipsFor(type type: Any.Type) throws -> [String]
+    func relationships(for type: Any.Type) throws -> [String]
 
     /**
      Performs the actual save to the persistence store.

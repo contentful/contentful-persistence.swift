@@ -8,7 +8,6 @@
 
 @testable import ContentfulPersistence
 import Contentful
-import CatchingFire
 import Nimble
 import Quick
 
@@ -26,20 +25,24 @@ class CoreDataTests: ContentfulPersistenceTestBase {
         it("can determine properties of a type") {
             let store = CoreDataStore(context: self.managedObjectContext)
 
-            AssertNoThrow {
-                let relationships = try store.propertiesFor(type: Category.self)
+            do {
+                let relationships = try store.properties(for: Category.self)
 
                 expect(relationships).to(equal(["title", "identifier"]))
+            } catch {
+                XCTAssert(false, "Storing properties for Categories should not throw an error")
             }
         }
 
         it("can determine relationships of a type") {
             let store = CoreDataStore(context: self.managedObjectContext)
 
-            AssertNoThrow {
-                let relationships = try store.relationshipsFor(type: Post.self)
+            do {
+                let relationships = try store.relationships(for: Post.self)
 
                 expect(relationships).to(equal(["author", "category", "featuredImage"]))
+            } catch {
+                XCTAssert(false, "Storing relationships for Posts should not throw an error")
             }
         }
     }

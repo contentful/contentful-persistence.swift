@@ -6,17 +6,17 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
-func += <KeyType, ValueType> (inout left: Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {
+func += <KeyType, ValueType>(left: inout Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {
     for (k, v) in right {
         left.updateValue(v, forKey: k)
     }
 }
 
-func - <T: Equatable> (left: [T], right: [T]) -> [T] {
+func - <T>(left: [T], right: [T]) -> [T] where T: Equatable {
     return left.filter { !right.contains($0) }
 }
 
-func valueFor<T>(dictionary: [String: T], keyPath: String) -> T? {
+func valueFor<T>(_ dictionary: [String: T], keyPath: String) -> T? {
     let components = keyPath.split(".")
 
     switch components.count {
@@ -28,7 +28,7 @@ func valueFor<T>(dictionary: [String: T], keyPath: String) -> T? {
         break
     }
 
-    let newKeyPath = components.dropFirst().joinWithSeparator(".")
+    let newKeyPath = components.dropFirst().joined(separator: ".")
     let value = dictionary[components[0]]
 
     if let dictionary = value as? [String: Any] {
@@ -43,7 +43,7 @@ func valueFor<T>(dictionary: [String: T], keyPath: String) -> T? {
 }
 
 extension String {
-    func split(separator: Character) -> [String] {
-        return self.characters.split(separator).map { String.init($0) }
+    func split(_ separator: Character) -> [String] {
+        return self.characters.split(separator: separator).map { String.init($0) }
     }
 }
