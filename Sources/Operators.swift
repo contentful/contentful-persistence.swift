@@ -6,18 +6,15 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
-func += <KeyType, ValueType>(left: inout Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {
+internal func += <KeyType, ValueType>(left: inout Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {
     for (k, v) in right {
         left.updateValue(v, forKey: k)
     }
 }
 
-func - <T>(left: [T], right: [T]) -> [T] where T: Equatable {
-    return left.filter { !right.contains($0) }
-}
+internal func valueIn<T>(dictionary: [String: T], forKeyPath keyPath: String) -> T? {
 
-func valueFor<T>(_ dictionary: [String: T], keyPath: String) -> T? {
-    let components = keyPath.split(".")
+    let components = keyPath.components(separatedBy: ".")
 
     switch components.count {
     case 0:
@@ -32,20 +29,12 @@ func valueFor<T>(_ dictionary: [String: T], keyPath: String) -> T? {
     let value = dictionary[components[0]]
 
     if let innerDictionary = value as? [String: Any] {
-        return valueFor(innerDictionary, keyPath: newKeyPath) as? T
+        return ContentfulPersistence.valueIn(dictionary: innerDictionary, forKeyPath: newKeyPath) as? T
     }
 
     if let innerDictionary = value as? [String: AnyObject] {
-        return valueFor(innerDictionary, keyPath: newKeyPath) as? T
+        return ContentfulPersistence.valueIn(dictionary: innerDictionary, forKeyPath: newKeyPath) as? T
     }
 
     return nil
-}
-
-extension String {
-    func split(_ separator: Character) -> [String] {
-        return self.characters.split(separator: separator).map { characterArray in
-            String(characterArray)
-        }
-    }
 }

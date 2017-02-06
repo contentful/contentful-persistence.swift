@@ -206,7 +206,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     fileprivate func map(_ fields: [String: Any], to: NSObject, mapping: [String: String]) {
         for (mapKey, mapValue) in mapping {
 
-            var fieldValue = valueFor(fields, keyPath: mapKey)
+            var fieldValue = valueIn(dictionary: fields, forKeyPath: mapKey)
 
             if let string = fieldValue as? String, string.hasPrefix("//") && mapValue == "url" {
                 fieldValue = "https:\(string)"
@@ -258,7 +258,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             mappingForAssets = deriveMapping(Array(asset.fields.keys), type: typeForAssets)
 
             ["file", "file.details.image"].forEach {
-                if let fileFields = valueFor(asset.fields, keyPath: $0) as? [String: AnyObject] {
+                if let fileFields = valueIn(dictionary: asset.fields, forKeyPath: $0) as? [String: AnyObject] {
                     mappingForAssets! += deriveMapping(Array(fileFields.keys), type: typeForAssets, prefix: "\($0).")
                 }
             }

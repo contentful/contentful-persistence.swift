@@ -104,7 +104,11 @@ public class CoreDataStore : PersistenceStore {
      */
     public func properties(for type: Any.Type) throws -> [String] {
         let description = try entityDescription(for: type)
-        return try description.propertiesByName.map { $0.0 } - relationships(for: type)
+        let propertyAndRelationshipNames = description.propertiesByName.map { $0.0 }
+        let relationshipNames = try relationships(for: type)
+
+        let propertyNames = propertyAndRelationshipNames.filter { !relationshipNames.contains($0) }
+        return propertyNames
     }
 
     /**
