@@ -117,7 +117,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             case .success(let syncSpace):
 
                 // Fetch the current space
-                var space = self.fetchSpace()
+                let space = self.fetchSpace()
                 space.syncToken = syncSpace.syncToken
 
                 assert(space.syncToken != nil)

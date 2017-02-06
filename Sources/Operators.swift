@@ -31,12 +31,12 @@ func valueFor<T>(_ dictionary: [String: T], keyPath: String) -> T? {
     let newKeyPath = components.dropFirst().joined(separator: ".")
     let value = dictionary[components[0]]
 
-    if let dictionary = value as? [String: Any] {
-        return valueFor(dictionary, keyPath: newKeyPath) as? T
+    if let innerDictionary = value as? [String: Any] {
+        return valueFor(innerDictionary, keyPath: newKeyPath) as? T
     }
 
-    if let dictionary = value as? [String: AnyObject] {
-        return valueFor(dictionary, keyPath: newKeyPath) as? T
+    if let innerDictionary = value as? [String: AnyObject] {
+        return valueFor(innerDictionary, keyPath: newKeyPath) as? T
     }
 
     return nil
@@ -44,6 +44,8 @@ func valueFor<T>(_ dictionary: [String: T], keyPath: String) -> T? {
 
 extension String {
     func split(_ separator: Character) -> [String] {
-        return self.characters.split(separator: separator).map { String.init($0) }
+        return self.characters.split(separator: separator).map { characterArray in
+            String(characterArray)
+        }
     }
 }
