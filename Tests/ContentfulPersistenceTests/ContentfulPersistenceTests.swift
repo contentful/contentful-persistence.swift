@@ -7,7 +7,6 @@
 //
 
 @testable import ContentfulPersistence
-
 import Contentful
 import Nimble
 import Quick

@@ -1,12 +1,12 @@
 //
-//  ContentfulPersistence_tvOS.h
-//  ContentfulPersistence_tvOS
+//  ContentfulPersistence.h
+//  ContentfulPersistence
 //
 //  Created by JP Wright on 06/02/2017.
 //  Copyright © 2017 Contentful GmbH. All rights reserved.
 //
 
-#import <Foundation/Foundastion.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for ContentfulPersistence
 FOUNDATION_EXPORT double ContentfulPersistenceVersionNumber;
