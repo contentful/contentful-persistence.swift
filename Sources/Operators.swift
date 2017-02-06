@@ -6,35 +6,37 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
-internal func += <KeyType, ValueType>(left: inout Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {
-    for (k, v) in right {
-        left.updateValue(v, forKey: k)
-    }
+func +<K: Hashable, V> (left: Dictionary<K, V>, right: Dictionary<K, V>) -> Dictionary<K, V> {
+    var result = left
+    right.forEach { (k, v) in result[k] = v }
+    return result
 }
 
-internal func valueIn<T>(dictionary: [String: T], forKeyPath keyPath: String) -> T? {
 
-    let components = keyPath.components(separatedBy: ".")
+protocol StringProtocol {}
+extension String: StringProtocol {}
 
-    switch components.count {
-    case 0:
+extension Dictionary where Key: StringProtocol {
+
+    func value(forKeyPath keyPath: Key) -> Value? {
+
+        guard let components = (keyPath as? String)?.components(separatedBy: ".") else { return nil }
+
+        switch components.count {
+        case 0: return nil
+        case 1: return self[keyPath]
+        default: break
+        }
+
+        guard let newKeyPath = components.dropFirst().joined(separator: ".") as? Key else { return nil }
+        let value = self[components[0] as! Key]
+
+        if let innerDictionary = value as? Dictionary<Key, Any> {
+            return innerDictionary.value(forKeyPath: newKeyPath) as? Value
+        }
+        if let innerDictionary = value as? Dictionary<Key, AnyObject> {
+            return innerDictionary.value(forKeyPath: newKeyPath) as? Value
+        }
         return nil
-    case 1:
-        return dictionary[keyPath]
-    default:
-        break
     }
-
-    let newKeyPath = components.dropFirst().joined(separator: ".")
-    let value = dictionary[components[0]]
-
-    if let innerDictionary = value as? [String: Any] {
-        return ContentfulPersistence.valueIn(dictionary: innerDictionary, forKeyPath: newKeyPath) as? T
-    }
-
-    if let innerDictionary = value as? [String: AnyObject] {
-        return ContentfulPersistence.valueIn(dictionary: innerDictionary, forKeyPath: newKeyPath) as? T
-    }
-
-    return nil
 }
