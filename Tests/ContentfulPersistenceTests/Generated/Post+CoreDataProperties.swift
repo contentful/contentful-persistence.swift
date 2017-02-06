@@ -20,7 +20,7 @@ extension Post {
     //@NSManaged var date: NSDate?
     @NSManaged var identifier: String?
     @NSManaged var slug: String?
-    @NSManaged var tags: NSData?
+    @NSManaged var tags: Data?
     @NSManaged var title: String?
     @NSManaged var author: NSOrderedSet?
     @NSManaged var category: NSOrderedSet?

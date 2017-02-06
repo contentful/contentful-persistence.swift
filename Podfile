@@ -2,25 +2,32 @@
 
 use_frameworks!
 
-target 'ContentfulPersistence' do
-
 podspec :path => 'ContentfulPersistenceSwift.podspec'
+
+target 'ContentfulPersistence_iOS' do
+
+  platform :ios, '8.0'
 
   target 'ContentfulPersistenceTests' do
     inherit! :search_paths
 
-    pod 'CatchingFire'
-    pod 'Nimble', '~> 4.1.0'
-    pod 'Quick', '~> 0.9.3'
+    pod 'Nimble', '~> 5.1.0'
+    pod 'Quick', '~> 1.0.0'
   end
 end
 
+# macOS
+target 'ContentfulPersistence_macOS' do
+  platform :osx, '10.12'
+end
 
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['SWIFT_VERSION'] = '2.3'
-    end
-  end
+# tvOS
+target 'ContentfulPersistence_tvOS' do
+  platform :tvos, '9.0'
+end
+
+# watchOS
+target 'ContentfulPersistence_watchOS' do
+  platform :watchos, '2.0'
 end
 

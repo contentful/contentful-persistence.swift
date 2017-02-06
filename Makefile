@@ -10,7 +10,7 @@ endif
 
 test:
 	xcodebuild test -workspace ContentfulPersistence.xcworkspace \
-		-scheme ContentfulPersistence -destination 'id=$(SIM_ID)' | xcpretty -c
+		-scheme ContentfulPersistence_iOS -destination 'id=$(SIM_ID)' | xcpretty -c
 
 setup:
 	bundle install

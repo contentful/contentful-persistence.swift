@@ -14,7 +14,7 @@ import CoreData
 
 extension SyncInfo {
 
-    @NSManaged var lastSyncTimestamp: NSDate?
+    @NSManaged var lastSyncTimestamp: Date?
     @NSManaged var syncToken: String?
 
 }

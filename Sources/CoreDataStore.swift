@@ -8,13 +8,13 @@
 
 import CoreData
 
-enum Errors: ErrorType {
-    case InvalidType(type: Any.Type)
+enum Errors: Error {
+    case invalidType(type: Any.Type)
 }
 
 /// Implementation fo the `PersistenceStore` protocol using CoreData
 public class CoreDataStore : PersistenceStore {
-    private let context: NSManagedObjectContext
+    fileprivate let context: NSManagedObjectContext
 
     /**
      Initialize a new CoreData persistence store
@@ -27,14 +27,14 @@ public class CoreDataStore : PersistenceStore {
         self.context = context
     }
 
-    public func fetchRequest(type: Any.Type, predicate: NSPredicate) throws -> NSFetchRequest {
-        if let `class` = type as? AnyClass {
-            let request = NSFetchRequest(entityName: NSStringFromClass(`class`))
-            request.predicate = predicate
-            return request
+    public func fetchRequest(for type: Any.Type, predicate: NSPredicate) throws -> NSFetchRequest<NSFetchRequestResult> {
+        guard let `class` = type as? AnyClass else {
+            throw Errors.invalidType(type: type)
         }
 
-        throw Errors.InvalidType(type: type)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: `class`))
+        request.predicate = predicate
+        return request
     }
 
     // MARK: <PersistenceStore>
@@ -49,19 +49,16 @@ public class CoreDataStore : PersistenceStore {
      - returns: A newly created object of the given type
      */
     public func create<T>(type: Any.Type) throws -> T {
-        var type = type
+        guard let `class` = type as? AnyClass else {
+            throw Errors.invalidType(type: type)
+        }
+        let object = NSEntityDescription.insertNewObject(forEntityName: String(describing: `class`), into: context)
 
-        if let `class` = type as? AnyClass {
-            let object = NSEntityDescription.insertNewObjectForEntityForName(NSStringFromClass(`class`), inManagedObjectContext: context)
-
-            if let object = object as? T {
-                return object
-            } else {
-                type = object.dynamicType
-            }
+        guard let managedObject = object as? T else {
+            throw Errors.invalidType(type: type(of: object))
         }
 
-        throw Errors.InvalidType(type: type)
+        return managedObject
     }
 
     /**
@@ -73,9 +70,9 @@ public class CoreDataStore : PersistenceStore {
      - throws: If an invalid type was specified
      */
     public func delete(type: Any.Type, predicate: NSPredicate) throws {
-        let objects: [NSManagedObject] = try fetchAll(type, predicate: predicate)
-        objects.forEach {
-            self.context.deleteObject($0)
+        let managedObjects: [NSManagedObject] = try fetchAll(type: type, predicate: predicate)
+        managedObjects.forEach {
+            self.context.delete($0)
         }
     }
 
@@ -90,8 +87,8 @@ public class CoreDataStore : PersistenceStore {
      - returns: An array of matching objects
      */
     public func fetchAll<T>(type: Any.Type, predicate: NSPredicate) throws -> [T] {
-        let request = try fetchRequest(type, predicate: predicate)
-        return try context.executeFetchRequest(request).flatMap { $0 as? T }
+        let request = try fetchRequest(for: type, predicate: predicate)
+        return try context.fetch(request).flatMap { $0 as? T }
     }
 
     /**
@@ -105,9 +102,13 @@ public class CoreDataStore : PersistenceStore {
 
      - returns: An array of property names representing system native types.
      */
-    public func propertiesFor(type type: Any.Type) throws -> [String] {
-        let description = try entityDescriptionFor(type: type)
-        return try description.propertiesByName.map { $0.0 } - relationshipsFor(type: type)
+    public func properties(for type: Any.Type) throws -> [String] {
+        let description = try entityDescription(for: type)
+        let propertyAndRelationshipNames = description.propertiesByName.map { $0.0 }
+        let relationshipNames = try relationships(for: type)
+
+        let propertyNames = propertyAndRelationshipNames.filter { !relationshipNames.contains($0) }
+        return propertyNames
     }
 
     /**
@@ -119,8 +120,8 @@ public class CoreDataStore : PersistenceStore {
 
      - returns: An array of property names representing related entities.
      */
-    public func relationshipsFor(type type: Any.Type) throws -> [String] {
-        let description = try entityDescriptionFor(type: type)
+    public func relationships(for type: Any.Type) throws -> [String] {
+        let description = try entityDescription(for: type)
         return description.relationshipsByName.map { $0.0 }
     }
 
@@ -135,11 +136,11 @@ public class CoreDataStore : PersistenceStore {
 
     // MARK: - Helper methods
 
-    private func entityDescriptionFor(type type: Any.Type) throws -> NSEntityDescription {
-        if let `class` = type as? AnyClass, description = NSEntityDescription.entityForName(NSStringFromClass(`class`), inManagedObjectContext: context) {
+    fileprivate func entityDescription(for type: Any.Type) throws -> NSEntityDescription {
+        if let `class` = type as? AnyClass, let description = NSEntityDescription.entity(forEntityName: String(describing: `class`), in: context) {
             return description
         }
 
-        throw Errors.InvalidType(type: type)
+        throw Errors.invalidType(type: type)
     }
 }

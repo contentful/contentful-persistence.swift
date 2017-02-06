@@ -7,9 +7,7 @@
 //
 
 @testable import ContentfulPersistence
-
 import Contentful
-import CatchingFire
 import Nimble
 import Quick
 
@@ -43,16 +41,18 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
         return sync
     }()
 
-    func postTests(expectations: TestFunc) {
+    func postTests(expectations: @escaping TestFunc) {
         waitUntil(timeout: 10) { done in
             self.sync.sync() {
                 expect($0).to(beTrue())
 
-                AssertNoThrow {
-                    let posts: [Post] = try self.store.fetchAll(Post.self, predicate: NSPredicate(value: true))
+                do {
+                    let posts: [Post] = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
                     expect(posts.count).to(equal(2))
 
                     try expectations(done)
+                } catch {
+                    XCTAssert(false, "Fetching posts should not throw an error")
                 }
             }
         }
@@ -72,14 +72,16 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
             self.sync.sync() {
                 expect($0).to(beTrue())
 
-                AssertNoThrow {
-                    let assets: [Asset] = try self.store.fetchAll(Asset.self, predicate: NSPredicate(value: true))
+                do {
+                    let assets: [Asset] = try self.store.fetchAll(type: Asset.self, predicate: NSPredicate(value: true))
                     expect(assets.count).to(equal(6))
 
-                    let alice: Asset? = try self.store.fetchAll(Asset.self, predicate: self.assetPredicate).first
+                    let alice: Asset? = try self.store.fetchAll(type: Asset.self, predicate: self.assetPredicate).first
                     expect(alice).toNot(beNil())
                     expect(alice?.title).to(equal("Alice in Wonderland"))
                     expect(alice?.url).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
+                } catch {
+                    XCTAssert(false, "Fetching asset(s) should not throw an error")
                 }
 
                 done()
@@ -88,7 +90,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
 
         it("can store Entries") {
             self.postTests { done in
-                let post: Post? = try self.store.fetchAll(Post.self, predicate: self.postPredicate).first
+                let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
                 expect(post).toNot(beNil())
                 expect(post?.title).to(equal("Down the Rabbit Hole"))
                 done()
@@ -97,7 +99,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
 
         it("can map Contentful Asset links to CoreData relationships") {
             self.postTests { done in
-                let post: Post? = try self.store.fetchAll(Post.self, predicate: self.postPredicate).first
+                let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
                 expect(post).toNot(beNil())
 
                 expect(post?.featuredImage).toNot(beNil())
@@ -110,7 +112,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
 
         it("can map Contentful Entry links to CoreData relationships") {
             self.postTests { done in
-                let post: Post? = try self.store.fetchAll(Post.self, predicate: self.postPredicate).first
+                let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
                 expect(post).toNot(beNil())
 
                 expect(post?.author).toNot(beNil())

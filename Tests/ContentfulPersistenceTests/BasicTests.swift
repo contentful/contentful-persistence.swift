@@ -6,7 +6,6 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
-import CatchingFire
 import Nimble
 import Quick
 
@@ -20,7 +19,7 @@ class BasicTests: ContentfulPersistenceTestBase {
             let fileDict: [String: Any] = ["file": urlDict]
             let dict: [String: Any] = ["fields": fileDict]
 
-            let value = valueFor(dict, keyPath: expected.0)
+            let value = dict.value(forKeyPath: expected.0)
 
             expect(value as? String).to(equal(expected.1))
         }
