@@ -68,5 +68,5 @@ Copyright (c) 2016 Contentful GmbH. See LICENSE for further details.
 [1]: https://www.contentful.com
 [2]: https://github.com/contentful/contentful.swift
 [3]: http://cocoadocs.org/docsets/ContentfulPersistenceSwift/
-[4]: http://docs.contentfulcda.apiary.io/
+[4]: https://www.contentful.com/developers/docs/references/content-delivery-api/
 [5]: https://cocoapods.org/
