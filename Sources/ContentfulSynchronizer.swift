@@ -39,7 +39,9 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
      - parameter client:           The API client to use for synchronization
      - parameter persistenceStore: The persistence store to use for storage
-     - parameter matching:         An optional query for syncing specific content, see <https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization/initial-synchronisation-of-entries-of-a-specific-content-type>
+     - parameter matching:         An optional query for syncing specific content, 
+                                   see <https://www.contentful.com/developers/docs/references/content-delivery-api/#/
+                                        reference/synchronization/initial-synchronisation-of-entries-of-a-specific-content-type>
 
      - returns: An initialised instance of ContentfulSynchronizer
      */
@@ -104,14 +106,14 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
 
      - parameter completion: A completion handler which is called after completing the sync process.
      */
-    public func sync(_ completion: @escaping (Bool) -> ()) {
+    public func sync(_ completion: @escaping (Bool) -> Void) {
         assert(typeForAssets != nil, "Define a type for Assets using mapAssets(to:)")
         assert(typeForEntries.first?.1 != nil, "Define a type for Entries using map(contentTypeId:to:)")
         assert(typeForSpaces != nil, "Define a type for Spaces using mapSpaces(to:)")
 
         var initial: Bool?
 
-        let syncCompletion: (Result<SyncSpace>) -> () = { result in
+        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
 
             switch result {
             case .success(let syncSpace):
@@ -199,13 +201,13 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         guard let space = fetchedResults.first else {
             return createNewPersistentSpace()
         }
-        
+
         return space
     }
 
     fileprivate func map(_ fields: [String: Any], to: NSObject, mapping: [String: String]) {
         for (mapKey, mapValue) in mapping {
-            
+
             var fieldValue = fields.value(forKeyPath: mapKey)
 
             if let string = fieldValue as? String, string.hasPrefix("//") && mapValue == "url" {
@@ -222,7 +224,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     }
 
     fileprivate func resolveRelationships() {
-        let entryTypes = typeForEntries.map { contentTypeId, type in
+        let entryTypes = typeForEntries.map { _, type in
             return type
         }
         let cache = DataCache(persistenceStore: store, assetType: typeForAssets, entryTypes: entryTypes)

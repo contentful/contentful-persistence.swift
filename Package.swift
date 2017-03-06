@@ -6,4 +6,3 @@ let package = Package(
         .Package(url: "https://github.com/contentful/contentful.swift", majorVersion: 0)
     ]
 )
-

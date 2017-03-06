@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "ContentfulPersistenceSwift"
-  s.version          = "0.3.0"
+  s.version          = "0.3.1"
   s.summary          = "Simplified persistence for the Contentful Swift SDK."
   s.homepage         = "https://github.com/contentful/contentful-persistence.swift/"
   s.social_media_url = 'https://twitter.com/contentful'
