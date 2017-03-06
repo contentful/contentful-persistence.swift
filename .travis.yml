@@ -4,6 +4,8 @@ cache:
   - cocoapods
 before_install:
   - pod repo update --silent
+  - brew update
+  - brew outdated swiftlint || brew upgrade swiftlint
 script:
 - xcodebuild test -workspace ContentfulPersistence.xcworkspace -scheme ContentfulPersistence_iOS -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6s,OS=9.3" | xcpretty -c
 after_success:

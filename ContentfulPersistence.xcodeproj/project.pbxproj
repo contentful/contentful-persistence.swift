@@ -321,7 +321,7 @@
 				A1A9FBE01CABE8EA00430734 /* Headers */,
 				A1A9FBE11CABE8EA00430734 /* Resources */,
 				6DCAF5A5DFBBB140C1C0D051 /* [CP] Copy Pods Resources */,
-				A19E04CC1CC3DA4600B2A9DA /* List TODOs and FIXMEs */,
+				ED9102941E6D60050076FDBD /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -580,20 +580,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ContentfulPersistenceTests/Pods-ContentfulPersistenceTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A19E04CC1CC3DA4600B2A9DA /* List TODOs and FIXMEs */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "List TODOs and FIXMEs";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "KEYWORDS=\"TODO:|FIXME:|\\?\\?\\?:|\\!\\!\\!:\"\nfind \"${SRCROOT}\" \\( -type f -and -name \"*.swift\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | grep -v '/Pods/' | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
-		};
 		AA7B92379213E59392CB4887 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -668,6 +654,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		ED9102941E6D60050076FDBD /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
 		};
 		EDE6895440A8165F75ACEFE4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
