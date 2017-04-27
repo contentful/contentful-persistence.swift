@@ -28,7 +28,7 @@ class CoreDataTests: ContentfulPersistenceTestBase {
             do {
                 let relationships = try store.properties(for: Category.self)
 
-                expect(relationships).to(equal(["title", "identifier"]))
+                expect(relationships).to(equal(["title", "id"]))
             } catch {
                 XCTAssert(false, "Storing properties for Categories should not throw an error")
             }

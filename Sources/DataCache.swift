@@ -85,7 +85,7 @@ class DataCache: DataCacheProtocol {
     }
 
     fileprivate static func cacheResource(in cache: NSCache<AnyObject, AnyObject>, resource: Resource) {
-        if let id = resource.identifier {
+        if let id = resource.id {
             cache.setObject(resource as AnyObject, forKey: id as AnyObject)
         }
     }

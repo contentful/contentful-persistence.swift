@@ -15,7 +15,7 @@ import CoreData
 extension Asset {
 
     @NSManaged var height: NSNumber?
-    @NSManaged var identifier: String?
+    @NSManaged var id: String?
     @NSManaged var internetMediaType: String?
     @NSManaged var url: String?
     @NSManaged var width: NSNumber?

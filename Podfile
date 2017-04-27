@@ -5,7 +5,7 @@ use_frameworks!
 podspec :path => 'ContentfulPersistenceSwift.podspec'
 
 target 'ContentfulPersistence_iOS' do
-
+  pod 'Contentful', :path => '~/Contentful/swift/SDK/contentful.swift'
   platform :ios, '8.0'
 
   target 'ContentfulPersistenceTests' do

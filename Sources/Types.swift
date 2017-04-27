@@ -17,7 +17,7 @@ import Foundation
 /// Protocol for mapping resources
 @objc public protocol Resource {
     /// ID of the resource
-    var identifier: String? { get set }
+    var id: String? { get set }
 }
 
 /// Protocol for mapping Spaces

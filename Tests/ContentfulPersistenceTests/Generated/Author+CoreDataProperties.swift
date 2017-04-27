@@ -15,7 +15,7 @@ import CoreData
 extension Author {
 
     @NSManaged var biography: String?
-    @NSManaged var identifier: String?
+    @NSManaged var id: String?
     @NSManaged var name: String?
     @NSManaged var website: String?
     @NSManaged var createdEntries: NSOrderedSet?

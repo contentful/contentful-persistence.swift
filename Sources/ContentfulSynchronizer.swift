@@ -9,8 +9,8 @@
 import Contentful
 import Interstellar
 
-func predicate(for identifier: String) -> NSPredicate {
-    return NSPredicate(format: "identifier == %@", identifier)
+func predicate(for id: String) -> NSPredicate {
+    return NSPredicate(format: "id == %@", id)
 }
 
 /// Provides the ability to sync content from Contentful to a persistence store.
@@ -170,7 +170,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             persisted = fetched
         } else {
             persisted = try! store.create(type: type)
-            persisted.identifier = identifier
+            persisted.id = identifier
         }
 
         if let persisted = persisted as? NSObject {
@@ -266,16 +266,16 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             }
         }
 
-        create(asset.identifier, fields: asset.fields, type: typeForAssets, mapping: mappingForAssets)
+        create(asset.id, fields: asset.fields, type: typeForAssets, mapping: mappingForAssets)
     }
 
     fileprivate func getIdentifier(_ target: Any) -> String? {
         if let target = target as? Contentful.Asset {
-            return target.identifier
+            return target.id
         }
 
         if let target = target as? Entry {
-            return target.identifier
+            return target.id
         }
 
         // For links that have not yet been resolved.
@@ -295,15 +295,13 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
      */
     public func create(entry: Entry) {
 
-        let contentTypeId = ((entry.sys["contentType"] as? [String: AnyObject])?["sys"] as? [String: AnyObject])?["id"] as? String
-
-        if let contentTypeId = contentTypeId, let type = typeForEntries[contentTypeId] {
+        if let contentTypeId = entry.sys.contentTypeId, let type = typeForEntries[contentTypeId] {
             var mapping = mappingForEntries[contentTypeId]
             if mapping == nil {
                 mapping = deriveMapping(Array(entry.fields.keys), type: type)
             }
 
-            create(entry.identifier, fields: entry.fields, type: type, mapping: mapping!)
+            create(entry.id, fields: entry.fields, type: type, mapping: mapping!)
 
             // ContentTypeId to either a single entry id or an array of entry id's to be linked.
             var relationships = [String: Any]()
@@ -329,7 +327,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
                 }
             }
 
-            relationshipsToResolve[entry.identifier] = relationships
+            relationshipsToResolve[entry.id] = relationships
         }
     }
 
