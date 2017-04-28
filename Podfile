@@ -5,14 +5,14 @@ use_frameworks!
 podspec :path => 'ContentfulPersistenceSwift.podspec'
 
 target 'ContentfulPersistence_iOS' do
-  pod 'Contentful', :path => '~/Contentful/swift/SDK/contentful.swift'
+#  pod 'Contentful', :path => '~/Contentful/swift/SDK/contentful.swift'
   platform :ios, '8.0'
 
   target 'ContentfulPersistenceTests' do
     inherit! :search_paths
 
-    pod 'Nimble', '~> 5.1.0'
-    pod 'Quick', '~> 1.0.0'
+    pod 'Nimble', '~> 6.1.0'
+    pod 'Quick', '~> 1.1.0'
   end
 end
 

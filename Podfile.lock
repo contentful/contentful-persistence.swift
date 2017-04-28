@@ -1,5 +1,5 @@
 PODS:
-  - Contentful (1.0.0):
+  - Contentful (0.4.0-beta1):
     - Interstellar (~> 2.0.0)
     - ObjectMapper (~> 2.2)
   - Interstellar (2.0.0):
@@ -8,26 +8,22 @@ PODS:
   - Interstellar/Core (2.0.0)
   - Interstellar/Warpdrive (2.0.0):
     - Interstellar/Core
-  - Nimble (5.1.1)
-  - ObjectMapper (2.2.5)
-  - Quick (1.0.0)
+  - Nimble (6.1.0)
+  - ObjectMapper (2.2.6)
+  - Quick (1.1.0)
 
 DEPENDENCIES:
-  - Contentful (from `~/Contentful/swift/SDK/contentful.swift`)
-  - Nimble (~> 5.1.0)
-  - Quick (~> 1.0.0)
-
-EXTERNAL SOURCES:
-  Contentful:
-    :path: "~/Contentful/swift/SDK/contentful.swift"
+  - Contentful (~> 0.4.0-beta1)
+  - Nimble (~> 6.1.0)
+  - Quick (~> 1.1.0)
 
 SPEC CHECKSUMS:
-  Contentful: c3886e45803f8ad3ddbface18dda75fcc414c3c9
+  Contentful: 3bc18698eabb2e975d51103d77abcb268e4d888e
   Interstellar: 63a760ff3a3657f791a4523de4b89727c51edec3
-  Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
-  ObjectMapper: fb30f71e08470d1e5a20b199fafe1246281db898
-  Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
+  Nimble: c53e6903fee94041b90ded74f135820437d8bf59
+  ObjectMapper: 042708195cc46c20871cbcbec0453826398273fd
+  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
 
-PODFILE CHECKSUM: 3a90455def431352856366054dabe55bb8fdac74
+PODFILE CHECKSUM: d110a71090bb043f5cd83004e69e12b50bfd3539
 
 COCOAPODS: 1.2.0

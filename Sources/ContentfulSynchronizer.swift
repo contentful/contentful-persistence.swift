@@ -23,6 +23,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     fileprivate var mappingForAssets: [String: String]!
 
     fileprivate var typeForAssets: Asset.Type!
+
     // Dictionary mapping contentTypeId's to Types
     fileprivate var typeForEntries = [String: Resource.Type]()
     fileprivate var typeForSpaces: Space.Type!
@@ -269,25 +270,6 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         create(asset.id, fields: asset.fields, type: typeForAssets, mapping: mappingForAssets)
     }
 
-    fileprivate func getIdentifier(_ target: Any) -> String? {
-        if let target = target as? Contentful.Asset {
-            return target.id
-        }
-
-        if let target = target as? Entry {
-            return target.id
-        }
-
-        // For links that have not yet been resolved.
-        if let jsonObject = target as? [String:AnyObject],
-            let sys = jsonObject["sys"] as? [String:AnyObject],
-            let identifier = sys["id"] as? String {
-            return identifier
-        }
-
-        return nil
-    }
-
     /**
      This function is public as a side-effect of implementing `SyncSpaceDelegate`.
 
@@ -312,24 +294,22 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
                 for relationshipName in relationshipNames {
 
                     if let target = entry.fields[relationshipName] {
-                        if let targets = target as? [Any] {
+                        if let targets = target as? [Link] {
                             // One-to-many.
-                            relationships[relationshipName] = targets.flatMap { self.getIdentifier($0) }
-                        } else if let targets = target as? [AnyObject] {
-                            // Workaround for when cast to [Any] fails; generally when the array still contains
-                            // Dictionary respresentation of link.
-                            relationships[relationshipName] = targets.flatMap { self.getIdentifier($0) }
+                            relationships[relationshipName] = targets.map { $0.id }
                         } else {
                             // One-to-one.
-                            relationships[relationshipName] = getIdentifier(target)
+                            assert(target is Link)
+                            relationships[relationshipName] = (target as! Link).id
                         }
                     }
                 }
             }
-
+            // Dictionary mapping Entry identifier's to a dictionary with fieldName to related entry id's.
             relationshipsToResolve[entry.id] = relationships
         }
     }
+
 
     /**
      This function is public as a side-effect of implementing `SyncSpaceDelegate`.

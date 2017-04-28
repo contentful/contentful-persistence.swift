@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "ContentfulPersistenceSwift"
-  s.version          = "0.3.1"
+  s.version          = "0.4.0"
   s.summary          = "Simplified persistence for the Contentful Swift SDK."
   s.homepage         = "https://github.com/contentful/contentful-persistence.swift/"
   s.social_media_url = 'https://twitter.com/contentful'
@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target    = '9.0'
 
-#  s.dependency 'Contentful', '~> 0.3.1'
+  s.dependency 'Contentful', '~> 0.4.0-beta1'
 end

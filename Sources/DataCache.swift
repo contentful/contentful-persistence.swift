@@ -66,7 +66,7 @@ class DataCache: DataCacheProtocol {
         }
     }
 
-    fileprivate func assetForIdentifier(_ identifier: String) -> Asset? {
+    func asset(for identifier: String) -> Asset? {
         return assetCache.object(forKey: identifier as AnyObject) as? Asset
     }
 
@@ -75,7 +75,7 @@ class DataCache: DataCacheProtocol {
     }
 
     func item(for identifier: String) -> NSObject? {
-        var target = self.assetForIdentifier(identifier) as? NSObject
+        var target = self.asset(for: identifier) as? NSObject
 
         if target == nil {
             target = self.entry(for: identifier) as? NSObject
