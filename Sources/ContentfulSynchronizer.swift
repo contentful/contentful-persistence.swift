@@ -9,8 +9,8 @@
 import Contentful
 import Interstellar
 
-func predicate(for identifier: String) -> NSPredicate {
-    return NSPredicate(format: "identifier == %@", identifier)
+func predicate(for id: String) -> NSPredicate {
+    return NSPredicate(format: "id == %@", id)
 }
 
 /// Provides the ability to sync content from Contentful to a persistence store.
@@ -23,6 +23,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     fileprivate var mappingForAssets: [String: String]!
 
     fileprivate var typeForAssets: Asset.Type!
+
     // Dictionary mapping contentTypeId's to Types
     fileprivate var typeForEntries = [String: Resource.Type]()
     fileprivate var typeForSpaces: Space.Type!
@@ -170,7 +171,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             persisted = fetched
         } else {
             persisted = try! store.create(type: type)
-            persisted.identifier = identifier
+            persisted.id = identifier
         }
 
         if let persisted = persisted as? NSObject {
@@ -266,26 +267,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
             }
         }
 
-        create(asset.identifier, fields: asset.fields, type: typeForAssets, mapping: mappingForAssets)
-    }
-
-    fileprivate func getIdentifier(_ target: Any) -> String? {
-        if let target = target as? Contentful.Asset {
-            return target.identifier
-        }
-
-        if let target = target as? Entry {
-            return target.identifier
-        }
-
-        // For links that have not yet been resolved.
-        if let jsonObject = target as? [String:AnyObject],
-            let sys = jsonObject["sys"] as? [String:AnyObject],
-            let identifier = sys["id"] as? String {
-            return identifier
-        }
-
-        return nil
+        create(asset.id, fields: asset.fields, type: typeForAssets, mapping: mappingForAssets)
     }
 
     /**
@@ -295,15 +277,13 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
      */
     public func create(entry: Entry) {
 
-        let contentTypeId = ((entry.sys["contentType"] as? [String: AnyObject])?["sys"] as? [String: AnyObject])?["id"] as? String
-
-        if let contentTypeId = contentTypeId, let type = typeForEntries[contentTypeId] {
+        if let contentTypeId = entry.sys.contentTypeId, let type = typeForEntries[contentTypeId] {
             var mapping = mappingForEntries[contentTypeId]
             if mapping == nil {
                 mapping = deriveMapping(Array(entry.fields.keys), type: type)
             }
 
-            create(entry.identifier, fields: entry.fields, type: type, mapping: mapping!)
+            create(entry.id, fields: entry.fields, type: type, mapping: mapping!)
 
             // ContentTypeId to either a single entry id or an array of entry id's to be linked.
             var relationships = [String: Any]()
@@ -314,24 +294,22 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
                 for relationshipName in relationshipNames {
 
                     if let target = entry.fields[relationshipName] {
-                        if let targets = target as? [Any] {
+                        if let targets = target as? [Link] {
                             // One-to-many.
-                            relationships[relationshipName] = targets.flatMap { self.getIdentifier($0) }
-                        } else if let targets = target as? [AnyObject] {
-                            // Workaround for when cast to [Any] fails; generally when the array still contains
-                            // Dictionary respresentation of link.
-                            relationships[relationshipName] = targets.flatMap { self.getIdentifier($0) }
+                            relationships[relationshipName] = targets.map { $0.id }
                         } else {
                             // One-to-one.
-                            relationships[relationshipName] = getIdentifier(target)
+                            assert(target is Link)
+                            relationships[relationshipName] = (target as! Link).id
                         }
                     }
                 }
             }
-
-            relationshipsToResolve[entry.identifier] = relationships
+            // Dictionary mapping Entry identifier's to a dictionary with fieldName to related entry id's.
+            relationshipsToResolve[entry.id] = relationships
         }
     }
+
 
     /**
      This function is public as a side-effect of implementing `SyncSpaceDelegate`.

@@ -14,14 +14,14 @@ import Quick
 typealias TestFunc = (() -> ()) throws -> ()
 
 class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
-    let assetPredicate = NSPredicate(format: "identifier == 'bXvdSYHB3Guy2uUmuEco8'")
-    let postPredicate = NSPredicate(format: "identifier == '1asN98Ph3mUiCYIYiiqwko'")
+    let assetPredicate = NSPredicate(format: "id == 'bXvdSYHB3Guy2uUmuEco8'")
+    let postPredicate = NSPredicate(format: "id == '1asN98Ph3mUiCYIYiiqwko'")
 
     lazy var client: Client = {
         let spaceId = "dqpnpm0n4e75" // => https://app.contentful.com/spaces/dqpnpm0n4e75
         let accessToken = "95c33f933385aa838825526c5753f3b5a7e59bb45cd6b5d78e15bfeafeef1b13"
 
-        return Client(spaceIdentifier: spaceId, accessToken: accessToken)
+        return Client(spaceId: spaceId, accessToken: accessToken)
     }()
 
     lazy var store: CoreDataStore = {
