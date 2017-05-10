@@ -5,7 +5,6 @@
 *.xccheckout
 xcuserdata
 .idea
-Pods
 build
 .build
 Packages

@@ -1,0 +1,6 @@
+framework module Pods_ContentfulPersistenceTests {
+  umbrella header "Pods-ContentfulPersistenceTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
