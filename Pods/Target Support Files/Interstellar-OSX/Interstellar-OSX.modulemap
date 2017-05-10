@@ -1,0 +1,6 @@
+framework module Interstellar {
+  umbrella header "Interstellar-OSX-umbrella.h"
+
+  export *
+  module * { export * }
+}

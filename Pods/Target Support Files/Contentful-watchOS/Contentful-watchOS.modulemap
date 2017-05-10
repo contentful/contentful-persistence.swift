@@ -1,0 +1,6 @@
+framework module Contentful {
+  umbrella header "Contentful-watchOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

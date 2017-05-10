@@ -1,0 +1,6 @@
+framework module Contentful {
+  umbrella header "Contentful-iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
