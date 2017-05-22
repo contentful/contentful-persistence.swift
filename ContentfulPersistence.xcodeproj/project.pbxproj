@@ -62,7 +62,6 @@
 		FA96A4AA1ED33087003536F0 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E88A1E48AB840061741F /* Types.swift */; };
 		FA96A4AB1ED33087003536F0 /* ContentfulSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* ContentfulSynchronizer.swift */; };
 		FA96A4AC1ED33087003536F0 /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
-		FA96A4AE1ED33087003536F0 /* Pods_ContentfulPersistence_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E05BF6C16E281DEDC69BA624 /* Pods_ContentfulPersistence_iOS.framework */; };
 		FA96A4B01ED33087003536F0 /* ContentfulPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = ED10E8DC1E48CB100061741F /* ContentfulPersistence.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA96A4BC1ED330F2003536F0 /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA96A4B91ED330F2003536F0 /* Contentful.framework */; };
 		FA96A4BD1ED330F2003536F0 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA96A4BA1ED330F2003536F0 /* Decodable.framework */; };
@@ -181,7 +180,6 @@
 			files = (
 				FA96A4BD1ED330F2003536F0 /* Decodable.framework in Frameworks */,
 				FA96A4BC1ED330F2003536F0 /* Contentful.framework in Frameworks */,
-				FA96A4AE1ED33087003536F0 /* Pods_ContentfulPersistence_iOS.framework in Frameworks */,
 				FA96A4BE1ED330F2003536F0 /* Interstellar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
