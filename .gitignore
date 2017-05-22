@@ -6,6 +6,7 @@
 xcuserdata
 .idea
 Pods
+Carthage
 build
 .build
 Packages

@@ -326,10 +326,10 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
      - parameter entryId: The ID of the deleted Entry
      */
     public func delete(entryWithId: String) {
-        let predicate = ContentfulPersistence.predicate(for: entryWithId)
+        let predicateValue = predicate(for: entryWithId)
 
         typeForEntries.forEach {
-            _ = try? self.store.delete(type: $0.1, predicate: predicate)
+            _ = try? self.store.delete(type: $0.1, predicate: predicateValue)
         }
     }
 }
