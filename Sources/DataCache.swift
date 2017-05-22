@@ -28,10 +28,10 @@ class NoDataCache: DataCacheProtocol {
     }
 
     fileprivate func itemsOf(_ types: [Resource.Type], identifier: String) -> Resource? {
-        let predicate = ContentfulPersistence.predicate(for: identifier)
+        let predicateValue = predicate(for: identifier)
 
         let items: [Resource] = types.flatMap {
-            if let result = try? store.fetchAll(type: $0, predicate: predicate) as [Resource] {
+            if let result = try? store.fetchAll(type: $0, predicate: predicateValue) as [Resource] {
                 return result.first
             }
             return nil
