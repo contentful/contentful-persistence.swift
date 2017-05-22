@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0820"
+   LastUpgradeVersion = "0830"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ED10E8F21E48CB650061741F"
-               BuildableName = "ContentfulPersistence.framework"
-               BlueprintName = "ContentfulPersistence_macOS"
+               BlueprintIdentifier = "FA96A4A41ED33087003536F0"
+               BuildableName = "ContentfulPersistence_iOS_Carthage.framework"
+               BlueprintName = "ContentfulPersistence_iOS_Carthage"
                ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ED10E8F21E48CB650061741F"
-            BuildableName = "ContentfulPersistence.framework"
-            BlueprintName = "ContentfulPersistence_macOS"
+            BlueprintIdentifier = "FA96A4A41ED33087003536F0"
+            BuildableName = "ContentfulPersistence_iOS_Carthage.framework"
+            BlueprintName = "ContentfulPersistence_iOS_Carthage"
             ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "ED10E8F21E48CB650061741F"
-            BuildableName = "ContentfulPersistence.framework"
-            BlueprintName = "ContentfulPersistence_macOS"
+            BlueprintIdentifier = "FA96A4A41ED33087003536F0"
+            BuildableName = "ContentfulPersistence_iOS_Carthage.framework"
+            BlueprintName = "ContentfulPersistence_iOS_Carthage"
             ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
