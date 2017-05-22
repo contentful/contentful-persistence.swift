@@ -125,7 +125,7 @@
 		ED10E8FB1E48CB910061741F /* Info_macOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_macOS.plist; sourceTree = "<group>"; };
 		ED10E8FC1E48CB910061741F /* Info_watchOS.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info_watchOS.plist; sourceTree = "<group>"; };
 		F03FD3E1D3A2D915858C8B65 /* Pods-ContentfulPersistenceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContentfulPersistenceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ContentfulPersistenceTests/Pods-ContentfulPersistenceTests.debug.xcconfig"; sourceTree = "<group>"; };
-		FA96A4B71ED33087003536F0 /* ContentfulPersistence_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContentfulPersistence_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA96A4B71ED33087003536F0 /* ContentfulPersistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContentfulPersistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA96A4B91ED330F2003536F0 /* Contentful.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contentful.framework; path = Carthage/Build/iOS/Contentful.framework; sourceTree = "<group>"; };
 		FA96A4BA1ED330F2003536F0 /* Decodable.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Decodable.framework; path = Carthage/Build/iOS/Decodable.framework; sourceTree = "<group>"; };
 		FA96A4BB1ED330F2003536F0 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 				ED10E8CE1E48BF110061741F /* ContentfulPersistence.framework */,
 				ED10E8E61E48CB480061741F /* ContentfulPersistence.framework */,
 				ED10E8F31E48CB650061741F /* ContentfulPersistence.framework */,
-				FA96A4B71ED33087003536F0 /* ContentfulPersistence_iOS.framework */,
+				FA96A4B71ED33087003536F0 /* ContentfulPersistence.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -347,9 +347,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		A1A9FBE21CABE8EA00430734 /* ContentfulPersistence_iOS_PODS */ = {
+		A1A9FBE21CABE8EA00430734 /* ContentfulPersistence_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A1A9FBF71CABE8EA00430734 /* Build configuration list for PBXNativeTarget "ContentfulPersistence_iOS_PODS" */;
+			buildConfigurationList = A1A9FBF71CABE8EA00430734 /* Build configuration list for PBXNativeTarget "ContentfulPersistence_iOS" */;
 			buildPhases = (
 				0E040560ABC7E456DB8FBD0F /* [CP] Check Pods Manifest.lock */,
 				A1A9FBDE1CABE8EA00430734 /* Sources */,
@@ -363,7 +363,7 @@
 			);
 			dependencies = (
 			);
-			name = ContentfulPersistence_iOS_PODS;
+			name = ContentfulPersistence_iOS;
 			productName = ContentfulPersistence;
 			productReference = A1A9FBE31CABE8EA00430734 /* ContentfulPersistence.framework */;
 			productType = "com.apple.product-type.framework";
@@ -449,9 +449,9 @@
 			productReference = ED10E8F31E48CB650061741F /* ContentfulPersistence.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		FA96A4A41ED33087003536F0 /* ContentfulPersistence_iOS */ = {
+		FA96A4A41ED33087003536F0 /* ContentfulPersistence */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FA96A4B41ED33087003536F0 /* Build configuration list for PBXNativeTarget "ContentfulPersistence_iOS" */;
+			buildConfigurationList = FA96A4B41ED33087003536F0 /* Build configuration list for PBXNativeTarget "ContentfulPersistence" */;
 			buildPhases = (
 				FA96A4A61ED33087003536F0 /* Sources */,
 				FA96A4AD1ED33087003536F0 /* Frameworks */,
@@ -463,9 +463,9 @@
 			);
 			dependencies = (
 			);
-			name = ContentfulPersistence_iOS;
+			name = ContentfulPersistence;
 			productName = ContentfulPersistence;
-			productReference = FA96A4B71ED33087003536F0 /* ContentfulPersistence_iOS.framework */;
+			productReference = FA96A4B71ED33087003536F0 /* ContentfulPersistence.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -512,12 +512,12 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A1A9FBE21CABE8EA00430734 /* ContentfulPersistence_iOS_PODS */,
+				A1A9FBE21CABE8EA00430734 /* ContentfulPersistence_iOS */,
 				A1A9FBEC1CABE8EA00430734 /* ContentfulPersistenceTests */,
 				ED10E8CD1E48BF110061741F /* ContentfulPersistence_tvOS */,
 				ED10E8E51E48CB480061741F /* ContentfulPersistence_watchOS */,
 				ED10E8F21E48CB650061741F /* ContentfulPersistence_macOS */,
-				FA96A4A41ED33087003536F0 /* ContentfulPersistence_iOS */,
+				FA96A4A41ED33087003536F0 /* ContentfulPersistence */,
 			);
 		};
 /* End PBXProject section */
@@ -856,7 +856,7 @@
 /* Begin PBXTargetDependency section */
 		A1A9FBF01CABE8EA00430734 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A1A9FBE21CABE8EA00430734 /* ContentfulPersistence_iOS_PODS */;
+			target = A1A9FBE21CABE8EA00430734 /* ContentfulPersistence_iOS */;
 			targetProxy = A1A9FBEF1CABE8EA00430734 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1250,7 +1250,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A1A9FBF71CABE8EA00430734 /* Build configuration list for PBXNativeTarget "ContentfulPersistence_iOS_PODS" */ = {
+		A1A9FBF71CABE8EA00430734 /* Build configuration list for PBXNativeTarget "ContentfulPersistence_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A1A9FBF81CABE8EA00430734 /* Debug */,
@@ -1295,7 +1295,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FA96A4B41ED33087003536F0 /* Build configuration list for PBXNativeTarget "ContentfulPersistence_iOS" */ = {
+		FA96A4B41ED33087003536F0 /* Build configuration list for PBXNativeTarget "ContentfulPersistence" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FA96A4B51ED33087003536F0 /* Debug */,

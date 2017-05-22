@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FA96A4A41ED33087003536F0"
-               BuildableName = "ContentfulPersistence_iOS.framework"
-               BlueprintName = "ContentfulPersistence_iOS"
+               BuildableName = "ContentfulPersistence.framework"
+               BlueprintName = "ContentfulPersistence"
                ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,8 +46,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA96A4A41ED33087003536F0"
-            BuildableName = "ContentfulPersistence_iOS.framework"
-            BlueprintName = "ContentfulPersistence_iOS"
+            BuildableName = "ContentfulPersistence.framework"
+            BlueprintName = "ContentfulPersistence"
             ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,8 +64,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FA96A4A41ED33087003536F0"
-            BuildableName = "ContentfulPersistence_iOS.framework"
-            BlueprintName = "ContentfulPersistence_iOS"
+            BuildableName = "ContentfulPersistence.framework"
+            BlueprintName = "ContentfulPersistence"
             ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
