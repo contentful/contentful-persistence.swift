@@ -8,7 +8,7 @@
 
 func +<K: Hashable, V> (left: Dictionary<K, V>, right: Dictionary<K, V>) -> Dictionary<K, V> {
     var result = left
-    right.forEach { (k, v) in result[k] = v }
+    right.forEach { (key, value) in result[key] = value }
     return result
 }
 

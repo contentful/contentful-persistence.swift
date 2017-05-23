@@ -1,4 +1,4 @@
-//
+    //
 //  ContentfulPersistenceTestBase.swift
 //  ContentfulPersistence
 //
@@ -13,6 +13,12 @@ import Quick
 class ContentfulPersistenceTestBase: QuickSpec {
     let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last?.appendingPathComponent("Test.sqlite")
 
+    func deleteCoreDataStore() {
+        try! FileManager.default.removeItem(at: self.storeURL!)
+        try! FileManager.default.removeItem(at: append("-shm", to: self.storeURL!))
+        try! FileManager.default.removeItem(at: append("-wal", to: self.storeURL!))
+    }
+
     lazy var managedObjectContext: NSManagedObjectContext = {
         let modelURL = Bundle(for: type(of: self)).url(forResource: "Test", withExtension: "momd")
         let mom = NSManagedObjectModel(contentsOf: modelURL!)
@@ -21,12 +27,6 @@ class ContentfulPersistenceTestBase: QuickSpec {
         let psc = NSPersistentStoreCoordinator(managedObjectModel: mom!)
 
         do {
-            _ = try? FileManager.default.removeItem(at: self.storeURL!)
-
-            let path = self.storeURL!.path
-            _ = try? FileManager.default.removeItem(atPath: "\(path)-shm")
-            _ = try? FileManager.default.removeItem(atPath: "\(path)-wal")
-
             var store = try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL!, options: nil)
             expect(store).toNot(beNil())
         } catch {
@@ -37,5 +37,9 @@ class ContentfulPersistenceTestBase: QuickSpec {
         managedObjectContext.persistentStoreCoordinator = psc
         return managedObjectContext
     }()
-    
+
+    func append(_ string: String, to fileURL: URL) -> URL {
+        let pathString = fileURL.path.appending(string)
+        return URL(fileURLWithPath: pathString)
+    }
 }
