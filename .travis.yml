@@ -7,9 +7,9 @@ before_install:
   - brew outdated carthage || brew upgrade carthage
   - brew outdated swiftlint || brew upgrade swiftlint
 before_script:
-  - carthage bootstrap --platform iOS
+  - carthage bootstrap --platform iOS --no-use-binaries
 script:
-- xcodebuild test -workspace ContentfulPersistence.xcworkspace -scheme ContentfulPersistence_iOS -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6s,OS=9.3" | xcpretty -c
+- xcodebuild test -project ContentfulPersistence.xcodeproj -scheme ContentfulPersistence_iOS -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6s,OS=10.3" | xcpretty -c
 after_success:
 - bundle exec slather coverage --coveralls ContentfulPersistence.xcodeproj
 - pod lib lint ContentfulPersistenceSwift.podspec
