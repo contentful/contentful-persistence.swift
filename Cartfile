@@ -1,2 +1,1 @@
-github "contentful/contentful.swift" ~> 0.4.0
-
+github "contentful/contentful.swift" ~> 0.4.1
