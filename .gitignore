@@ -9,4 +9,6 @@ Pods
 build
 .build
 Packages
+Carthage
 *.xcscmblueprint
+

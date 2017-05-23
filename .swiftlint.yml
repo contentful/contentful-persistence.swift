@@ -1,9 +1,10 @@
 
 excluded:
-  - Pods/
-  - Packages/
-  - Tests/
-  - build/
+  - Carthage
+  - Packages
+  - Tests
+  - build
+  - .build
 disabled_rules:
 - syntactic_sugar
 - type_body_length

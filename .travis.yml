@@ -1,11 +1,13 @@
 language: objective-c
-osx_image: xcode8.1
-cache:
-  - cocoapods
+osx_image: xcode8.3
+rvm:
+  - 2.3.0
 before_install:
-  - pod repo update --silent
   - brew update
+  - brew outdated carthage || brew upgrade carthage
   - brew outdated swiftlint || brew upgrade swiftlint
+before_script:
+  - carthage bootstrap --platform iOS
 script:
 - xcodebuild test -workspace ContentfulPersistence.xcworkspace -scheme ContentfulPersistence_iOS -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6s,OS=9.3" | xcpretty -c
 after_success:
