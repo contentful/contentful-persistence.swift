@@ -41,6 +41,8 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
         return sync
     }()
 
+
+
     func postTests(expectations: @escaping TestFunc) {
         waitUntil(timeout: 10) { done in
             self.sync.sync() {
@@ -59,6 +61,10 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
     }
 
     override func spec() {
+        beforeEach {
+            self.deleteCoreDataStore()
+        }
+
         it("can store SyncTokens") { waitUntil(timeout: 10) { done in
             self.sync.sync() {
                 expect($0).to(beTrue())
