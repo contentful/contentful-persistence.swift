@@ -14,16 +14,9 @@ class ContentfulPersistenceTestBase: QuickSpec {
     let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last?.appendingPathComponent("Test.sqlite")
 
     func deleteCoreDataStore() {
-        do {
-            // sleep to avoid disk i/o errors.
-            Thread.sleep(forTimeInterval: 1.0)
-            try FileManager.default.removeItem(at: self.storeURL!)
-            try FileManager.default.removeItem(at: append("-shm", to: self.storeURL!))
-            try FileManager.default.removeItem(at: append("-wal", to: self.storeURL!))
-            Thread.sleep(forTimeInterval: 1.0)
-        } catch let error {
-            XCTAssert(false, "Deleting the persistent store SQL files should not throw an error: \(error)")
-        }
+        try! FileManager.default.removeItem(at: self.storeURL!)
+        try! FileManager.default.removeItem(at: append("-shm", to: self.storeURL!))
+        try! FileManager.default.removeItem(at: append("-wal", to: self.storeURL!))
     }
 
     lazy var managedObjectContext: NSManagedObjectContext = {
