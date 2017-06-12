@@ -1,4 +1,4 @@
-    //
+//
 //  ContentfulPersistenceTestBase.swift
 //  ContentfulPersistence
 //
@@ -14,6 +14,8 @@ class ContentfulPersistenceTestBase: QuickSpec {
     let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last?.appendingPathComponent("Test.sqlite")
 
     func deleteCoreDataStore() {
+        guard FileManager.default.fileExists(atPath: self.storeURL!.absoluteString) == true else { return }
+
         try! FileManager.default.removeItem(at: self.storeURL!)
         try! FileManager.default.removeItem(at: append("-shm", to: self.storeURL!))
         try! FileManager.default.removeItem(at: append("-wal", to: self.storeURL!))
