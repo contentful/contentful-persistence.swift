@@ -1,5 +1,5 @@
-github "Hearst-DD/ObjectMapper" "2.2.6"
+github "Hearst-DD/ObjectMapper" "2.2.7"
 github "JensRavens/Interstellar" "2.0.0"
 github "Quick/Nimble" "v6.1.0"
 github "Quick/Quick" "v1.1.0"
-github "contentful/contentful.swift" "0.4.1"
+github "contentful/contentful.swift" "0.6.1"
