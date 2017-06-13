@@ -22,11 +22,14 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     fileprivate var mappingForEntries = [String: [String: String]]()
     fileprivate var mappingForAssets: [String: String]!
 
+
     fileprivate var typeForAssets: Asset.Type!
 
     // Dictionary mapping contentTypeId's to Types
-    fileprivate var typeForEntries = [String: Resource.Type]()
+    fileprivate var typesForEntries = [String: Resource.Type]()
     fileprivate var typeForSpaces: Space.Type!
+
+
 
     // Dictionary mapping Entry identifier's to a dictionary with fieldName to related entry id's.
     fileprivate var relationshipsToResolve = [String: [String: Any]]()
@@ -68,7 +71,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
      */
     public func map(contentTypeId: String, to type: Resource.Type, propertyMapping: [String:String]? = nil) {
         mappingForEntries[contentTypeId] = propertyMapping
-        typeForEntries[contentTypeId] = type
+        typesForEntries[contentTypeId] = type
     }
 
     /**
@@ -109,7 +112,7 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
      */
     public func sync(_ completion: @escaping (Bool) -> Void) {
         assert(typeForAssets != nil, "Define a type for Assets using mapAssets(to:)")
-        assert(typeForEntries.first?.1 != nil, "Define a type for Entries using map(contentTypeId:to:)")
+        assert(typesForEntries.first?.1 != nil, "Define a type for Entries using map(contentTypeId:to:)")
         assert(typeForSpaces != nil, "Define a type for Spaces using mapSpaces(to:)")
 
         var initial: Bool?
@@ -184,7 +187,9 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         let properties = (try! store.properties(for: type)).filter { propertyName in
             fields.contains(propertyName)
         }
-        properties.forEach { mapping["\(prefix)\($0)"] = $0 }
+        for property in properties {
+            mapping[prefix + property] = property
+        }
         return mapping
     }
 
@@ -225,9 +230,8 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     }
 
     fileprivate func resolveRelationships() {
-        let entryTypes = typeForEntries.map { _, type in
-            return type
-        }
+        let entryTypes = Array(typesForEntries.values)
+
         let cache = DataCache(persistenceStore: store, assetType: typeForAssets, entryTypes: entryTypes)
 
         for (entryId, field) in relationshipsToResolve {
@@ -260,9 +264,9 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         if mappingForAssets == nil {
             mappingForAssets = deriveMapping(Array(asset.fields.keys), type: typeForAssets)
 
-            ["file", "file.details.image"].forEach {
-                if let fileFields = asset.fields.value(forKeyPath: $0) as? [String: AnyObject] {
-                    mappingForAssets! = mappingForAssets! + deriveMapping(Array(fileFields.keys), type: typeForAssets, prefix: "\($0).")
+            for keyPath in ["file", "file.details.image"] {
+                if let fileFields = asset.fields.value(forKeyPath: keyPath) as? [String: AnyObject] {
+                    mappingForAssets! = mappingForAssets! + deriveMapping(Array(fileFields.keys), type: typeForAssets, prefix: "\(keyPath).")
                 }
             }
         }
@@ -277,10 +281,12 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
      */
     public func create(entry: Entry) {
 
-        if let contentTypeId = entry.sys.contentTypeId, let type = typeForEntries[contentTypeId] {
+        if let contentTypeId = entry.sys.contentTypeId, let type = typesForEntries[contentTypeId] {
             var mapping = mappingForEntries[contentTypeId]
+
+            // FIXME: Remove this check?
             if mapping == nil {
-                mapping = deriveMapping(Array(entry.fields.keys), type: type)
+                mapping = self.deriveMapping(Array(entry.fields.keys), type: type)
             }
 
             create(entry.id, fields: entry.fields, type: type, mapping: mapping!)
@@ -328,8 +334,8 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     public func delete(entryWithId: String) {
         let predicate = ContentfulPersistence.predicate(for: entryWithId)
 
-        typeForEntries.forEach {
-            _ = try? self.store.delete(type: $0.1, predicate: predicate)
+        for type in typesForEntries.values {
+            _ = try? self.store.delete(type: type, predicate: predicate)
         }
     }
 }
