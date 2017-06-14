@@ -8,10 +8,9 @@
 
 import Foundation
 import CoreData
-import ContentfulPersistence
 
 @objc(Asset)
-class Asset: NSManagedObject, ContentfulPersistence.Asset {
+class Asset: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 

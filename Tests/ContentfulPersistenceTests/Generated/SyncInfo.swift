@@ -11,7 +11,7 @@ import CoreData
 import ContentfulPersistence
 
 @objc(SyncInfo)
-class SyncInfo: NSManagedObject, Space {
+class SyncInfo: NSManagedObject {
 
     // Insert code here to add functionality to your managed object subclass
 

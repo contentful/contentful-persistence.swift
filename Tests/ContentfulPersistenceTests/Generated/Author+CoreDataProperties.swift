@@ -11,8 +11,11 @@
 
 import Foundation
 import CoreData
+import Contentful
 
-extension Author {
+extension Author: EntryPersistable {
+
+    static let contentTypeId = "1kUEViTN4EmGiEaaeC6ouY"
 
     @NSManaged var biography: String?
     @NSManaged var id: String?
@@ -20,5 +23,4 @@ extension Author {
     @NSManaged var website: String?
     @NSManaged var createdEntries: NSOrderedSet?
     @NSManaged var profilePhoto: Asset?
-
 }

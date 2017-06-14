@@ -11,13 +11,15 @@
 
 import Foundation
 import CoreData
+import Contentful
 
-extension Post {
+extension Post: EntryPersistable {
+    
+    static let contentTypeId = "2wKn6yEnZewu2SCCkus4as"
 
     @NSManaged var body: String?
     @NSManaged var comments: NSNumber?
-    // FIXME: Needs to be handled properly by contentful.swift
-    //@NSManaged var date: NSDate?
+    @NSManaged var date: NSDate?
     @NSManaged var id: String?
     @NSManaged var slug: String?
     @NSManaged var tags: Data?
@@ -25,5 +27,4 @@ extension Post {
     @NSManaged var author: NSOrderedSet?
     @NSManaged var category: NSOrderedSet?
     @NSManaged var featuredImage: Asset?
-
 }

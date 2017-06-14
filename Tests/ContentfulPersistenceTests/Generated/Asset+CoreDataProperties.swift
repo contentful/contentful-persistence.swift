@@ -11,17 +11,18 @@
 
 import Foundation
 import CoreData
+import Contentful
 
-extension Asset {
+extension Asset: AssetPersistable {
 
     @NSManaged var height: NSNumber?
     @NSManaged var id: String?
+    @NSManaged var title: String?
+    @NSManaged var assetDescription: String?
     @NSManaged var internetMediaType: String?
-    @NSManaged var url: String?
+    @NSManaged var urlString: String?
     @NSManaged var width: NSNumber?
     @NSManaged var featuredImage_2wKn6yEnZewu2SCCkus4as_Inverse: NSSet?
     @NSManaged var icon_5KMiN6YPvi42icqAUQMCQe_Inverse: NSSet?
     @NSManaged var profilePhoto_1kUEViTN4EmGiEaaeC6ouY_Inverse: NSSet?
-    @NSManaged var title: String?
-
 }

@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
     :file => 'LICENSE'
   }
 
-  s.authors      = { "Boris Bügling" => "boris@buegling.com", "JP Wright" => "jp@contentful.com" }
+  s.authors      = { "JP Wright" => "jp@contentful.com", "Boris Bügling" => "boris@buegling.com" }
   s.source       = { :git => "https://github.com/contentful/contentful-persistence.swift.git",
                      :tag => s.version.to_s }
   s.requires_arc = true
@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target    = '9.0'
 
-  s.dependency 'Contentful', '~> 0.4.0'
+  s.dependency 'Contentful', '~> 0.6.1'
 end

@@ -17,36 +17,18 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
     let assetPredicate = NSPredicate(format: "id == 'bXvdSYHB3Guy2uUmuEco8'")
     let postPredicate = NSPredicate(format: "id == '1asN98Ph3mUiCYIYiiqwko'")
 
-    lazy var client: Client = {
-        let spaceId = "dqpnpm0n4e75" // => https://app.contentful.com/spaces/dqpnpm0n4e75
-        let accessToken = "95c33f933385aa838825526c5753f3b5a7e59bb45cd6b5d78e15bfeafeef1b13"
-
-        return Client(spaceId: spaceId, accessToken: accessToken)
-    }()
+    var client: Client!
 
     lazy var store: CoreDataStore = {
         return CoreDataStore(context: self.managedObjectContext)
     }()
 
-    lazy var sync: ContentfulSynchronizer = {
-        let sync = ContentfulSynchronizer(client: self.client, persistenceStore: self.store)
-
-        sync.mapAssets(to: Asset.self)
-        sync.mapSpaces(to: SyncInfo.self)
-
-        sync.map(contentTypeId: "1kUEViTN4EmGiEaaeC6ouY", to: Author.self)
-        sync.map(contentTypeId: "5KMiN6YPvi42icqAUQMCQe", to: Category.self)
-        sync.map(contentTypeId: "2wKn6yEnZewu2SCCkus4as", to: Post.self)
-
-        return sync
-    }()
-
-
+    var sync: ContentfulSynchronizer!
 
     func postTests(expectations: @escaping TestFunc) {
         waitUntil(timeout: 10) { done in
-            self.sync.sync() {
-                expect($0).to(beTrue())
+            self.client.initialSync() { result in
+                expect(result.value).toNot(beNil())
 
                 do {
                     let posts: [Post] = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
@@ -61,13 +43,23 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
     }
 
     override func spec() {
+
         beforeEach {
+            let entryTypes: [EntryPersistable.Type] = [Author.self, Category.self, Post.self]
+
+            let persistenceModel = PersistenceModel(spaceType: SyncInfo.self, assetType: Asset.self, entryTypes: entryTypes)
+
+            let contentfulSynchronizer = ContentfulSynchronizer(persistenceStore: self.store, persistenceModel: persistenceModel)
+
+            self.client = Client(spaceId: "dqpnpm0n4e75", accessToken: "95c33f933385aa838825526c5753f3b5a7e59bb45cd6b5d78e15bfeafeef1b13", persistenceDelegate: contentfulSynchronizer)
+            self.sync = contentfulSynchronizer
+
             self.deleteCoreDataStore()
         }
 
         it("can store SyncTokens") { waitUntil(timeout: 10) { done in
-            self.sync.sync() {
-                expect($0).to(beTrue())
+            self.client.initialSync() { result in
+                expect(result.value!.assets.count).to(beGreaterThan(0))
                 expect(self.sync.syncToken?.characters.count).to(beGreaterThan(0))
 
                 done()
@@ -75,8 +67,8 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
         } }
 
         it("can store Assets") { waitUntil(timeout: 10) { done in
-            self.sync.sync() {
-                expect($0).to(beTrue())
+            self.client.initialSync() { result in
+
 
                 do {
                     let assets: [Asset] = try self.store.fetchAll(type: Asset.self, predicate: NSPredicate(value: true))
@@ -85,7 +77,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
                     let alice: Asset? = try self.store.fetchAll(type: Asset.self, predicate: self.assetPredicate).first
                     expect(alice).toNot(beNil())
                     expect(alice?.title).to(equal("Alice in Wonderland"))
-                    expect(alice?.url).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
+                    expect(alice?.urlString).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
                 } catch {
                     XCTAssert(false, "Fetching asset(s) should not throw an error")
                 }
@@ -109,8 +101,8 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
                 expect(post).toNot(beNil())
 
                 expect(post?.featuredImage).toNot(beNil())
-                expect(post?.featuredImage?.url).toNot(beNil())
-                expect(post?.featuredImage?.url).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
+                expect(post?.featuredImage?.urlString).toNot(beNil())
+                expect(post?.featuredImage?.urlString).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
 
                 done()
             }
@@ -123,9 +115,13 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
 
                 expect(post?.author).toNot(beNil())
                 expect(post?.author?.count).to(equal(1))
-                let author = post?.author?.firstObject as? Author
-                expect(author).toNot(beNil())
-
+                guard let author = post?.author?.firstObject as? Author else {
+                    fail("was unable to make relationship")
+                    done()
+                    return
+                }
+                expect(author.name).toNot(beNil())
+                expect(author.name).to(equal("Lewis Carroll"))
                 done()
             }
         }

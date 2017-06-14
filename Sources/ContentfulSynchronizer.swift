@@ -14,191 +14,102 @@ func predicate(for id: String) -> NSPredicate {
 }
 
 /// Provides the ability to sync content from Contentful to a persistence store.
-public class ContentfulSynchronizer: SyncSpaceDelegate {
-    fileprivate let client: Client
-    fileprivate let matching: [String: AnyObject]
-    fileprivate let store: PersistenceStore
+public class ContentfulSynchronizer: PersistenceDelegate {
 
-    fileprivate var mappingForEntries = [String: [String: String]]()
-    fileprivate var mappingForAssets: [String: String]!
+    /**
+     Instantiate a new ContentfulSynchronizer.
 
+     - parameter persistenceStore: The persistence store to use for storage
+     - parameter matching:         An optional query for syncing specific content,
+     see <https://www.contentful.com/developers/docs/references/content-delivery-api/#/
+     reference/synchronization/initial-synchronisation-of-entries-of-a-specific-content-type>
 
-    fileprivate var typeForAssets: Asset.Type!
+     - returns: An initialised instance of ContentfulSynchronizer
+     */
+    public init(persistenceStore: PersistenceStore, persistenceModel: PersistenceModel) {
+        self.persistentStore = persistenceStore
+        self.persistenceModel = persistenceModel
+    }
 
-    // Dictionary mapping contentTypeId's to Types
-    fileprivate var typesForEntries = [String: Resource.Type]()
-    fileprivate var typeForSpaces: Space.Type!
+    fileprivate let persistenceModel: PersistenceModel
 
-
+    public let persistentStore: PersistenceStore
 
     // Dictionary mapping Entry identifier's to a dictionary with fieldName to related entry id's.
-    fileprivate var relationshipsToResolve = [String: [String: Any]]()
+    fileprivate var relationshipsToResolve = [String: [FieldName: Any]]()
 
     var syncToken: String? {
         return fetchSpace().syncToken
     }
 
-    /**
-     Instantiate a new ContentfulSynchronizer.
+//    /**
+//     Perform a synchronization. This will fetch new content from Contentful and save it to the
+//     persistent store.
+//
+//     - parameter completion: A completion handler which is called after completing the sync process.
+//     */
+//    public func sync(_ completion: @escaping (Bool) -> Void) {
+//        assert(typeForAssets != nil, "Define a type for Assets using mapAssets(to:)")
+//        assert(typesForEntries.first?.1 != nil, "Define a type for Entries using map(contentTypeId:to:)")
+//        assert(typeForSpaces != nil, "Define a type for Spaces using mapSpaces(to:)")
+//
+//        var initial: Bool?
+//
+//        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
+//
+//            switch result {
+//            case .success(let syncSpace):
+//
+//                // Fetch the current space
+//                let space = self.fetchSpace()
+//                space.syncToken = syncSpace.syncToken
+//
+//                assert(space.syncToken != nil)
+//
+//                // TODO: Let the SDK call these methods.
+//                // Delegate callback will createEntries when necessary.
+//                if let initial = initial, initial == true {
+//
+//                    for asset in syncSpace.assets {
+//                        self.create(asset: asset)
+//                    }
+//                    for entry in syncSpace.entries {
+//                        self.create(entry: entry)
+//                    }
+//                }
+//
+//                self.resolveRelationships()
+//                _ = try? self.store.save()
+//                completion(true)
+//
+//            case .error(let error):
+//                NSLog("Error: \(error)")
+//                completion(false)
+//            }
+//        }
+//
+//        if let syncToken = syncToken {
+//            initial = false
+//            let syncSpace = SyncSpace(client: client, syncToken: syncToken, delegate: self)
+//            syncSpace.sync(matching: matching, completion: syncCompletion)
+//        } else {
+//            initial = true
+//            client.initialSync(completion: syncCompletion)
+//        }
+//
+//        relationshipsToResolve.removeAll()
+//    }
 
-     - parameter client:           The API client to use for synchronization
-     - parameter persistenceStore: The persistence store to use for storage
-     - parameter matching:         An optional query for syncing specific content, 
-                                   see <https://www.contentful.com/developers/docs/references/content-delivery-api/#/
-                                        reference/synchronization/initial-synchronisation-of-entries-of-a-specific-content-type>
-
-     - returns: An initialised instance of ContentfulSynchronizer
-     */
-    public init(client: Client, persistenceStore: PersistenceStore, matching: [String: AnyObject] = [String: AnyObject]()) {
-        self.client = client
-        self.matching = matching
-        self.store = persistenceStore
-    }
-
-    /**
-     Specify the type that Entries of a specific Content Type should be mapped to.
-
-     The given type needs to implement the `Resource` protocol. Optionally, a field mapping can be
-     provided which specifies the mapping between Contentful fields and properties of the target type.
-
-     By default, this mapping will be automatically derived through matching fields and properties which
-     share the same name. If you are using the Contentful Xcode plugin to generate your data model, the
-     assumptions of the default mapping should usually suffice.
-
-     - parameter contentTypeId:   ID of the Content Type which is being mapped
-     - parameter type:            The type Entries should be mapped to (needs to implement the `Resource` protocol)
-     - parameter propertyMapping: Optional mapping between Contentful fields and object properties
-     */
-    public func map(contentTypeId: String, to type: Resource.Type, propertyMapping: [String:String]? = nil) {
-        mappingForEntries[contentTypeId] = propertyMapping
-        typesForEntries[contentTypeId] = type
-    }
-
-    /**
-     Specify the type that Assets should be mapped to.
-
-     The given type needs to implement the `Asset` protocol. Optionally, a field mapping can be
-     provided which specifies the mapping between Contentful fields and properties of the target type.
-
-     By default, this mapping will be automatically derived through matching fields and properties which
-     share the same name. For this, also the sub-fields of the `file` and `file.details.image` fields
-     are being taken into consideration, e.g. if your type has a `width` property, the image width
-     provided by Contentful would be mapped to it.
-
-     - parameter type:            The type Assets should be mapped to (needs to implement the `Asset` protocol)
-     - parameter propertyMapping: Optional mapping between Contentful fields and object properties
-     */
-    public func mapAssets(to type: Asset.Type, propertyMapping: [String:String]? = nil) {
-        mappingForAssets = propertyMapping
-        typeForAssets = type
-    }
-
-    /**
-     Specify the type that Spaces are mapped to.
-
-     The given type needs to implement the `Space` protocol.
-
-     - parameter type: The type Spaces should be mapped to (needs to implement the `Space` protocol)
-     */
-    public func mapSpaces(to type: Space.Type) {
-        typeForSpaces = type
-    }
-
-    /**
-     Perform a synchronization. This will fetch new content from Contentful and save it to the
-     persistent store.
-
-     - parameter completion: A completion handler which is called after completing the sync process.
-     */
-    public func sync(_ completion: @escaping (Bool) -> Void) {
-        assert(typeForAssets != nil, "Define a type for Assets using mapAssets(to:)")
-        assert(typesForEntries.first?.1 != nil, "Define a type for Entries using map(contentTypeId:to:)")
-        assert(typeForSpaces != nil, "Define a type for Spaces using mapSpaces(to:)")
-
-        var initial: Bool?
-
-        let syncCompletion: (Result<SyncSpace>) -> Void = { result in
-
-            switch result {
-            case .success(let syncSpace):
-
-                // Fetch the current space
-                let space = self.fetchSpace()
-                space.syncToken = syncSpace.syncToken
-
-                assert(space.syncToken != nil)
-
-                // Delegate callback will createEntries when necessary.
-                if let initial = initial, initial == true {
-
-                    for asset in syncSpace.assets {
-                        self.create(asset: asset)
-                    }
-                    for entry in syncSpace.entries {
-                        self.create(entry: entry)
-                    }
-                }
-
-                self.resolveRelationships()
-                _ = try? self.store.save()
-                completion(true)
-
-            case .error(let error):
-                NSLog("Error: \(error)")
-                completion(false)
-            }
-        }
-
-        if let syncToken = syncToken {
-            initial = false
-            let syncSpace = SyncSpace(client: client, syncToken: syncToken, delegate: self)
-            syncSpace.sync(matching: matching, completion: syncCompletion)
-        } else {
-            initial = true
-            client.initialSync(completion: syncCompletion)
-        }
-
-        relationshipsToResolve.removeAll()
-    }
 
     // MARK: - Helpers
 
-    // Attempts to fetch the object from the the persistent store, if it exists,
-    fileprivate func create(_ identifier: String, fields: [String: Any], type: Resource.Type, mapping: [String: String]) {
-        assert(mapping.count > 0, "Empty mapping for \(type)")
-
-        let fetched: [Resource]? = try? store.fetchAll(type: type, predicate: predicate(for: identifier))
-        let persisted: Resource
-
-        if let fetched = fetched?.first {
-            persisted = fetched
-        } else {
-            persisted = try! store.create(type: type)
-            persisted.id = identifier
+    fileprivate func fetchSpace() -> SyncSpacePersistable {
+        let createNewPersistentSpace: () -> (SyncSpacePersistable) = {
+            let spacePersistable: SyncSpacePersistable = try! self.persistentStore.create(type: self.persistenceModel.spaceType)
+            return spacePersistable
         }
 
-        if let persisted = persisted as? NSObject {
-            map(fields, to: persisted, mapping: mapping)
-        }
-    }
-
-    fileprivate func deriveMapping(_ fields: [String], type: Resource.Type, prefix: String = "") -> [String: String] {
-        var mapping = [String: String]()
-        let properties = (try! store.properties(for: type)).filter { propertyName in
-            fields.contains(propertyName)
-        }
-        for property in properties {
-            mapping[prefix + property] = property
-        }
-        return mapping
-    }
-
-    fileprivate func fetchSpace() -> Space {
-        let createNewPersistentSpace: () -> (Space) = {
-            return try! self.store.create(type: self.typeForSpaces)
-        }
-
-        guard let fetchedResults = try? self.store.fetchAll(type: self.typeForSpaces, predicate: NSPredicate(value: true)) as [Space] else {
+        guard let fetchedResults = try? self.persistentStore.fetchAll(type: self.persistenceModel.spaceType, predicate: NSPredicate(value: true)) as [SyncSpacePersistable] else {
             return createNewPersistentSpace()
         }
 
@@ -207,32 +118,19 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         guard let space = fetchedResults.first else {
             return createNewPersistentSpace()
         }
-
+        
         return space
     }
 
-    fileprivate func map(_ fields: [String: Any], to: NSObject, mapping: [String: String]) {
-        for (mapKey, mapValue) in mapping {
-
-            var fieldValue = fields.value(forKeyPath: mapKey)
-
-            if let string = fieldValue as? String, string.hasPrefix("//") && mapValue == "url" {
-                fieldValue = "https:\(string)"
-            }
-
-            // handle symbol arrays
-            if let array = fieldValue as? NSArray {
-                fieldValue = NSKeyedArchiver.archivedData(withRootObject: array)
-            }
-
-            to.setValue(fieldValue as? NSObject, forKeyPath: mapValue)
-        }
+    public func create(syncSpace: SyncSpace) {
+        let space = fetchSpace()
+        space.syncToken = syncSpace.syncToken
     }
 
-    fileprivate func resolveRelationships() {
-        let entryTypes = Array(typesForEntries.values)
+    // KEEP!
+    public func resolveRelationships() {
 
-        let cache = DataCache(persistenceStore: store, assetType: typeForAssets, entryTypes: entryTypes)
+        let cache = DataCache(persistenceStore: persistentStore, assetType: persistenceModel.assetType, entryTypes: persistenceModel.entryTypes)
 
         for (entryId, field) in relationshipsToResolve {
             if let entry = cache.entry(for: entryId) as? NSObject {
@@ -251,62 +149,73 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
                 }
             }
         }
+        relationshipsToResolve.removeAll()
     }
 
-    // MARK: - SyncSpaceDelegate
+    // MARK: - PersistenceDelegate
 
     /**
-     This function is public as a side-effect of implementing `SyncSpaceDelegate`.
+     This function is public as a side-effect of implementing `PersistenceDelegate`.
 
      - parameter asset: The newly created Asset
      */
-    public func create(asset: Contentful.Asset) {
-        if mappingForAssets == nil {
-            mappingForAssets = deriveMapping(Array(asset.fields.keys), type: typeForAssets)
+    public func create(asset: Asset) {
+        let type = persistenceModel.assetType
+        let fetched: [AssetPersistable]? = try? persistentStore.fetchAll(type: type, predicate: predicate(for: asset.id))
+        let persisted: AssetPersistable
 
-            for keyPath in ["file", "file.details.image"] {
-                if let fileFields = asset.fields.value(forKeyPath: keyPath) as? [String: AnyObject] {
-                    mappingForAssets! = mappingForAssets! + deriveMapping(Array(fileFields.keys), type: typeForAssets, prefix: "\(keyPath).")
-                }
-            }
+        if let fetched = fetched?.first {
+            persisted = fetched
+        } else {
+            persisted = try! persistentStore.create(type: type)
+            persisted.id = asset.id
         }
 
-        create(asset.id, fields: asset.fields, type: typeForAssets, mapping: mappingForAssets)
+        self.update(assetPersistable: persisted, of: type, with: asset)
     }
 
-    /**
+
+    /** Never call this directly.
      This function is public as a side-effect of implementing `SyncSpaceDelegate`.
 
      - parameter entry: The newly created Entry
      */
     public func create(entry: Entry) {
 
-        if let contentTypeId = entry.sys.contentTypeId, let type = typesForEntries[contentTypeId] {
-            var mapping = mappingForEntries[contentTypeId]
+        if let contentTypeId = entry.sys.contentTypeId, let type = persistenceModel.entryTypes.filter({ $0.contentTypeId == contentTypeId }).first {
 
-            // FIXME: Remove this check?
-            if mapping == nil {
-                mapping = self.deriveMapping(Array(entry.fields.keys), type: type)
+            let fetched: [EntryPersistable]? = try? persistentStore.fetchAll(type: type, predicate: predicate(for: entry.id))
+            let persisted: EntryPersistable
+
+            if let fetched = fetched?.first {
+                persisted = fetched
+            } else {
+                persisted = try! persistentStore.create(type: type)
+                persisted.id = entry.id
             }
 
-            create(entry.id, fields: entry.fields, type: type, mapping: mapping!)
+            // Populate with data from the `Entry`
+            self.updateFields(for: persisted, of: type, with: entry)
+
+            // TODO: Refactor relationships in the same way.
+            // Now cache all the relationships.
 
             // ContentTypeId to either a single entry id or an array of entry id's to be linked.
-            var relationships = [String: Any]()
+            var relationships = [ContentTypeID: Any]()
 
             // Get fieldNames which are links/relationships/references to other types.
-            if let relationshipNames = try? store.relationships(for: type) {
+            if let relationshipNames = try? persistentStore.relationships(for: type) {
 
                 for relationshipName in relationshipNames {
 
-                    if let target = entry.fields[relationshipName] {
-                        if let targets = target as? [Link] {
+                    if let linkedValue = entry.fields[relationshipName] {
+                        if let targets = linkedValue as? [Link] {
                             // One-to-many.
                             relationships[relationshipName] = targets.map { $0.id }
                         } else {
                             // One-to-one.
-                            assert(target is Link)
-                            relationships[relationshipName] = (target as! Link).id
+                            assert(linkedValue is Link)
+                            relationships[relationshipName] = (linkedValue as! Link).id
                         }
                     }
                 }
@@ -316,14 +225,13 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
         }
     }
 
-
     /**
-     This function is public as a side-effect of implementing `SyncSpaceDelegate`.
+     This function is public as a side-effect of implementing `PersistenceDelegate`.
 
      - parameter assetId: The ID of the deleted Asset
      */
     public func delete(assetWithId: String) {
-        _ = try? store.delete(type: typeForAssets, predicate: predicate(for: assetWithId))
+        _ = try? persistentStore.delete(type: persistenceModel.assetType, predicate: predicate(for: assetWithId))
     }
 
     /**
@@ -334,8 +242,85 @@ public class ContentfulSynchronizer: SyncSpaceDelegate {
     public func delete(entryWithId: String) {
         let predicate = ContentfulPersistence.predicate(for: entryWithId)
 
-        for type in typesForEntries.values {
-            _ = try? self.store.delete(type: type, predicate: predicate)
+        for type in persistenceModel.entryTypes {
+            _ = try? self.persistentStore.delete(type: type, predicate: predicate)
+        }
+    }
+
+    // MARK: Private
+
+    fileprivate func sharedPropertyNames(for entryType: EntryPersistable.Type, and fields: [FieldName: Any]) -> [FieldName] {
+        if let sharedPropertyNames = sharedEntryPropertyNames[entryType.contentTypeId] {
+            return sharedPropertyNames
+        }
+
+        // TODO: Could also mirror `Sys` to see what sys properties exist?
+        let persistablePropertyNames = Set(try! persistentStore.properties(for: entryType))
+        let entryFieldNames = Set(fields.keys)
+        let sharedPropertyNames = Array(persistablePropertyNames.intersection(entryFieldNames))
+
+        // Cache.
+        sharedEntryPropertyNames[entryType.contentTypeId] = sharedPropertyNames
+        return sharedPropertyNames
+    }
+
+    fileprivate var sharedEntryPropertyNames: [ContentTypeID: [FieldName]] = [ContentTypeID: [FieldName]]()
+
+    fileprivate func updateFields(for entryPersistable: EntryPersistable, of type: EntryPersistable.Type, with entry: Entry) {
+        // KVC only works with NSObject types.
+        guard let persistable = entryPersistable as? NSObject else { return }
+
+        let sharedPropertyNames = self.sharedPropertyNames(for: type, and: entry.fields)
+
+        for propertyName in sharedPropertyNames {
+            var fieldValue = entry.fields[propertyName]
+
+            // handle symbol arrays
+            if let array = fieldValue as? [Any] {
+                fieldValue = NSKeyedArchiver.archivedData(withRootObject: array)
+            }
+            persistable.setValue(fieldValue, forKey: propertyName)
+        }
+
+        // TODO: Go through Sys properties as well!
+        // Check if persistable has an `updatedAt`, `createdAt`, etc...
+    }
+
+    fileprivate var sharedAssetPropertyNames: [FieldName]?
+
+    fileprivate func sharedAssetPropertyNames(for assetType: ContentPersistable.Type, asset: Asset) -> [FieldName] {
+
+        if let sharedAssetPropertyNames = sharedAssetPropertyNames {
+            return sharedAssetPropertyNames
+        }
+
+
+        let persistablePropertyNames = Set(try! persistentStore.properties(for: assetType))
+        let sharedPropertyNames = Array(persistablePropertyNames.intersection(Set(["urlString", "title", "description"])))
+
+        sharedAssetPropertyNames = sharedPropertyNames
+        return sharedPropertyNames
+    }
+
+    fileprivate func update(assetPersistable: ContentPersistable, of type: ContentPersistable.Type, with asset: Asset) {
+        // KVC only works with NSObject types.
+        guard let persistable = assetPersistable as? NSObject else { return }
+
+        let sharedPropertyNames = sharedAssetPropertyNames(for: type, asset: asset)
+
+        // `Asset`s always have same properties.
+        if sharedPropertyNames.contains("urlString") {
+            persistable.setValue(asset.urlString, forKey: "urlString")
+        }
+
+        if sharedPropertyNames.contains("title") {
+            persistable.setValue(asset.title, forKey: "title")
+        }
+
+        if sharedPropertyNames.contains("description") {
+            persistable.setValue(asset.description, forKey: "description")
         }
     }
 }
+
+

@@ -1,2 +1,2 @@
-github "contentful/contentful.swift" ~> 0.6.1
+git "/Users/jpwright/Contentful/swift/SDK/contentful.swift" "feature/persistence-compatibility/mapped-content"
 

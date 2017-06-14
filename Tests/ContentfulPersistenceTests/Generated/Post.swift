@@ -8,10 +8,9 @@
 
 import Foundation
 import CoreData
-import ContentfulPersistence
 
 @objc(Post)
-class Post: NSManagedObject, Resource {
+class Post: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 

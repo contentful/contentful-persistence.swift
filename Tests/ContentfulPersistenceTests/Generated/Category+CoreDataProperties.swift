@@ -11,12 +11,14 @@
 
 import Foundation
 import CoreData
+import Contentful
 
-extension Category {
+extension Category: EntryPersistable {
+
+    static let contentTypeId = "5KMiN6YPvi42icqAUQMCQe"
 
     @NSManaged var id: String?
     @NSManaged var title: String?
     @NSManaged var categoryInverse: NSSet?
     @NSManaged var icon: Asset?
-
 }
