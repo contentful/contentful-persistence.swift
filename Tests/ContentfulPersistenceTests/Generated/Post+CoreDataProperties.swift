@@ -11,20 +11,28 @@
 
 import Foundation
 import CoreData
+import ContentfulPersistence
 import Contentful
 
 extension Post: EntryPersistable {
     
     static let contentTypeId = "2wKn6yEnZewu2SCCkus4as"
 
+    @NSManaged var id: String?
+    @NSManaged var createdAt: Date?
+    @NSManaged var updatedAt: Date?
     @NSManaged var body: String?
     @NSManaged var comments: NSNumber?
     @NSManaged var date: NSDate?
-    @NSManaged var id: String?
     @NSManaged var slug: String?
     @NSManaged var tags: Data?
     @NSManaged var title: String?
     @NSManaged var author: NSOrderedSet?
     @NSManaged var category: NSOrderedSet?
     @NSManaged var featuredImage: Asset?
+
+
+    static func mapping() -> [FieldName: String]? {
+        return ["title": "title"]
+    }
 }

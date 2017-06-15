@@ -61,8 +61,8 @@ class DataCache: DataCacheProtocol {
         let assets: [AssetPersistable]? = try? persistenceStore.fetchAll(type: assetType, predicate: truePredicate)
         assets?.forEach { type(of: self).cacheResource(in: assetCache, resource: $0) }
 
-        entryTypes.forEach {
-            let entries: [EntryPersistable]? = try? persistenceStore.fetchAll(type: $0, predicate: truePredicate)
+        for entryType in entryTypes {
+            let entries: [EntryPersistable]? = try? persistenceStore.fetchAll(type: entryType, predicate: truePredicate)
             entries?.forEach { type(of: self).cacheResource(in: entryCache, resource: $0) }
         }
     }

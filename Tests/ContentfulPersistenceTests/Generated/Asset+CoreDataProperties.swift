@@ -11,13 +11,15 @@
 
 import Foundation
 import CoreData
-import Contentful
+import ContentfulPersistence
 
 extension Asset: AssetPersistable {
 
     @NSManaged var height: NSNumber?
     @NSManaged var id: String?
     @NSManaged var title: String?
+    @NSManaged var createdAt: Date?
+    @NSManaged var updatedAt: Date?
     @NSManaged var assetDescription: String?
     @NSManaged var internetMediaType: String?
     @NSManaged var urlString: String?

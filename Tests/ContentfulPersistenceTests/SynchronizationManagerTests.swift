@@ -23,7 +23,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
         return CoreDataStore(context: self.managedObjectContext)
     }()
 
-    var sync: ContentfulSynchronizer!
+    var sync: SynchronizationManager!
 
     func postTests(expectations: @escaping TestFunc) {
         waitUntil(timeout: 10) { done in
@@ -49,10 +49,10 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
 
             let persistenceModel = PersistenceModel(spaceType: SyncInfo.self, assetType: Asset.self, entryTypes: entryTypes)
 
-            let contentfulSynchronizer = ContentfulSynchronizer(persistenceStore: self.store, persistenceModel: persistenceModel)
+            let synchronizationManager = SynchronizationManager(persistenceStore: self.store, persistenceModel: persistenceModel)
 
-            self.client = Client(spaceId: "dqpnpm0n4e75", accessToken: "95c33f933385aa838825526c5753f3b5a7e59bb45cd6b5d78e15bfeafeef1b13", persistenceDelegate: contentfulSynchronizer)
-            self.sync = contentfulSynchronizer
+            self.client = Client(spaceId: "dqpnpm0n4e75", accessToken: "95c33f933385aa838825526c5753f3b5a7e59bb45cd6b5d78e15bfeafeef1b13", persistenceDelegate: synchronizationManager)
+            self.sync = synchronizationManager
 
             self.deleteCoreDataStore()
         }

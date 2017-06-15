@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A1A9FBEE1CABE8EA00430734 /* ContentfulPersistence.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A9FBE31CABE8EA00430734 /* ContentfulPersistence.framework */; };
-		ED10E88B1E48AB840061741F /* ContentfulSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* ContentfulSynchronizer.swift */; };
+		ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
 		ED10E88D1E48AB840061741F /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
 		ED10E8B51E48ACB00061741F /* Test.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8AB1E48AC870061741F /* Test.xcdatamodeld */; };
@@ -24,18 +24,18 @@
 		ED10E8BF1E48ACBD0061741F /* SyncInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E89A1E48AC720061741F /* SyncInfo.swift */; };
 		ED10E8C01E48ACBD0061741F /* SyncInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E89B1E48AC720061741F /* SyncInfo+CoreDataProperties.swift */; };
 		ED10E8C31E48ACBD0061741F /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8A81E48AC870061741F /* CoreDataTests.swift */; };
-		ED10E8C81E48BCAE0061741F /* ContentfulPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8A71E48AC870061741F /* ContentfulPersistenceTests.swift */; };
-		ED10E8D61E48BF1D0061741F /* ContentfulSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* ContentfulSynchronizer.swift */; };
+		ED10E8C81E48BCAE0061741F /* SynchronizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */; };
+		ED10E8D61E48BF1D0061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E8D71E48BF1D0061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
 		ED10E8D81E48BF1D0061741F /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
 		ED10E8DE1E48CB100061741F /* ContentfulPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = ED10E8DC1E48CB100061741F /* ContentfulPersistence.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED10E8E01E48CB160061741F /* ContentfulPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = ED10E8DC1E48CB100061741F /* ContentfulPersistence.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED10E8FF1E48CBBE0061741F /* ContentfulPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = ED10E8DC1E48CB100061741F /* ContentfulPersistence.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED10E9001E48CBBF0061741F /* ContentfulPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = ED10E8DC1E48CB100061741F /* ContentfulPersistence.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ED10E9011E48CD1E0061741F /* ContentfulSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* ContentfulSynchronizer.swift */; };
+		ED10E9011E48CD1E0061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E9021E48CD1E0061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
 		ED10E9031E48CD1E0061741F /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
-		ED10E9071E48CD1F0061741F /* ContentfulSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* ContentfulSynchronizer.swift */; };
+		ED10E9071E48CD1F0061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E9081E48CD1F0061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
 		ED10E9091E48CD1F0061741F /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
 		ED2C99951ED42C350039056E /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99921ED42C350039056E /* Contentful.framework */; };
@@ -55,6 +55,14 @@
 		ED2C99B51ED42E040039056E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99851ED42C190039056E /* Nimble.framework */; };
 		ED2C99B61ED42E040039056E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99861ED42C190039056E /* ObjectMapper.framework */; };
 		ED2C99B71ED42E040039056E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99871ED42C190039056E /* Quick.framework */; };
+		ED9C21F51EF2C4FB00882ABF /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F41EF2C4FB00882ABF /* Persistable.swift */; };
+		ED9C21F61EF2C4FB00882ABF /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F41EF2C4FB00882ABF /* Persistable.swift */; };
+		ED9C21F71EF2C4FB00882ABF /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F41EF2C4FB00882ABF /* Persistable.swift */; };
+		ED9C21F81EF2C4FB00882ABF /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F41EF2C4FB00882ABF /* Persistable.swift */; };
+		ED9C21FA1EF3DBD600882ABF /* PersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */; };
+		ED9C21FB1EF3DBD600882ABF /* PersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */; };
+		ED9C21FC1EF3DBD600882ABF /* PersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */; };
+		ED9C21FD1EF3DBD600882ABF /* PersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +78,7 @@
 /* Begin PBXFileReference section */
 		A1A9FBE31CABE8EA00430734 /* ContentfulPersistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContentfulPersistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A9FBED1CABE8EA00430734 /* ContentfulPersistenceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulPersistenceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED10E8841E48AB840061741F /* ContentfulSynchronizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentfulSynchronizer.swift; sourceTree = "<group>"; };
+		ED10E8841E48AB840061741F /* SynchronizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizationManager.swift; sourceTree = "<group>"; };
 		ED10E8851E48AB840061741F /* CoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		ED10E8861E48AB840061741F /* DataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
 		ED10E8921E48AC720061741F /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
@@ -83,7 +91,7 @@
 		ED10E8991E48AC720061741F /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		ED10E89A1E48AC720061741F /* SyncInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncInfo.swift; sourceTree = "<group>"; };
 		ED10E89B1E48AC720061741F /* SyncInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SyncInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		ED10E8A71E48AC870061741F /* ContentfulPersistenceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentfulPersistenceTests.swift; path = ContentfulPersistenceTests/ContentfulPersistenceTests.swift; sourceTree = "<group>"; };
+		ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SynchronizationManagerTests.swift; path = ContentfulPersistenceTests/SynchronizationManagerTests.swift; sourceTree = "<group>"; };
 		ED10E8A81E48AC870061741F /* CoreDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataTests.swift; path = ContentfulPersistenceTests/CoreDataTests.swift; sourceTree = "<group>"; };
 		ED10E8AA1E48AC870061741F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ContentfulPersistenceTests/Info.plist; sourceTree = "<group>"; };
 		ED10E8AC1E48AC870061741F /* Test.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Test.xcdatamodel; sourceTree = "<group>"; };
@@ -113,6 +121,8 @@
 		ED2C99AA1ED42CB70039056E /* Contentful.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contentful.framework; path = Carthage/Build/tvOS/Contentful.framework; sourceTree = "<group>"; };
 		ED2C99AB1ED42CB70039056E /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/tvOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED2C99AC1ED42CB70039056E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/tvOS/ObjectMapper.framework; sourceTree = "<group>"; };
+		ED9C21F41EF2C4FB00882ABF /* Persistable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistable.swift; sourceTree = "<group>"; };
+		ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,7 +226,9 @@
 		A1A9FBE51CABE8EA00430734 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				ED10E8841E48AB840061741F /* ContentfulSynchronizer.swift */,
+				ED10E8841E48AB840061741F /* SynchronizationManager.swift */,
+				ED9C21F41EF2C4FB00882ABF /* Persistable.swift */,
+				ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */,
 				ED10E8851E48AB840061741F /* CoreDataStore.swift */,
 				ED10E8861E48AB840061741F /* DataCache.swift */,
 			);
@@ -227,7 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				A15B70A61CAD47070019DBCC /* Generated */,
-				ED10E8A71E48AC870061741F /* ContentfulPersistenceTests.swift */,
+				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
 				ED10E8A81E48AC870061741F /* CoreDataTests.swift */,
 				ED10E8AA1E48AC870061741F /* Info.plist */,
 				ED10E8AB1E48AC870061741F /* Test.xcdatamodeld */,
@@ -555,7 +567,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */,
-				ED10E88B1E48AB840061741F /* ContentfulSynchronizer.swift in Sources */,
+				ED9C21FA1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
+				ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */,
+				ED9C21F51EF2C4FB00882ABF /* Persistable.swift in Sources */,
 				ED10E88D1E48AB840061741F /* DataCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -574,7 +588,7 @@
 				ED10E8BD1E48ACBD0061741F /* Post.swift in Sources */,
 				ED10E8C01E48ACBD0061741F /* SyncInfo+CoreDataProperties.swift in Sources */,
 				ED10E8BB1E48ACBD0061741F /* Category.swift in Sources */,
-				ED10E8C81E48BCAE0061741F /* ContentfulPersistenceTests.swift in Sources */,
+				ED10E8C81E48BCAE0061741F /* SynchronizationManagerTests.swift in Sources */,
 				ED10E8BC1E48ACBD0061741F /* Category+CoreDataProperties.swift in Sources */,
 				ED10E8BF1E48ACBD0061741F /* SyncInfo.swift in Sources */,
 				ED10E8C31E48ACBD0061741F /* CoreDataTests.swift in Sources */,
@@ -586,7 +600,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED10E8D71E48BF1D0061741F /* CoreDataStore.swift in Sources */,
-				ED10E8D61E48BF1D0061741F /* ContentfulSynchronizer.swift in Sources */,
+				ED9C21FB1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
+				ED10E8D61E48BF1D0061741F /* SynchronizationManager.swift in Sources */,
+				ED9C21F61EF2C4FB00882ABF /* Persistable.swift in Sources */,
 				ED10E8D81E48BF1D0061741F /* DataCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -596,7 +612,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED10E9021E48CD1E0061741F /* CoreDataStore.swift in Sources */,
-				ED10E9011E48CD1E0061741F /* ContentfulSynchronizer.swift in Sources */,
+				ED9C21FC1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
+				ED10E9011E48CD1E0061741F /* SynchronizationManager.swift in Sources */,
+				ED9C21F71EF2C4FB00882ABF /* Persistable.swift in Sources */,
 				ED10E9031E48CD1E0061741F /* DataCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,7 +624,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED10E9081E48CD1F0061741F /* CoreDataStore.swift in Sources */,
-				ED10E9071E48CD1F0061741F /* ContentfulSynchronizer.swift in Sources */,
+				ED9C21FD1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
+				ED10E9071E48CD1F0061741F /* SynchronizationManager.swift in Sources */,
+				ED9C21F81EF2C4FB00882ABF /* Persistable.swift in Sources */,
 				ED10E9091E48CD1F0061741F /* DataCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,9 +26,9 @@ class CoreDataTests: ContentfulPersistenceTestBase {
             let store = CoreDataStore(context: self.managedObjectContext)
 
             do {
-                let relationships = try store.properties(for: Category.self)
+                let properties = try store.properties(for: Category.self)
 
-                expect(relationships).to(equal(["title", "id"]))
+                expect(Set(properties)).to(equal(Set(["title", "id", "createdAt", "updatedAt"])))
             } catch {
                 XCTAssert(false, "Storing properties for Categories should not throw an error")
             }
