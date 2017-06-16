@@ -1,5 +1,5 @@
-git "/Users/jpwright/Contentful/swift/SDK/contentful.swift" "393948f41464d146f172e727ebd5a62561062e82"
 github "Hearst-DD/ObjectMapper" "2.2.7"
 github "JensRavens/Interstellar" "2.0.0"
 github "Quick/Nimble" "v6.1.0"
 github "Quick/Quick" "v1.1.0"
+github "contentful/contentful.swift" "0.7.1"
