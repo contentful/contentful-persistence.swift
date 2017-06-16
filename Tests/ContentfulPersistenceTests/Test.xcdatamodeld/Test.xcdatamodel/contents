@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Asset" representedClassName="Asset" syncable="YES">
+        <attribute name="assetDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="height" optional="YES" attributeType="Float" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -49,7 +50,7 @@
         <attribute name="syncToken" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Asset" positionX="0" positionY="0" width="128" height="210"/>
+        <element name="Asset" positionX="0" positionY="0" width="128" height="225"/>
         <element name="Author" positionX="0" positionY="0" width="128" height="165"/>
         <element name="Category" positionX="0" positionY="0" width="128" height="135"/>
         <element name="Post" positionX="0" positionY="0" width="128" height="225"/>

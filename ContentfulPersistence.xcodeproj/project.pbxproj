@@ -238,11 +238,11 @@
 		A1A9FBF11CABE8EA00430734 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				ED10E8AB1E48AC870061741F /* Test.xcdatamodeld */,
 				A15B70A61CAD47070019DBCC /* Generated */,
 				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
 				ED10E8A81E48AC870061741F /* CoreDataTests.swift */,
 				ED10E8AA1E48AC870061741F /* Info.plist */,
-				ED10E8AB1E48AC870061741F /* Test.xcdatamodeld */,
 				ED10E8AD1E48AC870061741F /* TestBase.swift */,
 			);
 			path = Tests;

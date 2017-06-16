@@ -32,40 +32,18 @@ public class SynchronizationManager: PersistenceDelegate {
     }
 
     fileprivate let persistenceModel: PersistenceModel
+    
+    fileprivate let persistentStore: PersistenceStore
 
-    public let persistentStore: PersistenceStore
-
-    var syncToken: String? {
+    fileprivate var syncToken: String? {
         return fetchSpace().syncToken
     }
 
-    // MARK: - Helpers
-
-    fileprivate func fetchSpace() -> SyncSpacePersistable {
-        let createNewPersistentSpace: () -> (SyncSpacePersistable) = {
-            let spacePersistable: SyncSpacePersistable = try! self.persistentStore.create(type: self.persistenceModel.spaceType)
-            return spacePersistable
-        }
-
-        guard let fetchedResults = try? persistentStore.fetchAll(type: persistenceModel.spaceType, predicate: NSPredicate(value: true)) as [SyncSpacePersistable] else {
-            return createNewPersistentSpace()
-        }
-
-        assert(fetchedResults.count <= 1)
-
-        guard let space = fetchedResults.first else {
-            return createNewPersistentSpace()
-        }
-
-        return space
-    }
-
-    public func create(syncSpace: SyncSpace) {
+    public func update(syncToken: String) {
         let space = fetchSpace()
-        space.syncToken = syncSpace.syncToken
+        space.syncToken = syncToken
     }
 
-    // KEEP!
     public func resolveRelationships() {
 
         let cache = DataCache(persistenceStore: persistentStore, assetType: persistenceModel.assetType, entryTypes: persistenceModel.entryTypes)
@@ -110,9 +88,11 @@ public class SynchronizationManager: PersistenceDelegate {
         }
 
         // Populate persistable with sys and fields data from the `Asset`
-        persistable.updatedAt = asset.sys.updatedAt
-        persistable.createdAt = asset.sys.updatedAt
-        update(assetPersistable: persistable, of: type, with: asset)
+        persistable.title               = asset.title
+        persistable.updatedAt           = asset.sys.updatedAt
+        persistable.createdAt           = asset.sys.updatedAt
+        persistable.urlString           = asset.urlString
+        persistable.assetDescription    = asset.description
     }
 
 
@@ -139,10 +119,10 @@ public class SynchronizationManager: PersistenceDelegate {
         // Populate persistable with sys and fields data from the `Entry`
         persistable.updatedAt = entry.sys.updatedAt
         persistable.createdAt = entry.sys.updatedAt
+
         updateFields(for: persistable, of: type, with: entry)
 
-        // TODO: Refactor relationships in the same way.
-        // Now cache all the relationships.
+        // Now handle and cache all the relationships.
 
         // ContentTypeId to either a single entry id or an array of entry id's to be linked.
         var relationships = [ContentTypeId: Any]()
@@ -190,9 +170,12 @@ public class SynchronizationManager: PersistenceDelegate {
         }
     }
 
-    // MARK: Private
+    public func save() {
+        try! persistentStore.save()
+    }
 
-    // MARK: Entry mapping
+
+    // MARK: Private
 
     // Dictionary mapping Entry identifier's to a dictionary with fieldName to related entry id's.
     fileprivate var relationshipsToResolve = [String: [FieldName: Any]]()
@@ -234,47 +217,29 @@ public class SynchronizationManager: PersistenceDelegate {
         }
     }
 
-    // MARK: Asset mapping
-
-    fileprivate var sharedAssetPropertyNames: [FieldName]?
-
-    fileprivate func sharedAssetPropertyNames(for assetType: ContentPersistable.Type, asset: Asset) -> [FieldName] {
-
-        if let sharedAssetPropertyNames = sharedAssetPropertyNames {
-            return sharedAssetPropertyNames
+    fileprivate func fetchSpace() -> SyncSpacePersistable {
+        let createNewPersistentSpace: () -> (SyncSpacePersistable) = {
+            let spacePersistable: SyncSpacePersistable = try! self.persistentStore.create(type: self.persistenceModel.spaceType)
+            return spacePersistable
         }
 
-        let persistablePropertyNames = Set(try! persistentStore.properties(for: assetType))
-        let sharedPropertyNames = Array(persistablePropertyNames.intersection(Set(["urlString", "title", "description"])))
-
-        sharedAssetPropertyNames = sharedPropertyNames
-        return sharedPropertyNames
-    }
-
-    fileprivate func update(assetPersistable: ContentPersistable, of type: ContentPersistable.Type, with asset: Asset) {
-        // KVC only works with NSObject types.
-        guard let persistable = assetPersistable as? NSObject else { return }
-
-        let sharedPropertyNames = sharedAssetPropertyNames(for: type, asset: asset)
-
-        // `Asset`s always have same properties.
-        if sharedPropertyNames.contains("urlString") {
-            persistable.setValue(asset.urlString, forKey: "urlString")
+        guard let fetchedResults = try? persistentStore.fetchAll(type: persistenceModel.spaceType, predicate: NSPredicate(value: true)) as [SyncSpacePersistable] else {
+            return createNewPersistentSpace()
         }
 
-        if sharedPropertyNames.contains("title") {
-            persistable.setValue(asset.title, forKey: "title")
+        assert(fetchedResults.count <= 1)
+
+        guard let space = fetchedResults.first else {
+            return createNewPersistentSpace()
         }
 
-        // FIXME: "description" is broken.
-        if sharedPropertyNames.contains("description") {
-            persistable.setValue(asset.description, forKey: "description")
-        }
+        return space
     }
 }
 
 extension Dictionary {
 
+    // Helper initializer to allow declarative style Dictionary initialization using an array of tuples.
     init(elements: [(Key, Value)]) {
         self.init()
         for (key, value) in elements {

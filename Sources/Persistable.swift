@@ -25,10 +25,13 @@ public struct PersistenceModel {
 // 1) CoreData requires that model classes inherit from `NSManagedObject`
 // 2) @objc enables optional protocol methods that don't require implementation.
 public protocol ContentPersistable: class {
+    /// The unique identifier of the Resource.
     var id: String? { get set }
 
+    /// The date representing the last time the Contentful Resource was updated.
     var updatedAt: Date? { get set }
 
+    /// The date that the Contentful Resource was first created.
     var createdAt: Date? { get set }
 }
 
@@ -62,7 +65,7 @@ public protocol EntryPersistable: ContentPersistable {
 
 public extension EntryPersistable {
 
-    // TODO: Make it a mapping of FieldNames to Swift 4 keypaths!
+    // Default implementation returns `nil` so that the `SynchornizationManager` will infer the mapping instead.
     static func mapping() -> [FieldName: String]? {
         return nil
     }
