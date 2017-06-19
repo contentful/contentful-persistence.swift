@@ -26,7 +26,7 @@ public struct PersistenceModel {
 // 2) @objc enables optional protocol methods that don't require implementation.
 public protocol ContentPersistable: class {
     /// The unique identifier of the Resource.
-    var id: String? { get set }
+    var id: String { get set }
 
     /// The date representing the last time the Contentful Resource was updated.
     var updatedAt: Date? { get set }

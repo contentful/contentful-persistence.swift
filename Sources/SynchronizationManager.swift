@@ -14,7 +14,20 @@ func predicate(for id: String) -> NSPredicate {
 }
 
 /// Provides the ability to sync content from Contentful to a persistence store.
-public class SynchronizationManager: PersistenceDelegate {
+public class SynchronizationManager: PersistenceIntegration {
+
+    // MARK: Integration
+
+    public let name: String = "ContentfulPersistence"
+
+    public var version: String {
+        guard
+            let bundleInfo = Bundle(for: Client.self).infoDictionary,
+            let versionNumberString = bundleInfo["CFBundleShortVersionString"] as? String
+            else { return "Unknown" }
+
+        return versionNumberString
+    }
 
     /**
      Instantiate a new SynchronizationManager.
@@ -32,10 +45,10 @@ public class SynchronizationManager: PersistenceDelegate {
     }
 
     fileprivate let persistenceModel: PersistenceModel
-    
+
     fileprivate let persistentStore: PersistenceStore
 
-    fileprivate var syncToken: String? {
+    public var syncToken: String? {
         return fetchSpace().syncToken
     }
 
@@ -103,9 +116,9 @@ public class SynchronizationManager: PersistenceDelegate {
      */
     public func create(entry: Entry) {
 
-        guard let contentTypeId = entry.sys.contentTypeId, let type = persistenceModel.entryTypes.filter({ $0.contentTypeId == contentTypeId }).first else {
-            return
-        }
+        guard let contentTypeId = entry.sys.contentTypeId else { return }
+        guard let type = persistenceModel.entryTypes.filter({ $0.contentTypeId == contentTypeId }).first else { return }
+
         let fetched: [EntryPersistable]? = try? persistentStore.fetchAll(type: type, predicate: predicate(for: entry.id))
         let persistable: EntryPersistable
 

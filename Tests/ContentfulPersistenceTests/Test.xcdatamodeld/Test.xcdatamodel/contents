@@ -4,9 +4,9 @@
         <attribute name="assetDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="height" optional="YES" attributeType="Float" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="internetMediaType" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="urlString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="width" optional="YES" attributeType="Float" usesScalarValueType="NO" syncable="YES"/>
@@ -17,7 +17,7 @@
     <entity name="Author" representedClassName="Author" syncable="YES">
         <attribute name="biography" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
@@ -26,7 +26,7 @@
     </entity>
     <entity name="Category" representedClassName="Category" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="categoryInverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="category" inverseEntity="Post" syncable="YES"/>
@@ -37,7 +37,7 @@
         <attribute name="comments" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tags" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>

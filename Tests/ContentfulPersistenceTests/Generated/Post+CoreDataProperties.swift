@@ -18,7 +18,7 @@ extension Post: EntryPersistable {
     
     static let contentTypeId = "2wKn6yEnZewu2SCCkus4as"
 
-    @NSManaged var id: String?
+    @NSManaged var id: String
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
     @NSManaged var body: String?
