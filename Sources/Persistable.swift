@@ -58,10 +58,11 @@ public protocol EntryPersistable: ContentPersistable {
     static var contentTypeId: ContentTypeId { get }
 
     /// This method has a defualt implementation that maps `Entry` fields to properties with the same name.
-    /// Override this method to provide a custom mapping.
+    /// Override this method to provide a custom mapping. Note that after Swift 4 is release, this method will
+    /// be deprecated in favor of leveraging the auto-synthesized `CodingKeys` enum that is generated for all
+    /// types conforming to `Codable`.
     static func mapping() -> [FieldName: String]?
 }
-
 
 public extension EntryPersistable {
 
