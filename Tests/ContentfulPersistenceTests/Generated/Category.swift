@@ -11,7 +11,7 @@ import CoreData
 import ContentfulPersistence
 
 @objc(Category)
-class Category: NSManagedObject, Resource {
+class Category: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 

@@ -6,6 +6,7 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
+import Contentful
 import CoreData
 
 enum Errors: Error {

@@ -11,10 +11,9 @@
 
 import Foundation
 import CoreData
+import ContentfulPersistence
 
-extension SyncInfo {
+extension SyncInfo: SyncSpacePersistable {
 
-    @NSManaged var lastSyncTimestamp: Date?
     @NSManaged var syncToken: String?
-
 }

@@ -1,16 +1,16 @@
 language: objective-c
 osx_image: xcode8.3
 rvm:
-  - 2.3.0
+  - 2.4.1
 before_install:
   - brew update
   - brew outdated carthage || brew upgrade carthage
   - brew outdated swiftlint || brew upgrade swiftlint
 before_script:
-  - carthage bootstrap --platform iOS --no-use-binaries
+  - carthage bootstrap --platform iOS
 script:
-- xcodebuild test -project ContentfulPersistence.xcodeproj -scheme ContentfulPersistence_iOS -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6s,OS=10.3" | xcpretty -c
+  - ./Scripts/travis-build-test.sh
 after_success:
-- bundle exec slather coverage --coveralls ContentfulPersistence.xcodeproj
-- pod lib lint ContentfulPersistenceSwift.podspec
+  - bundle exec slather coverage --coveralls ContentfulPersistence.xcodeproj
+  - pod lib lint ContentfulPersistenceSwift.podspec
 

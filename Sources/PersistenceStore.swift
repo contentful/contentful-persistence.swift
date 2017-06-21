@@ -1,14 +1,14 @@
 //
-//  PersistenceStore.swift
+//  PersistentStore.swift
 //  ContentfulPersistence
 //
-//  Created by Boris Bügling on 30/03/16.
-//  Copyright © 2016 Contentful GmbH. All rights reserved.
+//  Created by JP Wright on 16.06.17.
+//  Copyright © 2017 Contentful GmbH. All rights reserved.
 //
 
 import Foundation
 
-/// Protocol for persistence stores used by `ContentfulSynchronizer`
+/// Protocol for persistence stores used by `SynchronizationManager`
 public protocol PersistenceStore {
     /**
      Create a new object of the given type.

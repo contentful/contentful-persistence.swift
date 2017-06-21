@@ -7,31 +7,32 @@
 //
 
 import Foundation
+import Contentful
 
 protocol DataCacheProtocol {
-    init(persistenceStore: PersistenceStore, assetType: Asset.Type, entryTypes: [Resource.Type])
+    init(persistenceStore: PersistenceStore, assetType: AssetPersistable.Type, entryTypes: [EntryPersistable.Type])
 
-    func entry(for identifier: String) -> Resource?
-    func item (for identifier: String) -> NSObject?
+    func entry(for identifier: String) -> EntryPersistable?
+    func item(for identifier: String) -> NSObject?
 }
 
 /// Does not actually cache anything, but directly uses the persistence store instead
 class NoDataCache: DataCacheProtocol {
-    fileprivate let assetType: Asset.Type
-    fileprivate let entryTypes: [Resource.Type]
+    fileprivate let assetType: AssetPersistable.Type
+    fileprivate let entryTypes: [EntryPersistable.Type]
     fileprivate let store: PersistenceStore
 
-    required init(persistenceStore: PersistenceStore, assetType: Asset.Type, entryTypes: [Resource.Type]) {
+    required init(persistenceStore: PersistenceStore, assetType: AssetPersistable.Type, entryTypes: [EntryPersistable.Type]) {
         self.assetType = assetType
         self.entryTypes = entryTypes
         self.store = persistenceStore
     }
 
-    fileprivate func itemsOf(_ types: [Resource.Type], identifier: String) -> Resource? {
+    fileprivate func itemsOf(_ types: [ContentPersistable.Type], identifier: String) -> EntryPersistable? {
         let predicate = ContentfulPersistence.predicate(for: identifier)
 
-        let items: [Resource] = types.flatMap {
-            if let result = try? store.fetchAll(type: $0, predicate: predicate) as [Resource] {
+        let items: [EntryPersistable] = types.flatMap {
+            if let result = try? store.fetchAll(type: $0, predicate: predicate) as [EntryPersistable] {
                 return result.first
             }
             return nil
@@ -40,7 +41,7 @@ class NoDataCache: DataCacheProtocol {
         return items.first
     }
 
-    func entry(for identifier: String) -> Resource? {
+    func entry(for identifier: String) -> EntryPersistable? {
         return itemsOf(entryTypes, identifier: identifier)
     }
 
@@ -54,24 +55,24 @@ class DataCache: DataCacheProtocol {
     fileprivate let assetCache = NSCache<AnyObject, AnyObject>()
     fileprivate let entryCache = NSCache<AnyObject, AnyObject>()
 
-    required init(persistenceStore: PersistenceStore, assetType: Asset.Type, entryTypes: [Resource.Type]) {
+    required init(persistenceStore: PersistenceStore, assetType: AssetPersistable.Type, entryTypes: [EntryPersistable.Type]) {
         let truePredicate = NSPredicate(value: true)
 
-        let assets: [Asset]? = try? persistenceStore.fetchAll(type: assetType, predicate: truePredicate)
+        let assets: [AssetPersistable]? = try? persistenceStore.fetchAll(type: assetType, predicate: truePredicate)
         assets?.forEach { type(of: self).cacheResource(in: assetCache, resource: $0) }
 
-        entryTypes.forEach {
-            let entries: [Resource]? = try? persistenceStore.fetchAll(type: $0, predicate: truePredicate)
+        for entryType in entryTypes {
+            let entries: [EntryPersistable]? = try? persistenceStore.fetchAll(type: entryType, predicate: truePredicate)
             entries?.forEach { type(of: self).cacheResource(in: entryCache, resource: $0) }
         }
     }
 
-    func asset(for identifier: String) -> Asset? {
-        return assetCache.object(forKey: identifier as AnyObject) as? Asset
+    func asset(for identifier: String) -> AssetPersistable? {
+        return assetCache.object(forKey: identifier as AnyObject) as? AssetPersistable
     }
 
-    func entry(for identifier: String) -> Resource? {
-        return entryCache.object(forKey: identifier as AnyObject) as? Resource
+    func entry(for identifier: String) -> EntryPersistable? {
+        return entryCache.object(forKey: identifier as AnyObject) as? EntryPersistable
     }
 
     func item(for identifier: String) -> NSObject? {
@@ -84,9 +85,7 @@ class DataCache: DataCacheProtocol {
         return target
     }
 
-    fileprivate static func cacheResource(in cache: NSCache<AnyObject, AnyObject>, resource: Resource) {
-        if let id = resource.id {
-            cache.setObject(resource as AnyObject, forKey: id as AnyObject)
-        }
+    fileprivate static func cacheResource(in cache: NSCache<AnyObject, AnyObject>, resource: ContentPersistable) {
+        cache.setObject(resource as AnyObject, forKey: resource.id as AnyObject)
     }
 }

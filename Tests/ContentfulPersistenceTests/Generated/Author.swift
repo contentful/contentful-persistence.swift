@@ -8,10 +8,9 @@
 
 import Foundation
 import CoreData
-import ContentfulPersistence
 
 @objc(Author)
-class Author: NSManagedObject, Resource {
+class Author: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 

@@ -11,14 +11,18 @@
 
 import Foundation
 import CoreData
+import ContentfulPersistence
 
-extension Author {
+extension Author: EntryPersistable {
 
-    @NSManaged var biography: String?
-    @NSManaged var id: String?
+    static let contentTypeId = "1kUEViTN4EmGiEaaeC6ouY"
+
+    @NSManaged var id: String
+    @NSManaged var createdAt: Date?
+    @NSManaged var updatedAt: Date?
     @NSManaged var name: String?
+    @NSManaged var biography: String?
     @NSManaged var website: String?
     @NSManaged var createdEntries: NSOrderedSet?
     @NSManaged var profilePhoto: Asset?
-
 }
