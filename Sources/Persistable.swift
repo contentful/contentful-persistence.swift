@@ -9,6 +9,11 @@
 import Foundation
 import Contentful
 
+/**
+ Structure used to define the schema of your CoreData model and it's correlation to your Content Model
+ in Contentful. Pass in your `NSManagedObject` subclasses conforming to `SyncSpacePersistable`,
+ `AssetPersistable` and `EntryPersistable` to properly map your content to CoreData entities.
+ */
 public struct PersistenceModel {
     public let spaceType: SyncSpacePersistable.Type
     public let assetType: AssetPersistable.Type
@@ -21,6 +26,9 @@ public struct PersistenceModel {
     }
 }
 
+/**
+ Base protocol for all `AssetPersistable` and `EntryPersistable`.
+ */
 // Protocols are marked with @objc attribute for two reasons:
 // 1) CoreData requires that model classes inherit from `NSManagedObject`
 // 2) @objc enables optional protocol methods that don't require implementation.
@@ -35,11 +43,21 @@ public protocol ContentPersistable: class {
     var createdAt: Date? { get set }
 }
 
+/**
+ Your `NSManagedObject` subclass should conform to this `SyncSpacePersistable` to enable continuing
+ a sync from a sync token on subsequent launches of your application rather than re-fetching all data
+ during an initialSync. See [Contentful's Content Delivery API docs](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization/pagination-and-subsequent-syncs) 
+ for more information.
+ */
 public protocol SyncSpacePersistable: class {
     /// The current synchronization token
     var syncToken: String? { get set }
 }
 
+/**
+ Conform to `AssetPersistable` protocol to enable mapping of your Contentful media Assets to
+ your `NSManagedObject` subclass.
+ */
 public protocol AssetPersistable: ContentPersistable {
     /// URL of the Asset.
     var urlString: String? { get set }
@@ -52,7 +70,10 @@ public protocol AssetPersistable: ContentPersistable {
     var assetDescription: String? { get set }
 }
 
-
+/**
+ Conform to `EntryPersistable` protocol to enable mapping of your Contentful content type to  
+ your `NSManagedObject` subclass.
+ */
 public protocol EntryPersistable: ContentPersistable {
     /// The identifier of the Contentful content type that will map to this type of `EntryPersistable`
     static var contentTypeId: ContentTypeId { get }
