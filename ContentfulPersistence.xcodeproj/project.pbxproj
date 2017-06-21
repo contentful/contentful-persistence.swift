@@ -23,7 +23,6 @@
 		ED10E8BE1E48ACBD0061741F /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8991E48AC720061741F /* Post+CoreDataProperties.swift */; };
 		ED10E8BF1E48ACBD0061741F /* SyncInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E89A1E48AC720061741F /* SyncInfo.swift */; };
 		ED10E8C01E48ACBD0061741F /* SyncInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E89B1E48AC720061741F /* SyncInfo+CoreDataProperties.swift */; };
-		ED10E8C31E48ACBD0061741F /* CoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8A81E48AC870061741F /* CoreDataTests.swift */; };
 		ED10E8C81E48BCAE0061741F /* SynchronizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */; };
 		ED10E8D61E48BF1D0061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E8D71E48BF1D0061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
@@ -92,7 +91,6 @@
 		ED10E89A1E48AC720061741F /* SyncInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncInfo.swift; sourceTree = "<group>"; };
 		ED10E89B1E48AC720061741F /* SyncInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SyncInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SynchronizationManagerTests.swift; path = ContentfulPersistenceTests/SynchronizationManagerTests.swift; sourceTree = "<group>"; };
-		ED10E8A81E48AC870061741F /* CoreDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataTests.swift; path = ContentfulPersistenceTests/CoreDataTests.swift; sourceTree = "<group>"; };
 		ED10E8AA1E48AC870061741F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ContentfulPersistenceTests/Info.plist; sourceTree = "<group>"; };
 		ED10E8AC1E48AC870061741F /* Test.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Test.xcdatamodel; sourceTree = "<group>"; };
 		ED10E8AD1E48AC870061741F /* TestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestBase.swift; path = ContentfulPersistenceTests/TestBase.swift; sourceTree = "<group>"; };
@@ -242,10 +240,9 @@
 			children = (
 				ED10E8AB1E48AC870061741F /* Test.xcdatamodeld */,
 				A15B70A61CAD47070019DBCC /* Generated */,
-				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
-				ED10E8A81E48AC870061741F /* CoreDataTests.swift */,
-				ED10E8AA1E48AC870061741F /* Info.plist */,
 				ED10E8AD1E48AC870061741F /* TestBase.swift */,
+				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
+				ED10E8AA1E48AC870061741F /* Info.plist */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -593,7 +590,6 @@
 				ED10E8C81E48BCAE0061741F /* SynchronizationManagerTests.swift in Sources */,
 				ED10E8BC1E48ACBD0061741F /* Category+CoreDataProperties.swift in Sources */,
 				ED10E8BF1E48ACBD0061741F /* SyncInfo.swift in Sources */,
-				ED10E8C31E48ACBD0061741F /* CoreDataTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

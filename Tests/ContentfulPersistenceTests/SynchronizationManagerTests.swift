@@ -66,6 +66,14 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
             }
         } }
 
+        it("can continue syncing from an existing sync token") { waitUntil(timeout: 10) { done in
+            let syncSpace = SyncSpace(syncToken: "w5ZGw6JFwqZmVcKsE8Kow4grw45QdybDqXt4XTFdw6tcwrMiwqpmwq7DlcOqZ8KnwpUiG1sZwr3Cq8OpFcKEUsOyPcOiQMOEITLDnyIkw4fDq8KAw6x_Mh3Dui_Cgw3CnsKswrwhw6hNwostejQDw4nDmUkp")
+            self.client.nextSync(for: syncSpace) { result in
+                expect(result.value!.entries.count).to(equal(0))
+                done()
+            }
+        } }
+
         it("can store Assets") { waitUntil(timeout: 10) { done in
             self.client.initialSync() { result in
 
@@ -125,8 +133,38 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
             }
         }
 
-        it("can continue syncing from an existing data store") {
-            // TODO: implement test
+        it("respects user defined mappings when creating core data entities.") {
+            self.postTests { done in
+                let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+                expect(post).toNot(beNil())
+                expect(post?.comments).to(beNil())
+                expect(post?.title).toNot(beNil())
+                done()
+            }
+        }
+
+        it("can determine properties of a type") {
+            let store = CoreDataStore(context: self.managedObjectContext)
+
+            do {
+                let properties = try store.properties(for: Category.self)
+
+                expect(Set(properties)).to(equal(Set(["title", "id", "createdAt", "updatedAt"])))
+            } catch {
+                XCTAssert(false, "Storing properties for Categories should not throw an error")
+            }
+        }
+
+        it("can determine relationships of a type") {
+            let store = CoreDataStore(context: self.managedObjectContext)
+
+            do {
+                let relationships = try store.relationships(for: Post.self)
+
+                expect(relationships).to(equal(["author", "category", "featuredImage"]))
+            } catch {
+                XCTAssert(false, "Storing relationships for Posts should not throw an error")
+            }
         }
     }
 }
