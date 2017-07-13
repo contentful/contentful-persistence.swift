@@ -1,3 +1,4 @@
+github "AliSoftware/OHHTTPStubs" "6.0.0"
 github "Hearst-DD/ObjectMapper" "2.2.8"
 github "JensRavens/Interstellar" "2.0.0"
 github "Quick/Nimble" "v6.1.0"

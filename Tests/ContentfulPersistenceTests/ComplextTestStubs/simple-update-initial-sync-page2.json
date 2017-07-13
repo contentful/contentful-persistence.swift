@@ -1,0 +1,92 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "7vervB1KtUYWC22OCcmsKc",
+        "type": "Entry",
+        "createdAt": "2017-06-20T12:51:06.955Z",
+        "updatedAt": "2017-06-20T12:51:06.955Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "3"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "NNPT58qeyYKauym8S0MUk",
+        "type": "Entry",
+        "createdAt": "2017-06-20T12:51:00.210Z",
+        "updatedAt": "2017-06-20T12:51:00.210Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "2"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "3PbLvOJldSc6MqKEaIE6Ce",
+        "type": "Entry",
+        "createdAt": "2017-06-20T12:50:15.724Z",
+        "updatedAt": "2017-06-20T12:50:15.724Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "1"
+        }
+      }
+    }
+  ],
+  "nextSyncUrl": "https://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=w5ZGw6JFwqZmVcKsE8Kow4grw45QdyYxPMK6EcOWw7swwqJhAcOTwqwMwoLCkUFqwpkGMHnDicOeCls-wpHCtSHDiMOJwp9Zw6URwqHCqcK4fFNpDV12wpzDpcKAw71Uw53Dk8KdwrYDw7DCqQU1w4bCg8KkwojDhsOb"
+}
