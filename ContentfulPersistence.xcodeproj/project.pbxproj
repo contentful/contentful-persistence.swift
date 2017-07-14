@@ -67,6 +67,8 @@
 		ED2C99B61ED42E040039056E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99861ED42C190039056E /* ObjectMapper.framework */; };
 		ED2C99B71ED42E040039056E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99871ED42C190039056E /* Quick.framework */; };
 		ED4C58EB1F161BA6000B65FD /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */; };
+		ED6B67981F191342008EC7C8 /* clear-field-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */; };
+		ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */; };
 		ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F9951F18C52E00540DAC /* multi-page-link-resolution1.json */; };
 		ED91F99F1F18C79D00540DAC /* multi-page-link-resolution2.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F9961F18C52E00540DAC /* multi-page-link-resolution2.json */; };
 		ED91F9A01F18C79D00540DAC /* simple-update-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED25D7F91F1790B200A6BA9A /* simple-update-initial-sync.json */; };
@@ -153,6 +155,8 @@
 		ED2C99AB1ED42CB70039056E /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/tvOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED2C99AC1ED42CB70039056E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/tvOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "clear-field-initial-sync.json"; sourceTree = "<group>"; };
+		ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "clear-field-next-sync.json"; sourceTree = "<group>"; };
 		ED86952A1EFA8C93004693BA /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		ED91F98F1F17A74D00540DAC /* simple-update-initial-sync-page2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "simple-update-initial-sync-page2.json"; sourceTree = "<group>"; };
 		ED91F9921F17A8C900540DAC /* simple-update-next-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "simple-update-next-sync.json"; sourceTree = "<group>"; };
@@ -324,6 +328,8 @@
 		ED25D7F61F17900900A6BA9A /* ComplexTestStubs */ = {
 			isa = PBXGroup;
 			children = (
+				ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */,
+				ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */,
 				ED91F9951F18C52E00540DAC /* multi-page-link-resolution1.json */,
 				ED91F9961F18C52E00540DAC /* multi-page-link-resolution2.json */,
 				ED25D7F91F1790B200A6BA9A /* simple-update-initial-sync.json */,
@@ -602,8 +608,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */,
 				ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */,
 				EDCFBF9D1F161EB6002B1B73 /* single-author.json in Resources */,
+				ED6B67981F191342008EC7C8 /* clear-field-initial-sync.json in Resources */,
 				ED91F9A01F18C79D00540DAC /* simple-update-initial-sync.json in Resources */,
 				ED91F9A11F18C79D00540DAC /* simple-update-initial-sync-page2.json in Resources */,
 				ED91F9A21F18C79D00540DAC /* simple-update-next-sync.json in Resources */,

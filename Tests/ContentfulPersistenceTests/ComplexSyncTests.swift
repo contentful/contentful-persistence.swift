@@ -161,6 +161,65 @@ class ComplexSyncTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
+    func testClearingFieldSetsItToNil() {
+        let expectation = self.expectation(description: "Initial sync succeeded")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("clear-field-initial-sync.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+            }.name = "Initial sync stub"
+
+        var syncSpace: SyncSpace!
+
+        client.initialSync() { result in
+            switch result {
+            case .success(let space):
+                syncSpace = space
+                do {
+                    let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
+                    expect(records.count).to(equal(1))
+                    if let record = records.first {
+                        expect(record.textBody).to(equal("INITIAL TEXT BODY"))
+                    }
+                } catch {
+                    XCTAssert(false, "Fetching posts should not throw an error")
+                }
+                expectation.fulfill()
+            case .error(let error):
+                fail("\(error)")
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 10.0, handler: nil)
+        OHHTTPStubs.removeAllStubs()
+
+        // ============================NEXT SYNC==================================================
+        let nextExpectation = self.expectation(description: "Next sync expectation")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("clear-field-next-sync.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+        }.name = "Next sync: updated value."
+
+        client.nextSync(for: syncSpace) { result in
+            switch result {
+            case .success:
+                do {
+                    let blankTextBodyRecord: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
+                    expect(blankTextBodyRecord.count).to(equal(1))
+                    expect(blankTextBodyRecord.first!.textBody).to(beNil())
+                } catch {
+                    XCTAssert(false, "Fetching posts should not throw an error")
+                }
+            case .error(let error):
+                fail("\(error)")
+            }
+            nextExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
 
     func testLinkResolutionForMultipageSync() {
         let expectation = self.expectation(description: "Initial sync succeeded")
@@ -194,7 +253,7 @@ class ComplexSyncTests: XCTestCase {
                         }
                     }
                 } catch {
-                    XCTAssert(false, "Fetching SingleRecord should not throw an error")
+                    fail("Fetching SingleRecord should not throw an error")
                 }
 
             case .error(let error):
@@ -202,6 +261,6 @@ class ComplexSyncTests: XCTestCase {
             }
             expectation.fulfill()
         }
-        self.wait
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 }

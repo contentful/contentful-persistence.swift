@@ -1,0 +1,33 @@
+{
+    "sys": {
+        "type": "Array"
+    },
+    "items": [
+              {
+              "sys": {
+              "space": {
+              "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "smf0sqiu0c5s"
+              }
+              },
+              "id": "5GiLOZvY7SiMeUIgIIAssS",
+              "type": "Entry",
+              "createdAt": "2017-06-20T14:03:29.319Z",
+              "updatedAt": "2017-06-20T14:03:29.319Z",
+              "revision": 1,
+              "contentType": {
+              "sys": {
+              "type": "Link",
+              "linkType": "ContentType",
+              "id": "singleRecord"
+              }
+              }
+              },
+              "fields": {
+              }
+              },
+              ],
+    "nextSyncUrl": "https://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=w5ZGw6JFwqZmVcKsE8Kow4grw45QdybCpMOBFS3CksKJasKKw4HCriw3wofDhsKAXcKXQMOlZMKgw5AKHMKhw7zCmMOSc2ADwozCpAHDpsOmw4XDt0VPwrXCm3how4UII8OswrzDlMKDwqRewpQTw4oNwqBYw4RPXsKxLA"
+}
