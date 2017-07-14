@@ -53,7 +53,11 @@ public class CoreDataStore: PersistenceStore {
         guard let `class` = type as? AnyClass else {
             throw Errors.invalidType(type: type)
         }
-        let object = NSEntityDescription.insertNewObject(forEntityName: String(describing: `class`), into: context)
+        var object: NSManagedObject?
+
+        context.performAndWait {
+            object = NSEntityDescription.insertNewObject(forEntityName: String(describing: `class`), into: self.context)
+        }
 
         guard let managedObject = object as? T else {
             throw Errors.invalidType(type: type(of: object))
@@ -72,8 +76,10 @@ public class CoreDataStore: PersistenceStore {
      */
     public func delete(type: Any.Type, predicate: NSPredicate) throws {
         let managedObjects: [NSManagedObject] = try fetchAll(type: type, predicate: predicate)
-        managedObjects.forEach {
-            self.context.delete($0)
+        context.performAndWait {
+            for managedObject in managedObjects {
+                self.context.delete(managedObject)
+            }
         }
     }
 
@@ -89,7 +95,13 @@ public class CoreDataStore: PersistenceStore {
      */
     public func fetchAll<T>(type: Any.Type, predicate: NSPredicate) throws -> [T] {
         let request = try fetchRequest(for: type, predicate: predicate)
-        return try context.fetch(request).flatMap { $0 as? T }
+        var results = [T]()
+        context.performAndWait {
+            results = try! self.context.fetch(request).flatMap { managedObject in
+                return managedObject as? T
+            }
+        }
+        return results
     }
 
     /**
@@ -132,16 +144,23 @@ public class CoreDataStore: PersistenceStore {
      - throws: If any error occured during the save operation
      */
     public func save() throws {
-        try context.save()
+        context.performAndWait {
+            try! self.context.save()
+        }
     }
 
     // MARK: - Helper methods
 
     fileprivate func entityDescription(for type: Any.Type) throws -> NSEntityDescription {
-        if let `class` = type as? AnyClass, let description = NSEntityDescription.entity(forEntityName: String(describing: `class`), in: context) {
-            return description
+        var description: NSEntityDescription? = nil
+        context.performAndWait {
+            if let `class` = type as? AnyClass, let entityDescription = NSEntityDescription.entity(forEntityName: String(describing: `class`), in: self.context) {
+                description = entityDescription
+            }
         }
-
-        throw Errors.invalidType(type: type)
+        guard let theDescription = description else {
+            throw Errors.invalidType(type: type)
+        }
+        return theDescription
     }
 }

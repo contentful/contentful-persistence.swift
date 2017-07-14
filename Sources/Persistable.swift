@@ -78,17 +78,8 @@ public protocol EntryPersistable: ContentPersistable {
     /// The identifier of the Contentful content type that will map to this type of `EntryPersistable`
     static var contentTypeId: ContentTypeId { get }
 
-    /// This method has a defualt implementation that maps `Entry` fields to properties with the same name.
-    /// Override this method to provide a custom mapping. Note that after Swift 4 is release, this method will
-    /// be deprecated in favor of leveraging the auto-synthesized `CodingKeys` enum that is generated for all
-    /// types conforming to `Codable`.
-    static func mapping() -> [FieldName: String]?
-}
-
-public extension EntryPersistable {
-
-    // Default implementation returns `nil` so that the `SynchornizationManager` will infer the mapping instead.
-    static func mapping() -> [FieldName: String]? {
-        return nil
-    }
+    /// This method must be implemented to provide a custom mapping from Contentful fields to Swift properties. 
+    /// Note that after Swift 4 is release, this method will be deprecated in favor of leveraging the 
+    /// auto-synthesized `CodingKeys` enum that is generated for all types conforming to `Codable`.
+    static func mapping() -> [FieldName: String]
 }

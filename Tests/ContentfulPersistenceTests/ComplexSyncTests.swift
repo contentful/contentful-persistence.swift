@@ -63,6 +63,8 @@ class ComplexSyncTests: XCTestCase {
     override func setUp() {
         OHHTTPStubs.removeAllStubs()
 
+        self.deleteCoreDataStore()
+
         let persistenceModel = PersistenceModel(spaceType: ComplexSyncInfo.self, assetType: ComplexAsset.self, entryTypes: [SingleRecord.self, Link.self])
 
         let synchronizationManager = SynchronizationManager(persistenceStore: self.store, persistenceModel: persistenceModel)
@@ -73,7 +75,10 @@ class ComplexSyncTests: XCTestCase {
                         persistenceIntegration: synchronizationManager)
 
         self.syncManager = synchronizationManager
-        self.deleteCoreDataStore()
+
+        // Give the system time to clear the cache for the underlying SQL files.
+//        Thread.sleep(forTimeInterval: 4.0)
+
     }
 
     // After each test.
@@ -101,28 +106,26 @@ class ComplexSyncTests: XCTestCase {
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
         }.name = "Initial sync stub"
 
-        OHHTTPStubs.onStubActivation { (request, stub, response) in
-            if let name = stub.name {
-                print("\(name) activated for \(request)")
-            }
-        }
-
         var syncSpace: SyncSpace!
 
         client.initialSync() { result in
             switch result {
             case .success(let space):
                 syncSpace = space
-                let records: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI'"))
-                expect(records.count).to(equal(1))
-                if let helloRecord = records.first {
-                    expect(helloRecord.textBody).to(equal("Hello"))
+                do {
+                    let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI'"))
+                    expect(records.count).to(equal(1))
+                    if let helloRecord = records.first {
+                        expect(helloRecord.textBody).to(equal("Hello"))
+                    }
+                } catch {
+                    XCTAssert(false, "Fetching posts should not throw an error")
                 }
-
+                expectation.fulfill()
             case .error(let error):
                 fail("\(error)")
+                expectation.fulfill()
             }
-            expectation.fulfill()
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -142,19 +145,63 @@ class ComplexSyncTests: XCTestCase {
         client.nextSync(for: syncSpace) { result in
             switch result {
             case .success:
-                let helloSingleRecord: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI'"))
-                expect(helloSingleRecord.count).to(equal(1))
-                expect(helloSingleRecord.first!.textBody).to(equal("Hello FooBar"))
+                do {
+                    let helloSingleRecord: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI'"))
+                    expect(helloSingleRecord.count).to(equal(1))
+                    expect(helloSingleRecord.first!.textBody).to(equal("Hello FooBar"))
+                } catch {
+                    XCTAssert(false, "Fetching posts should not throw an error")
+                }
             case .error(let error):
                 fail("\(error)")
             }
             nextExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 10000.0, handler: nil)
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    func testLinkResolutionForMultipageSync() {
 
+    func testLinkResolutionForMultipageSync() {
+        let expectation = self.expectation(description: "Initial sync succeeded")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let urlString = request.url!.absoluteString
+            let queryItems = URLComponents(string: urlString)!.queryItems!
+            for queryItem in queryItems {
+                if queryItem.name == "initial" {
+                    let stubPath = OHPathForFile("multi-page-link-resolution1.json", ComplexSyncTests.self)
+                    return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+                } else if queryItem.name == "sync_token" && queryItem.value == "wonDrcKnRgcSOF4-wrDCgcKefWzCgsOxwrfCq8KOfMOdXUPCvEnChwEEO8KFwqHDj8KYwr7DrEPChBsewo8ELTsbwo7Dj000fcKxwqbCn8OZw5gTwrVPw5rDgzN3wpJwwqfCtn7Cn1HDvcKYw5fDgTglwqrDqcKvw7jDhxIqe8Kjwpdmwr7CvcKdw67Co8OwHTNLIz_Dj2HCpApRTsOnDSdBagJJcsKfw67Di8Kad8OGO8OfEMKPw53DgsK3wphxDzJZ" {
+                    let stubPath = OHPathForFile("multi-page-link-resolution2.json", ComplexSyncTests.self)
+                    return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+                }
+            }
+            let stubPath = OHPathForFile("simple-update-initial-sync.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+        }.name = "Initial sync stub"
+
+        client.initialSync() { result in
+            switch result {
+            case .success:
+                do {
+                    let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '14XouHzspI44uKCcMicWUY'"))
+                    expect(records.count).to(equal(1))
+                    if let record = records.first {
+                        expect(record.linkField).toNot(beNil())
+                        if let linkedField = record.linkField {
+                            expect(linkedField.awesomeLinkTitle).to(equal("AWESOMELINK!!!"))
+                        }
+                    }
+                } catch {
+                    XCTAssert(false, "Fetching SingleRecord should not throw an error")
+                }
+
+            case .error(let error):
+                fail("\(error)")
+            }
+            expectation.fulfill()
+        }
+        self.wait
     }
 }

@@ -11,6 +11,7 @@
 
 import Foundation
 import CoreData
+import Contentful
 import ContentfulPersistence
 
 extension Category: EntryPersistable {
@@ -23,4 +24,11 @@ extension Category: EntryPersistable {
     @NSManaged var title: String?
     @NSManaged var categoryInverse: NSSet?
     @NSManaged var icon: Asset?
+
+    static func mapping() -> [FieldName: String] {
+        return [
+            "title": "title",
+            "icon": "icon"
+        ]
+    }
 }

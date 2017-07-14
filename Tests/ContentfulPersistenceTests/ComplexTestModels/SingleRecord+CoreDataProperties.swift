@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import Contentful
 import ContentfulPersistence
 
 extension SingleRecord: EntryPersistable {
@@ -20,4 +21,12 @@ extension SingleRecord: EntryPersistable {
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
     @NSManaged var linkField: Link?
+
+    static func mapping() -> [FieldName: String] {
+        return [
+            "textBody": "textBody",
+            "linkField": "linkField",
+            "postedDate": "postedDate"
+        ]
+    }
 }

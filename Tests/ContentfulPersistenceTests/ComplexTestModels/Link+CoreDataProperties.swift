@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import Contentful
 import ContentfulPersistence
 
 extension Link: EntryPersistable {
@@ -18,4 +19,10 @@ extension Link: EntryPersistable {
     @NSManaged var awesomeLinkTitle: String?
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
+
+    static func mapping() -> [FieldName: String] {
+        return [
+            "awesomeLinkTitle": "awesomeLinkTitle"
+        ]
+    }
 }

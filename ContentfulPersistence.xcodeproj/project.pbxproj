@@ -49,7 +49,6 @@
 		ED25D7EE1F17758100A6BA9A /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED25D7ED1F17758100A6BA9A /* OHHTTPStubs.framework */; };
 		ED25D7F51F177D8F00A6BA9A /* ComplexTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED25D7F31F177D8F00A6BA9A /* ComplexTest.xcdatamodeld */; };
 		ED25D7F81F17908D00A6BA9A /* ContentfulPersistenceTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED25D7F71F17908D00A6BA9A /* ContentfulPersistenceTestBase.swift */; };
-		ED25D7FA1F1790B200A6BA9A /* simple-update-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED25D7F91F1790B200A6BA9A /* simple-update-initial-sync.json */; };
 		ED2C99951ED42C350039056E /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99921ED42C350039056E /* Contentful.framework */; };
 		ED2C99961ED42C350039056E /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99931ED42C350039056E /* Interstellar.framework */; };
 		ED2C99971ED42C350039056E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99941ED42C350039056E /* ObjectMapper.framework */; };
@@ -68,8 +67,11 @@
 		ED2C99B61ED42E040039056E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99861ED42C190039056E /* ObjectMapper.framework */; };
 		ED2C99B71ED42E040039056E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99871ED42C190039056E /* Quick.framework */; };
 		ED4C58EB1F161BA6000B65FD /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */; };
-		ED91F9911F17A76C00540DAC /* simple-update-initial-sync-page2.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F98F1F17A74D00540DAC /* simple-update-initial-sync-page2.json */; };
-		ED91F9941F17A8CC00540DAC /* simple-update-next-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F9921F17A8C900540DAC /* simple-update-next-sync.json */; };
+		ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F9951F18C52E00540DAC /* multi-page-link-resolution1.json */; };
+		ED91F99F1F18C79D00540DAC /* multi-page-link-resolution2.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F9961F18C52E00540DAC /* multi-page-link-resolution2.json */; };
+		ED91F9A01F18C79D00540DAC /* simple-update-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED25D7F91F1790B200A6BA9A /* simple-update-initial-sync.json */; };
+		ED91F9A11F18C79D00540DAC /* simple-update-initial-sync-page2.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F98F1F17A74D00540DAC /* simple-update-initial-sync-page2.json */; };
+		ED91F9A21F18C79D00540DAC /* simple-update-next-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F9921F17A8C900540DAC /* simple-update-next-sync.json */; };
 		ED9C21F51EF2C4FB00882ABF /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F41EF2C4FB00882ABF /* Persistable.swift */; };
 		ED9C21F61EF2C4FB00882ABF /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F41EF2C4FB00882ABF /* Persistable.swift */; };
 		ED9C21F71EF2C4FB00882ABF /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F41EF2C4FB00882ABF /* Persistable.swift */; };
@@ -154,6 +156,8 @@
 		ED86952A1EFA8C93004693BA /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		ED91F98F1F17A74D00540DAC /* simple-update-initial-sync-page2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "simple-update-initial-sync-page2.json"; sourceTree = "<group>"; };
 		ED91F9921F17A8C900540DAC /* simple-update-next-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "simple-update-next-sync.json"; sourceTree = "<group>"; };
+		ED91F9951F18C52E00540DAC /* multi-page-link-resolution1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-page-link-resolution1.json"; sourceTree = "<group>"; };
+		ED91F9961F18C52E00540DAC /* multi-page-link-resolution2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-page-link-resolution2.json"; sourceTree = "<group>"; };
 		ED9C21F41EF2C4FB00882ABF /* Persistable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistable.swift; sourceTree = "<group>"; };
 		ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceStore.swift; sourceTree = "<group>"; };
 		EDCFBF9C1F161EB6002B1B73 /* single-author.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "single-author.json"; sourceTree = "<group>"; };
@@ -320,12 +324,13 @@
 		ED25D7F61F17900900A6BA9A /* ComplexTestStubs */ = {
 			isa = PBXGroup;
 			children = (
+				ED91F9951F18C52E00540DAC /* multi-page-link-resolution1.json */,
+				ED91F9961F18C52E00540DAC /* multi-page-link-resolution2.json */,
 				ED25D7F91F1790B200A6BA9A /* simple-update-initial-sync.json */,
 				ED91F98F1F17A74D00540DAC /* simple-update-initial-sync-page2.json */,
 				ED91F9921F17A8C900540DAC /* simple-update-next-sync.json */,
 			);
-			name = ComplexTestStubs;
-			path = ComplextTestStubs;
+			path = ComplexTestStubs;
 			sourceTree = "<group>";
 		};
 		ED2C997D1ED42B940039056E /* Frameworks */ = {
@@ -597,11 +602,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */,
 				EDCFBF9D1F161EB6002B1B73 /* single-author.json in Resources */,
-				ED91F9911F17A76C00540DAC /* simple-update-initial-sync-page2.json in Resources */,
-				ED91F9941F17A8CC00540DAC /* simple-update-next-sync.json in Resources */,
+				ED91F9A01F18C79D00540DAC /* simple-update-initial-sync.json in Resources */,
+				ED91F9A11F18C79D00540DAC /* simple-update-initial-sync-page2.json in Resources */,
+				ED91F9A21F18C79D00540DAC /* simple-update-next-sync.json in Resources */,
 				ED1BA7D01F16288100E21FD5 /* space.json in Resources */,
-				ED25D7FA1F1790B200A6BA9A /* simple-update-initial-sync.json in Resources */,
+				ED91F99F1F18C79D00540DAC /* multi-page-link-resolution2.json in Resources */,
 				ED1BA7D31F1645A000E21FD5 /* single-post.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

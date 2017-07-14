@@ -6,6 +6,7 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
+import CoreData
 import Contentful
 import Interstellar
 
@@ -62,7 +63,6 @@ public class SynchronizationManager: PersistenceIntegration {
         let cache = DataCache(persistenceStore: persistentStore, assetType: persistenceModel.assetType, entryTypes: persistenceModel.entryTypes)
 
         for (entryId, fields) in relationshipsToResolve {
-
             if let entryPersistable = cache.entry(for: entryId) as? NSObject {
 
                 for (fieldName, relatedEntryId) in fields {
@@ -182,31 +182,20 @@ public class SynchronizationManager: PersistenceIntegration {
         }
 
         // If user-defined relationship properties exist, use them, but filter out relationships.
-        if let mapping = entryType.mapping() {
-            // Filter out user-defined properties that represent relationships.
-            let persistentRelationshipPropertyNames = try! persistentStore.relationships(for: entryType)
+        let mapping = entryType.mapping()
 
-            let relationshipPropertyNamesToExclude = Set(persistentRelationshipPropertyNames).intersection(Set(mapping.values))
-            let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
-                return relationshipPropertyNamesToExclude.contains(propertyName) == false
-            }
-            let filteredMapping = Dictionary(elements: filteredMappingTuplesArray)
+        // Filter out user-defined properties that represent relationships.
+        let persistentRelationshipPropertyNames = try! persistentStore.relationships(for: entryType)
 
-            // Cache.
-            sharedEntryPropertyNames[entryType.contentTypeId] = filteredMapping
-            return filteredMapping
+        let relationshipPropertyNamesToExclude = Set(persistentRelationshipPropertyNames).intersection(Set(mapping.values))
+        let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
+            return relationshipPropertyNamesToExclude.contains(propertyName) == false
         }
-
-        // If there is no user-defined mapping, derive a mapping by finding field names and property names that match.
-        let persistablePropertyNames = Set(try! persistentStore.properties(for: entryType))
-        let entryFieldNames = Set(fields.keys)
-        let sharedPropertyNames = Array(persistablePropertyNames.intersection(entryFieldNames))
-
-        let mapping = [FieldName: String](elements: sharedPropertyNames.map({ ($0, $0) }))
+        let filteredMapping = Dictionary(elements: filteredMappingTuplesArray)
 
         // Cache.
-        sharedEntryPropertyNames[entryType.contentTypeId] = mapping
-        return mapping
+        sharedEntryPropertyNames[entryType.contentTypeId] = filteredMapping
+        return filteredMapping
     }
 
     internal func relationshipMapping(for entryType: EntryPersistable.Type, and fields: [FieldName: Any]) -> [FieldName: String] {
@@ -214,36 +203,25 @@ public class SynchronizationManager: PersistenceIntegration {
             return sharedPropertyNames
         }
 
-        if let mapping = entryType.mapping() {
-            // Filter out user-defined regular fields that do NOT represent relationships.
-            let persistentPropertyNames = try! persistentStore.properties(for: entryType)
-            let propertyNamesToExclude = Set(persistentPropertyNames).intersection(Set(mapping.values))
+        let mapping = entryType.mapping()
+        // Filter out user-defined regular fields that do NOT represent relationships.
+        let persistentPropertyNames = try! persistentStore.properties(for: entryType)
+        let propertyNamesToExclude = Set(persistentPropertyNames).intersection(Set(mapping.values))
 
-            let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
-                return propertyNamesToExclude.contains(propertyName) == false
-            }
-            let filteredMapping = Dictionary(elements: filteredMappingTuplesArray)
-
-            // Cache.
-            sharedRelationshipPropertyNames[entryType.contentTypeId] = filteredMapping
-            return filteredMapping
+        let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
+            return propertyNamesToExclude.contains(propertyName) == false
         }
-
-        let persistableRelationshipNames = Set(try! persistentStore.relationships(for: entryType))
-        let entryRelationshipFieldNames = Set(fields.keys)
-        let sharedRelationshipNames = Array(persistableRelationshipNames.intersection(entryRelationshipFieldNames))
-
-        let mapping = [FieldName: String](elements: sharedRelationshipNames.map({ ($0, $0) }))
+        let filteredMapping = Dictionary(elements: filteredMappingTuplesArray)
 
         // Cache.
-        sharedRelationshipPropertyNames[entryType.contentTypeId] = mapping
-        return mapping
+        sharedRelationshipPropertyNames[entryType.contentTypeId] = filteredMapping
+        return filteredMapping
     }
 
     fileprivate func updatePropertyFields(for entryPersistable: EntryPersistable, of type: EntryPersistable.Type, with entry: Entry) {
 
         // Key-Value Coding only works with NSObject types as it's an Obj-C API.
-        guard let persistable = entryPersistable as? NSObject else { return }
+        guard let persistable = entryPersistable as? NSManagedObject else { return }
 
         let mapping = propertyMapping(for: type, and: entry.fields)
 
@@ -261,12 +239,11 @@ public class SynchronizationManager: PersistenceIntegration {
     fileprivate func persistableRelationships(for entryPersistable: EntryPersistable,
                                               of type: EntryPersistable.Type,
                                               with entry: Entry) -> [FieldName: Any] {
-
         // FieldName to either a single entry id or an array of entry id's to be linked.
         var relationships = [FieldName: Any]()
 
         let relationshipMapping = self.relationshipMapping(for: type, and: entry.fields)
-        let relationshipFieldNames = relationshipMapping.keys
+        let relationshipFieldNames = Array(relationshipMapping.keys)
 
         // Get fieldNames which are links/relationships/references to other types.
         for relationshipName in relationshipFieldNames {

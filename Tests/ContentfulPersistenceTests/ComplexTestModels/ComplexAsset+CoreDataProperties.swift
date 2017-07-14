@@ -11,6 +11,7 @@
 
 import Foundation
 import CoreData
+import Contentful
 import ContentfulPersistence
 
 extension ComplexAsset: AssetPersistable {

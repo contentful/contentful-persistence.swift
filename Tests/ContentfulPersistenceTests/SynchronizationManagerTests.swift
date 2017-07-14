@@ -233,7 +233,7 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
 
             do {
                 let relationships = try store.relationships(for: Post.self)
-                let expectedRelationships = ["category", "theFeaturedImage", "author" ]
+                let expectedRelationships = ["author", "category", "theFeaturedImage"]
                 expect(relationships).to(equal(expectedRelationships))
             } catch {
                 XCTAssert(false, "Storing relationships for Posts should not throw an error")
