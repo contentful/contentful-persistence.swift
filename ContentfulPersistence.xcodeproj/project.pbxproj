@@ -48,7 +48,6 @@
 		ED25D7EC1F17709A00A6BA9A /* ComplexSyncInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED25D7EB1F17709A00A6BA9A /* ComplexSyncInfo+CoreDataProperties.swift */; };
 		ED25D7EE1F17758100A6BA9A /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED25D7ED1F17758100A6BA9A /* OHHTTPStubs.framework */; };
 		ED25D7F51F177D8F00A6BA9A /* ComplexTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED25D7F31F177D8F00A6BA9A /* ComplexTest.xcdatamodeld */; };
-		ED25D7F81F17908D00A6BA9A /* ContentfulPersistenceTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED25D7F71F17908D00A6BA9A /* ContentfulPersistenceTestBase.swift */; };
 		ED2C99951ED42C350039056E /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99921ED42C350039056E /* Contentful.framework */; };
 		ED2C99961ED42C350039056E /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99931ED42C350039056E /* Interstellar.framework */; };
 		ED2C99971ED42C350039056E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99941ED42C350039056E /* ObjectMapper.framework */; };
@@ -137,7 +136,6 @@
 		ED25D7EB1F17709A00A6BA9A /* ComplexSyncInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComplexSyncInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		ED25D7ED1F17758100A6BA9A /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		ED25D7F41F177D8F00A6BA9A /* ComplexTest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ComplexTest.xcdatamodel; sourceTree = "<group>"; };
-		ED25D7F71F17908D00A6BA9A /* ContentfulPersistenceTestBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentfulPersistenceTestBase.swift; sourceTree = "<group>"; };
 		ED25D7F91F1790B200A6BA9A /* simple-update-initial-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "simple-update-initial-sync.json"; sourceTree = "<group>"; };
 		ED2C99831ED42C190039056E /* Contentful.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contentful.framework; path = Carthage/Build/iOS/Contentful.framework; sourceTree = "<group>"; };
 		ED2C99841ED42C190039056E /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
@@ -293,7 +291,6 @@
 				ED25D7DC1F166B7300A6BA9A /* ComplexTestModels */,
 				ED25D7F61F17900900A6BA9A /* ComplexTestStubs */,
 				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
-				ED25D7F71F17908D00A6BA9A /* ContentfulPersistenceTestBase.swift */,
 				ED25D7D71F16654A00A6BA9A /* ComplexSyncTests.swift */,
 				ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */,
 				ED10E8AA1E48AC870061741F /* Info.plist */,
@@ -694,7 +691,6 @@
 				ED10E8B91E48ACBD0061741F /* Author.swift in Sources */,
 				ED10E8BD1E48ACBD0061741F /* Post.swift in Sources */,
 				ED10E8C01E48ACBD0061741F /* SyncInfo+CoreDataProperties.swift in Sources */,
-				ED25D7F81F17908D00A6BA9A /* ContentfulPersistenceTestBase.swift in Sources */,
 				ED25D7E61F17700900A6BA9A /* ComplexAsset.swift in Sources */,
 				ED25D7E41F176D8E00A6BA9A /* Link+CoreDataProperties.swift in Sources */,
 				ED25D7E81F17703400A6BA9A /* ComplexAsset+CoreDataProperties.swift in Sources */,

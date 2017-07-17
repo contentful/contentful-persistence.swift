@@ -52,19 +52,50 @@ public class SynchronizationManager: PersistenceIntegration {
     fileprivate let persistentStore: PersistenceStore
 
     public var syncToken: String? {
-        return fetchSpace().syncToken
+        var syncToken: String? = nil
+        persistentStore.performAndWait {
+            syncToken = self.fetchSpace().syncToken
+        }
+        return syncToken
+    }
+
+    public func update(with syncSpace: SyncSpace) {
+        persistentStore.performBlock {
+            for asset in syncSpace.assets {
+                self.create(asset: asset)
+            }
+
+            // Update and deduplicate all entries.
+            for entry in syncSpace.entries {
+                self.create(entry: entry)
+            }
+
+            for deletedAssetId in syncSpace.deletedAssetIds {
+                self.delete(assetWithId: deletedAssetId)
+            }
+
+            for deletedEntryId in syncSpace.deletedEntryIds {
+                self.delete(entryWithId: deletedEntryId)
+            }
+
+            self.update(syncToken: syncSpace.syncToken)
+            self.resolveRelationships()
+            self.save()
+        }
     }
 
     public func update(syncToken: String) {
-        let space = fetchSpace()
+        let space = self.fetchSpace()
         space.syncToken = syncToken
     }
 
     public func resolveRelationships() {
 
-        let cache = DataCache(persistenceStore: persistentStore, assetType: persistenceModel.assetType, entryTypes: persistenceModel.entryTypes)
+        let cache = DataCache(persistenceStore: self.persistentStore,
+                              assetType: self.persistenceModel.assetType,
+                              entryTypes: self.persistenceModel.entryTypes)
 
-        for (entryId, fields) in relationshipsToResolve {
+        for (entryId, fields) in self.relationshipsToResolve {
             if let entryPersistable = cache.entry(for: entryId) as? NSObject {
 
                 for (fieldName, relatedEntryId) in fields {
@@ -85,7 +116,7 @@ public class SynchronizationManager: PersistenceIntegration {
                 }
             }
         }
-        relationshipsToResolve.removeAll()
+        self.relationshipsToResolve.removeAll()
     }
 
     // MARK: - PersistenceDelegate
@@ -97,13 +128,14 @@ public class SynchronizationManager: PersistenceIntegration {
      */
     public func create(asset: Asset) {
         let type = persistenceModel.assetType
-        let fetched: [AssetPersistable]? = try? persistentStore.fetchAll(type: type, predicate: predicate(for: asset.id))
+
+        let fetched: [AssetPersistable]? = try? self.persistentStore.fetchAll(type: type, predicate: predicate(for: asset.id))
         let persistable: AssetPersistable
 
         if let fetched = fetched?.first {
             persistable = fetched
         } else {
-            persistable = try! persistentStore.create(type: type)
+            persistable = try! self.persistentStore.create(type: type)
             persistable.id = asset.id
         }
 
@@ -126,22 +158,23 @@ public class SynchronizationManager: PersistenceIntegration {
         guard let contentTypeId = entry.sys.contentTypeId else { return }
         guard let type = persistenceModel.entryTypes.filter({ $0.contentTypeId == contentTypeId }).first else { return }
 
-        let fetched: [EntryPersistable]? = try? persistentStore.fetchAll(type: type, predicate: predicate(for: entry.id))
+        let fetched: [EntryPersistable]? = try? self.persistentStore.fetchAll(type: type, predicate: predicate(for: entry.id))
         let persistable: EntryPersistable
 
         if let fetched = fetched?.first {
             persistable = fetched
         } else {
-            persistable = try! persistentStore.create(type: type)
+            persistable = try! self.persistentStore.create(type: type)
             persistable.id = entry.id
+            persistable.createdAt = entry.sys.createdAt
         }
+
 
         // Populate persistable with sys and fields data from the `Entry`
         persistable.updatedAt = entry.sys.updatedAt
-        persistable.createdAt = entry.sys.updatedAt
 
-        updatePropertyFields(for: persistable, of: type, with: entry)
-        relationshipsToResolve[entry.id] = persistableRelationships(for: persistable, of: type, with: entry)
+        self.updatePropertyFields(for: persistable, of: type, with: entry)
+        self.relationshipsToResolve[entry.id] = self.persistableRelationships(for: persistable, of: type, with: entry)
     }
 
     /**

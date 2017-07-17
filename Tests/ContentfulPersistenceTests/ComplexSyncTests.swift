@@ -17,7 +17,8 @@ import OHHTTPStubs
 
 class ComplexSyncTests: XCTestCase {
 
-    let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last?.appendingPathComponent("ComplexTest.sqlite")
+    let storeURL = FileManager.default.urls(for: .documentDirectory,
+                                            in: .userDomainMask).last?.appendingPathComponent("ComplexTest.sqlite")
 
     var syncManager: SynchronizationManager!
 
@@ -54,7 +55,7 @@ class ComplexSyncTests: XCTestCase {
             XCTAssert(false, "Recreating the persistent store SQL files should not throw an error")
         }
 
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = psc
         return managedObjectContext
     }()
@@ -75,10 +76,6 @@ class ComplexSyncTests: XCTestCase {
                         persistenceIntegration: synchronizationManager)
 
         self.syncManager = synchronizationManager
-
-        // Give the system time to clear the cache for the underlying SQL files.
-//        Thread.sleep(forTimeInterval: 4.0)
-
     }
 
     // After each test.
@@ -112,16 +109,18 @@ class ComplexSyncTests: XCTestCase {
             switch result {
             case .success(let space):
                 syncSpace = space
-                do {
-                    let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI'"))
-                    expect(records.count).to(equal(1))
-                    if let helloRecord = records.first {
-                        expect(helloRecord.textBody).to(equal("Hello"))
+                self.managedObjectContext.perform {
+                    do {
+                        let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI'"))
+                        expect(records.count).to(equal(1))
+                        if let helloRecord = records.first {
+                            expect(helloRecord.textBody).to(equal("Hello"))
+                        }
+                    } catch {
+                        XCTAssert(false, "Fetching posts should not throw an error")
                     }
-                } catch {
-                    XCTAssert(false, "Fetching posts should not throw an error")
+                    expectation.fulfill()
                 }
-                expectation.fulfill()
             case .error(let error):
                 fail("\(error)")
                 expectation.fulfill()
@@ -145,17 +144,20 @@ class ComplexSyncTests: XCTestCase {
         client.nextSync(for: syncSpace) { result in
             switch result {
             case .success:
-                do {
-                    let helloSingleRecord: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI'"))
-                    expect(helloSingleRecord.count).to(equal(1))
-                    expect(helloSingleRecord.first!.textBody).to(equal("Hello FooBar"))
-                } catch {
-                    XCTAssert(false, "Fetching posts should not throw an error")
+                self.managedObjectContext.perform {
+                    do {
+                        let helloSingleRecord: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI'"))
+                        expect(helloSingleRecord.count).to(equal(1))
+                        expect(helloSingleRecord.first!.textBody).to(equal("Hello FooBar"))
+                    } catch {
+                        XCTAssert(false, "Fetching posts should not throw an error")
+                    }
+                    nextExpectation.fulfill()
                 }
             case .error(let error):
                 fail("\(error)")
+                nextExpectation.fulfill()
             }
-            nextExpectation.fulfill()
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -175,16 +177,19 @@ class ComplexSyncTests: XCTestCase {
             switch result {
             case .success(let space):
                 syncSpace = space
-                do {
-                    let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
-                    expect(records.count).to(equal(1))
-                    if let record = records.first {
-                        expect(record.textBody).to(equal("INITIAL TEXT BODY"))
+                self.managedObjectContext.perform {
+                    do {
+                        let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
+                        expect(records.count).to(equal(1))
+                        if let record = records.first {
+                            expect(record.textBody).to(equal("INITIAL TEXT BODY"))
+                        }
+                    } catch {
+                        XCTAssert(false, "Fetching posts should not throw an error")
                     }
-                } catch {
-                    XCTAssert(false, "Fetching posts should not throw an error")
+                    expectation.fulfill()
                 }
-                expectation.fulfill()
+
             case .error(let error):
                 fail("\(error)")
                 expectation.fulfill()
@@ -205,17 +210,21 @@ class ComplexSyncTests: XCTestCase {
         client.nextSync(for: syncSpace) { result in
             switch result {
             case .success:
-                do {
-                    let blankTextBodyRecord: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
-                    expect(blankTextBodyRecord.count).to(equal(1))
-                    expect(blankTextBodyRecord.first!.textBody).to(beNil())
-                } catch {
-                    XCTAssert(false, "Fetching posts should not throw an error")
+
+                self.managedObjectContext.perform {
+                    do {
+                        let blankTextBodyRecord: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
+                        expect(blankTextBodyRecord.count).to(equal(1))
+                        expect(blankTextBodyRecord.first!.textBody).to(beNil())
+                    } catch {
+                        XCTAssert(false, "Fetching posts should not throw an error")
+                    }
+                    nextExpectation.fulfill()
                 }
             case .error(let error):
                 fail("\(error)")
+                nextExpectation.fulfill()
             }
-            nextExpectation.fulfill()
         }
         
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -243,23 +252,27 @@ class ComplexSyncTests: XCTestCase {
         client.initialSync() { result in
             switch result {
             case .success:
-                do {
-                    let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '14XouHzspI44uKCcMicWUY'"))
-                    expect(records.count).to(equal(1))
-                    if let record = records.first {
-                        expect(record.linkField).toNot(beNil())
-                        if let linkedField = record.linkField {
-                            expect(linkedField.awesomeLinkTitle).to(equal("AWESOMELINK!!!"))
-                        }
-                    }
-                } catch {
-                    fail("Fetching SingleRecord should not throw an error")
-                }
 
+                self.managedObjectContext.perform {
+                    do {
+                        let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '14XouHzspI44uKCcMicWUY'"))
+                        expect(records.count).to(equal(1))
+                        if let record = records.first {
+                            expect(record.linkField).toNot(beNil())
+                            if let linkedField = record.linkField {
+                                expect(linkedField.awesomeLinkTitle).to(equal("AWESOMELINK!!!"))
+                            }
+                        }
+                    } catch {
+                        fail("Fetching SingleRecord should not throw an error")
+                    }
+                    expectation.fulfill()
+                }
             case .error(let error):
                 fail("\(error)")
+                expectation.fulfill()
             }
-            expectation.fulfill()
+
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -278,23 +291,28 @@ class ComplexSyncTests: XCTestCase {
             switch result {
             case .success(let space):
                 syncSpace = space
-                do {
-                    let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
-                    expect(records.count).to(equal(1))
-                    if let record = records.first {
-                        expect(record.linkField).toNot(beNil())
-                        if let linkedField = record.linkField {
-                            expect(linkedField.awesomeLinkTitle).to(equal("To be nullified"))
+
+                self.managedObjectContext.perform {
+                    do {
+                        let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
+                        expect(records.count).to(equal(1))
+                        if let record = records.first {
+                            expect(record.linkField).toNot(beNil())
+                            if let linkedField = record.linkField {
+                                expect(linkedField.awesomeLinkTitle).to(equal("To be nullified"))
+                            }
                         }
                     }
-                } catch {
-                    fail("Fetching SingleRecord should not throw an error")
+                    catch {
+                        fail("Fetching SingleRecord should not throw an error")
+                    }
+                    expectation.fulfill()
                 }
 
             case .error(let error):
                 fail("\(error)")
+                expectation.fulfill()
             }
-            expectation.fulfill()
         }
         waitForExpectations(timeout: 10.0, handler: nil)
         OHHTTPStubs.removeAllStubs()
@@ -310,16 +328,20 @@ class ComplexSyncTests: XCTestCase {
         client.nextSync(for: syncSpace) { result in
             switch result {
             case .success:
-                do {
-                    let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
-                    expect(records.first!.linkField).to(beNil())
-                } catch {
-                    XCTAssert(false, "Fetching posts should not throw an error")
+
+                self.managedObjectContext.perform {
+                    do {
+                        let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
+                        expect(records.first!.linkField).to(beNil())
+                    } catch {
+                        XCTAssert(false, "Fetching posts should not throw an error")
+                    }
+                    nextExpectation.fulfill()
                 }
             case .error(let error):
                 fail("\(error)")
+                nextExpectation.fulfill()
             }
-            nextExpectation.fulfill()
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)

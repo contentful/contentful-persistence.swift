@@ -11,12 +11,49 @@ import ObjectMapper
 import Contentful
 import Nimble
 import Quick
+import CoreData
 
 typealias TestFunc = (() -> ()) throws -> ()
 
-class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
+class ContentfulPersistenceTests: QuickSpec {
+
     let assetPredicate = NSPredicate(format: "id == 'bXvdSYHB3Guy2uUmuEco8'")
     let postPredicate = NSPredicate(format: "id == '1asN98Ph3mUiCYIYiiqwko'")
+
+
+    let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last?.appendingPathComponent("Test.sqlite")
+
+    func deleteCoreDataStore() {
+        guard FileManager.default.fileExists(atPath: self.storeURL!.absoluteString) == true else { return }
+
+        try! FileManager.default.removeItem(at: self.storeURL!)
+        try! FileManager.default.removeItem(at: append("-shm", to: self.storeURL!))
+        try! FileManager.default.removeItem(at: append("-wal", to: self.storeURL!))
+    }
+
+    lazy var managedObjectContext: NSManagedObjectContext = {
+        let modelURL = Bundle(for: type(of: self)).url(forResource: "Test", withExtension: "momd")
+        let mom = NSManagedObjectModel(contentsOf: modelURL!)
+        expect(mom).toNot(beNil())
+
+        let psc = NSPersistentStoreCoordinator(managedObjectModel: mom!)
+
+        do {
+            var store = try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL!, options: nil)
+            expect(store).toNot(beNil())
+        } catch {
+            XCTAssert(false, "Recreating the persistent store SQL files should not throw an error")
+        }
+
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = psc
+        return managedObjectContext
+    }()
+
+    func append(_ string: String, to fileURL: URL) -> URL {
+        let pathString = fileURL.path.appending(string)
+        return URL(fileURLWithPath: pathString)
+    }
 
     var client: Client!
 
@@ -31,13 +68,14 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
             self.client.initialSync() { result in
                 expect(result.value).toNot(beNil())
 
-                do {
-                    let posts: [Post] = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
-                    expect(posts.count).to(equal(2))
-
-                    try expectations(done)
-                } catch {
-                    XCTAssert(false, "Fetching posts should not throw an error")
+                self.managedObjectContext.perform {
+                    do {
+                        let posts: [Post] = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
+                        expect(posts.count).to(equal(2))
+                        try expectations(done)
+                    } catch {
+                        XCTAssert(false, "Fetching posts should not throw an error")
+                    }
                 }
             }
         }
@@ -131,10 +169,12 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
 
         it("can store SyncTokens") { waitUntil(timeout: 10) { done in
             self.client.initialSync() { result in
-                expect(result.value!.assets.count).to(beGreaterThan(0))
-                expect(self.sync.syncToken?.characters.count).to(beGreaterThan(0))
+                self.managedObjectContext.perform {
+                    expect(result.value!.assets.count).to(beGreaterThan(0))
+                    expect(self.sync.syncToken?.characters.count).to(beGreaterThan(0))
 
-                done()
+                    done()
+                }
             }
         } }
 
@@ -149,25 +189,26 @@ class ContentfulPersistenceTests: ContentfulPersistenceTestBase {
         it("can store Assets") { waitUntil(timeout: 10) { done in
             self.client.initialSync() { result in
 
-                do {
-                    let assets: [Asset] = try self.store.fetchAll(type: Asset.self, predicate: NSPredicate(value: true))
-                    expect(assets.count).to(equal(6))
+                self.managedObjectContext.perform {
+                    do {
+                        let assets: [Asset] = try self.store.fetchAll(type: Asset.self, predicate: NSPredicate(value: true))
+                        expect(assets.count).to(equal(6))
 
-                    let alice: Asset? = try self.store.fetchAll(type: Asset.self, predicate: self.assetPredicate).first
-                    expect(alice).toNot(beNil())
-                    expect(alice?.title).to(equal("Alice in Wonderland"))
-                    expect(alice?.urlString).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
-                } catch {
-                    XCTAssert(false, "Fetching asset(s) should not throw an error")
+                        let alice: Asset? = try! self.store.fetchAll(type: Asset.self, predicate: self.assetPredicate).first
+                        expect(alice).toNot(beNil())
+                        expect(alice?.title).to(equal("Alice in Wonderland"))
+                        expect(alice?.urlString).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
+                    } catch {
+                        XCTAssert(false, "Fetching asset(s) should not throw an error")
+                    }
+                    done()
                 }
-
-                done()
             }
         } }
 
         it("can store Entries") {
             self.postTests { done in
-                let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+                let post: Post? = try! self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
                 expect(post).toNot(beNil())
                 expect(post?.title).to(equal("Down the Rabbit Hole"))
                 done()
