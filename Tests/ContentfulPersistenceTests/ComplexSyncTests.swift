@@ -231,7 +231,7 @@ class ComplexSyncTests: XCTestCase {
                 if queryItem.name == "initial" {
                     let stubPath = OHPathForFile("multi-page-link-resolution1.json", ComplexSyncTests.self)
                     return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
-                } else if queryItem.name == "sync_token" && queryItem.value == "wonDrcKnRgcSOF4-wrDCgcKefWzCgsOxwrfCq8KOfMOdXUPCvEnChwEEO8KFwqHDj8KYwr7DrEPChBsewo8ELTsbwo7Dj000fcKxwqbCn8OZw5gTwrVPw5rDgzN3wpJwwqfCtn7Cn1HDvcKYw5fDgTglwqrDqcKvw7jDhxIqe8Kjwpdmwr7CvcKdw67Co8OwHTNLIz_Dj2HCpApRTsOnDSdBagJJcsKfw67Di8Kad8OGO8OfEMKPw53DgsK3wphxDzJZ" {
+                } else if queryItem.name == "sync_token" && queryItem.value == "multi-page-link-resolution-token" {
                     let stubPath = OHPathForFile("multi-page-link-resolution2.json", ComplexSyncTests.self)
                     return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
                 }
@@ -261,6 +261,67 @@ class ComplexSyncTests: XCTestCase {
             }
             expectation.fulfill()
         }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testNullifyingLinkBetweenSyncs() {
+        let expectation = self.expectation(description: "Initial sync succeeded")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("nullified-link-initial.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+        }.name = "Initial sync stub"
+
+        var syncSpace: SyncSpace!
+
+        client.initialSync() { result in
+            switch result {
+            case .success(let space):
+                syncSpace = space
+                do {
+                    let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
+                    expect(records.count).to(equal(1))
+                    if let record = records.first {
+                        expect(record.linkField).toNot(beNil())
+                        if let linkedField = record.linkField {
+                            expect(linkedField.awesomeLinkTitle).to(equal("To be nullified"))
+                        }
+                    }
+                } catch {
+                    fail("Fetching SingleRecord should not throw an error")
+                }
+
+            case .error(let error):
+                fail("\(error)")
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+        OHHTTPStubs.removeAllStubs()
+
+        // ============================NEXT SYNC==================================================
+        let nextExpectation = self.expectation(description: "Next sync expectation")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("nullified-link-next.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+        }.name = "Next sync: updated value."
+
+        client.nextSync(for: syncSpace) { result in
+            switch result {
+            case .success:
+                do {
+                    let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
+                    expect(records.first!.linkField).to(beNil())
+                } catch {
+                    XCTAssert(false, "Fetching posts should not throw an error")
+                }
+            case .error(let error):
+                fail("\(error)")
+            }
+            nextExpectation.fulfill()
+        }
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 }

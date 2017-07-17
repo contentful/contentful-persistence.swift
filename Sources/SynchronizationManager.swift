@@ -14,6 +14,8 @@ func predicate(for id: String) -> NSPredicate {
     return NSPredicate(format: "id == %@", id)
 }
 
+fileprivate struct DeletedRelationship {}
+
 /// Provides the ability to sync content from Contentful to a persistence store.
 public class SynchronizationManager: PersistenceIntegration {
 
@@ -75,6 +77,10 @@ public class SynchronizationManager: PersistenceIntegration {
                             return cache.item(for: id)
                         }
                         entryPersistable.setValue(NSOrderedSet(array: targets), forKey: fieldName)
+                    }
+                    // Nullfiy the link if it's nil.
+                    if relatedEntryId is DeletedRelationship {
+                        entryPersistable.setValue(nil, forKey: fieldName)
                     }
                 }
             }
@@ -247,9 +253,10 @@ public class SynchronizationManager: PersistenceIntegration {
 
         // Get fieldNames which are links/relationships/references to other types.
         for relationshipName in relationshipFieldNames {
+            guard let propertyName = relationshipMapping[relationshipName] else { continue }
 
             // Get the name of the propery to be linked to.
-            if let linkedValue = entry.fields[relationshipName], let propertyName = relationshipMapping[relationshipName] {
+            if let linkedValue = entry.fields[relationshipName] {
                 if let targets = linkedValue as? [Link] {
                     // One-to-many.
                     relationships[propertyName] = targets.map { $0.id }
@@ -258,6 +265,8 @@ public class SynchronizationManager: PersistenceIntegration {
                     assert(linkedValue is Link)
                     relationships[propertyName] = (linkedValue as! Link).id
                 }
+            } else if entry.fields[relationshipName] == nil {
+                relationships[propertyName] = DeletedRelationship()
             }
         }
 
