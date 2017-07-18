@@ -31,11 +31,14 @@ self.client = Client(spaceId: "<YOUR_SPACE_ID>", accessToken: "<YOUR_ACCESS_TOKE
 
 // Sync with the API. 
 self.client.initialSync().then { _ in
-  do {
-    // Fetch all `Posts` from CoreData
-    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
-  } catch {
-    // Handle error thrown by CoreData fetches.
+  // Make sure to delegate to the correct thread.
+  self.managedObjectContext.perform { 
+    do {
+      // Fetch all `Posts` from CoreData
+      let post: Post? = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
+    } catch {
+      // Handle error thrown by CoreData fetches.
+    }
   }
 }
 ```
