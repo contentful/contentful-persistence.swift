@@ -11,6 +11,7 @@
 
 import Foundation
 import CoreData
+import Contentful
 import ContentfulPersistence
 
 extension Author: EntryPersistable {
@@ -25,4 +26,14 @@ extension Author: EntryPersistable {
     @NSManaged var website: String?
     @NSManaged var createdEntries: NSOrderedSet?
     @NSManaged var profilePhoto: Asset?
+
+    static func mapping() -> [FieldName: String] {
+        return [
+            "name": "name",
+            "biography": "biography",
+            "website": "website",
+            "createdEntries": "createdEntries",
+            "profilePhoto": "profilePhoto"
+        ]
+    }
 }

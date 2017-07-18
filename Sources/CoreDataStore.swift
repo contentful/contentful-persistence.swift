@@ -72,8 +72,9 @@ public class CoreDataStore: PersistenceStore {
      */
     public func delete(type: Any.Type, predicate: NSPredicate) throws {
         let managedObjects: [NSManagedObject] = try fetchAll(type: type, predicate: predicate)
-        managedObjects.forEach {
-            self.context.delete($0)
+
+        for managedObject in managedObjects {
+            self.context.delete(managedObject)
         }
     }
 
@@ -143,5 +144,27 @@ public class CoreDataStore: PersistenceStore {
         }
 
         throw Errors.invalidType(type: type)
+    }
+
+    public func performBlock(block: @escaping () -> Void) {
+        switch context.concurrencyType {
+        case .confinementConcurrencyType:
+            block()
+        case .mainQueueConcurrencyType, .privateQueueConcurrencyType:
+            context.perform {
+                block()
+            }
+        }
+    }
+
+    public func performAndWait(block: @escaping () -> Void) {
+        switch context.concurrencyType {
+        case .confinementConcurrencyType:
+            block()
+        case .mainQueueConcurrencyType, .privateQueueConcurrencyType:
+            context.performAndWait {
+                block()
+            }
+        }
     }
 }

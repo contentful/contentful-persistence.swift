@@ -1,0 +1,15 @@
+{
+    "sys": {
+        "type": "Space",
+        "id": "dqpnpm0n4e75"
+    },
+    "name": "blog space",
+    "locales": [
+                {
+                "code": "en-US",
+                "default": true,
+                "name": "U.S. English",
+                "fallbackCode": null
+                }
+                ]
+}   

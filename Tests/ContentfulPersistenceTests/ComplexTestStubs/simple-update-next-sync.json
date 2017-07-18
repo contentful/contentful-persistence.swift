@@ -1,0 +1,36 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "aNt2d7YR4AIwEAMcG4OwI",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:28.985Z",
+        "updatedAt": "2017-07-13T13:08:34.383Z",
+        "revision": 4,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "Hello FooBar"
+        }
+      }
+    }
+  ],
+  "nextSyncUrl": "https://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=w5ZGw6JFwqZmVcKsE8Kow4grw45QdybCpMOBFS3CksKJasKKw4HCriw3wofDhsKAXcKXQMOlZMKgw5AKHMKhw7zCmMOSc2ADwozCpAHDpsOmw4XDt0VPwrXCm3how4UII8OswrzDlMKDwqRewpQTw4oNwqBYw4RPXsKxLA"
+}

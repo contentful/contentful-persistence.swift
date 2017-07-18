@@ -6,12 +6,15 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
+import CoreData
 import Contentful
 import Interstellar
 
 func predicate(for id: String) -> NSPredicate {
     return NSPredicate(format: "id == %@", id)
 }
+
+fileprivate struct DeletedRelationship {}
 
 /// Provides the ability to sync content from Contentful to a persistence store.
 public class SynchronizationManager: PersistenceIntegration {
@@ -49,36 +52,71 @@ public class SynchronizationManager: PersistenceIntegration {
     fileprivate let persistentStore: PersistenceStore
 
     public var syncToken: String? {
-        return fetchSpace().syncToken
+        var syncToken: String? = nil
+        persistentStore.performAndWait {
+            syncToken = self.fetchSpace().syncToken
+        }
+        return syncToken
+    }
+
+    public func update(with syncSpace: SyncSpace) {
+        persistentStore.performBlock {
+            for asset in syncSpace.assets {
+                self.create(asset: asset)
+            }
+
+            // Update and deduplicate all entries.
+            for entry in syncSpace.entries {
+                self.create(entry: entry)
+            }
+
+            for deletedAssetId in syncSpace.deletedAssetIds {
+                self.delete(assetWithId: deletedAssetId)
+            }
+
+            for deletedEntryId in syncSpace.deletedEntryIds {
+                self.delete(entryWithId: deletedEntryId)
+            }
+
+            self.update(syncToken: syncSpace.syncToken)
+            self.resolveRelationships()
+            self.save()
+        }
     }
 
     public func update(syncToken: String) {
-        let space = fetchSpace()
+        let space = self.fetchSpace()
         space.syncToken = syncToken
     }
 
     public func resolveRelationships() {
 
-        let cache = DataCache(persistenceStore: persistentStore, assetType: persistenceModel.assetType, entryTypes: persistenceModel.entryTypes)
+        let cache = DataCache(persistenceStore: self.persistentStore,
+                              assetType: self.persistenceModel.assetType,
+                              entryTypes: self.persistenceModel.entryTypes)
 
-        for (entryId, field) in relationshipsToResolve {
-            if let entry = cache.entry(for: entryId) as? NSObject {
+        for (entryId, fields) in self.relationshipsToResolve {
+            if let entryPersistable = cache.entry(for: entryId) as? NSObject {
 
-                for (fieldName, relatedEntryId) in field {
+                for (fieldName, relatedEntryId) in fields {
                     if let identifier = relatedEntryId as? String {
-                        entry.setValue(cache.item(for: identifier), forKey: fieldName)
+                        entryPersistable.setValue(cache.item(for: identifier), forKey: fieldName)
                     }
 
                     if let identifiers = relatedEntryId as? [String] {
                         let targets = identifiers.flatMap { id in
                             return cache.item(for: id)
                         }
-                        entry.setValue(NSOrderedSet(array: targets), forKey: fieldName)
+                        entryPersistable.setValue(NSOrderedSet(array: targets), forKey: fieldName)
+                    }
+                    // Nullfiy the link if it's nil.
+                    if relatedEntryId is DeletedRelationship {
+                        entryPersistable.setValue(nil, forKey: fieldName)
                     }
                 }
             }
         }
-        relationshipsToResolve.removeAll()
+        self.relationshipsToResolve.removeAll()
     }
 
     // MARK: - PersistenceDelegate
@@ -90,13 +128,14 @@ public class SynchronizationManager: PersistenceIntegration {
      */
     public func create(asset: Asset) {
         let type = persistenceModel.assetType
-        let fetched: [AssetPersistable]? = try? persistentStore.fetchAll(type: type, predicate: predicate(for: asset.id))
+
+        let fetched: [AssetPersistable]? = try? self.persistentStore.fetchAll(type: type, predicate: predicate(for: asset.id))
         let persistable: AssetPersistable
 
         if let fetched = fetched?.first {
             persistable = fetched
         } else {
-            persistable = try! persistentStore.create(type: type)
+            persistable = try! self.persistentStore.create(type: type)
             persistable.id = asset.id
         }
 
@@ -119,46 +158,23 @@ public class SynchronizationManager: PersistenceIntegration {
         guard let contentTypeId = entry.sys.contentTypeId else { return }
         guard let type = persistenceModel.entryTypes.filter({ $0.contentTypeId == contentTypeId }).first else { return }
 
-        let fetched: [EntryPersistable]? = try? persistentStore.fetchAll(type: type, predicate: predicate(for: entry.id))
+        let fetched: [EntryPersistable]? = try? self.persistentStore.fetchAll(type: type, predicate: predicate(for: entry.id))
         let persistable: EntryPersistable
 
         if let fetched = fetched?.first {
             persistable = fetched
         } else {
-            persistable = try! persistentStore.create(type: type)
+            persistable = try! self.persistentStore.create(type: type)
             persistable.id = entry.id
+            persistable.createdAt = entry.sys.createdAt
         }
+
 
         // Populate persistable with sys and fields data from the `Entry`
         persistable.updatedAt = entry.sys.updatedAt
-        persistable.createdAt = entry.sys.updatedAt
 
-        updateFields(for: persistable, of: type, with: entry)
-
-        // Now handle and cache all the relationships.
-
-        // ContentTypeId to either a single entry id or an array of entry id's to be linked.
-        var relationships = [ContentTypeId: Any]()
-
-        // Get fieldNames which are links/relationships/references to other types.
-        if let relationshipNames = try? persistentStore.relationships(for: type) {
-
-            for relationshipName in relationshipNames {
-
-                if let linkedValue = entry.fields[relationshipName] {
-                    if let targets = linkedValue as? [Link] {
-                        // One-to-many.
-                        relationships[relationshipName] = targets.map { $0.id }
-                    } else {
-                        // One-to-one.
-                        assert(linkedValue is Link)
-                        relationships[relationshipName] = (linkedValue as! Link).id
-                    }
-                }
-            }
-        }
-        // Dictionary mapping Entry identifier's to a dictionary with fieldName to related entry id's.
-        relationshipsToResolve[entry.id] = relationships
+        self.updatePropertyFields(for: persistable, of: type, with: entry)
+        self.relationshipsToResolve[entry.id] = self.persistableRelationships(for: persistable, of: type, with: entry)
     }
 
     /**
@@ -196,28 +212,57 @@ public class SynchronizationManager: PersistenceIntegration {
     // Dictionary to cache mappings for fields on `Entry` to `EntryPersistable` properties for each content type.
     fileprivate var sharedEntryPropertyNames: [ContentTypeId: [FieldName: String]] = [ContentTypeId: [FieldName: String]]()
 
-    fileprivate func derivedMapping(for entryType: EntryPersistable.Type, and fields: [FieldName: Any]) -> [FieldName: String] {
+    fileprivate var sharedRelationshipPropertyNames: [ContentTypeId: [FieldName: String]] = [ContentTypeId: [FieldName: String]]()
+
+    // Returns regular (non-relationship) field to property mappings.
+    internal func propertyMapping(for entryType: EntryPersistable.Type, and fields: [FieldName: Any]) -> [FieldName: String] {
         if let sharedPropertyNames = sharedEntryPropertyNames[entryType.contentTypeId] {
             return sharedPropertyNames
         }
 
-        let persistablePropertyNames = Set(try! persistentStore.properties(for: entryType))
-        let entryFieldNames = Set(fields.keys)
-        let sharedPropertyNames = Array(persistablePropertyNames.intersection(entryFieldNames))
+        // If user-defined relationship properties exist, use them, but filter out relationships.
+        let mapping = entryType.mapping()
 
-        let mapping = [FieldName: String](elements: sharedPropertyNames.map({ ($0, $0) }))
+        // Filter out user-defined properties that represent relationships.
+        let persistentRelationshipPropertyNames = try! persistentStore.relationships(for: entryType)
+
+        let relationshipPropertyNamesToExclude = Set(persistentRelationshipPropertyNames).intersection(Set(mapping.values))
+        let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
+            return relationshipPropertyNamesToExclude.contains(propertyName) == false
+        }
+        let filteredMapping = Dictionary(elements: filteredMappingTuplesArray)
 
         // Cache.
-        sharedEntryPropertyNames[entryType.contentTypeId] = mapping
-        return mapping
+        sharedEntryPropertyNames[entryType.contentTypeId] = filteredMapping
+        return filteredMapping
     }
 
-    fileprivate func updateFields(for entryPersistable: EntryPersistable, of type: EntryPersistable.Type, with entry: Entry) {
+    internal func relationshipMapping(for entryType: EntryPersistable.Type, and fields: [FieldName: Any]) -> [FieldName: String] {
+        if let sharedPropertyNames = sharedRelationshipPropertyNames[entryType.contentTypeId] {
+            return sharedPropertyNames
+        }
+
+        let mapping = entryType.mapping()
+        // Filter out user-defined regular fields that do NOT represent relationships.
+        let persistentPropertyNames = try! persistentStore.properties(for: entryType)
+        let propertyNamesToExclude = Set(persistentPropertyNames).intersection(Set(mapping.values))
+
+        let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
+            return propertyNamesToExclude.contains(propertyName) == false
+        }
+        let filteredMapping = Dictionary(elements: filteredMappingTuplesArray)
+
+        // Cache.
+        sharedRelationshipPropertyNames[entryType.contentTypeId] = filteredMapping
+        return filteredMapping
+    }
+
+    fileprivate func updatePropertyFields(for entryPersistable: EntryPersistable, of type: EntryPersistable.Type, with entry: Entry) {
 
         // Key-Value Coding only works with NSObject types as it's an Obj-C API.
-        guard let persistable = entryPersistable as? NSObject else { return }
+        guard let persistable = entryPersistable as? NSManagedObject else { return }
 
-        let mapping = type.mapping() ?? derivedMapping(for: type, and: entry.fields)
+        let mapping = propertyMapping(for: type, and: entry.fields)
 
         for (fieldName, propertyName) in mapping {
             var fieldValue = entry.fields[fieldName]
@@ -230,13 +275,45 @@ public class SynchronizationManager: PersistenceIntegration {
         }
     }
 
+    fileprivate func persistableRelationships(for entryPersistable: EntryPersistable,
+                                              of type: EntryPersistable.Type,
+                                              with entry: Entry) -> [FieldName: Any] {
+        // FieldName to either a single entry id or an array of entry id's to be linked.
+        var relationships = [FieldName: Any]()
+
+        let relationshipMapping = self.relationshipMapping(for: type, and: entry.fields)
+        let relationshipFieldNames = Array(relationshipMapping.keys)
+
+        // Get fieldNames which are links/relationships/references to other types.
+        for relationshipName in relationshipFieldNames {
+            guard let propertyName = relationshipMapping[relationshipName] else { continue }
+
+            // Get the name of the propery to be linked to.
+            if let linkedValue = entry.fields[relationshipName] {
+                if let targets = linkedValue as? [Link] {
+                    // One-to-many.
+                    relationships[propertyName] = targets.map { $0.id }
+                } else {
+                    // One-to-one.
+                    assert(linkedValue is Link)
+                    relationships[propertyName] = (linkedValue as! Link).id
+                }
+            } else if entry.fields[relationshipName] == nil {
+                relationships[propertyName] = DeletedRelationship()
+            }
+        }
+
+        return relationships
+    }
+
     fileprivate func fetchSpace() -> SyncSpacePersistable {
         let createNewPersistentSpace: () -> (SyncSpacePersistable) = {
             let spacePersistable: SyncSpacePersistable = try! self.persistentStore.create(type: self.persistenceModel.spaceType)
             return spacePersistable
         }
 
-        guard let fetchedResults = try? persistentStore.fetchAll(type: persistenceModel.spaceType, predicate: NSPredicate(value: true)) as [SyncSpacePersistable] else {
+        guard let fetchedResults = try? persistentStore.fetchAll(type: persistenceModel.spaceType,
+                                                                 predicate: NSPredicate(value: true)) as [SyncSpacePersistable] else {
             return createNewPersistentSpace()
         }
 

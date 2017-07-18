@@ -16,6 +16,12 @@ open:
 clean:
 	rm -rf $(HOME)/Library/Developer/Xcode/DerivedData/*
 
+clean_simulators: kill_simulator
+	xcrun simctl erase all
+
+kill_simulator:
+	killall "Simulator" || true
+
 test: clean
 	set -x -o pipefail && xcodebuild test -project $(PROJECT) \
 		-scheme ContentfulPersistence_iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=10.3' | bundle exec xcpretty -c

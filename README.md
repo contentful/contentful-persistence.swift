@@ -31,11 +31,14 @@ self.client = Client(spaceId: "<YOUR_SPACE_ID>", accessToken: "<YOUR_ACCESS_TOKE
 
 // Sync with the API. 
 self.client.initialSync().then { _ in
-  do {
-    // Fetch all `Posts` from CoreData
-    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
-  } catch {
-    // Handle error thrown by CoreData fetches.
+  // Make sure to delegate to the correct thread.
+  self.managedObjectContext.perform { 
+    do {
+      // Fetch all `Posts` from CoreData
+      let post: Post? = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
+    } catch {
+      // Handle error thrown by CoreData fetches.
+    }
   }
 }
 ```
@@ -99,7 +102,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target :MyApp do
-	pod 'ContentfulPersistenceSwift', '~> 0.4.0'
+	pod 'ContentfulPersistenceSwift', '~> 0.5.0'
 end
 ```
 
@@ -108,7 +111,7 @@ end
 You can also use [Carthage][6] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.4.0
+github "contentful/contentful.swift" ~> 0.5.0
 ```
 
 ## Unit Tests

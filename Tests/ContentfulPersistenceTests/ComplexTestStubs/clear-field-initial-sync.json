@@ -1,0 +1,120 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "aNt2d7YR4AIwEAMcG4OwI",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:28.985Z",
+        "updatedAt": "2017-07-13T09:49:17.125Z",
+        "revision": 3,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "Hello"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "14XouHzspI44uKCcMicWUY",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:29.046Z",
+        "updatedAt": "2017-06-22T09:09:16.166Z",
+        "revision": 2,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "12"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "5GiLOZvY7SiMeUIgIIAssS",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:29.319Z",
+        "updatedAt": "2017-06-20T14:03:29.319Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "INITIAL TEXT BODY"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "2eXtYKYxYAue2IQgaucoYW",
+        "type": "Entry",
+        "createdAt": "2017-06-20T12:51:13.910Z",
+        "updatedAt": "2017-06-20T12:51:13.910Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "4"
+        }
+      }
+    }
+  ],
+  "nextSyncUrl": "https://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=clear-field-sync-token"
+}

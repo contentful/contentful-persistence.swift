@@ -1,8 +1,8 @@
 //
-//  Category+CoreDataProperties.swift
-//  
+//  ComplexAsset+CoreDataProperties.swift
 //
-//  Created by Boris Bügling on 31/03/16.
+//
+//  Created by JP Wright on 31/03/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -11,16 +11,15 @@
 
 import Foundation
 import CoreData
+import Contentful
 import ContentfulPersistence
 
-extension Category: EntryPersistable {
-
-    static let contentTypeId = "5KMiN6YPvi42icqAUQMCQe"
+extension ComplexAsset: AssetPersistable {
 
     @NSManaged var id: String
+    @NSManaged var title: String?
+    @NSManaged var assetDescription: String?
+    @NSManaged var urlString: String?
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
-    @NSManaged var title: String?
-    @NSManaged var categoryInverse: NSSet?
-    @NSManaged var icon: Asset?
 }

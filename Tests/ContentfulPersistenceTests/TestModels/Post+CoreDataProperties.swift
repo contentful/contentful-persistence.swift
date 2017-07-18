@@ -29,10 +29,12 @@ extension Post: EntryPersistable {
     @NSManaged var title: String?
     @NSManaged var author: NSOrderedSet?
     @NSManaged var category: NSOrderedSet?
-    @NSManaged var featuredImage: Asset?
+    @NSManaged var theFeaturedImage: Asset?
 
-
-    static func mapping() -> [FieldName: String]? {
-        return ["title": "title"]
+    static func mapping() -> [FieldName: String] {
+        return [
+            "title": "title",
+            "featuredImage": "theFeaturedImage"
+        ]
     }
 }

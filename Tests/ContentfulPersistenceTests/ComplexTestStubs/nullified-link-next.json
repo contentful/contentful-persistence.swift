@@ -1,0 +1,36 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "5GiLOZvY7SiMeUIgIIAssS",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:29.319Z",
+        "updatedAt": "2017-07-17T08:54:04.647Z",
+        "revision": 4,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "Record with nullified link"
+        }
+      }
+    }
+  ],
+  "nextSyncUrl": "http://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=w5ZGw6JFwqZmVcKsE8Kow4grw45QdybCp3rDsSHDqVwfRcK9bHfDrBfDuMKrb8ONwqbDuXTDiEwDJRZWwqYyw5TDvMKRBgfDgXtYJMKOY0smw4HCg8OmH8Oaw6DDl0PCrcKJw4PCl8KEUUPCoMOHwrhuw4VeR2c"
+}

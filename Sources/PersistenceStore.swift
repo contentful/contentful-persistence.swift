@@ -73,4 +73,8 @@ public protocol PersistenceStore {
      - throws: If any error occured during the save operation
      */
     func save() throws
+
+    func performBlock(block: @escaping () -> Void)
+
+    func performAndWait(block: @escaping () -> Void)
 }
