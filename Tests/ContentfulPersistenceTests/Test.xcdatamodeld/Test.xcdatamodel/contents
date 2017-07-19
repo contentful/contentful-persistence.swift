@@ -21,7 +21,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="createdEntries" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="author" inverseEntity="Post" syncable="YES"/>
+        <relationship name="createdEntries" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Post" inverseName="authors" inverseEntity="Post" syncable="YES"/>
         <relationship name="profilePhoto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Asset" inverseName="profilePhoto_1kUEViTN4EmGiEaaeC6ouY_Inverse" inverseEntity="Asset" syncable="YES"/>
     </entity>
     <entity name="Category" representedClassName="Category" syncable="YES">
@@ -42,7 +42,7 @@
         <attribute name="tags" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="author" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Author" inverseName="createdEntries" inverseEntity="Author" syncable="YES"/>
+        <relationship name="authors" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Author" inverseName="createdEntries" inverseEntity="Author" syncable="YES"/>
         <relationship name="category" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Category" inverseName="categoryInverse" inverseEntity="Category" syncable="YES"/>
         <relationship name="theFeaturedImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Asset" inverseName="featuredImage_2wKn6yEnZewu2SCCkus4as_Inverse" inverseEntity="Asset" syncable="YES"/>
     </entity>

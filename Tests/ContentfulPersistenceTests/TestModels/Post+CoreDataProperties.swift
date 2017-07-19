@@ -27,14 +27,15 @@ extension Post: EntryPersistable {
     @NSManaged var slug: String?
     @NSManaged var tags: Data?
     @NSManaged var title: String?
-    @NSManaged var author: NSOrderedSet?
+    @NSManaged var authors: NSOrderedSet?
     @NSManaged var category: NSOrderedSet?
     @NSManaged var theFeaturedImage: Asset?
 
     static func mapping() -> [FieldName: String] {
         return [
             "title": "title",
-            "featuredImage": "theFeaturedImage"
+            "featuredImage": "theFeaturedImage",
+            "author": "authors"
         ]
     }
 }

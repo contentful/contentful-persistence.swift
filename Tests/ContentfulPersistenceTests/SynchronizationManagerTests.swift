@@ -161,7 +161,8 @@ class ContentfulPersistenceTests: QuickSpec {
             let post = try! Entry(map: map)
 
             let expectedRelationshipMapping: [FieldName: String] = [
-                "featuredImage": "theFeaturedImage"
+                "featuredImage": "theFeaturedImage",
+                "author": "authors"
             ]
             let postRelationshiopMapping = self.sync.relationshipMapping(for: Post.self, and: post.fields)
             expect(postRelationshiopMapping).to(equal(expectedRelationshipMapping))
@@ -219,7 +220,6 @@ class ContentfulPersistenceTests: QuickSpec {
             self.postTests { done in
                 let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
                 expect(post).toNot(beNil())
-
                 expect(post?.theFeaturedImage).toNot(beNil())
                 expect(post?.theFeaturedImage?.urlString).toNot(beNil())
                 expect(post?.theFeaturedImage?.urlString).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
@@ -233,9 +233,9 @@ class ContentfulPersistenceTests: QuickSpec {
                 let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
                 expect(post).toNot(beNil())
 
-                expect(post?.author).toNot(beNil())
-                expect(post?.author?.count).to(equal(1))
-                guard let author = post?.author?.firstObject as? Author else {
+                expect(post?.authors).toNot(beNil())
+                expect(post?.authors?.count).to(equal(1))
+                guard let author = post?.authors?.firstObject as? Author else {
                     fail("was unable to make relationship")
                     done()
                     return
@@ -274,7 +274,7 @@ class ContentfulPersistenceTests: QuickSpec {
 
             do {
                 let relationships = try store.relationships(for: Post.self)
-                let expectedRelationships = ["author", "category", "theFeaturedImage"]
+                let expectedRelationships = ["authors", "theFeaturedImage", "category"]
                 expect(relationships).to(equal(expectedRelationships))
             } catch {
                 XCTAssert(false, "Storing relationships for Posts should not throw an error")
