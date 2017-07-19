@@ -42,10 +42,41 @@ public class SynchronizationManager: PersistenceIntegration {
 
      - returns: An initialised instance of SynchronizationManager
      */
-    public init(persistenceStore: PersistenceStore, persistenceModel: PersistenceModel) {
+    public init(spaceId: String? = nil,
+                accessToken: String? = nil,
+                clientConfiguration: ClientConfiguration = .default,
+                sessionConfiguration: URLSessionConfiguration = .default,
+                persistenceStore: PersistenceStore,
+                persistenceModel: PersistenceModel) {
         self.persistentStore = persistenceStore
         self.persistenceModel = persistenceModel
+        guard let spaceId = spaceId, let accessToken = accessToken else {
+            return }
+
+        self.client = Client(spaceId: spaceId,
+                            accessToken: accessToken,
+                            clientConfiguration: clientConfiguration,
+                            sessionConfiguration: sessionConfiguration,
+                            persistenceIntegration: self)
     }
+
+    // TODO: SyncSpace being passed back has the most recent diffs so that you can delete stuff from secondary cache.
+    public func sync(then completion: @escaping ResultsHandler<SyncSpace>) {
+
+        let safeCompletion: ResultsHandler<SyncSpace> = { result in
+            self.persistentStore.performBlock {
+                completion(result)
+            }
+        }
+
+        if let syncToken = self.syncToken {
+            client?.nextSync(for: SyncSpace(syncToken: syncToken), completion: safeCompletion)
+        } else {
+            client?.initialSync(completion: safeCompletion)
+        }
+    }
+
+    public var client: Client?
 
     fileprivate let persistenceModel: PersistenceModel
 
