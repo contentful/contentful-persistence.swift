@@ -74,7 +74,7 @@ public class CoreDataStore: PersistenceStore {
         let managedObjects: [NSManagedObject] = try fetchAll(type: type, predicate: predicate)
 
         for managedObject in managedObjects {
-            self.context.delete(managedObject)
+            context.delete(managedObject)
         }
     }
 
@@ -109,7 +109,7 @@ public class CoreDataStore: PersistenceStore {
         let propertyAndRelationshipNames = description.propertiesByName.map { $0.0 }
         let relationshipNames = try relationships(for: type)
 
-        let propertyNames = propertyAndRelationshipNames.filter { !relationshipNames.contains($0) }
+        let propertyNames = propertyAndRelationshipNames.filter { relationshipNames.contains($0) == false }
         return propertyNames
     }
 

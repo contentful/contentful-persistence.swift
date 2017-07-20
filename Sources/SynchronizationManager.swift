@@ -48,6 +48,7 @@ public class SynchronizationManager: PersistenceIntegration {
                 sessionConfiguration: URLSessionConfiguration = .default,
                 persistenceStore: PersistenceStore,
                 persistenceModel: PersistenceModel) {
+
         self.persistentStore = persistenceStore
         self.persistenceModel = persistenceModel
         guard let spaceId = spaceId, let accessToken = accessToken else {
@@ -90,6 +91,12 @@ public class SynchronizationManager: PersistenceIntegration {
         return syncToken
     }
 
+    public func performAndWait(block: @escaping () -> Void) {
+        persistentStore.performAndWait {
+            block()
+        }
+    }
+
     public func update(with syncSpace: SyncSpace) {
         persistentStore.performBlock {
             for asset in syncSpace.assets {
@@ -122,11 +129,11 @@ public class SynchronizationManager: PersistenceIntegration {
 
     public func resolveRelationships() {
 
-        let cache = DataCache(persistenceStore: self.persistentStore,
-                              assetType: self.persistenceModel.assetType,
-                              entryTypes: self.persistenceModel.entryTypes)
+        let cache = DataCache(persistenceStore: persistentStore,
+                              assetType: persistenceModel.assetType,
+                              entryTypes: persistenceModel.entryTypes)
 
-        for (entryId, fields) in self.relationshipsToResolve {
+        for (entryId, fields) in relationshipsToResolve {
             if let entryPersistable = cache.entry(for: entryId) as? NSObject {
 
                 for (fieldName, relatedEntryId) in fields {
@@ -140,7 +147,7 @@ public class SynchronizationManager: PersistenceIntegration {
                         }
                         entryPersistable.setValue(NSOrderedSet(array: targets), forKey: fieldName)
                     }
-                    // Nullfiy the link if it's nil.
+                    // Nullifiy the link if it's nil.
                     if relatedEntryId is DeletedRelationship {
                         entryPersistable.setValue(nil, forKey: fieldName)
                     }
@@ -211,6 +218,7 @@ public class SynchronizationManager: PersistenceIntegration {
         // Populate persistable with sys and fields data from the `Entry`
         persistable.updatedAt = entry.sys.updatedAt
 
+        // Update all properties and cache relationships to be resolved.
         self.updatePropertyFields(for: persistable, of: type, with: entry)
         self.relationshipsToResolve[entry.id] = self.persistableRelationships(for: persistable, of: type, with: entry)
     }
@@ -252,20 +260,22 @@ public class SynchronizationManager: PersistenceIntegration {
     fileprivate var relationshipsToResolve = [String: [FieldName: Any]]()
 
     // Dictionary to cache mappings for fields on `Entry` to `EntryPersistable` properties for each content type.
-    fileprivate var sharedEntryPropertyNames: [ContentTypeId: [FieldName: String]] = [ContentTypeId: [FieldName: String]]()
+    fileprivate var cachedPropertyMappingForContentTypeId: [ContentTypeId: [FieldName: String]] = [ContentTypeId: [FieldName: String]]()
 
-    fileprivate var sharedRelationshipPropertyNames: [ContentTypeId: [FieldName: String]] = [ContentTypeId: [FieldName: String]]()
+    fileprivate var cachedRelationshipMappingForContentTypeId: [ContentTypeId: [FieldName: String]] = [ContentTypeId: [FieldName: String]]()
 
     // Returns regular (non-relationship) field to property mappings.
-    internal func propertyMapping(for entryType: EntryPersistable.Type, and fields: [FieldName: Any]) -> [FieldName: String] {
+    internal func propertyMapping(for entryType: EntryPersistable.Type,
+                                  and fields: [FieldName: Any]) -> [FieldName: String] {
+
+            if let cachedPropertyMapping = cachedPropertyMappingForContentTypeId[entryType.contentTypeId] {
+            return cachedPropertyMapping
+        }
+
         // Filter out user-defined properties that represent relationships.
         guard let persistentRelationshipPropertyNames = try? persistentStore.relationships(for: entryType) else {
             assertionFailure("Could not filter out user-defined properties that represent relationships.")
             return [:]
-        }
-
-        if let sharedPropertyNames = sharedEntryPropertyNames[entryType.contentTypeId] {
-            return sharedPropertyNames
         }
 
         // If user-defined relationship properties exist, use them, but filter out relationships.
@@ -278,24 +288,24 @@ public class SynchronizationManager: PersistenceIntegration {
         let filteredMapping = Dictionary(elements: filteredMappingTuplesArray)
 
         // Cache.
-        sharedEntryPropertyNames[entryType.contentTypeId] = filteredMapping
+        cachedPropertyMappingForContentTypeId[entryType.contentTypeId] = filteredMapping
         return filteredMapping
     }
 
-    internal func relationshipMapping(for entryType: EntryPersistable.Type, and fields: [FieldName: Any]) -> [FieldName: String] {
+    internal func relationshipMapping(for entryType: EntryPersistable.Type,
+                                      and fields: [FieldName: Any]) -> [FieldName: String] {
+
+        if let cachedRelationshipMapping = cachedRelationshipMappingForContentTypeId[entryType.contentTypeId] {
+            return cachedRelationshipMapping
+        }
+
         // Filter out user-defined regular fields that do NOT represent relationships.
         guard let persistentPropertyNames = try? persistentStore.properties(for: entryType) else {
             assertionFailure("Could not filter out user-defined regular fields that do NOT represent relationships.")
             return [:]
         }
 
-        if let sharedPropertyNames = sharedRelationshipPropertyNames[entryType.contentTypeId] {
-            return sharedPropertyNames
-        }
-
         let mapping = entryType.fieldMapping()
-        // Filter out user-defined regular fields that do NOT represent relationships.
-        let persistentPropertyNames = try! persistentStore.properties(for: entryType)
         let propertyNamesToExclude = Set(persistentPropertyNames).intersection(Set(mapping.values))
 
         let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
@@ -304,11 +314,13 @@ public class SynchronizationManager: PersistenceIntegration {
         let filteredMapping = Dictionary(elements: filteredMappingTuplesArray)
 
         // Cache.
-        sharedRelationshipPropertyNames[entryType.contentTypeId] = filteredMapping
+        cachedRelationshipMappingForContentTypeId[entryType.contentTypeId] = filteredMapping
         return filteredMapping
     }
 
-    fileprivate func updatePropertyFields(for entryPersistable: EntryPersistable, of type: EntryPersistable.Type, with entry: Entry) {
+    fileprivate func updatePropertyFields(for entryPersistable: EntryPersistable,
+                                          of type: EntryPersistable.Type,
+                                          with entry: Entry) {
 
         // Key-Value Coding only works with NSObject types as it's an Obj-C API.
         guard let persistable = entryPersistable as? NSManagedObject else { return }
@@ -329,6 +341,7 @@ public class SynchronizationManager: PersistenceIntegration {
     fileprivate func persistableRelationships(for entryPersistable: EntryPersistable,
                                               of type: EntryPersistable.Type,
                                               with entry: Entry) -> [FieldName: Any] {
+
         // FieldName to either a single entry id or an array of entry id's to be linked.
         var relationships = [FieldName: Any]()
 
