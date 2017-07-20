@@ -25,7 +25,7 @@ extension Category: EntryPersistable {
     @NSManaged var categoryInverse: NSSet?
     @NSManaged var icon: Asset?
 
-    static func mapping() -> [FieldName: String] {
+    static func fieldMapping() -> [FieldName: String] {
         return [
             "title": "title",
             "icon": "icon"

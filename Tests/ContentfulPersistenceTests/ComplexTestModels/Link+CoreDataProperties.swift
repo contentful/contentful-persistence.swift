@@ -20,7 +20,7 @@ extension Link: EntryPersistable {
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
 
-    static func mapping() -> [FieldName: String] {
+    static func fieldMapping() -> [FieldName: String] {
         return [
             "awesomeLinkTitle": "awesomeLinkTitle"
         ]

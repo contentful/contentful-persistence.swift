@@ -269,7 +269,7 @@ public class SynchronizationManager: PersistenceIntegration {
         }
 
         // If user-defined relationship properties exist, use them, but filter out relationships.
-        let mapping = entryType.mapping()
+        let mapping = entryType.fieldMapping()
 
         let relationshipPropertyNamesToExclude = Set(persistentRelationshipPropertyNames).intersection(Set(mapping.values))
         let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
@@ -293,7 +293,9 @@ public class SynchronizationManager: PersistenceIntegration {
             return sharedPropertyNames
         }
 
-        let mapping = entryType.mapping()
+        let mapping = entryType.fieldMapping()
+        // Filter out user-defined regular fields that do NOT represent relationships.
+        let persistentPropertyNames = try! persistentStore.properties(for: entryType)
         let propertyNamesToExclude = Set(persistentPropertyNames).intersection(Set(mapping.values))
 
         let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in

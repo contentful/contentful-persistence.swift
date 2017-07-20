@@ -22,7 +22,7 @@ extension SingleRecord: EntryPersistable {
     @NSManaged var updatedAt: Date?
     @NSManaged var linkField: Link?
 
-    static func mapping() -> [FieldName: String] {
+    static func fieldMapping() -> [FieldName: String] {
         return [
             "textBody": "textBody",
             "linkField": "linkField",
