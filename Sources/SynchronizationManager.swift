@@ -135,8 +135,12 @@ public class SynchronizationManager: PersistenceIntegration {
         if let fetched = fetched?.first {
             persistable = fetched
         } else {
-            persistable = try! self.persistentStore.create(type: type)
-            persistable.id = asset.id
+            do {
+                persistable = try self.persistentStore.create(type: type)
+                persistable.id = asset.id
+            } catch let error {
+                fatalError("Could not create the Asset persistent store\n \(error)")
+            }
         }
 
         // Populate persistable with sys and fields data from the `Asset`
@@ -164,11 +168,14 @@ public class SynchronizationManager: PersistenceIntegration {
         if let fetched = fetched?.first {
             persistable = fetched
         } else {
-            persistable = try! self.persistentStore.create(type: type)
-            persistable.id = entry.id
-            persistable.createdAt = entry.sys.createdAt
+            do {
+                persistable = try self.persistentStore.create(type: type)
+                persistable.id = entry.id
+                persistable.createdAt = entry.sys.createdAt
+            } catch let error {
+                fatalError("Could not create the Entry persistent store\n \(error)")
+            }
         }
-
 
         // Populate persistable with sys and fields data from the `Entry`
         persistable.updatedAt = entry.sys.updatedAt
@@ -200,7 +207,11 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
     public func save() {
-        try! persistentStore.save()
+        do {
+            try persistentStore.save()
+        } catch let error {
+            assertionFailure("Could not save the persistent store\n \(error)")
+        }
     }
 
 
@@ -216,15 +227,18 @@ public class SynchronizationManager: PersistenceIntegration {
 
     // Returns regular (non-relationship) field to property mappings.
     internal func propertyMapping(for entryType: EntryPersistable.Type, and fields: [FieldName: Any]) -> [FieldName: String] {
+        // Filter out user-defined properties that represent relationships.
+        guard let persistentRelationshipPropertyNames = try? persistentStore.relationships(for: entryType) else {
+            assertionFailure("Could not filter out user-defined properties that represent relationships.")
+            return [:]
+        }
+
         if let sharedPropertyNames = sharedEntryPropertyNames[entryType.contentTypeId] {
             return sharedPropertyNames
         }
 
         // If user-defined relationship properties exist, use them, but filter out relationships.
         let mapping = entryType.mapping()
-
-        // Filter out user-defined properties that represent relationships.
-        let persistentRelationshipPropertyNames = try! persistentStore.relationships(for: entryType)
 
         let relationshipPropertyNamesToExclude = Set(persistentRelationshipPropertyNames).intersection(Set(mapping.values))
         let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
@@ -238,13 +252,17 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
     internal func relationshipMapping(for entryType: EntryPersistable.Type, and fields: [FieldName: Any]) -> [FieldName: String] {
+        // Filter out user-defined regular fields that do NOT represent relationships.
+        guard let persistentPropertyNames = try? persistentStore.properties(for: entryType) else {
+            assertionFailure("Could not filter out user-defined regular fields that do NOT represent relationships.")
+            return [:]
+        }
+
         if let sharedPropertyNames = sharedRelationshipPropertyNames[entryType.contentTypeId] {
             return sharedPropertyNames
         }
 
         let mapping = entryType.mapping()
-        // Filter out user-defined regular fields that do NOT represent relationships.
-        let persistentPropertyNames = try! persistentStore.properties(for: entryType)
         let propertyNamesToExclude = Set(persistentPropertyNames).intersection(Set(mapping.values))
 
         let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
@@ -308,8 +326,12 @@ public class SynchronizationManager: PersistenceIntegration {
 
     fileprivate func fetchSpace() -> SyncSpacePersistable {
         let createNewPersistentSpace: () -> (SyncSpacePersistable) = {
-            let spacePersistable: SyncSpacePersistable = try! self.persistentStore.create(type: self.persistenceModel.spaceType)
-            return spacePersistable
+            do {
+                let spacePersistable: SyncSpacePersistable = try self.persistentStore.create(type: self.persistenceModel.spaceType)
+                return spacePersistable
+            } catch let error {
+                fatalError("Could not create the Sync Space persistent store\n \(error)")
+            }
         }
 
         guard let fetchedResults = try? persistentStore.fetchAll(type: persistenceModel.spaceType,
