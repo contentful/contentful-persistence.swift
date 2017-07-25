@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G29" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ComplexAsset" representedClassName="ComplexAsset" syncable="YES">
         <attribute name="assetDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="localeCode" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="urlString" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,21 +16,23 @@
         <attribute name="awesomeLinkTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="localeCode" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="singleRecordInverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SingleRecord" inverseName="linkField" inverseEntity="SingleRecord" syncable="YES"/>
     </entity>
     <entity name="SingleRecord" representedClassName="SingleRecord" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
+        <attribute name="localeCode" attributeType="String" syncable="YES"/>
         <attribute name="postedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="textBody" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="linkField" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Link" inverseName="singleRecordInverse" inverseEntity="Link" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ComplexAsset" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="ComplexAsset" positionX="-63" positionY="-18" width="128" height="150"/>
         <element name="ComplexSyncInfo" positionX="-54" positionY="-9" width="128" height="60"/>
-        <element name="Link" positionX="-18" positionY="99" width="128" height="120"/>
-        <element name="SingleRecord" positionX="-36" positionY="90" width="128" height="135"/>
+        <element name="Link" positionX="-18" positionY="99" width="128" height="135"/>
+        <element name="SingleRecord" positionX="-36" positionY="90" width="128" height="150"/>
     </elements>
 </model>

@@ -88,7 +88,7 @@ class ContentfulPersistenceTests: QuickSpec {
 
             let persistenceModel = PersistenceModel(spaceType: SyncInfo.self, assetType: Asset.self, entryTypes: entryTypes)
 
-            let synchronizationManager = SynchronizationManager(persistenceStore: self.store, persistenceModel: persistenceModel)
+            let synchronizationManager = SynchronizationManager(localizationScheme: .default, persistenceStore: self.store, persistenceModel: persistenceModel)
 
             self.client = Client(spaceId: "dqpnpm0n4e75", accessToken: "95c33f933385aa838825526c5753f3b5a7e59bb45cd6b5d78e15bfeafeef1b13", persistenceIntegration: synchronizationManager)
             self.sync = synchronizationManager
@@ -263,7 +263,7 @@ class ContentfulPersistenceTests: QuickSpec {
             do {
                 let properties = try store.properties(for: Category.self)
 
-                expect(Set(properties)).to(equal(Set(["title", "id", "createdAt", "updatedAt"])))
+                expect(Set(properties)).to(equal(Set(["title", "id", "createdAt", "updatedAt", "localeCode"])))
             } catch {
                 XCTAssert(false, "Storing properties for Categories should not throw an error")
             }

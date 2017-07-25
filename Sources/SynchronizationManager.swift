@@ -10,11 +10,40 @@ import CoreData
 import Contentful
 import Interstellar
 
+func predicate(for id: String, localeCode: LocaleCode) -> NSPredicate {
+    return NSPredicate(format: "id == %@ AND localeCode == %@", id, localeCode)
+}
+
 func predicate(for id: String) -> NSPredicate {
     return NSPredicate(format: "id == %@", id)
 }
 
+// A type used to cache relationships that should be deleted in the `resolveRelationships()` method
 fileprivate struct DeletedRelationship {}
+
+/**
+ Configure your SynchronizationManager instance with a localization scheme to define which data should
+ be saved to your persistent store. The `LocalizationScheme.default` scheme will save entities representing
+ data only for the default locale of your space, while the `LocalizationScheme.all` will save data 
+ for all locales.
+ */
+public enum LocalizationScheme {
+    /// Use the `.default` scheme to save only for the default locale for your space.
+    case `default`
+    /** 
+     Specify that data should be saved for only one locale using this scheme.
+     For example the scheme, `LocalizationScheme.one("es-MX")`, will configure this library to only
+     save data for Mexican Spanish. Not that an `assertionFailure` will be thrown if Mexican Spanish
+     is not a valid locale on your space.
+     */
+    case one(LocaleCode)
+    /** 
+     Require that data for all locales be saved to your persistent store. Remember to specify a
+     predicate that includes pattern matching for the `localeCode` property of your `Persistable` model classes
+     when fetching from your local database.
+    */
+    case all
+}
 
 /// Provides the ability to sync content from Contentful to a persistence store.
 public class SynchronizationManager: PersistenceIntegration {
@@ -42,26 +71,43 @@ public class SynchronizationManager: PersistenceIntegration {
 
      - returns: An initialised instance of SynchronizationManager
      */
-    public init(spaceId: String? = nil,
-                accessToken: String? = nil,
-                clientConfiguration: ClientConfiguration = .default,
-                sessionConfiguration: URLSessionConfiguration = .default,
+    public init(client: Client? = nil,
+                localizationScheme: LocalizationScheme,
                 persistenceStore: PersistenceStore,
                 persistenceModel: PersistenceModel) {
 
         self.persistentStore = persistenceStore
         self.persistenceModel = persistenceModel
-        guard let spaceId = spaceId, let accessToken = accessToken else {
-            return }
+        self.localizationScheme = localizationScheme
+        self.localeCodes = []
 
-        self.client = Client(spaceId: spaceId,
-                            accessToken: accessToken,
-                            clientConfiguration: clientConfiguration,
-                            sessionConfiguration: sessionConfiguration,
-                            persistenceIntegration: self)
+        if let client = client {
+            client.persistenceIntegration = self
+            self.client = client
+        }
     }
 
-    // TODO: SyncSpace being passed back has the most recent diffs so that you can delete stuff from secondary cache.
+    fileprivate var localeCodes: [LocaleCode]
+
+    public func update(localeCodes: [LocaleCode]) {
+        switch localizationScheme {
+        case .one(let localeCode):
+            if localeCodes.contains(localeCode) == false {
+                assertionFailure("LocaleCode that SynchronizationManager is configured"
+                    + " to use does not correspond to any locales available for current Contentful.Space")
+            }
+        default: break
+        }
+        self.localeCodes = localeCodes
+
+    }
+
+    /**
+     A wrapper method to synchronize data from Contentful to your locale data store. The callback for this
+     method is thread safe and will delegate to the thread that your data store is tied to.
+     
+     Execute data base queries in the callback for this method.
+     */
     public func sync(then completion: @escaping ResultsHandler<SyncSpace>) {
 
         let safeCompletion: ResultsHandler<SyncSpace> = { result in
@@ -77,7 +123,11 @@ public class SynchronizationManager: PersistenceIntegration {
         }
     }
 
+    /// The Contentful.Client that is configured to retrieve data from your Contentful space.
     public var client: Client?
+
+    /// The localization scheme with which to synchronize your Contentful space to your data store.
+    public var localizationScheme: LocalizationScheme
 
     fileprivate let persistenceModel: PersistenceModel
 
@@ -165,9 +215,26 @@ public class SynchronizationManager: PersistenceIntegration {
      - parameter asset: The newly created Asset
      */
     public func create(asset: Asset) {
+        switch localizationScheme {
+        case .default:
+            // Don't change the locale.
+            createLocalized(asset: asset)
+        case .all:
+            for localeCode in localeCodes {
+                asset.setLocale(withCode: localeCode)
+                createLocalized(asset: asset)
+            }
+        case .one(let localeCode):
+            asset.setLocale(withCode: localeCode)
+            createLocalized(asset: asset)
+        }
+    }
+
+    private func createLocalized(asset: Asset) {
         let type = persistenceModel.assetType
 
-        let fetched: [AssetPersistable]? = try? self.persistentStore.fetchAll(type: type, predicate: predicate(for: asset.id))
+        let fetchPredicate = predicate(for: asset.id, localeCode: asset.currentlySelectedLocale.code)
+        let fetched: [AssetPersistable]? = try? self.persistentStore.fetchAll(type: type, predicate: fetchPredicate)
         let persistable: AssetPersistable
 
         if let fetched = fetched?.first {
@@ -187,8 +254,10 @@ public class SynchronizationManager: PersistenceIntegration {
         persistable.createdAt           = asset.sys.updatedAt
         persistable.urlString           = asset.urlString
         persistable.assetDescription    = asset.description
-    }
 
+        // Set the localeCode.
+        persistable.localeCode = asset.currentlySelectedLocale.code
+    }
 
     /** Never call this directly.
      This function is public as a side-effect of implementing `SyncSpaceDelegate`.
@@ -196,11 +265,28 @@ public class SynchronizationManager: PersistenceIntegration {
      - parameter entry: The newly created Entry
      */
     public func create(entry: Entry) {
+        switch localizationScheme {
+        case .default:
+            // Don't change the locale.
+            createLocalized(entry: entry)
+        case .all:
+            for localeCode in localeCodes {
+                entry.setLocale(withCode: localeCode)
+                createLocalized(entry: entry)
+            }
+        case .one(let localeCode):
+            entry.setLocale(withCode: localeCode)
+            createLocalized(entry: entry)
+        }
+    }
+
+    private func createLocalized(entry: Entry) {
 
         guard let contentTypeId = entry.sys.contentTypeId else { return }
         guard let type = persistenceModel.entryTypes.filter({ $0.contentTypeId == contentTypeId }).first else { return }
 
-        let fetched: [EntryPersistable]? = try? self.persistentStore.fetchAll(type: type, predicate: predicate(for: entry.id))
+        let fetchPredicate = predicate(for: entry.id, localeCode: entry.currentlySelectedLocale.code)
+        let fetched: [EntryPersistable]? = try? self.persistentStore.fetchAll(type: type, predicate: fetchPredicate)
         let persistable: EntryPersistable
 
         if let fetched = fetched?.first {
@@ -209,7 +295,6 @@ public class SynchronizationManager: PersistenceIntegration {
             do {
                 persistable = try self.persistentStore.create(type: type)
                 persistable.id = entry.id
-                persistable.createdAt = entry.sys.createdAt
             } catch let error {
                 fatalError("Could not create the Entry persistent store\n \(error)")
             }
@@ -217,10 +302,18 @@ public class SynchronizationManager: PersistenceIntegration {
 
         // Populate persistable with sys and fields data from the `Entry`
         persistable.updatedAt = entry.sys.updatedAt
+        persistable.createdAt = entry.sys.createdAt
+
+        // Set the localeCode.
+        persistable.localeCode = entry.currentlySelectedLocale.code
+
 
         // Update all properties and cache relationships to be resolved.
         self.updatePropertyFields(for: persistable, of: type, with: entry)
-        self.relationshipsToResolve[entry.id] = self.persistableRelationships(for: persistable, of: type, with: entry)
+
+        // The key has locale information.
+        let entryKey = DataCache.cacheKey(for: entry)
+        self.relationshipsToResolve[entryKey] = self.persistableRelationships(for: persistable, of: type, with: entry)
     }
 
     /**
@@ -256,7 +349,7 @@ public class SynchronizationManager: PersistenceIntegration {
 
     // MARK: Private
 
-    // Dictionary mapping Entry identifier's to a dictionary with fieldName to related entry id's.
+    // Dictionary mapping Entry id's concatenated with locale code to a dictionary with fieldName to related entry id's.
     fileprivate var relationshipsToResolve = [String: [FieldName: Any]]()
 
     // Dictionary to cache mappings for fields on `Entry` to `EntryPersistable` properties for each content type.
@@ -356,11 +449,11 @@ public class SynchronizationManager: PersistenceIntegration {
             if let linkedValue = entry.fields[relationshipName] {
                 if let targets = linkedValue as? [Link] {
                     // One-to-many.
-                    relationships[propertyName] = targets.map { $0.id }
+                    relationships[propertyName] = targets.map { $0.id + "_" + entry.currentlySelectedLocale.code }
                 } else {
                     // One-to-one.
                     assert(linkedValue is Link)
-                    relationships[propertyName] = (linkedValue as! Link).id
+                    relationships[propertyName] = (linkedValue as! Link).id + "_" + entry.currentlySelectedLocale.code 
                 }
             } else if entry.fields[relationshipName] == nil {
                 relationships[propertyName] = DeletedRelationship()

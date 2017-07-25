@@ -17,6 +17,7 @@ import ContentfulPersistence
 extension ComplexAsset: AssetPersistable {
 
     @NSManaged var id: String
+    @NSManaged var localeCode: String
     @NSManaged var title: String?
     @NSManaged var assetDescription: String?
     @NSManaged var urlString: String?

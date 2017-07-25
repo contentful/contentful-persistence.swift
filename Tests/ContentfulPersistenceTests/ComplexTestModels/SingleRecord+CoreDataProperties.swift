@@ -16,6 +16,7 @@ extension SingleRecord: EntryPersistable {
     static let contentTypeId = "singleRecord"
 
     @NSManaged var id: String
+    @NSManaged var localeCode: String
     @NSManaged var textBody: String?
     @NSManaged var postedDate: Date?
     @NSManaged var createdAt: Date?

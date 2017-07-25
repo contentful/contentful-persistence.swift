@@ -19,7 +19,10 @@ public struct PersistenceModel {
     public let assetType: AssetPersistable.Type
     public let entryTypes: [EntryPersistable.Type]
 
-    public init(spaceType: SyncSpacePersistable.Type, assetType: AssetPersistable.Type, entryTypes: [EntryPersistable.Type]) {
+    public init(spaceType: SyncSpacePersistable.Type,
+                assetType: AssetPersistable.Type,
+                entryTypes: [EntryPersistable.Type]) {
+
         self.spaceType = spaceType
         self.assetType = assetType
         self.entryTypes = entryTypes
@@ -41,6 +44,9 @@ public protocol ContentSysPersistable: class {
 
     /// The date that the Contentful Resource was first created.
     var createdAt: Date? { get set }
+
+    /// The code which represents which locale the Resource of interest contains data for.
+    var localeCode: String { get set }
 }
 
 /**

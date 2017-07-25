@@ -50,8 +50,20 @@ class NoDataCache: DataCacheProtocol {
     }
 }
 
+
 /// Implemented using `NSCache`
 class DataCache: DataCacheProtocol {
+
+    public static func cacheKey(for resource: ContentSysPersistable) -> String {
+        let cacheKey =  resource.id + "_" + resource.localeCode
+        return cacheKey
+    }
+
+    public static func cacheKey(for resource: LocalizableResource) -> String {
+        let cacheKey =  resource.id + "_" + resource.currentlySelectedLocale.code
+        return cacheKey
+    }
+
     fileprivate let assetCache = NSCache<AnyObject, AnyObject>()
     fileprivate let entryCache = NSCache<AnyObject, AnyObject>()
 
@@ -86,6 +98,7 @@ class DataCache: DataCacheProtocol {
     }
 
     fileprivate static func cacheResource(in cache: NSCache<AnyObject, AnyObject>, resource: ContentSysPersistable) {
-        cache.setObject(resource as AnyObject, forKey: resource.id as AnyObject)
+        let cacheKey = DataCache.cacheKey(for: resource)
+        cache.setObject(resource as AnyObject, forKey: cacheKey as AnyObject)
     }
 }
