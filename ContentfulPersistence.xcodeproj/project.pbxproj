@@ -83,6 +83,9 @@
 		ED9C21FB1EF3DBD600882ABF /* PersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */; };
 		ED9C21FC1EF3DBD600882ABF /* PersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */; };
 		ED9C21FD1EF3DBD600882ABF /* PersistenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */; };
+		EDBDBFD21F28B1EB00649F5A /* LocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBDBFD11F28B1EB00649F5A /* LocalizationTests.swift */; };
+		EDBDBFD51F28B23B00649F5A /* LocalizationTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EDBDBFD31F28B23B00649F5A /* LocalizationTest.xcdatamodeld */; };
+		EDBDBFD81F28B6E800649F5A /* localization-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = EDBDBFD71F28B6E800649F5A /* localization-sync.json */; };
 		EDCFBF9D1F161EB6002B1B73 /* single-author.json in Resources */ = {isa = PBXBuildFile; fileRef = EDCFBF9C1F161EB6002B1B73 /* single-author.json */; };
 		EDCFBFA01F162449002B1B73 /* Test.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EDCFBF9E1F162449002B1B73 /* Test.xcdatamodeld */; };
 /* End PBXBuildFile section */
@@ -166,6 +169,9 @@
 		ED91F9961F18C52E00540DAC /* multi-page-link-resolution2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-page-link-resolution2.json"; sourceTree = "<group>"; };
 		ED9C21F41EF2C4FB00882ABF /* Persistable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Persistable.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceStore.swift; sourceTree = "<group>"; };
+		EDBDBFD11F28B1EB00649F5A /* LocalizationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationTests.swift; sourceTree = "<group>"; };
+		EDBDBFD41F28B23B00649F5A /* LocalizationTest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocalizationTest.xcdatamodel; sourceTree = "<group>"; };
+		EDBDBFD71F28B6E800649F5A /* localization-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "localization-sync.json"; sourceTree = "<group>"; };
 		EDCFBF9C1F161EB6002B1B73 /* single-author.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "single-author.json"; sourceTree = "<group>"; };
 		EDCFBF9F1F162449002B1B73 /* Test.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Test.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -291,7 +297,10 @@
 				ED25D7DC1F166B7300A6BA9A /* ComplexTestModels */,
 				ED25D7F61F17900900A6BA9A /* ComplexTestStubs */,
 				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
+				EDBDBFD31F28B23B00649F5A /* LocalizationTest.xcdatamodeld */,
 				ED25D7D71F16654A00A6BA9A /* ComplexSyncTests.swift */,
+				EDBDBFD11F28B1EB00649F5A /* LocalizationTests.swift */,
+				EDBDBFD61F28B6CF00649F5A /* LocalizationTestStubs */,
 				ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */,
 				ED10E8AA1E48AC870061741F /* Info.plist */,
 			);
@@ -415,6 +424,14 @@
 				ED1BA7CE1F16287F00E21FD5 /* space.json */,
 			);
 			path = ContentStubs;
+			sourceTree = "<group>";
+		};
+		EDBDBFD61F28B6CF00649F5A /* LocalizationTestStubs */ = {
+			isa = PBXGroup;
+			children = (
+				EDBDBFD71F28B6E800649F5A /* localization-sync.json */,
+			);
+			path = LocalizationTestStubs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -612,6 +629,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */,
+				EDBDBFD81F28B6E800649F5A /* localization-sync.json in Resources */,
 				ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */,
 				EDCFBF9D1F161EB6002B1B73 /* single-author.json in Resources */,
 				ED6B67981F191342008EC7C8 /* clear-field-initial-sync.json in Resources */,
@@ -697,8 +715,10 @@
 				ED4C58EB1F161BA6000B65FD /* TestHelpers.swift in Sources */,
 				ED25D7E01F166C1700A6BA9A /* SingleRecord+CoreDataProperties.swift in Sources */,
 				ED10E8BB1E48ACBD0061741F /* Category.swift in Sources */,
+				EDBDBFD21F28B1EB00649F5A /* LocalizationTests.swift in Sources */,
 				ED25D7EC1F17709A00A6BA9A /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,
 				EDCFBFA01F162449002B1B73 /* Test.xcdatamodeld in Sources */,
+				EDBDBFD51F28B23B00649F5A /* LocalizationTest.xcdatamodeld in Sources */,
 				ED25D7EA1F17706E00A6BA9A /* ComplexSyncInfo.swift in Sources */,
 				ED10E8C81E48BCAE0061741F /* SynchronizationManagerTests.swift in Sources */,
 				ED25D7F51F177D8F00A6BA9A /* ComplexTest.xcdatamodeld in Sources */,
@@ -1187,6 +1207,16 @@
 			);
 			currentVersion = ED25D7F41F177D8F00A6BA9A /* ComplexTest.xcdatamodel */;
 			path = ComplexTest.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		EDBDBFD31F28B23B00649F5A /* LocalizationTest.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EDBDBFD41F28B23B00649F5A /* LocalizationTest.xcdatamodel */,
+			);
+			currentVersion = EDBDBFD41F28B23B00649F5A /* LocalizationTest.xcdatamodel */;
+			path = LocalizationTest.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

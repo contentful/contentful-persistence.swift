@@ -1,0 +1,373 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "aNt2d7YR4AIwEAMcG4OwI",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:28.985Z",
+        "updatedAt": "2017-07-26T11:34:24.314Z",
+        "revision": 6,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "Hello",
+          "es-MX": "Hola"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "3Ck6MRrAJ2CaiasGKqeyao",
+        "type": "Entry",
+        "createdAt": "2017-07-26T11:34:16.890Z",
+        "updatedAt": "2017-07-26T11:34:16.890Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "Record with fallback link"
+        },
+        "linkField": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Entry",
+              "id": "6OdVm20wGAu06w88UqqeaG"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "6OdVm20wGAu06w88UqqeaG",
+        "type": "Entry",
+        "createdAt": "2017-07-26T11:33:11.106Z",
+        "updatedAt": "2017-07-26T11:33:34.957Z",
+        "revision": 3,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "link"
+          }
+        }
+      },
+      "fields": {
+        "awesomeLinkTitle": {
+          "en-US": "The link with a fallback",
+          "es-MX": "Español"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "14XouHzspI44uKCcMicWUY",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:29.046Z",
+        "updatedAt": "2017-07-26T11:32:35.590Z",
+        "revision": 4,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "Record With Link"
+        },
+        "linkField": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Entry",
+              "id": "2XYdAPiR0I6SMAGiCOEukU"
+            }
+          },
+          "es-MX": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Entry",
+              "id": "3Q0rPkimDmuoCQqgUiqKUu"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "3Q0rPkimDmuoCQqgUiqKUu",
+        "type": "Entry",
+        "createdAt": "2017-07-26T11:29:55.608Z",
+        "updatedAt": "2017-07-26T11:29:55.608Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "link"
+          }
+        }
+      },
+      "fields": {
+        "awesomeLinkTitle": {
+          "en-US": "The second link",
+          "es-MX": "El segundo link"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "2XYdAPiR0I6SMAGiCOEukU",
+        "type": "Entry",
+        "createdAt": "2017-07-14T09:10:20.703Z",
+        "updatedAt": "2017-07-26T11:29:12.572Z",
+        "revision": 2,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "link"
+          }
+        }
+      },
+      "fields": {
+        "awesomeLinkTitle": {
+          "en-US": "AWESOMELINK!!!",
+          "es-MX": "La mejor Link!"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "5GiLOZvY7SiMeUIgIIAssS",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:29.319Z",
+        "updatedAt": "2017-07-17T08:54:04.647Z",
+        "revision": 4,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "Record with nullified link"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "oyH8Sacu7m4c2si8CEcqs",
+        "type": "Entry",
+        "createdAt": "2017-07-17T08:49:34.933Z",
+        "updatedAt": "2017-07-17T08:49:34.933Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "link"
+          }
+        }
+      },
+      "fields": {
+        "awesomeLinkTitle": {
+          "en-US": "To be nullified"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "1N7rfyWDCQGoiQk204aWAS",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:29.282Z",
+        "updatedAt": "2017-06-20T14:03:29.282Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "11"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "iIjks5ZkbY6KyICk28I8A",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:28.997Z",
+        "updatedAt": "2017-06-20T14:03:28.997Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "13"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "yulOlzRnPwES6k6wCQEEQ",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:28.978Z",
+        "updatedAt": "2017-06-20T14:03:28.978Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "14"
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "57e6FQmZRYGGmqUA4kQQuC",
+        "type": "Entry",
+        "createdAt": "2017-06-20T14:03:28.938Z",
+        "updatedAt": "2017-06-20T14:03:28.938Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "16"
+        }
+      }
+    }
+  ],
+  "nextSyncUrl": "http://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=wonDrcKnRgcSOF4-wrDCgcKefWzCgsOxwrfCq8KOfMOdXUPCvEnChwEEO8KFwqHDj8KywqF3w6XCkcOAAcOwwo55EsO6wopVV8KgcsKywoEEVgfDs8Ohw4wOGcKFwrtdPhHDqBnDjC_ClCfDoD3CoMONRjLDpSHCqFRvUmF-DXvDgsOnwpzCnSsTSVLCrsKgPB_CvCp_w4bDoxzDlMOpw4jCtsOzwqDCh8K4wqc0w5cQwofDm8KSFcO6JWwrw6_CqAQH"
+}
