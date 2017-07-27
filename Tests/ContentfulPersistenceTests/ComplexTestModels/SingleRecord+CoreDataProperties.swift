@@ -16,13 +16,14 @@ extension SingleRecord: EntryPersistable {
     static let contentTypeId = "singleRecord"
 
     @NSManaged var id: String
+    @NSManaged var localeCode: String
     @NSManaged var textBody: String?
     @NSManaged var postedDate: Date?
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
     @NSManaged var linkField: Link?
 
-    static func mapping() -> [FieldName: String] {
+    static func fieldMapping() -> [FieldName: String] {
         return [
             "textBody": "textBody",
             "linkField": "linkField",

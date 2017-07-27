@@ -19,6 +19,7 @@ extension Post: EntryPersistable {
     static let contentTypeId = "2wKn6yEnZewu2SCCkus4as"
 
     @NSManaged var id: String
+    @NSManaged var localeCode: String
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
     @NSManaged var body: String?
@@ -27,14 +28,15 @@ extension Post: EntryPersistable {
     @NSManaged var slug: String?
     @NSManaged var tags: Data?
     @NSManaged var title: String?
-    @NSManaged var author: NSOrderedSet?
+    @NSManaged var authors: NSOrderedSet?
     @NSManaged var category: NSOrderedSet?
     @NSManaged var theFeaturedImage: Asset?
 
-    static func mapping() -> [FieldName: String] {
+    static func fieldMapping() -> [FieldName: String] {
         return [
             "title": "title",
-            "featuredImage": "theFeaturedImage"
+            "featuredImage": "theFeaturedImage",
+            "author": "authors"
         ]
     }
 }

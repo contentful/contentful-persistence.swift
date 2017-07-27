@@ -4,7 +4,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> All recent changes are published
+~~> All recent changes are published~~
+> #### Added
+> - The ability to a `LocalizationScheme` on `SynchronizationManager` which determines for which locales data should be saved to your persistent store.
+> 
+> #### Changed
+> - **BREAKING:** `ContentPersistable` is now called `ContentSysPersistable`
+> - **BREAKING:** `mapping()` is now called `fieldMapping()` to clarify that only 'fields' from your Entries ContentModel must be mapped.
+> - **BREAKING:** `localeCode: String` is now a necessary property for `ContentSysPersistable` model classes.
+>
+> #### Fixed
+> - Removed use of `try!` in the codebase Issue [#25](https://github.com/contentful/contentful.swift/issues/25). Fix by [@tapwork](https://github.com/tapwork) in [#26](https://github.com/contentful/contentful-persistence.swift/pull/26)
+>
 ---
 
 ## Table of contents

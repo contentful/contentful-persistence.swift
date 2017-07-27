@@ -68,12 +68,13 @@ class ComplexSyncTests: XCTestCase {
 
         let persistenceModel = PersistenceModel(spaceType: ComplexSyncInfo.self, assetType: ComplexAsset.self, entryTypes: [SingleRecord.self, Link.self])
 
-        let synchronizationManager = SynchronizationManager(persistenceStore: self.store, persistenceModel: persistenceModel)
-
 
         client = Client(spaceId: "smf0sqiu0c5s",
-                        accessToken: "14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34",
-                        persistenceIntegration: synchronizationManager)
+                        accessToken: "14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34")
+        let synchronizationManager = SynchronizationManager(client: client,
+                                                            localizationScheme: .default,
+                                                            persistenceStore: self.store,
+                                                            persistenceModel: persistenceModel)
 
         self.syncManager = synchronizationManager
     }

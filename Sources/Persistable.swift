@@ -19,7 +19,10 @@ public struct PersistenceModel {
     public let assetType: AssetPersistable.Type
     public let entryTypes: [EntryPersistable.Type]
 
-    public init(spaceType: SyncSpacePersistable.Type, assetType: AssetPersistable.Type, entryTypes: [EntryPersistable.Type]) {
+    public init(spaceType: SyncSpacePersistable.Type,
+                assetType: AssetPersistable.Type,
+                entryTypes: [EntryPersistable.Type]) {
+
         self.spaceType = spaceType
         self.assetType = assetType
         self.entryTypes = entryTypes
@@ -32,7 +35,7 @@ public struct PersistenceModel {
 // Protocols are marked with @objc attribute for two reasons:
 // 1) CoreData requires that model classes inherit from `NSManagedObject`
 // 2) @objc enables optional protocol methods that don't require implementation.
-public protocol ContentPersistable: class {
+public protocol ContentSysPersistable: class {
     /// The unique identifier of the Resource.
     var id: String { get set }
 
@@ -41,6 +44,9 @@ public protocol ContentPersistable: class {
 
     /// The date that the Contentful Resource was first created.
     var createdAt: Date? { get set }
+
+    /// The code which represents which locale the Resource of interest contains data for.
+    var localeCode: String { get set }
 }
 
 /**
@@ -58,7 +64,7 @@ public protocol SyncSpacePersistable: class {
  Conform to `AssetPersistable` protocol to enable mapping of your Contentful media Assets to
  your `NSManagedObject` subclass.
  */
-public protocol AssetPersistable: ContentPersistable {
+public protocol AssetPersistable: ContentSysPersistable {
     /// URL of the Asset.
     var urlString: String? { get set }
 
@@ -74,12 +80,12 @@ public protocol AssetPersistable: ContentPersistable {
  Conform to `EntryPersistable` protocol to enable mapping of your Contentful content type to  
  your `NSManagedObject` subclass.
  */
-public protocol EntryPersistable: ContentPersistable {
+public protocol EntryPersistable: ContentSysPersistable {
     /// The identifier of the Contentful content type that will map to this type of `EntryPersistable`
     static var contentTypeId: ContentTypeId { get }
 
     /// This method must be implemented to provide a custom mapping from Contentful fields to Swift properties. 
     /// Note that after Swift 4 is release, this method will be deprecated in favor of leveraging the 
     /// auto-synthesized `CodingKeys` enum that is generated for all types conforming to `Codable`.
-    static func mapping() -> [FieldName: String]
+    static func fieldMapping() -> [FieldName: String]
 }

@@ -24,7 +24,7 @@ kill_simulator:
 
 test: clean
 	set -x -o pipefail && xcodebuild test -project $(PROJECT) \
-		-scheme ContentfulPersistence_iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=10.3' | bundle exec xcpretty -c
+		-scheme ContentfulPersistence_iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=10.3.1' | bundle exec xcpretty -c
 
 setup_env:
 	./Scripts/setup-env.sh
