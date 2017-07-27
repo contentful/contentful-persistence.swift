@@ -28,7 +28,7 @@ self.client = Client(spaceId: "<YOUR_SPACE_ID>", accessToken: "<YOUR_ACCESS_TOKE
 
 // Create the manager.
 self.syncManager = SynchronizationManager(client: self.client,
-                                          localizationScheme: LocalizationScheme.all, // Save data for all locales your Space supports.
+                                          localizationScheme: LocalizationScheme.all, // Save data for all locales your space supports.
                                           persistenceStore: self.store, 
                                           persistenceModel: persistenceModel)
 

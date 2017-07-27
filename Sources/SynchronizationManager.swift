@@ -103,10 +103,10 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
     /**
-     A wrapper method to synchronize data from Contentful to your locale data store. The callback for this
+     A wrapper method to synchronize data from Contentful to your local data store. The callback for this
      method is thread safe and will delegate to the thread that your data store is tied to.
      
-     Execute data base queries in the callback for this method.
+     Execute queries on your local data store in the callback for this method.
      */
     public func sync(then completion: @escaping ResultsHandler<SyncSpace>) {
 
