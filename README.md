@@ -23,31 +23,33 @@ let entryTypes = [Author.self, Category.self, Post.self]
 let store = CoreDataStore(context: self.managedObjectContext)
 let persistenceModel = PersistenceModel(spaceType: SyncInfo.self, assetType: Asset.self, entryTypes: entryTypes)
 
-// Create the manager.
-let syncManager = SynchronizationManager(persistenceStore: self.store, persistenceModel: persistenceModel)
-
 // Initialize the Contentful.Client with a persistenceIntegration which will receive messages about changes when calling `sync methods`
-self.client = Client(spaceId: "<YOUR_SPACE_ID>", accessToken: "<YOUR_ACCESS_TOKEN>", persistenceIntegration: syncManager)
+self.client = Client(spaceId: "<YOUR_SPACE_ID>", accessToken: "<YOUR_ACCESS_TOKEN>")
+
+// Create the manager.
+self.syncManager = SynchronizationManager(client: self.client,
+                                          localizationScheme: LocalizationScheme.all, // Save data for all locales your Space supports.
+                                          persistenceStore: self.store, 
+                                          persistenceModel: persistenceModel)
+
+
 
 // Sync with the API. 
-self.client.initialSync().then { _ in
-  // Make sure to delegate to the correct thread.
-  self.managedObjectContext.perform { 
-    do {
-      // Fetch all `Posts` from CoreData
-      let post: Post? = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
-    } catch {
-      // Handle error thrown by CoreData fetches.
-    }
+self.syncManager.sync() { _ in
+  do {
+    // Fetch all `Posts` from CoreData
+    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
+  } catch {
+    // Handle error thrown by CoreData fetches.
   }
 }
 ```
 
 ## Define your `CoreData` model
 
-To make your model classes work with contentful-persistence.swift you will need to either conform to `ContentPersistable` for Contentful Assets, or `EntryPersistable` for Contentful entry types.
+To make your model classes work with contentful-persistence.swift you will need to either conform to `ContentSysPersistable` for Contentful Assets, or `EntryPersistable` for Contentful entry types.
 
-Then you will need to make the corresponding model in your projects `xcdatamodel` file. Both `EntryPersistable` and `ContentPersistable` types must have a _non-optional_ `id` property as well as optional `createdAt` and `updatedAt` date properties.
+Then you will need to make the corresponding model in your projects `xcdatamodel` file. Both `EntryPersistable` and `ContentSysPersistable` types must have a _non-optional_ `id` and `localeCode` properties as well as optional `createdAt` and `updatedAt` date properties.
 
 Optionality on CoreData entities is a bit different than swift optionality—optionality means that the property may be absent when a save-to-database operation is performed. To configure a property's optionality, open the "Data Model Inspector" in Xcode's "Utilities" right sidebar and toggle the "Optional" checkbox:
 
@@ -70,6 +72,7 @@ class Post: NSManagedObject, EntryPersistable {
     static let contentTypeId = "2wKn6yEnZewu2SCCkus4as"
 
     @NSManaged var id: String
+    @NSManaged var localeCode: String
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
     @NSManaged var body: String?
@@ -82,9 +85,14 @@ class Post: NSManagedObject, EntryPersistable {
     @NSManaged var category: NSOrderedSet?
     @NSManaged var featuredImage: Asset?
 
-    // Override auto-derived mapping. In the below example, only the `title` property will be populated.
-    static func mapping() -> [FieldName: String]? {
-        return ["title": "title"]
+    // Define the mapping from the fields on your Contentful.Entry to your model class. 
+    // In the below example, only the `title` and `author` fields and `featuredImage` link will be populated.
+    static func fieldMapping() -> [FieldName: String] {
+        return [
+            "title": "title",
+            "featuredImage": "theFeaturedImage",
+            "author": "authors"
+        ]    
     }
 }
 ```
