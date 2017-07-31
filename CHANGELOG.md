@@ -4,25 +4,32 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-~~> All recent changes are published~~
-> #### Added
-> - The ability to a `LocalizationScheme` on `SynchronizationManager` which determines for which locales data should be saved to your persistent store.
-> 
-> #### Changed
-> - **BREAKING:** `ContentPersistable` is now called `ContentSysPersistable`
-> - **BREAKING:** `mapping()` is now called `fieldMapping()` to clarify that only 'fields' from your Entries ContentModel must be mapped.
-> - **BREAKING:** `localeCode: String` is now a necessary property for `ContentSysPersistable` model classes.
->
-> #### Fixed
-> - Removed use of `try!` in the codebase Issue [#25](https://github.com/contentful/contentful.swift/issues/25). Fix by [@tapwork](https://github.com/tapwork) in [#26](https://github.com/contentful/contentful-persistence.swift/pull/26)
->
+> All recent changes are published
 ---
 
 ## Table of contents
 
 #### 0.x Releases
-- `0.5.x` Releases - [0.4.0](#050)
+
+- `0.6.x` Releases - [0.6.0](#060)
+- `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040)
+
+---
+
+## [`0.6.0`](https://github.com/contentful/contentful-persistence.swift/releases/tag/0.6.0)
+Released on 2017-07-31
+
+#### Added
+- The ability to a `LocalizationScheme` on `SynchronizationManager` which determines for which locales data should be saved to your persistent store.
+
+#### Changed
+- **BREAKING:** `ContentPersistable` is now called `ContentSysPersistable`
+- **BREAKING:** `mapping()` is now called `fieldMapping()` to clarify that only 'fields' from your Entries ContentModel must be mapped.
+- **BREAKING:** `localeCode: String` is now a necessary property for `ContentSysPersistable` model classes.
+
+#### Fixed
+- Removed use of `try!` in the codebase Issue [#25](https://github.com/contentful/contentful.swift/issues/25). Fix by [@tapwork](https://github.com/tapwork) in [#26](https://github.com/contentful/contentful-persistence.swift/pull/26)
 
 ---
 
