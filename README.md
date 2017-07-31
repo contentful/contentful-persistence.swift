@@ -65,7 +65,9 @@ import CoreData
 import ContentfulPersistence
 import Contentful
 
-@objc(Post)
+// The following @objc attribute is only necessary if your xcdatamodel Default configuration doesn't have your module
+// name prepended to the Swift class. To enable removing the @objc attribute, change the Class for your entity to `ModuleName.Post`
+@objc(Post) 
 class Post: NSManagedObject, EntryPersistable {
       
     // The identifier of the corresponding Content Type in Contentful.
@@ -81,9 +83,9 @@ class Post: NSManagedObject, EntryPersistable {
     @NSManaged var slug: String?
     @NSManaged var tags: Data?
     @NSManaged var title: String?
-    @NSManaged var author: NSOrderedSet?
+    @NSManaged var authors: NSOrderedSet?
     @NSManaged var category: NSOrderedSet?
-    @NSManaged var featuredImage: Asset?
+    @NSManaged var theFeaturedImage: Asset?
 
     // Define the mapping from the fields on your Contentful.Entry to your model class. 
     // In the below example, only the `title` and `author` fields and `featuredImage` link will be populated.
@@ -110,7 +112,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target :MyApp do
-	pod 'ContentfulPersistenceSwift', '~> 0.5.0'
+	pod 'ContentfulPersistenceSwift', '~> 0.6.0'
 end
 ```
 
@@ -119,7 +121,7 @@ end
 You can also use [Carthage][6] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.5.0
+github "contentful/contentful.swift" ~> 0.6.0
 ```
 
 ## Unit Tests
