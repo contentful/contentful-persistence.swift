@@ -64,7 +64,6 @@
 		ED2C99B41ED42E040039056E /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99841ED42C190039056E /* Interstellar.framework */; };
 		ED2C99B51ED42E040039056E /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99851ED42C190039056E /* Nimble.framework */; };
 		ED2C99B61ED42E040039056E /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99861ED42C190039056E /* ObjectMapper.framework */; };
-		ED2C99B71ED42E040039056E /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99871ED42C190039056E /* Quick.framework */; };
 		ED4C58EB1F161BA6000B65FD /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */; };
 		ED6B67981F191342008EC7C8 /* clear-field-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */; };
 		ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */; };
@@ -144,7 +143,6 @@
 		ED2C99841ED42C190039056E /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED2C99851ED42C190039056E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		ED2C99861ED42C190039056E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
-		ED2C99871ED42C190039056E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		ED2C99921ED42C350039056E /* Contentful.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contentful.framework; path = Carthage/Build/iOS/Contentful.framework; sourceTree = "<group>"; };
 		ED2C99931ED42C350039056E /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED2C99941ED42C350039056E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
@@ -193,7 +191,6 @@
 			files = (
 				ED2C99B31ED42E040039056E /* Contentful.framework in Frameworks */,
 				ED2C99B41ED42E040039056E /* Interstellar.framework in Frameworks */,
-				ED2C99B71ED42E040039056E /* Quick.framework in Frameworks */,
 				ED25D7EE1F17758100A6BA9A /* OHHTTPStubs.framework in Frameworks */,
 				ED2C99B61ED42E040039056E /* ObjectMapper.framework in Frameworks */,
 				A1A9FBEE1CABE8EA00430734 /* ContentfulPersistence.framework in Frameworks */,
@@ -371,7 +368,6 @@
 				ED2C99841ED42C190039056E /* Interstellar.framework */,
 				ED2C99851ED42C190039056E /* Nimble.framework */,
 				ED2C99861ED42C190039056E /* ObjectMapper.framework */,
-				ED2C99871ED42C190039056E /* Quick.framework */,
 			);
 			name = TestFrameworks;
 			sourceTree = "<group>";
