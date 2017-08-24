@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A1A9FBEC1CABE8EA00430734"
-               BuildableName = "ContentfulPersistenceTests.xctest"
-               BlueprintName = "ContentfulPersistenceTests"
+               BuildableName = "ContentfulPersistenceTests_iOS.xctest"
+               BlueprintName = "ContentfulPersistenceTests_iOS"
                ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
             </BuildableReference>
          </TestableReference>

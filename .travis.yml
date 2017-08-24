@@ -2,15 +2,15 @@ language: objective-c
 osx_image: xcode8.3
 rvm:
   - 2.4.1
-before_install:
-  - brew update
-  - brew outdated carthage || brew upgrade carthage
-  - brew outdated swiftlint || brew upgrade swiftlint
-before_script:
-  - carthage bootstrap --platform iOS
+cache: bundler
+matrix:
+  include:
+    - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone 6s,OS=10.3.1" SCHEME=ContentfulPersistence_iOS
+    - env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV 1080p,OS=10.2" SCHEME=ContentfulPersistence_tvOS
+    - env: SDK=macosx PLATFORM="OS X" SCHEME=ContentfulPersistence_macOS
 script:
   - ./Scripts/travis-build-test.sh
 after_success:
-  - bundle exec slather coverage --coveralls ContentfulPersistence.xcodeproj
+  - bundle exec slather coverage -s --coveralls 
   - pod lib lint ContentfulPersistenceSwift.podspec
 

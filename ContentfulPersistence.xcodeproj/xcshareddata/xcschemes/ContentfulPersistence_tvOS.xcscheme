@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EDD8F4B21F54004C0000D3BB"
+               BuildableName = "ContentfulPersistenceTests_tvOS.xctest"
+               BlueprintName = "ContentfulPersistenceTests_tvOS"
+               ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "ED10E8CD1E48BF110061741F"
+            BuildableName = "ContentfulPersistence.framework"
+            BlueprintName = "ContentfulPersistence_tvOS"
+            ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

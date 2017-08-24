@@ -7,11 +7,13 @@
 //
 
 @testable import ContentfulPersistence
-import ObjectMapper
 import Contentful
+import Interstellar
+import ObjectMapper
 import XCTest
 import Nimble
 import CoreData
+import CoreLocation
 
 typealias TestFunc = (() -> ()) throws -> ()
 
@@ -20,8 +22,13 @@ class ContentfulPersistenceTests: XCTestCase {
     let assetPredicate = NSPredicate(format: "id == 'bXvdSYHB3Guy2uUmuEco8'")
     let postPredicate = NSPredicate(format: "id == '1asN98Ph3mUiCYIYiiqwko'")
 
-
-    let storeURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last?.appendingPathComponent("Test.sqlite")
+    #if os(iOS) || os(macOS)
+    let storeURL = FileManager.default.urls(for: .documentDirectory,
+                                            in: .userDomainMask).last?.appendingPathComponent("Test.sqlite")
+    #elseif os(tvOS)
+    let storeURL = FileManager.default.urls(for: .cachesDirectory,
+                                            in: .userDomainMask).last?.appendingPathComponent("Test.sqlite")
+    #endif
 
     func deleteCoreDataStore() {
         guard FileManager.default.fileExists(atPath: self.storeURL!.absoluteString) == true else { return }

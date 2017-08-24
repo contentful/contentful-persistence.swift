@@ -8,7 +8,6 @@
 
 import CoreData
 import Contentful
-import Interstellar
 
 func predicate(for id: String, localeCode: LocaleCode) -> NSPredicate {
     return NSPredicate(format: "id == %@ AND localeCode == %@", id, localeCode)
@@ -19,7 +18,7 @@ func predicate(for id: String) -> NSPredicate {
 }
 
 // A type used to cache relationships that should be deleted in the `resolveRelationships()` method
-fileprivate struct DeletedRelationship {}
+private struct DeletedRelationship {}
 
 /**
  Configure your SynchronizationManager instance with a localization scheme to define which data should
@@ -453,7 +452,7 @@ public class SynchronizationManager: PersistenceIntegration {
                 } else {
                     // One-to-one.
                     assert(linkedValue is Link)
-                    relationships[propertyName] = (linkedValue as! Link).id + "_" + entry.currentlySelectedLocale.code 
+                    relationships[propertyName] = (linkedValue as! Link).id + "_" + entry.currentlySelectedLocale.code
                 }
             } else if entry.fields[relationshipName] == nil {
                 relationships[propertyName] = DeletedRelationship()

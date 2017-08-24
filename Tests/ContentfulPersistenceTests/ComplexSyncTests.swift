@@ -9,16 +9,23 @@
 
 @testable import ContentfulPersistence
 import Contentful
+import Interstellar
 import XCTest
 import Nimble
 import Foundation
 import CoreData
 import OHHTTPStubs
+import CoreLocation
 
 class ComplexSyncTests: XCTestCase {
 
+    #if os(iOS) || os(macOS)
     let storeURL = FileManager.default.urls(for: .documentDirectory,
                                             in: .userDomainMask).last?.appendingPathComponent("ComplexTest.sqlite")
+    #elseif os(tvOS)
+    let storeURL = FileManager.default.urls(for: .cachesDirectory,
+                                            in: .userDomainMask).last?.appendingPathComponent("ComplexTest.sqlite")
+    #endif
 
     var syncManager: SynchronizationManager!
 
