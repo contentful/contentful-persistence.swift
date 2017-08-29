@@ -615,6 +615,7 @@
 				ED10E8CA1E48BF110061741F /* Frameworks */,
 				ED10E8CB1E48BF110061741F /* Headers */,
 				ED10E8CC1E48BF110061741F /* Resources */,
+				EDDE9EBD1F5582AA00A092D7 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -633,6 +634,7 @@
 				ED10E8E21E48CB480061741F /* Frameworks */,
 				ED10E8E31E48CB480061741F /* Headers */,
 				ED10E8E41E48CB480061741F /* Resources */,
+				EDDE9EBE1F5582BF00A092D7 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -651,6 +653,7 @@
 				ED10E8EF1E48CB650061741F /* Frameworks */,
 				ED10E8F01E48CB650061741F /* Headers */,
 				ED10E8F11E48CB650061741F /* Resources */,
+				EDDE9EC01F5582D100A092D7 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -856,6 +859,48 @@
 		ED9102941E6D60050076FDBD /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+		};
+		EDDE9EBD1F5582AA00A092D7 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+		};
+		EDDE9EBE1F5582BF00A092D7 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = $SRCROOT/Scripts/BuildPhases/SwiftLint.sh;
+		};
+		EDDE9EC01F5582D100A092D7 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
