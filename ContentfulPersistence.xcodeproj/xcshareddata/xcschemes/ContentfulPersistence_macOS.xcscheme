@@ -26,9 +26,29 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EDD8F4C11F5400980000D3BB"
+               BuildableName = "ContentfulPersistenceTests_macOS.xctest"
+               BlueprintName = "ContentfulPersistenceTests_macOS"
+               ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "ED10E8F21E48CB650061741F"
+            BuildableName = "ContentfulPersistence.framework"
+            BlueprintName = "ContentfulPersistence_macOS"
+            ReferencedContainer = "container:ContentfulPersistence.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

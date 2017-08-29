@@ -8,16 +8,23 @@
 
 @testable import ContentfulPersistence
 import Contentful
+import Interstellar
 import XCTest
 import Nimble
 import Foundation
 import CoreData
 import OHHTTPStubs
+import CoreLocation
 
 class LocalizationTests: XCTestCase {
-    
+
+    #if os(iOS) || os(macOS)
     let storeURL = FileManager.default.urls(for: .documentDirectory,
                                             in: .userDomainMask).last?.appendingPathComponent("LocalizationTest.sqlite")
+    #elseif os(tvOS)
+    let storeURL = FileManager.default.urls(for: .cachesDirectory,
+                                            in: .userDomainMask).last?.appendingPathComponent("LocalizationTest.sqlite")
+    #endif
 
     var syncManager: SynchronizationManager!
 

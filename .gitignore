@@ -9,6 +9,9 @@ Pods
 build
 .build
 Packages
-Carthage
+
+# Carthage
+Carthage/Build/
+
 *.xcscmblueprint
 

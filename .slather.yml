@@ -1,2 +1,5 @@
+coverage_service: coveralls
 workspace: ContentfulPersistence.xcworkspace
-scheme: ContentfulPersistence
+xcodeproj: ContentfulPersistence.xcodeproj
+scheme: "ContentfulPersistence_iOS"
+
