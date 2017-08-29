@@ -7,11 +7,12 @@ $(error Could not find $(SIM_NAME) simulator)
 endif
 
 PROJECT=ContentfulPersistence.xcodeproj
+WORKSPACE=ContentfulPersistence.xcworkspace
 
 .PHONY: test setup lint coverage carthage clean open
 
 open:
-	open $(PROJECT)
+	open $(WORKSPACE)
 
 clean:
 	rm -rf $(HOME)/Library/Developer/Xcode/DerivedData/*
@@ -23,15 +24,16 @@ kill_simulator:
 	killall "Simulator" || true
 
 test: clean
-	set -x -o pipefail && xcodebuild test -project $(PROJECT) \
-		-scheme ContentfulPersistence_iOS -destination 'platform=iOS Simulator,name=iPhone 6s,OS=10.3.1' | bundle exec xcpretty -c
+	set -x -o pipefail && xcodebuild test -workspace $(WORKSPACE) \
+		-scheme ContentfulPersistence_macOS -destination 'platform=OS X' | bundle exec xcpretty -c
 
 setup_env:
 	./Scripts/setup-env.sh
 
 setup:
 	bundle install
-	bundle exec pod install --no-repo-update
+	git submodule sync
+	git submodule update --init --recursive
 
 lint:
 	swiftlint
