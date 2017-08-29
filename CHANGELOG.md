@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> All recent changes are published
+> ~~All recent changes are published~~
+> #### Fixed
+> - Project configuration so that contentful-persistence.swift may be built from source without warnings. Implications:
+>   - Dependencies are still managed via Carthage but using the `--use-submodules` flag. Thus, dependencies are all tracked as submodules and the source (i.e. Carthage/Checkouts) is now tracked in git.
+>   - Now travis doesn't install carthage or use it at all to build the project and ContentfulPersistence.xcodeproj framework search paths are cleared.
 ---
 
 ## Table of contents
