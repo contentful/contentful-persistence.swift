@@ -64,7 +64,7 @@ public protocol SyncSpacePersistable: class {
  Conform to `AssetPersistable` protocol to enable mapping of your Contentful media Assets to
  your `NSManagedObject` subclass.
  */
-public protocol AssetPersistable: ContentSysPersistable {
+public protocol AssetPersistable: ContentSysPersistable, Media {
     /// URL of the Asset.
     var urlString: String? { get set }
 

@@ -1,0 +1,137 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "dqpnpm0n4e75"
+          }
+        },
+        "id": "2xA3oKlZTuQ0Wgs2Wm2Mkk",
+        "type": "Asset",
+        "createdAt": "2015-02-05T12:11:50.659Z",
+        "updatedAt": "2015-02-05T12:11:50.659Z",
+        "revision": 1
+      },
+      "fields": {
+        "title": {
+          "en-US": "Mike Springer"
+        },
+        "file": {
+          "en-US": {
+            "url": "//images.contentful.com/dqpnpm0n4e75/2xA3oKlZTuQ0Wgs2Wm2Mkk/bcf0c26a4c528583bb582884c61295df/kenchoong.jpeg",
+            "details": {
+              "size": 3559,
+              "image": {
+                "width": 200,
+                "height": 200
+              }
+            },
+            "fileName": "kenchoong.jpeg",
+            "contentType": "image/jpeg"
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "dqpnpm0n4e75"
+          }
+        },
+        "id": "5JQ715oDQW68k8EiEuKOk8",
+        "type": "Entry",
+        "createdAt": "2015-02-05T12:11:56.980Z",
+        "updatedAt": "2015-02-05T12:11:56.980Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "1kUEViTN4EmGiEaaeC6ouY"
+          }
+        }
+      },
+      "fields": {
+        "name": {
+          "en-US": "Mike Springer"
+        },
+        "website": {
+          "en-US": "https://plus.google.com/+openculture/posts"
+        },
+        "profilePhoto": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Asset",
+              "id": "2xA3oKlZTuQ0Wgs2Wm2Mkk"
+            }
+          }
+        },
+        "biography": {
+          "en-US": "Mike Springer is a journalist living in Cambridge, Massachusetts, he writes daily for Open Culture."
+        },
+        "createdEntries": {
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Entry",
+                "id": "3lHulSxvby04sO0q0k64aA"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "dqpnpm0n4e75"
+          }
+        },
+        "id": "6XL7nwqRZ6yEw0cUe4y0y6",
+        "type": "Entry",
+        "createdAt": "2015-02-05T12:11:56.974Z",
+        "updatedAt": "2015-02-05T12:11:56.974Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "5KMiN6YPvi42icqAUQMCQe"
+          }
+        }
+      },
+      "fields": {
+        "title": {
+          "en-US": "Literature"
+        },
+        "shortDescription": {
+          "en-US": "Blog posts featuring extracts from classical books, new novels and literary criticism."
+        },
+        "icon": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Asset",
+              "id": "5Q6yYElPe8w8AEsKeki4M4"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "nextSyncUrl": "https://cdn.contentful.com/spaces/dqpnpm0n4e75/sync?sync_token=the_end"
+}
