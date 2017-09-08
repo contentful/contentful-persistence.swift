@@ -64,6 +64,19 @@
 		ED882EC91F4EFF9A00FCE253 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED25D7ED1F17758100A6BA9A /* OHHTTPStubs.framework */; };
 		ED882ECA1F4EFF9A00FCE253 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99851ED42C190039056E /* Nimble.framework */; };
 		ED882ED51F4F014700FCE253 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED882ED11F4F012000FCE253 /* ObjectMapper.framework */; };
+		ED8C1E721F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8C1E711F603939001D059F /* SynchronizationManager+SeedDB.swift */; };
+		ED8C1E731F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8C1E711F603939001D059F /* SynchronizationManager+SeedDB.swift */; };
+		ED8C1E741F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8C1E711F603939001D059F /* SynchronizationManager+SeedDB.swift */; };
+		ED8C1E751F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8C1E711F603939001D059F /* SynchronizationManager+SeedDB.swift */; };
+		ED8C1E781F603D45001D059F /* PreseedingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8C1E771F603D45001D059F /* PreseedingTests.swift */; };
+		ED8C1E791F603D45001D059F /* PreseedingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8C1E771F603D45001D059F /* PreseedingTests.swift */; };
+		ED8C1E7A1F603D45001D059F /* PreseedingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8C1E771F603D45001D059F /* PreseedingTests.swift */; };
+		ED8C1E801F6040E0001D059F /* PreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED8C1E7F1F6040E0001D059F /* PreseedJSONFiles */; };
+		ED8C1E811F6040E0001D059F /* PreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED8C1E7F1F6040E0001D059F /* PreseedJSONFiles */; };
+		ED8C1E821F6040E0001D059F /* PreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED8C1E7F1F6040E0001D059F /* PreseedJSONFiles */; };
+		ED8C1E881F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */; };
+		ED8C1E891F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */; };
+		ED8C1E8A1F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */; };
 		ED8E98B91F5445B200164DDE /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED882ED01F4F012000FCE253 /* Interstellar.framework */; };
 		ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F9951F18C52E00540DAC /* multi-page-link-resolution1.json */; };
 		ED91F99F1F18C79D00540DAC /* multi-page-link-resolution2.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F9961F18C52E00540DAC /* multi-page-link-resolution2.json */; };
@@ -248,6 +261,10 @@
 		ED86952A1EFA8C93004693BA /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		ED882ED01F4F012000FCE253 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED882ED11F4F012000FCE253 /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
+		ED8C1E711F603939001D059F /* SynchronizationManager+SeedDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SynchronizationManager+SeedDB.swift"; sourceTree = "<group>"; };
+		ED8C1E771F603D45001D059F /* PreseedingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreseedingTests.swift; sourceTree = "<group>"; };
+		ED8C1E7F1F6040E0001D059F /* PreseedJSONFiles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PreseedJSONFiles; sourceTree = "<group>"; };
+		ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MultifilePreseedJSONFiles; sourceTree = "<group>"; };
 		ED91F98F1F17A74D00540DAC /* simple-update-initial-sync-page2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "simple-update-initial-sync-page2.json"; sourceTree = "<group>"; };
 		ED91F9921F17A8C900540DAC /* simple-update-next-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "simple-update-next-sync.json"; sourceTree = "<group>"; };
 		ED91F9951F18C52E00540DAC /* multi-page-link-resolution1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-page-link-resolution1.json"; sourceTree = "<group>"; };
@@ -384,11 +401,7 @@
 		A1A9FBE51CABE8EA00430734 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				ED10E8841E48AB840061741F /* SynchronizationManager.swift */,
-				ED9C21F41EF2C4FB00882ABF /* Persistable.swift */,
-				ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */,
-				ED10E8851E48AB840061741F /* CoreDataStore.swift */,
-				ED10E8861E48AB840061741F /* DataCache.swift */,
+				ED8C1E9C1F617A36001D059F /* ContentfulPersistence */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -396,19 +409,7 @@
 		A1A9FBF11CABE8EA00430734 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				ED4C58EC1F161DDE000B65FD /* ContentStubs */,
-				EDCFBF9E1F162449002B1B73 /* Test.xcdatamodeld */,
-				A15B70A61CAD47070019DBCC /* TestModels */,
-				ED25D7F31F177D8F00A6BA9A /* ComplexTest.xcdatamodeld */,
-				ED25D7DC1F166B7300A6BA9A /* ComplexTestModels */,
-				ED25D7F61F17900900A6BA9A /* ComplexTestStubs */,
-				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
-				EDBDBFD31F28B23B00649F5A /* LocalizationTest.xcdatamodeld */,
-				ED25D7D71F16654A00A6BA9A /* ComplexSyncTests.swift */,
-				EDBDBFD11F28B1EB00649F5A /* LocalizationTests.swift */,
-				EDBDBFD61F28B6CF00649F5A /* LocalizationTestStubs */,
-				ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */,
-				ED10E8AA1E48AC870061741F /* Info.plist */,
+				ED8C1E9D1F617A8E001D059F /* ContentfulPersistenceTests */,
 			);
 			name = Tests;
 			path = Tests/ContentfulPersistenceTests;
@@ -522,6 +523,42 @@
 				ED1BA7CE1F16287F00E21FD5 /* space.json */,
 			);
 			path = ContentStubs;
+			sourceTree = "<group>";
+		};
+		ED8C1E9C1F617A36001D059F /* ContentfulPersistence */ = {
+			isa = PBXGroup;
+			children = (
+				ED10E8841E48AB840061741F /* SynchronizationManager.swift */,
+				ED8C1E711F603939001D059F /* SynchronizationManager+SeedDB.swift */,
+				ED9C21F41EF2C4FB00882ABF /* Persistable.swift */,
+				ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */,
+				ED10E8851E48AB840061741F /* CoreDataStore.swift */,
+				ED10E8861E48AB840061741F /* DataCache.swift */,
+			);
+			path = ContentfulPersistence;
+			sourceTree = "<group>";
+		};
+		ED8C1E9D1F617A8E001D059F /* ContentfulPersistenceTests */ = {
+			isa = PBXGroup;
+			children = (
+				ED10E8AA1E48AC870061741F /* Info.plist */,
+				ED4C58EC1F161DDE000B65FD /* ContentStubs */,
+				EDCFBF9E1F162449002B1B73 /* Test.xcdatamodeld */,
+				A15B70A61CAD47070019DBCC /* TestModels */,
+				ED25D7F31F177D8F00A6BA9A /* ComplexTest.xcdatamodeld */,
+				ED25D7DC1F166B7300A6BA9A /* ComplexTestModels */,
+				ED25D7F61F17900900A6BA9A /* ComplexTestStubs */,
+				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
+				EDBDBFD31F28B23B00649F5A /* LocalizationTest.xcdatamodeld */,
+				ED25D7D71F16654A00A6BA9A /* ComplexSyncTests.swift */,
+				EDBDBFD11F28B1EB00649F5A /* LocalizationTests.swift */,
+				EDBDBFD61F28B6CF00649F5A /* LocalizationTestStubs */,
+				ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */,
+				ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */,
+				ED8C1E7F1F6040E0001D059F /* PreseedJSONFiles */,
+				ED8C1E771F603D45001D059F /* PreseedingTests.swift */,
+			);
+			name = ContentfulPersistenceTests;
 			sourceTree = "<group>";
 		};
 		EDBDBFD61F28B6CF00649F5A /* LocalizationTestStubs */ = {
@@ -707,7 +744,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Contentful GmbH";
 				TargetAttributes = {
 					A1A9FBE21CABE8EA00430734 = {
@@ -785,10 +822,12 @@
 				ED91F9A11F18C79D00540DAC /* simple-update-initial-sync-page2.json in Resources */,
 				ED91F9A21F18C79D00540DAC /* simple-update-next-sync.json in Resources */,
 				ED1BA7D01F16288100E21FD5 /* space.json in Resources */,
+				ED8C1E881F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				ED91F99F1F18C79D00540DAC /* multi-page-link-resolution2.json in Resources */,
 				ED6B67A21F1CB350008EC7C8 /* nullified-link-initial.json in Resources */,
 				ED1BA7D31F1645A000E21FD5 /* single-post.json in Resources */,
 				ED6B67A31F1CB350008EC7C8 /* nullified-link-next.json in Resources */,
+				ED8C1E801F6040E0001D059F /* PreseedJSONFiles in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -826,10 +865,12 @@
 				EDD8F4F11F5401FD0000D3BB /* nullified-link-initial.json in Resources */,
 				EDD8F4F61F5401FD0000D3BB /* simple-update-initial-sync-page2.json in Resources */,
 				EDD8F4EF1F5401FD0000D3BB /* clear-field-initial-sync.json in Resources */,
+				ED8C1E891F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				EDD8F4ED1F5401F50000D3BB /* localization-sync.json in Resources */,
 				EDD8F4F71F5401FD0000D3BB /* simple-update-next-sync.json in Resources */,
 				EDD8F4F21F5401FD0000D3BB /* nullified-link-next.json in Resources */,
 				EDD8F52D1F5402290000D3BB /* space.json in Resources */,
+				ED8C1E811F6040E0001D059F /* PreseedJSONFiles in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -846,10 +887,12 @@
 				EDD8F4FA1F5401FD0000D3BB /* nullified-link-initial.json in Resources */,
 				EDD8F4FF1F5401FD0000D3BB /* simple-update-initial-sync-page2.json in Resources */,
 				EDD8F4F81F5401FD0000D3BB /* clear-field-initial-sync.json in Resources */,
+				ED8C1E8A1F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				EDD8F4EE1F5401F60000D3BB /* localization-sync.json in Resources */,
 				EDD8F5001F5401FD0000D3BB /* simple-update-next-sync.json in Resources */,
 				EDD8F4FB1F5401FD0000D3BB /* nullified-link-next.json in Resources */,
 				EDD8F5301F5402290000D3BB /* space.json in Resources */,
+				ED8C1E821F6040E0001D059F /* PreseedJSONFiles in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -920,6 +963,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */,
+				ED8C1E721F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FA1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
 				ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */,
 				ED9C21F51EF2C4FB00882ABF /* Persistable.swift in Sources */,
@@ -954,6 +998,7 @@
 				ED25D7F51F177D8F00A6BA9A /* ComplexTest.xcdatamodeld in Sources */,
 				ED25D7E21F176D5900A6BA9A /* Link.swift in Sources */,
 				ED10E8BC1E48ACBD0061741F /* Category+CoreDataProperties.swift in Sources */,
+				ED8C1E781F603D45001D059F /* PreseedingTests.swift in Sources */,
 				ED25D7DE1F166BF500A6BA9A /* SingleRecord.swift in Sources */,
 				ED10E8BF1E48ACBD0061741F /* SyncInfo.swift in Sources */,
 			);
@@ -964,6 +1009,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED10E8D71E48BF1D0061741F /* CoreDataStore.swift in Sources */,
+				ED8C1E731F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FB1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
 				ED10E8D61E48BF1D0061741F /* SynchronizationManager.swift in Sources */,
 				ED9C21F61EF2C4FB00882ABF /* Persistable.swift in Sources */,
@@ -976,6 +1022,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED10E9021E48CD1E0061741F /* CoreDataStore.swift in Sources */,
+				ED8C1E741F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FC1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
 				ED10E9011E48CD1E0061741F /* SynchronizationManager.swift in Sources */,
 				ED9C21F71EF2C4FB00882ABF /* Persistable.swift in Sources */,
@@ -988,6 +1035,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED10E9081E48CD1F0061741F /* CoreDataStore.swift in Sources */,
+				ED8C1E751F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FD1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
 				ED10E9071E48CD1F0061741F /* SynchronizationManager.swift in Sources */,
 				ED9C21F81EF2C4FB00882ABF /* Persistable.swift in Sources */,
@@ -1022,6 +1070,7 @@
 				EDD8F5061F5402040000D3BB /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,
 				EDD8F5081F5402040000D3BB /* Link+CoreDataProperties.swift in Sources */,
 				EDD8F5131F54020C0000D3BB /* LocalizationTest.xcdatamodeld in Sources */,
+				ED8C1E791F603D45001D059F /* PreseedingTests.swift in Sources */,
 				EDD8F5011F5402040000D3BB /* SingleRecord.swift in Sources */,
 				EDD8F5291F5402240000D3BB /* Test.xcdatamodeld in Sources */,
 			);
@@ -1054,6 +1103,7 @@
 				EDD8F50E1F5402040000D3BB /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,
 				EDD8F5101F5402040000D3BB /* Link+CoreDataProperties.swift in Sources */,
 				EDD8F5141F54020D0000D3BB /* LocalizationTest.xcdatamodeld in Sources */,
+				ED8C1E7A1F603D45001D059F /* PreseedingTests.swift in Sources */,
 				EDD8F5091F5402040000D3BB /* SingleRecord.swift in Sources */,
 				EDD8F52A1F5402250000D3BB /* Test.xcdatamodeld in Sources */,
 			);
@@ -1170,6 +1220,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
