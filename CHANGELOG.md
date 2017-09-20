@@ -15,9 +15,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 #### 0.x Releases
 
-- `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061)
+- `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061) | [0.6.2](#062)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040)
+
+---
+
+## [`0.6.2`](https://github.com/contentful/contentful-persistence.swift/releases/tag/0.6.2)
+Released on 2017-09-20
+
+#### Fixed
+- Bug that caused `SynchronizationManager` to fail seeding a CoreData database from bundled content because of lack of localization context.
 
 ---
 
