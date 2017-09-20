@@ -27,11 +27,25 @@ public extension SynchronizationManager {
         var fileIndex = 0
         let filePaths = bundle.paths(forResourcesOfType: "json", inDirectory: directory)
 
+        let spaceJSONFilePath = filePaths.filter({ URL(string: $0)?.deletingPathExtension().lastPathComponent == "space" }).first
         let firstFilePath = filePaths.filter({ URL(string: $0)?.deletingPathExtension().lastPathComponent == String(fileIndex) }).first
-        guard let initialSyncJSONFilePath = firstFilePath else {
+
+        guard let initialSyncJSONFilePath = firstFilePath, let spaceFilePath = spaceJSONFilePath else {
             throw DatabaseSeedingError.invalidFilePath
         }
 
+        // Get the space first to give the client context.
+        guard let data = FileManager.default.contents(atPath: spaceFilePath) else {
+            let error = SDKError.invalidURL(string: spaceFilePath)
+            throw error
+        }
+        guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+            let error = SDKError.unparseableJSON(data: data, errorMessage: "Foundation.JSONSerialization failed")
+            throw error
+        }
+
+        let map = Map(mappingType: .fromJSON, JSON: json)
+        let space = try Space(map: map)
 
         var filePath: String? = initialSyncJSONFilePath
         while let path = filePath {
@@ -45,7 +59,7 @@ public extension SynchronizationManager {
                 throw error
             }
 
-            let map = Map(mappingType: .fromJSON, JSON: json)
+            let map = Map(mappingType: .fromJSON, JSON: json, context: space.localizationContext)
             let syncSpace = try SyncSpace(map: map)
             self.update(with: syncSpace)
 

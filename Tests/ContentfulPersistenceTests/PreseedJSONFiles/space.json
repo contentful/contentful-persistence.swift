@@ -1,0 +1,21 @@
+{
+  "sys": {
+    "type": "Space",
+    "id": "smf0sqiu0c5s"
+  },
+  "name": "Complex-Sync-Test-Space",
+  "locales": [
+    {
+      "code": "en-US",
+      "default": true,
+      "name": "U.S. English",
+      "fallbackCode": null
+    },
+    {
+      "code": "es-MX",
+      "default": false,
+      "name": "Spanish (Mexico)",
+      "fallbackCode": "en-US"
+    }
+  ]
+}
