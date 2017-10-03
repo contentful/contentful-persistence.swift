@@ -109,8 +109,8 @@ public class SynchronizationManager: PersistenceIntegration {
      */
     public func sync(then completion: @escaping ResultsHandler<SyncSpace>) {
 
-        let safeCompletion: ResultsHandler<SyncSpace> = { result in
-            self.persistentStore.performBlock {
+        let safeCompletion: ResultsHandler<SyncSpace> = { [weak self] result in
+            self?.persistentStore.performBlock {
                 completion(result)
             }
         }
@@ -147,27 +147,27 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
     public func update(with syncSpace: SyncSpace) {
-        persistentStore.performBlock {
+        persistentStore.performBlock { [weak self] in
             for asset in syncSpace.assets {
-                self.create(asset: asset)
+                self?.create(asset: asset)
             }
 
             // Update and deduplicate all entries.
             for entry in syncSpace.entries {
-                self.create(entry: entry)
+                self?.create(entry: entry)
             }
 
             for deletedAssetId in syncSpace.deletedAssetIds {
-                self.delete(assetWithId: deletedAssetId)
+                self?.delete(assetWithId: deletedAssetId)
             }
 
             for deletedEntryId in syncSpace.deletedEntryIds {
-                self.delete(entryWithId: deletedEntryId)
+                self?.delete(entryWithId: deletedEntryId)
             }
 
-            self.update(syncToken: syncSpace.syncToken)
-            self.resolveRelationships()
-            self.save()
+            self?.update(syncToken: syncSpace.syncToken)
+            self?.resolveRelationships()
+            self?.save()
         }
     }
 
@@ -374,10 +374,9 @@ public class SynchronizationManager: PersistenceIntegration {
         let mapping = entryType.fieldMapping()
 
         let relationshipPropertyNamesToExclude = Set(persistentRelationshipPropertyNames).intersection(Set(mapping.values))
-        let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
+        let filteredMapping = mapping.filter { (_, propertyName) -> Bool in
             return relationshipPropertyNamesToExclude.contains(propertyName) == false
         }
-        let filteredMapping = Dictionary(elements: filteredMappingTuplesArray)
 
         // Cache.
         cachedPropertyMappingForContentTypeId[entryType.contentTypeId] = filteredMapping
@@ -400,10 +399,9 @@ public class SynchronizationManager: PersistenceIntegration {
         let mapping = entryType.fieldMapping()
         let propertyNamesToExclude = Set(persistentPropertyNames).intersection(Set(mapping.values))
 
-        let filteredMappingTuplesArray = mapping.filter { (_, propertyName) -> Bool in
+        let filteredMapping = mapping.filter { (_, propertyName) -> Bool in
             return propertyNamesToExclude.contains(propertyName) == false
         }
-        let filteredMapping = Dictionary(elements: filteredMappingTuplesArray)
 
         // Cache.
         cachedRelationshipMappingForContentTypeId[entryType.contentTypeId] = filteredMapping
@@ -484,16 +482,5 @@ public class SynchronizationManager: PersistenceIntegration {
         }
 
         return space
-    }
-}
-
-extension Dictionary {
-
-    // Helper initializer to allow declarative style Dictionary initialization using an array of tuples.
-    init(elements: [(Key, Value)]) {
-        self.init()
-        for (key, value) in elements {
-            updateValue(value, forKey: key)
-        }
     }
 }

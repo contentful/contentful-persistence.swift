@@ -10,7 +10,6 @@
 @testable import ContentfulPersistence
 import Contentful
 import Interstellar
-import ObjectMapper
 import XCTest
 import Nimble
 import CoreData
@@ -83,7 +82,7 @@ class PreseededDatabaseTests: XCTestCase {
 
     func testsCanPreseedDBAndMapLinksToCoreDataRelationships() {
         let directoryName = "PreseedJSONFiles"
-        let testBundle = Bundle(for: type(of: self))
+        let testBundle = Bundle(for: Swift.type(of: self))
 
         try! syncManager.seedDBFromJSONFiles(in: directoryName, in: testBundle)
 

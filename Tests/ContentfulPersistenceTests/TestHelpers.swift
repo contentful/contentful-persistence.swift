@@ -10,10 +10,9 @@ import Foundation
 
 class TestHelpers {
 
-    static func jsonData(_ fileName: String) -> [String: Any] {
+    static func jsonData(_ fileName: String) -> Data {
         let bundle = Bundle(for: TestHelpers.self)
         let urlPath = bundle.path(forResource: fileName, ofType: "json")!
-        let data = try! Data(contentsOf: URL(fileURLWithPath: urlPath))
-        return try! JSONSerialization.jsonObject(with: data, options: []) as! [String : Any]
+        return try! Data(contentsOf: URL(fileURLWithPath: urlPath))
     }
 }
