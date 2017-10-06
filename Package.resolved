@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Contentful",
+        "repositoryURL": "https://github.com/contentful/contentful.swift",
+        "state": {
+          "branch": null,
+          "revision": "e6ed254095f1862fa2f91fed10416dee46dc795f",
+          "version": "0.10.1"
+        }
+      },
+      {
+        "package": "Interstellar",
+        "repositoryURL": "https://github.com/jensravens/Interstellar",
+        "state": {
+          "branch": null,
+          "revision": "5fb8f1f2b7d869380555cca5f44a8cfdca390633",
+          "version": "2.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

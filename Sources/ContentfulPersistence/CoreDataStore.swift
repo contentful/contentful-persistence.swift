@@ -56,7 +56,7 @@ public class CoreDataStore: PersistenceStore {
         let object = NSEntityDescription.insertNewObject(forEntityName: String(describing: `class`), into: context)
 
         guard let managedObject = object as? T else {
-            throw Errors.invalidType(type: type(of: object))
+            throw Errors.invalidType(type: Swift.type(of: object))
         }
 
         return managedObject

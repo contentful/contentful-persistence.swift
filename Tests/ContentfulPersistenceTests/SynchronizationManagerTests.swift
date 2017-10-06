@@ -9,7 +9,6 @@
 @testable import ContentfulPersistence
 import Contentful
 import Interstellar
-import ObjectMapper
 import XCTest
 import Nimble
 import CoreData
@@ -104,13 +103,14 @@ class ContentfulPersistenceTests: XCTestCase {
 
     func testPropertyMappingInferredCorrectly() {
         // We must have a space first to pass in locale information.
-        let spaceMap = Map(mappingType: .fromJSON, JSON: TestHelpers.jsonData("space"))
-        let space = try! Space(map: spaceMap)
+        let spaceData = TestHelpers.jsonData("space")
+        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+        let space = try! jsonDecoder.decode(Space.self, from: spaceData)
+        Client.update(jsonDecoder, withLocalizationContextFrom: space)
 
-        let localesContext = space.localizationContext
+        let authorData = TestHelpers.jsonData("single-author")
 
-        let map = Map(mappingType: .fromJSON, JSON: TestHelpers.jsonData("single-author"), context: localesContext)
-        let author = try! Entry(map: map)
+        let author = try! jsonDecoder.decode(Entry.self, from: authorData)
 
         let expectedPropertyMapping: [FieldName: String] = [
             "name": "name",
@@ -123,13 +123,14 @@ class ContentfulPersistenceTests: XCTestCase {
 
     func testRelationshipMappingInferredCorrectly() {
         // We must have a space first to pass in locale information.
-        let spaceMap = Map(mappingType: .fromJSON, JSON: TestHelpers.jsonData("space"))
-        let space = try! Space(map: spaceMap)
+        let spaceData = TestHelpers.jsonData("space")
+        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+        let space = try! jsonDecoder.decode(Space.self, from: spaceData)
+        Client.update(jsonDecoder, withLocalizationContextFrom: space)
 
-        let localesContext = space.localizationContext
+        let authorData = TestHelpers.jsonData("single-author")
 
-        let map = Map(mappingType: .fromJSON, JSON: TestHelpers.jsonData("single-author"), context: localesContext)
-        let author = try! Entry(map: map)
+        let author = try! jsonDecoder.decode(Entry.self, from: authorData)
 
         let expectedRelationshipMapping: [FieldName: String] = [
             "createdEntries": "createdEntries",

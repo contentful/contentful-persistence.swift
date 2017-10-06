@@ -1,8 +1,23 @@
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
-    name: "Contentful",
+    name: "ContentfulPersistence",
+    products: [
+        .library(
+            name: "ContentfulPersistence",
+            targets: ["ContentfulPersistence"])
+    ],
     dependencies: [
-        .Package(url: "https://github.com/contentful/contentful.swift", Version(0, 9, 3))
+        .package(url: "https://github.com/contentful/contentful.swift", .upToNextMinor(from: "0.10.1"))
+    ],
+    targets: [
+        .target(
+            name: "ContentfulPersistence",
+            dependencies: [
+                "Contentful"
+            ])
     ]
+
 )
+
