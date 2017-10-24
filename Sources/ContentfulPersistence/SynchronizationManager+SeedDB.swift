@@ -55,7 +55,7 @@ public extension SynchronizationManager {
             self.update(with: syncSpace)
 
             fileIndex += 1
-            filePath = filePaths.filter({ URL(string:$0)?.deletingPathExtension().lastPathComponent == String(fileIndex)}).first
+            filePath = filePaths.filter({ URL(string: $0)?.deletingPathExtension().lastPathComponent == String(fileIndex)}).first
         }
     }
 

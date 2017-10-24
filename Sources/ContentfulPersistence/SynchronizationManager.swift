@@ -53,7 +53,7 @@ public class SynchronizationManager: PersistenceIntegration {
 
     public var version: String {
         guard
-            let bundleInfo = Bundle(for: Client.self).infoDictionary,
+            let bundleInfo = Bundle(for: SynchronizationManager.self).infoDictionary,
             let versionNumberString = bundleInfo["CFBundleShortVersionString"] as? String
             else { return "Unknown" }
 
@@ -116,9 +116,9 @@ public class SynchronizationManager: PersistenceIntegration {
         }
 
         if let syncToken = self.syncToken {
-            client?.nextSync(for: SyncSpace(syncToken: syncToken), completion: safeCompletion)
+            client?.nextSync(for: SyncSpace(syncToken: syncToken), then: safeCompletion)
         } else {
-            client?.initialSync(completion: safeCompletion)
+            client?.initialSync(then: safeCompletion)
         }
     }
 
