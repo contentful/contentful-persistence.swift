@@ -1,17 +1,33 @@
 language: objective-c
 osx_image: xcode9
 rvm:
-  - 2.4.1
+- 2.4.1
 cache: bundler
+branches:
+  only:
+  - master
 matrix:
   include:
-    - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone 6s,OS=11.0" SCHEME=ContentfulPersistence_iOS
-    - env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV 1080p,OS=11.0" SCHEME=ContentfulPersistence_tvOS
-    - env: SDK=macosx PLATFORM="OS X" SCHEME=ContentfulPersistence_macOS
-    - env: SWIFT_BUILD=true
+  - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone 6s,OS=11.0" SCHEME=ContentfulPersistence_iOS
+  - env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV 1080p,OS=11.0"
+      SCHEME=ContentfulPersistence_tvOS
+  - env: SDK=macosx PLATFORM="OS X" SCHEME=ContentfulPersistence_macOS
+  - env: SWIFT_BUILD=true
 script:
-  - ./Scripts/travis-build-test.sh
+- "./Scripts/travis-build-test.sh"
 after_success:
-  - bundle exec slather coverage -s --coveralls 
-  - pod lib lint ContentfulPersistenceSwift.podspec
-
+- bundle exec slather coverage -s --coveralls
+- pod lib lint ContentfulPersistenceSwift.podspec
+- if [[ $TRAVIS_PULL_REQUEST == false && -n $TRAVIS_TAG  && $SWIFT_BUILD == true ]];
+  then ./Scripts/reference-docs.sh; fi
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: "$GITHUB_ACCESS_TOKEN"
+  local_dir: docs
+  on:
+    condition: "$TRAVIS_PULL_REQUEST == false && -n $TRAVIS_TAG && $SWIFT_BUILD ==
+      true"
+env:
+  global:
+    secure: Xohxw56tpFlfTXtxR+Krg6vYoNr70YPXXGxuhCkwys4bQDwHooPNcdLcNL8Q2jpOS4ZsNIKhn3zEy6mbdCYGSu8ifd44v2haWS5Bl+zbomnnB5qkZveMwpEt+sG/MuKIO2dVhD3AULNM5CkqRXfCAUTmxFbafe1wIoB8Y6pjt4RSWmVoBidNgv7WeT9x4XPXUUjjJJOekdRUpOjgSleE3QCJetWTZfcG+6u6B1pvEoOMMMsMCkb7jk9RqevqlUQ0Kv0VI5ATvJaSdjgOIIAROL+deKq63zU1n/6IfXhVVSMMeuREnfb924pZCaDX0+tG/ZxveFdYjOwN9OZniveXJEdrJ3ROsCZq58G9rTTJuh4+g/J2SFLV83bi7ZIg6aDJxlBIP6CjyxeLaYT9z2kVZgpU2kihDu+lVBSKIEa8eHo/SO2T92VCYxgo3iHwvCiMiyT59h7uSVK69zCXkoejjpcrw/Ud2OC6WgZEWHjHJYote5e8PN2task2Hgi+NCkhkf27IId5N5QUDbVSbSx7mDPdV/QIErcnfTuJFNLIGAMAP9dbGBhOpfLEexx03ar2/6+f41Rrjg1COfBVipV8C0s9rW48t8vE7rAR5NkrQC7VOeZvsKWdXkH6hwuqvXw03ENIE0ak+Tn83Bo1PQaIykqN7oEGBsvPeudAeyNXsw4=
