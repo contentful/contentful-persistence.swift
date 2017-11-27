@@ -98,7 +98,6 @@ public class SynchronizationManager: PersistenceIntegration {
         default: break
         }
         self.localeCodes = localeCodes
-
     }
 
     /**

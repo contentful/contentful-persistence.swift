@@ -123,3 +123,87 @@ class PreseededDatabaseTests: XCTestCase {
         expect(categories.count).to(equal(2))
     }
 }
+
+class MultiLocalePreseedTests: XCTestCase {
+
+    #if os(iOS) || os(macOS)
+    let storeURL = FileManager.default.urls(for: .documentDirectory,
+                                            in: .userDomainMask).last?.appendingPathComponent("LocalizationTest.sqlite")
+    #elseif os(tvOS)
+    let storeURL = FileManager.default.urls(for: .cachesDirectory,
+    in: .userDomainMask).last?.appendingPathComponent("LocalizationTest.sqlite")
+    #endif
+
+
+    func append(_ string: String, to fileURL: URL) -> URL {
+        let pathString = fileURL.path.appending(string)
+        return URL(fileURLWithPath: pathString)
+    }
+
+    func deleteCoreDataStore() {
+        guard FileManager.default.fileExists(atPath: self.storeURL!.absoluteString) == true else { return }
+
+        try! FileManager.default.removeItem(at: self.storeURL!)
+        try! FileManager.default.removeItem(at: append("-shm", to: self.storeURL!))
+        try! FileManager.default.removeItem(at: append("-wal", to: self.storeURL!))
+    }
+
+    lazy var managedObjectContext: NSManagedObjectContext = {
+        let modelURL = Bundle(for: type(of: self)).url(forResource: "LocalizationTest", withExtension: "momd")
+        let mom = NSManagedObjectModel(contentsOf: modelURL!)
+        expect(mom).toNot(beNil())
+
+        let psc = NSPersistentStoreCoordinator(managedObjectModel: mom!)
+
+        do {
+            // Store in memory so there is no caching between test methods.
+            var store = try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL!, options: nil)
+            expect(store).toNot(beNil())
+        } catch {
+            XCTAssert(false, "Recreating the persistent store SQL files should not throw an error")
+        }
+
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = psc
+        return managedObjectContext
+    }()
+
+
+    var syncManager: SynchronizationManager!
+
+    var client: Client!
+
+    lazy var store: CoreDataStore = {
+        return CoreDataStore(context: self.managedObjectContext)
+    }()
+
+    override func setUp() {
+        let entryTypes: [EntryPersistable.Type] = [SingleRecord.self, Link.self]
+
+        let persistenceModel = PersistenceModel(spaceType: ComplexSyncInfo.self, assetType: ComplexAsset.self, entryTypes: entryTypes)
+
+        let synchronizationManager = SynchronizationManager(localizationScheme: .all, persistenceStore: self.store, persistenceModel: persistenceModel)
+
+        self.client = Client(spaceId: "smf0sqiu0c5s",
+                             accessToken: "14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34",
+                             persistenceIntegration: synchronizationManager)
+        self.syncManager = synchronizationManager
+
+        self.deleteCoreDataStore()
+    }
+
+    func testPreseededDatabaseHasRecordsForAllLocales() {
+        let directoryName = "MultilocalePreseedJSONFiles"
+        let testBundle = Bundle(for: type(of: self))
+        try! syncManager.seedDBFromJSONFiles(in: directoryName, in: testBundle)
+
+        let records: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '14XouHzspI44uKCcMicWUY'"))
+
+        let englishRecords = records.filter { $0.localeCode == "en-US" }
+        let spanishRecords = records.filter { $0.localeCode == "es-MX" }
+        // There should be one record per locale: the space has 2 locales.
+        expect(records.count).to(equal(2))
+        expect(englishRecords.count).to(equal(1))
+        expect(spanishRecords.count).to(equal(1))
+    }
+}

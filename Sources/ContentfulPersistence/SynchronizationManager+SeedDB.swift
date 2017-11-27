@@ -39,9 +39,12 @@ public extension SynchronizationManager {
             throw error
         }
 
+        // Extract locale information about the space and inject into the client and sync manager.
         let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
         let space = try jsonDecoder.decode(Space.self, from: spaceData)
         Client.update(jsonDecoder, withLocalizationContextFrom: space)
+        let localeCodes = space.locales.map { $0.code }
+        update(localeCodes: localeCodes)
 
         var filePath: String? = initialSyncJSONFilePath
         while let path = filePath {

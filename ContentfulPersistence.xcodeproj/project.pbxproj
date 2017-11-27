@@ -57,6 +57,9 @@
 		ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */; };
 		ED6B67A21F1CB350008EC7C8 /* nullified-link-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B679E1F1CB34C008EC7C8 /* nullified-link-initial.json */; };
 		ED6B67A31F1CB350008EC7C8 /* nullified-link-next.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B679F1F1CB34C008EC7C8 /* nullified-link-next.json */; };
+		ED79E9281FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED79E9271FCC23E10045F44F /* MultilocalePreseedJSONFiles */; };
+		ED79E9291FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED79E9271FCC23E10045F44F /* MultilocalePreseedJSONFiles */; };
+		ED79E92A1FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED79E9271FCC23E10045F44F /* MultilocalePreseedJSONFiles */; };
 		ED882EC01F4EFEC600FCE253 /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99921ED42C350039056E /* Contentful.framework */; };
 		ED882EC91F4EFF9A00FCE253 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED25D7ED1F17758100A6BA9A /* OHHTTPStubs.framework */; };
 		ED882ECA1F4EFF9A00FCE253 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99851ED42C190039056E /* Nimble.framework */; };
@@ -254,6 +257,7 @@
 		ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "clear-field-next-sync.json"; sourceTree = "<group>"; };
 		ED6B679E1F1CB34C008EC7C8 /* nullified-link-initial.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "nullified-link-initial.json"; sourceTree = "<group>"; };
 		ED6B679F1F1CB34C008EC7C8 /* nullified-link-next.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "nullified-link-next.json"; sourceTree = "<group>"; };
+		ED79E9271FCC23E10045F44F /* MultilocalePreseedJSONFiles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MultilocalePreseedJSONFiles; sourceTree = "<group>"; };
 		ED86952A1EFA8C93004693BA /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		ED882ED01F4F012000FCE253 /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/iOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED882ED11F4F012000FCE253 /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/iOS/ObjectMapper.framework; sourceTree = "<group>"; };
@@ -546,6 +550,7 @@
 				EDBDBFD11F28B1EB00649F5A /* LocalizationTests.swift */,
 				EDBDBFD61F28B6CF00649F5A /* LocalizationTestStubs */,
 				ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */,
+				ED79E9271FCC23E10045F44F /* MultilocalePreseedJSONFiles */,
 				ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */,
 				ED8C1E7F1F6040E0001D059F /* PreseedJSONFiles */,
 				ED8C1E771F603D45001D059F /* PreseedingTests.swift */,
@@ -816,6 +821,7 @@
 				ED1BA7D01F16288100E21FD5 /* space.json in Resources */,
 				ED8C1E881F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				ED91F99F1F18C79D00540DAC /* multi-page-link-resolution2.json in Resources */,
+				ED79E9281FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
 				ED6B67A21F1CB350008EC7C8 /* nullified-link-initial.json in Resources */,
 				ED1BA7D31F1645A000E21FD5 /* single-post.json in Resources */,
 				ED6B67A31F1CB350008EC7C8 /* nullified-link-next.json in Resources */,
@@ -859,6 +865,7 @@
 				EDD8F4EF1F5401FD0000D3BB /* clear-field-initial-sync.json in Resources */,
 				ED8C1E891F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				EDD8F4ED1F5401F50000D3BB /* localization-sync.json in Resources */,
+				ED79E9291FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
 				EDD8F4F71F5401FD0000D3BB /* simple-update-next-sync.json in Resources */,
 				EDD8F4F21F5401FD0000D3BB /* nullified-link-next.json in Resources */,
 				EDD8F52D1F5402290000D3BB /* space.json in Resources */,
@@ -881,6 +888,7 @@
 				EDD8F4F81F5401FD0000D3BB /* clear-field-initial-sync.json in Resources */,
 				ED8C1E8A1F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				EDD8F4EE1F5401F60000D3BB /* localization-sync.json in Resources */,
+				ED79E92A1FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
 				EDD8F5001F5401FD0000D3BB /* simple-update-next-sync.json in Resources */,
 				EDD8F4FB1F5401FD0000D3BB /* nullified-link-next.json in Resources */,
 				EDD8F5301F5402290000D3BB /* space.json in Resources */,

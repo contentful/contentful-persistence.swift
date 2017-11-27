@@ -146,7 +146,7 @@ class ContentfulPersistenceTests: XCTestCase {
         self.client.initialSync() { result in
             self.managedObjectContext.perform {
                 expect(result.value!.assets.count).to(beGreaterThan(0))
-                expect(self.syncManager.syncToken?.characters.count).to(beGreaterThan(0))
+                expect(self.syncManager.syncToken?.count).to(beGreaterThan(0))
 
                 expectation.fulfill()
             }
