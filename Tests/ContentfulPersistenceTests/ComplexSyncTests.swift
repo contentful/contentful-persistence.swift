@@ -19,14 +19,6 @@ import CoreLocation
 
 class ComplexSyncTests: XCTestCase {
 
-    #if os(iOS) || os(macOS)
-    let storeURL = FileManager.default.urls(for: .documentDirectory,
-                                            in: .userDomainMask).last?.appendingPathComponent("ComplexTest.sqlite")
-    #elseif os(tvOS)
-    let storeURL = FileManager.default.urls(for: .cachesDirectory,
-                                            in: .userDomainMask).last?.appendingPathComponent("ComplexTest.sqlite")
-    #endif
-
     var syncManager: SynchronizationManager!
 
     var client: Client!
@@ -35,55 +27,23 @@ class ComplexSyncTests: XCTestCase {
         return CoreDataStore(context: self.managedObjectContext)
     }()
 
-    func append(_ string: String, to fileURL: URL) -> URL {
-        let pathString = fileURL.path.appending(string)
-        return URL(fileURLWithPath: pathString)
-    }
-
-    func deleteCoreDataStore() {
-        guard FileManager.default.fileExists(atPath: self.storeURL!.absoluteString) == true else { return }
-
-        try! FileManager.default.removeItem(at: self.storeURL!)
-        try! FileManager.default.removeItem(at: append("-shm", to: self.storeURL!))
-        try! FileManager.default.removeItem(at: append("-wal", to: self.storeURL!))
-    }
-
     lazy var managedObjectContext: NSManagedObjectContext = {
-        let modelURL = Bundle(for: type(of: self)).url(forResource: "ComplexTest", withExtension: "momd")
-        let mom = NSManagedObjectModel(contentsOf: modelURL!)
-        expect(mom).toNot(beNil())
-
-        let psc = NSPersistentStoreCoordinator(managedObjectModel: mom!)
-
-        do {
-            var store = try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL!, options: nil)
-            expect(store).toNot(beNil())
-        } catch {
-            XCTAssert(false, "Recreating the persistent store SQL files should not throw an error")
-        }
-
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = psc
-        return managedObjectContext
+        return TestHelpers.managedObjectContext(forMOMInTestBundleNamed: "ComplexTest")
     }()
 
     // Before each test.
     override func setUp() {
         OHHTTPStubs.removeAllStubs()
 
-        self.deleteCoreDataStore()
-
         let persistenceModel = PersistenceModel(spaceType: ComplexSyncInfo.self, assetType: ComplexAsset.self, entryTypes: [SingleRecord.self, Link.self])
 
 
         client = Client(spaceId: "smf0sqiu0c5s",
                         accessToken: "14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34")
-        let synchronizationManager = SynchronizationManager(client: client,
-                                                            localizationScheme: .default,
-                                                            persistenceStore: self.store,
-                                                            persistenceModel: persistenceModel)
-
-        self.syncManager = synchronizationManager
+        self.syncManager = SynchronizationManager(client: client,
+                                                  localizationScheme: .default,
+                                                  persistenceStore: self.store,
+                                                  persistenceModel: persistenceModel)
     }
 
     // After each test.

@@ -544,16 +544,16 @@
 				ED25D7F31F177D8F00A6BA9A /* ComplexTest.xcdatamodeld */,
 				ED25D7DC1F166B7300A6BA9A /* ComplexTestModels */,
 				ED25D7F61F17900900A6BA9A /* ComplexTestStubs */,
+				ED25D7D71F16654A00A6BA9A /* ComplexSyncTests.swift */,
 				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
 				EDBDBFD31F28B23B00649F5A /* LocalizationTest.xcdatamodeld */,
-				ED25D7D71F16654A00A6BA9A /* ComplexSyncTests.swift */,
 				EDBDBFD11F28B1EB00649F5A /* LocalizationTests.swift */,
 				EDBDBFD61F28B6CF00649F5A /* LocalizationTestStubs */,
 				ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */,
-				ED79E9271FCC23E10045F44F /* MultilocalePreseedJSONFiles */,
-				ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */,
-				ED8C1E7F1F6040E0001D059F /* PreseedJSONFiles */,
 				ED8C1E771F603D45001D059F /* PreseedingTests.swift */,
+				ED8C1E7F1F6040E0001D059F /* PreseedJSONFiles */,
+				ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */,
+				ED79E9271FCC23E10045F44F /* MultilocalePreseedJSONFiles */,
 			);
 			name = ContentfulPersistenceTests;
 			sourceTree = "<group>";
