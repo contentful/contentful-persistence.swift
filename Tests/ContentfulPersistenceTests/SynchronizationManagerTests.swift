@@ -21,46 +21,10 @@ class ContentfulPersistenceTests: XCTestCase {
     let assetPredicate = NSPredicate(format: "id == 'bXvdSYHB3Guy2uUmuEco8'")
     let postPredicate = NSPredicate(format: "id == '1asN98Ph3mUiCYIYiiqwko'")
 
-    #if os(iOS) || os(macOS)
-    let storeURL = FileManager.default.urls(for: .documentDirectory,
-                                            in: .userDomainMask).last?.appendingPathComponent("Test.sqlite")
-    #elseif os(tvOS)
-    let storeURL = FileManager.default.urls(for: .cachesDirectory,
-                                            in: .userDomainMask).last?.appendingPathComponent("Test.sqlite")
-    #endif
-
-    func deleteCoreDataStore() {
-        guard FileManager.default.fileExists(atPath: self.storeURL!.absoluteString) == true else { return }
-
-        try! FileManager.default.removeItem(at: self.storeURL!)
-        try! FileManager.default.removeItem(at: append("-shm", to: self.storeURL!))
-        try! FileManager.default.removeItem(at: append("-wal", to: self.storeURL!))
-    }
-
     lazy var managedObjectContext: NSManagedObjectContext = {
-        let modelURL = Bundle(for: type(of: self)).url(forResource: "Test", withExtension: "momd")
-        let mom = NSManagedObjectModel(contentsOf: modelURL!)
-        expect(mom).toNot(beNil())
-
-        let psc = NSPersistentStoreCoordinator(managedObjectModel: mom!)
-
-        do {
-            var store = try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL!, options: nil)
-            expect(store).toNot(beNil())
-        } catch {
-            XCTAssert(false, "Recreating the persistent store SQL files should not throw an error")
-        }
-
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = psc
-        return managedObjectContext
+        return TestHelpers.managedObjectContext(forMOMInTestBundleNamed: "Test")
     }()
-
-    func append(_ string: String, to fileURL: URL) -> URL {
-        let pathString = fileURL.path.appending(string)
-        return URL(fileURLWithPath: pathString)
-    }
-
+    
     var client: Client!
 
     lazy var store: CoreDataStore = {
@@ -76,10 +40,11 @@ class ContentfulPersistenceTests: XCTestCase {
 
         let synchronizationManager = SynchronizationManager(localizationScheme: .default, persistenceStore: self.store, persistenceModel: persistenceModel)
 
-        self.client = Client(spaceId: "dqpnpm0n4e75", accessToken: "95c33f933385aa838825526c5753f3b5a7e59bb45cd6b5d78e15bfeafeef1b13", persistenceIntegration: synchronizationManager)
-        self.syncManager = synchronizationManager
+        self.client = Client(spaceId: "dqpnpm0n4e75",
+                             accessToken: "95c33f933385aa838825526c5753f3b5a7e59bb45cd6b5d78e15bfeafeef1b13",
+                             persistenceIntegration: synchronizationManager)
 
-        self.deleteCoreDataStore()
+        self.syncManager = synchronizationManager
     }
 
     func postTests(expectations: @escaping TestFunc) {
@@ -146,7 +111,7 @@ class ContentfulPersistenceTests: XCTestCase {
         self.client.initialSync() { result in
             self.managedObjectContext.perform {
                 expect(result.value!.assets.count).to(beGreaterThan(0))
-                expect(self.syncManager.syncToken?.characters.count).to(beGreaterThan(0))
+                expect(self.syncManager.syncToken?.count).to(beGreaterThan(0))
 
                 expectation.fulfill()
             }

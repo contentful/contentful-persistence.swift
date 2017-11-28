@@ -31,59 +31,23 @@ class LocalizationTests: XCTestCase {
     var client: Client!
 
     lazy var store: CoreDataStore = {
-        return CoreDataStore(context: self.managedObjectContext)
+        return CoreDataStore(context: TestHelpers.managedObjectContext(forMOMInTestBundleNamed: "LocalizationTest"))
     }()
 
-    func append(_ string: String, to fileURL: URL) -> URL {
-        let pathString = fileURL.path.appending(string)
-        return URL(fileURLWithPath: pathString)
-    }
 
-    func deleteCoreDataStore() {
-        guard FileManager.default.fileExists(atPath: self.storeURL!.absoluteString) == true else { return }
-
-        try! FileManager.default.removeItem(at: self.storeURL!)
-        try! FileManager.default.removeItem(at: append("-shm", to: self.storeURL!))
-        try! FileManager.default.removeItem(at: append("-wal", to: self.storeURL!))
-    }
-
-    lazy var managedObjectContext: NSManagedObjectContext = {
-        let modelURL = Bundle(for: type(of: self)).url(forResource: "LocalizationTest", withExtension: "momd")
-        let mom = NSManagedObjectModel(contentsOf: modelURL!)
-        expect(mom).toNot(beNil())
-
-        let psc = NSPersistentStoreCoordinator(managedObjectModel: mom!)
-
-        do {
-            // Store in memory so there is no caching between test methods.
-            var store = try psc.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: self.storeURL!, options: nil)
-            expect(store).toNot(beNil())
-        } catch {
-            XCTAssert(false, "Recreating the persistent store SQL files should not throw an error")
-        }
-
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = psc
-        return managedObjectContext
-    }()
 
     // Before each test.
     override func setUp() {
         OHHTTPStubs.removeAllStubs()
 
-        self.deleteCoreDataStore()
-
         let persistenceModel = PersistenceModel(spaceType: ComplexSyncInfo.self, assetType: ComplexAsset.self, entryTypes: [SingleRecord.self, Link.self])
-
 
         client = Client(spaceId: "smf0sqiu0c5s",
                         accessToken: "14d305ad526d4487e21a99b5b9313a8877ce6fbf540f02b12189eea61550ef34")
-        let synchronizationManager = SynchronizationManager(client: client,
-                                                            localizationScheme: .all,
-                                                            persistenceStore: self.store,
-                                                            persistenceModel: persistenceModel)
-
-        self.syncManager = synchronizationManager
+        syncManager = SynchronizationManager(client: client,
+                                             localizationScheme: .all,
+                                             persistenceStore: self.store,
+                                             persistenceModel: persistenceModel)
     }
 
     // After each test.

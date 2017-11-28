@@ -98,7 +98,6 @@ public class SynchronizationManager: PersistenceIntegration {
         default: break
         }
         self.localeCodes = localeCodes
-
     }
 
     /**
@@ -147,7 +146,7 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
     public func update(with syncSpace: SyncSpace) {
-        persistentStore.performBlock { [weak self] in
+        persistentStore.performAndWait { [weak self] in
             for asset in syncSpace.assets {
                 self?.create(asset: asset)
             }
