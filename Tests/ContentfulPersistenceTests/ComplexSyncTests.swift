@@ -315,10 +315,6 @@ class ComplexSyncTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    func testResolvingArrayOfLinkedAssets() {
-        
-    }
-
     func testDeserializingLocation() {
         let expectation = self.expectation(description: "Initial sync succeeded")
 
@@ -337,8 +333,10 @@ class ComplexSyncTests: XCTestCase {
                         expect(records.count).to(equal(1))
                         if let record = records.first {
                             expect(record.locationField).toNot(beNil())
-                            if let linkedField = record.linkField {
-                                expect(linkedField.awesomeLinkTitle).to(equal("To be nullified"))
+                            if let locationField = record.locationField {
+                                expect(locationField.latitude).to(equal(34.4208305))
+                            } else {
+                                fail()
                             }
                         }
                     }
@@ -353,5 +351,7 @@ class ComplexSyncTests: XCTestCase {
                 expectation.fulfill()
             }
         }
+        waitForExpectations(timeout: 10.0, handler: nil)
+
     }
 }
