@@ -1,0 +1,42 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "4VTL2TY7rikiS6c2MI2is4",
+        "type": "Entry",
+        "createdAt": "2017-12-18T09:23:29.280Z",
+        "updatedAt": "2017-12-18T09:23:29.280Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "Record with Location"
+        },
+        "locationField": {
+          "en-US": {
+            "lon": -119.69819010000003,
+            "lat": 34.4208305
+          }
+        }
+      }
+    }
+  ],
+  "nextSyncUrl": "http://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=wonDrcKnRgcSOF4-wrDCgcKefWzCgsOxwrfCq8KOfMOdXUPCvEnChwEEO8KFwqHDjyPCuxtwVcO7KEvCmAp7P8Oqw4ppKsOic8ONw4rDgMOzw7LDusKaaMO5w5zCo8K6SsOkeMOjwoTCji8lwrHDtcKjf8KDw73DmsOyAjZ9woPCiMOeVMOydsOtCMOCbMOGI8OXw4_Drk_DmDwtDhM_w4XCu8KpJEw3w7Q7bz_CvTzDsFTCvWfDuwzCnBHClGvCiWjDiQ"
+}

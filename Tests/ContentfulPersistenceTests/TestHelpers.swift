@@ -34,7 +34,7 @@ class TestHelpers {
             XCTAssert(false, "Recreating the persistent store SQL files should not throw an error")
         }
 
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
+        let managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = psc
         return managedObjectContext
     }

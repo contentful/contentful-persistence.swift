@@ -38,5 +38,6 @@ extension Post: EntryPersistable {
             "featuredImage": "theFeaturedImage",
             "author": "authors"
         ]
+
     }
 }

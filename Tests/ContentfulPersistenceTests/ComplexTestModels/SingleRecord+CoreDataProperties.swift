@@ -22,6 +22,7 @@ extension SingleRecord: EntryPersistable {
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
     @NSManaged var linkField: Link?
+    @NSManaged var locationField: Location
 
     static func fieldMapping() -> [FieldName: String] {
         return [
@@ -29,5 +30,20 @@ extension SingleRecord: EntryPersistable {
             "linkField": "linkField",
             "postedDate": "postedDate"
         ]
+    }
+}
+
+class Location: NSObject, NSCoding {
+
+    let latitude: Double
+    let longitude: Double
+
+    public func encode(with aCoder: NSCoder) {
+
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        self.latitude = 4.0
+        self.longitude = 4.0
     }
 }

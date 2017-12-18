@@ -314,4 +314,44 @@ class ComplexSyncTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
+    func testResolvingArrayOfLinkedAssets() {
+        
+    }
+
+    func testDeserializingLocation() {
+        let expectation = self.expectation(description: "Initial sync succeeded")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("location.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+            }.name = "Initial sync stub"
+
+        client.initialSync() { result in
+            switch result {
+            case .success:
+
+                self.managedObjectContext.perform {
+                    do {
+                        let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '4VTL2TY7rikiS6c2MI2is4'"))
+                        expect(records.count).to(equal(1))
+                        if let record = records.first {
+                            expect(record.locationField).toNot(beNil())
+                            if let linkedField = record.linkField {
+                                expect(linkedField.awesomeLinkTitle).to(equal("To be nullified"))
+                            }
+                        }
+                    }
+                    catch {
+                        fail("Fetching SingleRecord should not throw an error")
+                    }
+                    expectation.fulfill()
+                }
+
+            case .error(let error):
+                fail("\(error)")
+                expectation.fulfill()
+            }
+        }
+    }
 }
