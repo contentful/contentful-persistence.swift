@@ -22,11 +22,13 @@ extension SingleRecord: EntryPersistable {
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
     @NSManaged var linkField: Link?
+    @NSManaged var locationField: Contentful.Location?
 
     static func fieldMapping() -> [FieldName: String] {
         return [
             "textBody": "textBody",
             "linkField": "linkField",
+            "locationField": "locationField",
             "postedDate": "postedDate"
         ]
     }

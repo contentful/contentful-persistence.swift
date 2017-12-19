@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D8850FD1FE7CCE900FA2A13 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8850FB1FE7CCD900FA2A13 /* location.json */; };
+		5D8850FE1FE7CCEA00FA2A13 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8850FB1FE7CCD900FA2A13 /* location.json */; };
+		5D8850FF1FE7CCEA00FA2A13 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8850FB1FE7CCD900FA2A13 /* location.json */; };
 		ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
 		ED10E88D1E48AB840061741F /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
@@ -202,6 +205,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5D8850FB1FE7CCD900FA2A13 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = location.json; sourceTree = "<group>"; };
 		A1A9FBE31CABE8EA00430734 /* ContentfulPersistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContentfulPersistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A9FBED1CABE8EA00430734 /* ContentfulPersistenceTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulPersistenceTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED10E8841E48AB840061741F /* SynchronizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SynchronizationManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -442,6 +446,7 @@
 			isa = PBXGroup;
 			children = (
 				ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */,
+				5D8850FB1FE7CCD900FA2A13 /* location.json */,
 				ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */,
 				ED6B679E1F1CB34C008EC7C8 /* nullified-link-initial.json */,
 				ED6B679F1F1CB34C008EC7C8 /* nullified-link-next.json */,
@@ -816,6 +821,7 @@
 				EDCFBF9D1F161EB6002B1B73 /* single-author.json in Resources */,
 				ED6B67981F191342008EC7C8 /* clear-field-initial-sync.json in Resources */,
 				ED91F9A01F18C79D00540DAC /* simple-update-initial-sync.json in Resources */,
+				5D8850FD1FE7CCE900FA2A13 /* location.json in Resources */,
 				ED91F9A11F18C79D00540DAC /* simple-update-initial-sync-page2.json in Resources */,
 				ED91F9A21F18C79D00540DAC /* simple-update-next-sync.json in Resources */,
 				ED1BA7D01F16288100E21FD5 /* space.json in Resources */,
@@ -860,6 +866,7 @@
 				EDD8F4F51F5401FD0000D3BB /* simple-update-initial-sync.json in Resources */,
 				EDD8F4F41F5401FD0000D3BB /* multi-page-link-resolution2.json in Resources */,
 				EDD8F52C1F5402290000D3BB /* single-post.json in Resources */,
+				5D8850FE1FE7CCEA00FA2A13 /* location.json in Resources */,
 				EDD8F4F11F5401FD0000D3BB /* nullified-link-initial.json in Resources */,
 				EDD8F4F61F5401FD0000D3BB /* simple-update-initial-sync-page2.json in Resources */,
 				EDD8F4EF1F5401FD0000D3BB /* clear-field-initial-sync.json in Resources */,
@@ -883,6 +890,7 @@
 				EDD8F4FE1F5401FD0000D3BB /* simple-update-initial-sync.json in Resources */,
 				EDD8F4FD1F5401FD0000D3BB /* multi-page-link-resolution2.json in Resources */,
 				EDD8F52F1F5402290000D3BB /* single-post.json in Resources */,
+				5D8850FF1FE7CCEA00FA2A13 /* location.json in Resources */,
 				EDD8F4FA1F5401FD0000D3BB /* nullified-link-initial.json in Resources */,
 				EDD8F4FF1F5401FD0000D3BB /* simple-update-initial-sync-page2.json in Resources */,
 				EDD8F4F81F5401FD0000D3BB /* clear-field-initial-sync.json in Resources */,
