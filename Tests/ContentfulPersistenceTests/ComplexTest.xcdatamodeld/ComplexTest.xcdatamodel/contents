@@ -28,12 +28,13 @@
         <attribute name="postedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="textBody" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="assetLinkField" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ComplexAsset" syncable="YES"/>
         <relationship name="linkField" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Link" inverseName="singleRecordInverse" inverseEntity="Link" syncable="YES"/>
     </entity>
     <elements>
         <element name="ComplexAsset" positionX="-63" positionY="-18" width="128" height="150"/>
         <element name="ComplexSyncInfo" positionX="-54" positionY="-9" width="128" height="60"/>
         <element name="Link" positionX="-18" positionY="99" width="128" height="135"/>
-        <element name="SingleRecord" positionX="-36" positionY="90" width="128" height="165"/>
+        <element name="SingleRecord" positionX="-36" positionY="90" width="128" height="180"/>
     </elements>
 </model>

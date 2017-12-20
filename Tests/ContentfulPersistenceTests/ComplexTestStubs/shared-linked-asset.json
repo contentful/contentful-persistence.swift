@@ -1,0 +1,117 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "12f37qR1CGOOcqoWOgqC2o",
+        "type": "Entry",
+        "createdAt": "2017-12-20T19:04:05.031Z",
+        "updatedAt": "2017-12-20T19:04:05.031Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "Second record with shared asset"
+        },
+        "assetLinkField": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Asset",
+              "id": "6Wsz8owhtCGSICg44IUYAm"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "4DiVtM6u08uMA2QSgg0OoY",
+        "type": "Entry",
+        "createdAt": "2017-12-20T19:03:45.612Z",
+        "updatedAt": "2017-12-20T19:03:45.612Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "First record with shared asset"
+        },
+        "assetLinkField": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Asset",
+              "id": "6Wsz8owhtCGSICg44IUYAm"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "6Wsz8owhtCGSICg44IUYAm",
+        "type": "Asset",
+        "createdAt": "2017-11-27T09:23:17.444Z",
+        "updatedAt": "2017-11-27T09:23:17.444Z",
+        "revision": 1
+      },
+      "fields": {
+        "title": {
+          "en-US": "First asset in array"
+        },
+        "file": {
+          "en-US": {
+            "url": "//images.contentful.com/smf0sqiu0c5s/6Wsz8owhtCGSICg44IUYAm/4061427d7cba2050a87579033efb3fb9/dog.jpg",
+            "details": {
+              "size": 79169,
+              "image": {
+                "width": 830,
+                "height": 830
+              }
+            },
+            "fileName": "dog.jpg",
+            "contentType": "image/jpeg"
+          }
+        }
+      }
+    }
+  ],
+  "nextSyncUrl": "http://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=wonDrcKnRgcSOF4-wrDCgcKefWzCgsOxwrfCq8KOfMOdXUPCvEnChwEEO8KFwqHDj8KpJMKkJn0Xw5LCgcO3w5oOLkJxwpPDr8KZV1rCh3nDi8Obwq0-wp1EwpRGwrApMWvDkjNgI3TCgWvDmH4zVFHDpBgkwpoCflTDg8KqbmHCpMKuU8KTHcONX8Ogw67CusO_wo3DucO9w6jDj8Kiw6TDpMKUw44bwr_CqsOqMsOkwqYWKBrCvcK0BlzDmsOtw4nDgMK2"
+}

@@ -352,6 +352,47 @@ class ComplexSyncTests: XCTestCase {
             }
         }
         waitForExpectations(timeout: 10.0, handler: nil)
-
     }
+
+    func testEntriesLinkingToSameLinkCanResolveLinks() {
+        let expectation = self.expectation(description: "Two entries can resolve links to the same asset")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("shared-linked-asset.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+            }.name = "Initial sync stub"
+
+        self.client.initialSync { result in
+            switch result {
+            case .success:
+                // Test first entry can link to asset.
+                let records: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '4DiVtM6u08uMA2QSgg0OoY'"))
+
+                expect(records.count).to(equal(1))
+
+                if let linkedAsset = records.first?.assetLinkField {
+                    expect(linkedAsset.id).to(equal("6Wsz8owhtCGSICg44IUYAm"))
+                    expect(linkedAsset.title).to(equal("First asset in array"))
+                } else {
+                    fail("There should be a linked asset")
+                }
+
+                // Test second entry can link to same asset
+                let secondRecordsSet: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '12f37qR1CGOOcqoWOgqC2o'"))
+                expect(secondRecordsSet.count).to(equal(1))
+
+                if let linkedAsset = secondRecordsSet.first?.assetLinkField {
+                    expect(linkedAsset.id).to(equal("6Wsz8owhtCGSICg44IUYAm"))
+                    expect(linkedAsset.title).to(equal("First asset in array"))
+                } else {
+                    fail("There should be a linked asset")
+                }
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        self.waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
 }

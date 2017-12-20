@@ -10,6 +10,9 @@
 		5D8850FD1FE7CCE900FA2A13 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8850FB1FE7CCD900FA2A13 /* location.json */; };
 		5D8850FE1FE7CCEA00FA2A13 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8850FB1FE7CCD900FA2A13 /* location.json */; };
 		5D8850FF1FE7CCEA00FA2A13 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8850FB1FE7CCD900FA2A13 /* location.json */; };
+		5D8851021FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */; };
+		5D8851031FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */; };
+		5D8851041FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */; };
 		ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
 		ED10E88D1E48AB840061741F /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
@@ -206,6 +209,7 @@
 
 /* Begin PBXFileReference section */
 		5D8850FB1FE7CCD900FA2A13 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = location.json; sourceTree = "<group>"; };
+		5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "shared-linked-asset.json"; sourceTree = "<group>"; };
 		A1A9FBE31CABE8EA00430734 /* ContentfulPersistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContentfulPersistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A9FBED1CABE8EA00430734 /* ContentfulPersistenceTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulPersistenceTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED10E8841E48AB840061741F /* SynchronizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SynchronizationManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -445,6 +449,7 @@
 		ED25D7F61F17900900A6BA9A /* ComplexTestStubs */ = {
 			isa = PBXGroup;
 			children = (
+				5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */,
 				ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */,
 				5D8850FB1FE7CCD900FA2A13 /* location.json */,
 				ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */,
@@ -815,6 +820,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D8851021FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
 				ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */,
 				EDBDBFD81F28B6E800649F5A /* localization-sync.json in Resources */,
 				ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */,
@@ -860,6 +866,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D8851031FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
 				EDD8F4F31F5401FD0000D3BB /* multi-page-link-resolution1.json in Resources */,
 				EDD8F4F01F5401FD0000D3BB /* clear-field-next-sync.json in Resources */,
 				EDD8F52B1F5402290000D3BB /* single-author.json in Resources */,
@@ -884,6 +891,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D8851041FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
 				EDD8F4FC1F5401FD0000D3BB /* multi-page-link-resolution1.json in Resources */,
 				EDD8F4F91F5401FD0000D3BB /* clear-field-next-sync.json in Resources */,
 				EDD8F52E1F5402290000D3BB /* single-author.json in Resources */,
