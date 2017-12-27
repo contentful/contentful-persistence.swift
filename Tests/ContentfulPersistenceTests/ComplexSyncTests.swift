@@ -395,4 +395,74 @@ class ComplexSyncTests: XCTestCase {
         self.waitForExpectations(timeout: 10.0, handler: nil)
     }
 
+
+    func testResolvingArrayOfLinkedAssets() {
+        let expectation = self.expectation(description: "Can resolve relationship to linked assets array")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("linked-assets-array.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+            }.name = "Initial sync stub"
+
+        self.client.initialSync { result in
+            switch result {
+            case .success:
+                let records: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self, predicate: NSPredicate(format: "id == '2JFSeiPTZYm4goMSUeYSCU'"))
+
+                expect(records.count).to(equal(1))
+
+                if let linkedAssetsSet = records.first?.assetsArrayLinkField {
+                    expect(linkedAssetsSet.count).to(equal(2))
+                    expect((linkedAssetsSet.firstObject as? ComplexAsset)?.title).to(equal("First asset in array"))
+                    expect((linkedAssetsSet[1] as? ComplexAsset)?.title).to(equal("Second asset in array"))
+                } else {
+                    fail("There should be a linked assets set")
+                }
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        self.waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testDeserializingArrayOfStrings() {
+        // TODO:
+        let expectation = self.expectation(description: "Can deserialize linked strings array")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("shared-linked-asset.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+            }.name = "Initial sync stub"
+
+        self.client.initialSync { result in
+            switch result {
+            case .success:
+                break
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        self.waitForExpectations(timeout: 10.0, handler: nil)    }
+
+    func testDeserializingImageInfo() {
+        // TODO:
+        let expectation = self.expectation(description: "Can resolve linked Strings array")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("shared-linked-asset.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+            }.name = "Initial sync stub"
+
+        self.client.initialSync { result in
+            switch result {
+            case .success:
+                break
+            case .error(let error):
+                fail("Should not throw an error \(error)")
+            }
+            expectation.fulfill()
+        }
+        self.waitForExpectations(timeout: 10.0, handler: nil)    }
 }

@@ -13,6 +13,9 @@
 		5D8851021FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */; };
 		5D8851031FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */; };
 		5D8851041FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */; };
+		5D9309C92003FDE80050786B /* linked-assets-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D9309C72003FDE20050786B /* linked-assets-array.json */; };
+		5D9309CB2003FDEA0050786B /* linked-assets-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D9309C72003FDE20050786B /* linked-assets-array.json */; };
+		5D9309CC2003FDEB0050786B /* linked-assets-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D9309C72003FDE20050786B /* linked-assets-array.json */; };
 		ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
 		ED10E88D1E48AB840061741F /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
@@ -210,6 +213,7 @@
 /* Begin PBXFileReference section */
 		5D8850FB1FE7CCD900FA2A13 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = location.json; sourceTree = "<group>"; };
 		5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "shared-linked-asset.json"; sourceTree = "<group>"; };
+		5D9309C72003FDE20050786B /* linked-assets-array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "linked-assets-array.json"; sourceTree = "<group>"; };
 		A1A9FBE31CABE8EA00430734 /* ContentfulPersistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContentfulPersistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A9FBED1CABE8EA00430734 /* ContentfulPersistenceTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulPersistenceTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED10E8841E48AB840061741F /* SynchronizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SynchronizationManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -452,6 +456,7 @@
 				5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */,
 				ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */,
 				5D8850FB1FE7CCD900FA2A13 /* location.json */,
+				5D9309C72003FDE20050786B /* linked-assets-array.json */,
 				ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */,
 				ED6B679E1F1CB34C008EC7C8 /* nullified-link-initial.json */,
 				ED6B679F1F1CB34C008EC7C8 /* nullified-link-next.json */,
@@ -836,6 +841,7 @@
 				ED79E9281FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
 				ED6B67A21F1CB350008EC7C8 /* nullified-link-initial.json in Resources */,
 				ED1BA7D31F1645A000E21FD5 /* single-post.json in Resources */,
+				5D9309C92003FDE80050786B /* linked-assets-array.json in Resources */,
 				ED6B67A31F1CB350008EC7C8 /* nullified-link-next.json in Resources */,
 				ED8C1E801F6040E0001D059F /* PreseedJSONFiles in Resources */,
 			);
@@ -882,6 +888,7 @@
 				ED79E9291FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
 				EDD8F4F71F5401FD0000D3BB /* simple-update-next-sync.json in Resources */,
 				EDD8F4F21F5401FD0000D3BB /* nullified-link-next.json in Resources */,
+				5D9309CC2003FDEB0050786B /* linked-assets-array.json in Resources */,
 				EDD8F52D1F5402290000D3BB /* space.json in Resources */,
 				ED8C1E811F6040E0001D059F /* PreseedJSONFiles in Resources */,
 			);
@@ -907,6 +914,7 @@
 				ED79E92A1FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
 				EDD8F5001F5401FD0000D3BB /* simple-update-next-sync.json in Resources */,
 				EDD8F4FB1F5401FD0000D3BB /* nullified-link-next.json in Resources */,
+				5D9309CB2003FDEA0050786B /* linked-assets-array.json in Resources */,
 				EDD8F5301F5402290000D3BB /* space.json in Resources */,
 				ED8C1E821F6040E0001D059F /* PreseedJSONFiles in Resources */,
 			);
