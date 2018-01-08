@@ -1,0 +1,45 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "smf0sqiu0c5s"
+          }
+        },
+        "id": "2mhGzgf3oQOquo0SyGWCQE",
+        "type": "Entry",
+        "createdAt": "2018-01-08T19:42:13.766Z",
+        "updatedAt": "2018-01-08T19:42:13.766Z",
+        "revision": 1,
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "singleRecord"
+          }
+        }
+      },
+      "fields": {
+        "textBody": {
+          "en-US": "Record with symbols array"
+        },
+        "symbolsArray": {
+          "en-US": [
+            "one",
+            "two",
+            "three",
+            "four",
+            "five"
+          ]
+        }
+      }
+    }
+  ],
+  "nextSyncUrl": "http://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=wonDrcKnRgcSOF4-wrDCgcKefWzCgsOxwrfCq8KOfMOdXUPCvEnChwEEO8KFwqHDj8KBwrXDq8KnKiQTBA3DkDw2w7o0JcOyQmlaV8O5Q8ORPjbDpiUGwptdSMOcwrXDnsK4aQ4HwpnDkB5SYMKQRm4UXRsSbW1AU8K6LsOJw5_CvS1iV2bCvcKED0XClcKuw7t4UsKIwoHCvMOAcMOmwrlYF8OmUcKUwq1aw5NQwrBpw7RdwqrClsK9wrc"
+}

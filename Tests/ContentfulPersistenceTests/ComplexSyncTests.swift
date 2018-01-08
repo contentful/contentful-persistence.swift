@@ -431,14 +431,24 @@ class ComplexSyncTests: XCTestCase {
         let expectation = self.expectation(description: "Can deserialize linked strings array")
 
         stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
-            let stubPath = OHPathForFile("shared-linked-asset.json", ComplexSyncTests.self)
+            let stubPath = OHPathForFile("symbols-array.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
 
         self.client.initialSync { result in
             switch result {
             case .success:
-                break
+                let records: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self, predicate: NSPredicate(format: "id == '2mhGzgf3oQOquo0SyGWCQE'"))
+
+                expect(records.count).to(equal(1))
+
+                if let linkedStringsData = records.first?.symbolsArray, let linkedStringsArray = NSKeyedUnarchiver.unarchiveObject(with: linkedStringsData) as? [String] {
+                    expect(linkedStringsArray.count).to(equal(5))
+                    expect(linkedStringsArray.first).to(equal("one"))
+                    expect(linkedStringsArray.last).to(equal("five"))
+                } else {
+                    fail("There should be an array of linked strings")
+                }
             case .error(let error):
                 fail("Should not throw an error \(error)")
             }
@@ -446,23 +456,4 @@ class ComplexSyncTests: XCTestCase {
         }
         self.waitForExpectations(timeout: 10.0, handler: nil)    }
 
-    func testDeserializingImageInfo() {
-        // TODO:
-        let expectation = self.expectation(description: "Can resolve linked Strings array")
-
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
-            let stubPath = OHPathForFile("shared-linked-asset.json", ComplexSyncTests.self)
-            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
-            }.name = "Initial sync stub"
-
-        self.client.initialSync { result in
-            switch result {
-            case .success:
-                break
-            case .error(let error):
-                fail("Should not throw an error \(error)")
-            }
-            expectation.fulfill()
-        }
-        self.waitForExpectations(timeout: 10.0, handler: nil)    }
 }
