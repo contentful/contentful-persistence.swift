@@ -177,8 +177,7 @@ class ContentfulPersistenceTests: XCTestCase {
         }
     }
 
-
-    func canMapContentfulEntryLinksAsCoreDataRelationshiops() {
+    func canResolveLinkedEntriesArray() {
 
         self.postTests { done in
             let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first

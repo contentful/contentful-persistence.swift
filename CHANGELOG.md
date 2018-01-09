@@ -11,11 +11,24 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 #### 0.x Releases
 
+- `0.9.x` Releases - [0.9.0](#090)
 - `0.8.x` Releases - [0.8.0](#080)
 - `0.7.x` Releases - [0.7.0](#070)
 - `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061) | [0.6.2](#062)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040)
+
+
+---
+
+## [`0.9.0`](https://github.com/contentful/contentful-persistence.swift/releases/tag/0.9.0)
+Released on 2017-01-09
+
+#### Improved
+- Improved test coverage to capture edge cases for various models.
+
+#### Added
+- `Contentful.Location` can now be stored as an 'Transformable' attribute on a CoreData entity in the Xcode data model editor and on your `NSManagedObject` subclasses.
 
 ---
 
