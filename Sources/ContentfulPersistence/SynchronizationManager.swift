@@ -182,27 +182,44 @@ public class SynchronizationManager: PersistenceIntegration {
                               entryTypes: persistenceModel.entryTypes)
 
         for (entryId, fields) in relationshipsToResolve {
+
             if let entryPersistable = cache.entry(for: entryId) as? NSObject {
 
-                for (fieldName, relatedEntryId) in fields {
-                    if let identifier = relatedEntryId as? String {
-                        entryPersistable.setValue(cache.item(for: identifier), forKey: fieldName)
-                    }
+                // Mutable copy of fields to link targets.
+                var updatedFieldsRelationships: [FieldName: Any] = fields
 
-                    if let identifiers = relatedEntryId as? [String] {
-                        let targets = identifiers.flatMap { id in
-                            return cache.item(for: id)
-                        }
+                for (fieldName, relatedResourceId) in fields {
+                    // Resolve one-to-one link.
+                    if let identifier = relatedResourceId as? String, let target = cache.item(for: identifier) {
+                        entryPersistable.setValue(target, forKey: fieldName)
+                        updatedFieldsRelationships.removeValue(forKey: fieldName)
+                    }
+                    // Resolve one-to-many links array.
+                    if let identifiers = relatedResourceId as? [String] {
+                        let targets = identifiers.flatMap { cache.item(for: $0) }
                         entryPersistable.setValue(NSOrderedSet(array: targets), forKey: fieldName)
+
+                        // Only clear links to be resolved array if all links in the array have been resolved.
+                        if targets.count == identifiers.count {
+                            updatedFieldsRelationships.removeValue(forKey: fieldName)
+                        }
+
                     }
                     // Nullifiy the link if it's nil.
-                    if relatedEntryId is DeletedRelationship {
+                    if relatedResourceId is DeletedRelationship {
                         entryPersistable.setValue(nil, forKey: fieldName)
+                        updatedFieldsRelationships.removeValue(forKey: fieldName)
                     }
+                }
+
+                // Update the relationships that must be resolved.
+                if updatedFieldsRelationships.isEmpty {
+                    relationshipsToResolve.removeValue(forKey: entryId)
+                } else {
+                    relationshipsToResolve[entryId] = updatedFieldsRelationships
                 }
             }
         }
-        self.relationshipsToResolve.removeAll()
     }
 
     // MARK: - PersistenceDelegate
@@ -347,8 +364,8 @@ public class SynchronizationManager: PersistenceIntegration {
 
     // MARK: Private
 
-    // Dictionary mapping Entry id's concatenated with locale code to a dictionary with fieldName to related entry id's.
-    fileprivate var relationshipsToResolve = [String: [FieldName: Any]]()
+    // Dictionary mapping source Entry id's concatenated with locale code to a dictionary with linking fieldName to target entry id's.
+    internal var relationshipsToResolve = [String: [FieldName: Any]]()
 
     // Dictionary to cache mappings for fields on `Entry` to `EntryPersistable` properties for each content type.
     fileprivate var cachedPropertyMappingForContentTypeId: [ContentTypeId: [FieldName: String]] = [ContentTypeId: [FieldName: String]]()

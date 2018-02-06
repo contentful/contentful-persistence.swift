@@ -40,7 +40,7 @@ public extension SynchronizationManager {
         }
 
         // Extract locale information about the space and inject into the client and sync manager.
-        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
         let space = try jsonDecoder.decode(Space.self, from: spaceData)
         Client.update(jsonDecoder, withLocalizationContextFrom: space)
         let localeCodes = space.locales.map { $0.code }

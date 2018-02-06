@@ -1,2 +1,2 @@
-github "contentful/contentful.swift" "1.0.0-beta5"
+github "contentful/contentful.swift" ~> 1.0.1
 

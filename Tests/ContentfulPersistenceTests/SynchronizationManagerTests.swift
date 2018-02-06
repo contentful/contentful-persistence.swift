@@ -69,7 +69,7 @@ class ContentfulPersistenceTests: XCTestCase {
     func testPropertyMappingInferredCorrectly() {
         // We must have a space first to pass in locale information.
         let spaceData = TestHelpers.jsonData("space")
-        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
         let space = try! jsonDecoder.decode(Space.self, from: spaceData)
         Client.update(jsonDecoder, withLocalizationContextFrom: space)
 
@@ -89,7 +89,7 @@ class ContentfulPersistenceTests: XCTestCase {
     func testRelationshipMappingInferredCorrectly() {
         // We must have a space first to pass in locale information.
         let spaceData = TestHelpers.jsonData("space")
-        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext
+        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
         let space = try! jsonDecoder.decode(Space.self, from: spaceData)
         Client.update(jsonDecoder, withLocalizationContextFrom: space)
 

@@ -79,6 +79,16 @@ class PreseededDatabaseTests: XCTestCase {
 
         let categories: [Category] = try! self.store.fetchAll(type: Category.self, predicate: NSPredicate(value: true))
         expect(categories.count).to(equal(2))
+
+        let lewisCarroll: Author = try! self.store.fetchAll(type: Author.self, predicate: NSPredicate(format: "id == '6EczfGnuHCIYGGwEwIqiq2'")).first!
+        expect(lewisCarroll.name).to(equal("Lewis Carroll"))
+
+        let profilePhoto = lewisCarroll.profilePhoto
+        expect(profilePhoto).toNot(beNil())
+        expect(profilePhoto?.urlString).to(equal("https://images.contentful.com/dqpnpm0n4e75/2ReMHJhXoAcy4AyamgsgwQ/0a79951064da28107e2d730cecbf6bab/lewis-carroll-1.jpg"))
+
+        // Asser that we've cleared all the relationships that were supposed to be resolved.
+        expect(self.syncManager.relationshipsToResolve.isEmpty).to(be(true))
     }
 }
 

@@ -390,44 +390,6 @@
             "id": "dqpnpm0n4e75"
           }
         },
-        "id": "2ReMHJhXoAcy4AyamgsgwQ",
-        "type": "Asset",
-        "createdAt": "2015-02-05T12:11:50.600Z",
-        "updatedAt": "2015-02-05T12:11:50.600Z",
-        "revision": 1
-      },
-      "fields": {
-        "title": {
-          "en-US": "Lewis Carroll"
-        },
-        "description": {
-          "en-US": "Taken on January 1, 1855"
-        },
-        "file": {
-          "en-US": {
-            "url": "//images.contentful.com/dqpnpm0n4e75/2ReMHJhXoAcy4AyamgsgwQ/0a79951064da28107e2d730cecbf6bab/lewis-carroll-1.jpg",
-            "details": {
-              "size": 21113,
-              "image": {
-                "width": 300,
-                "height": 250
-              }
-            },
-            "fileName": "lewis-carroll-1.jpg",
-            "contentType": "image/jpeg"
-          }
-        }
-      }
-    },
-    {
-      "sys": {
-        "space": {
-          "sys": {
-            "type": "Link",
-            "linkType": "Space",
-            "id": "dqpnpm0n4e75"
-          }
-        },
         "id": "6JCShApjO0O4CUkUKAKAaS",
         "type": "Asset",
         "createdAt": "2015-02-05T12:11:50.578Z",
