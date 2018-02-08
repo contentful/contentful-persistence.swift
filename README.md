@@ -7,10 +7,13 @@
 [![Build Status](https://img.shields.io/travis/contentful/contentful-persistence.swift/master.svg?style=flat)](https://travis-ci.org/contentful/contentful-persistence.swift)
 [![Coverage Status](https://img.shields.io/coveralls/contentful/contentful-persistence.swift.svg)](https://coveralls.io/github/contentful/contentful-persistence.swift)
 
-Simplified persistence for the [Contentful][1] [Swift SDK][2].
+An integration to simplify persisting data from [Contentful][1] to a local CoreData database; built on top of the official Contentful [Swift SDK][2].
 
 [Contentful][1] provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship digital products faster.
+
 ## Usage
+
+Before getting started, it is highly recommended that you familiarize yourself with Apple's CoreData framework as many issues encountered during development may be CoreData specific. Read the [CoreData Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/index.html) and check out other (non-Contentful) examples. 
 
 The `SynchronizationManager` manages the state of your CoreData database and keeps it in sync with the data from your Contentful Space:
 
