@@ -187,6 +187,9 @@
 		EDD8F52F1F5402290000D3BB /* single-post.json in Resources */ = {isa = PBXBuildFile; fileRef = ED1BA7D11F16459B00E21FD5 /* single-post.json */; };
 		EDD8F5301F5402290000D3BB /* space.json in Resources */ = {isa = PBXBuildFile; fileRef = ED1BA7CE1F16287F00E21FD5 /* space.json */; };
 		EDD8F5311F5402E60000D3BB /* ComplexTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED25D7F31F177D8F00A6BA9A /* ComplexTest.xcdatamodeld */; };
+		EDE5BA39207220F900A650FE /* video-asset.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE5BA37207220F400A650FE /* video-asset.json */; };
+		EDE5BA3A207220FA00A650FE /* video-asset.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE5BA37207220F400A650FE /* video-asset.json */; };
+		EDE5BA3B207220FA00A650FE /* video-asset.json in Resources */ = {isa = PBXBuildFile; fileRef = EDE5BA37207220F400A650FE /* video-asset.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -298,6 +301,7 @@
 		EDD8F4DC1F5401840000D3BB /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/Mac/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		EDD8F4DF1F54019F0000D3BB /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
 		EDD8F4E01F54019F0000D3BB /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/tvOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
+		EDE5BA37207220F400A650FE /* video-asset.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "video-asset.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,6 +461,7 @@
 		ED25D7F61F17900900A6BA9A /* ComplexTestStubs */ = {
 			isa = PBXGroup;
 			children = (
+				EDE5BA37207220F400A650FE /* video-asset.json */,
 				5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */,
 				ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */,
 				5D001E5A2004019700AC5A4C /* symbols-array.json */,
@@ -845,6 +850,7 @@
 				ED8C1E881F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				ED91F99F1F18C79D00540DAC /* multi-page-link-resolution2.json in Resources */,
 				ED79E9281FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
+				EDE5BA39207220F900A650FE /* video-asset.json in Resources */,
 				ED6B67A21F1CB350008EC7C8 /* nullified-link-initial.json in Resources */,
 				ED1BA7D31F1645A000E21FD5 /* single-post.json in Resources */,
 				5D9309C92003FDE80050786B /* linked-assets-array.json in Resources */,
@@ -893,6 +899,7 @@
 				ED8C1E891F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				EDD8F4ED1F5401F50000D3BB /* localization-sync.json in Resources */,
 				ED79E9291FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
+				EDE5BA3A207220FA00A650FE /* video-asset.json in Resources */,
 				EDD8F4F71F5401FD0000D3BB /* simple-update-next-sync.json in Resources */,
 				EDD8F4F21F5401FD0000D3BB /* nullified-link-next.json in Resources */,
 				5D9309CC2003FDEB0050786B /* linked-assets-array.json in Resources */,
@@ -920,6 +927,7 @@
 				ED8C1E8A1F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				EDD8F4EE1F5401F60000D3BB /* localization-sync.json in Resources */,
 				ED79E92A1FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
+				EDE5BA3B207220FA00A650FE /* video-asset.json in Resources */,
 				EDD8F5001F5401FD0000D3BB /* simple-update-next-sync.json in Resources */,
 				EDD8F4FB1F5401FD0000D3BB /* nullified-link-next.json in Resources */,
 				5D9309CB2003FDEA0050786B /* linked-assets-array.json in Resources */,
