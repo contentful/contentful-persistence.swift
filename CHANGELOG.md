@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ### Merged, but not yet released
 > ~~All recent changes are published~~
+> #### FIXED
+> - Assets that contained media files that were not images failed to deserialize the metadata about the file properly, see [contentful.swift #182](https://github.com/contentful/contentful.swift/pull/182)
+
 ---
 
 ## Table of contents

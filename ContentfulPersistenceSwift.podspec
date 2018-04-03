@@ -28,6 +28,6 @@ Pod::Spec.new do |spec|
   spec.watchos.deployment_target = '2.0'
   spec.tvos.deployment_target    = '9.0'
 
-  spec.dependency 'Contentful', '~> 1.0.0-beta5'
+  spec.dependency 'Contentful', '~> 2.0.0-alpha1'
 end
 
