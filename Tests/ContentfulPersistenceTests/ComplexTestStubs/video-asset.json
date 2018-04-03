@@ -1,0 +1,44 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "items": [
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "r3rkxrglg2d1"
+          }
+        },
+        "id": "YokO2rWbOoo68QmiEUkqe",
+        "type": "Asset",
+        "createdAt": "2018-04-02T08:13:10.692Z",
+        "updatedAt": "2018-04-02T08:13:10.692Z",
+        "revision": 1
+      },
+      "fields": {
+        "title": {
+          "en-US": "Video asset"
+        },
+        "description": {
+          "en-US": "this is a video"
+        },
+        "file": {
+          "en-US": {
+            "url": "//videos.ctfassets.net/r3rkxrglg2d1/YokO2rWbOoo68QmiEUkqe/5cd5ab8fc90e7b9b4d99d56ea29de768/JP_Swift_Demo.mp4",
+            "details": {
+              "size": 12429451
+            },
+            "fileName": "JP_Swift_Demo.mp4",
+            "contentType": "video/mp4"
+          }
+        }
+      }
+    }
+  ],
+  "nextSyncUrl": "http://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=wonDrcKnRgcSOF4-wrDCgcKefWzCgsOxwrfCq8KOfMOdXUPCvEnChwEEO8KFwqHDjyPCuxtwVcO7KEvCmAp7P8Oqw4ppKsOic8ONw4rDgMOzw7LDusKaaMO5w5zCo8K6SsOkeMOjwoTCji8lwrHDtcKjf8KDw73DmsOyAjZ9woPCiMOeVMOydsOtCMOCbMOGI8OXw4_Drk_DmDwtDhM_w4XCu8KpJEw3w7Q7bz_CvTzDsFTCvWfDuwzCnBHClGvCiWjDiQ"
+}
+
+

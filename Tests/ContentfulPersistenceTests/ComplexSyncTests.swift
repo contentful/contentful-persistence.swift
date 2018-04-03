@@ -73,7 +73,7 @@ class ComplexSyncTests: XCTestCase {
 
         var syncSpace: SyncSpace!
 
-        client.initialSync() { result in
+        client.sync() { result in
             switch result {
             case .success(let space):
                 syncSpace = space
@@ -109,7 +109,7 @@ class ComplexSyncTests: XCTestCase {
             )
         }.name = "Next sync: updated value."
 
-        client.nextSync(for: syncSpace) { result in
+        client.sync(for: syncSpace) { result in
             switch result {
             case .success:
                 self.managedObjectContext.perform {
@@ -141,7 +141,7 @@ class ComplexSyncTests: XCTestCase {
 
         var syncSpace: SyncSpace!
 
-        client.initialSync() { result in
+        client.sync() { result in
             switch result {
             case .success(let space):
                 syncSpace = space
@@ -175,7 +175,7 @@ class ComplexSyncTests: XCTestCase {
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
         }.name = "Next sync: updated value."
 
-        client.nextSync(for: syncSpace) { result in
+        client.sync(for: syncSpace) { result in
             switch result {
             case .success:
 
@@ -217,7 +217,7 @@ class ComplexSyncTests: XCTestCase {
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
         }.name = "Initial sync stub"
 
-        client.initialSync() { result in
+        client.sync() { result in
             switch result {
             case .success:
 
@@ -255,7 +255,7 @@ class ComplexSyncTests: XCTestCase {
 
         var syncSpace: SyncSpace!
 
-        client.initialSync() { result in
+        client.sync { result in
             switch result {
             case .success(let space):
                 syncSpace = space
@@ -293,7 +293,7 @@ class ComplexSyncTests: XCTestCase {
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
         }.name = "Next sync: updated value."
 
-        client.nextSync(for: syncSpace) { result in
+        client.sync(for: syncSpace) { result in
             switch result {
             case .success:
 
@@ -323,7 +323,7 @@ class ComplexSyncTests: XCTestCase {
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
 
-        client.initialSync() { result in
+        client.sync { result in
             switch result {
             case .success:
 
@@ -338,6 +338,8 @@ class ComplexSyncTests: XCTestCase {
                             } else {
                                 fail()
                             }
+                        } else {
+                            fail()
                         }
                     }
                     catch {
@@ -354,6 +356,45 @@ class ComplexSyncTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
+    func testDeserializingVideoAssetURL() {
+
+        let expectation = self.expectation(description: "Initial sync succeeded")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("video-asset.json", ComplexSyncTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+            }.name = "Initial sync stub"
+
+        client.sync { result in
+            switch result {
+            case .success:
+
+                self.managedObjectContext.perform {
+                    do {
+                        let assets: [ComplexAsset] = try self.store.fetchAll(type: ComplexAsset.self,  predicate: NSPredicate(format: "id == 'YokO2rWbOoo68QmiEUkqe'"))
+                        expect(assets.count).to(equal(1))
+                        if let asset = assets.first {
+                            expect(asset.urlString).toNot(beNil())
+                            expect(asset.urlString).to(equal("https://videos.ctfassets.net/r3rkxrglg2d1/YokO2rWbOoo68QmiEUkqe/5cd5ab8fc90e7b9b4d99d56ea29de768/JP_Swift_Demo.mp4"))
+                        } else {
+                            fail()
+                        }
+                    }
+                    catch {
+                        fail("Fetching SingleRecord should not throw an error")
+                    }
+                    expectation.fulfill()
+                }
+
+            case .error(let error):
+                fail("\(error)")
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+
+    }
+
     func testEntriesLinkingToSameLinkCanResolveLinks() {
         let expectation = self.expectation(description: "Two entries can resolve links to the same asset")
 
@@ -362,7 +403,7 @@ class ComplexSyncTests: XCTestCase {
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
 
-        self.client.initialSync { result in
+        self.client.sync { result in
             switch result {
             case .success:
                 // Test first entry can link to asset.
@@ -404,7 +445,7 @@ class ComplexSyncTests: XCTestCase {
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
 
-        self.client.initialSync { result in
+        self.client.sync { result in
             switch result {
             case .success:
                 let records: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self, predicate: NSPredicate(format: "id == '2JFSeiPTZYm4goMSUeYSCU'"))
@@ -435,7 +476,7 @@ class ComplexSyncTests: XCTestCase {
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
 
-        self.client.initialSync { result in
+        self.client.sync { result in
             switch result {
             case .success:
                 let records: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self, predicate: NSPredicate(format: "id == '2mhGzgf3oQOquo0SyGWCQE'"))

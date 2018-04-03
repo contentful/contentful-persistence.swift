@@ -115,9 +115,9 @@ public class SynchronizationManager: PersistenceIntegration {
         }
 
         if let syncToken = self.syncToken {
-            client?.nextSync(for: SyncSpace(syncToken: syncToken), then: safeCompletion)
+            client?.sync(for: SyncSpace(syncToken: syncToken), then: safeCompletion)
         } else {
-            client?.initialSync(then: safeCompletion)
+            client?.sync(for: SyncSpace(), then: safeCompletion)
         }
     }
 

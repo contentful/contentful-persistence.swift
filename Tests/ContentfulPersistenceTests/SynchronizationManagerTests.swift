@@ -50,7 +50,7 @@ class ContentfulPersistenceTests: XCTestCase {
     func postTests(expectations: @escaping TestFunc) {
         let expectation = self.expectation(description: "PostTests expectation")
 
-        self.client.initialSync() { result in
+        self.client.sync { result in
             expect(result.value).toNot(beNil())
 
             self.managedObjectContext.perform {
@@ -69,10 +69,9 @@ class ContentfulPersistenceTests: XCTestCase {
     func testPropertyMappingInferredCorrectly() {
         // We must have a space first to pass in locale information.
         let spaceData = TestHelpers.jsonData("space")
-        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
+        let jsonDecoder = JSONDecoder.withoutLocalizationContext()
         let space = try! jsonDecoder.decode(Space.self, from: spaceData)
-        Client.update(jsonDecoder, withLocalizationContextFrom: space)
-
+        jsonDecoder.update(with: LocalizationContext(locales: space.locales)!)
         let authorData = TestHelpers.jsonData("single-author")
 
         let author = try! jsonDecoder.decode(Entry.self, from: authorData)
@@ -89,10 +88,9 @@ class ContentfulPersistenceTests: XCTestCase {
     func testRelationshipMappingInferredCorrectly() {
         // We must have a space first to pass in locale information.
         let spaceData = TestHelpers.jsonData("space")
-        let jsonDecoder = Client.jsonDecoderWithoutLocalizationContext()
+        let jsonDecoder = JSONDecoder.withoutLocalizationContext()
         let space = try! jsonDecoder.decode(Space.self, from: spaceData)
-        Client.update(jsonDecoder, withLocalizationContextFrom: space)
-
+        jsonDecoder.update(with: LocalizationContext(locales: space.locales)!)
         let authorData = TestHelpers.jsonData("single-author")
 
         let author = try! jsonDecoder.decode(Entry.self, from: authorData)
@@ -108,7 +106,7 @@ class ContentfulPersistenceTests: XCTestCase {
     func testSyncManagerCanStoreSyncTokens() {
         let expectation = self.expectation(description: "Can store sync tokens")
 
-        self.client.initialSync() { result in
+        self.client.sync { result in
             self.managedObjectContext.perform {
                 expect(result.value!.assets.count).to(beGreaterThan(0))
                 expect(self.syncManager.syncToken?.count).to(beGreaterThan(0))
@@ -124,7 +122,7 @@ class ContentfulPersistenceTests: XCTestCase {
 
         let syncSpace = SyncSpace(syncToken: "w5ZGw6JFwqZmVcKsE8Kow4grw45QdybDqXt4XTFdw6tcwrMiwqpmwq7DlcOqZ8KnwpUiG1sZwr3Cq8OpFcKEUsOyPcOiQMOEITLDnyIkw4fDq8KAw6x_Mh3Dui_Cgw3CnsKswrwhw6hNwostejQDw4nDmUkp")
 
-        self.client.nextSync(for: syncSpace) { result in
+        self.client.sync(for: syncSpace) { result in
             expect(result.value!.entries.count).to(equal(0))
             expectation.fulfill()
         }
@@ -134,7 +132,7 @@ class ContentfulPersistenceTests: XCTestCase {
     func canStoreAssetPersistables() {
         let expectation = self.expectation(description: "Can store Asset Persistables expecatation")
 
-        self.client.initialSync() { result in
+        self.client.sync { result in
 
             self.managedObjectContext.perform {
                 do {
