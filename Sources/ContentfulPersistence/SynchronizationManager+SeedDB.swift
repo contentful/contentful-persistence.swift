@@ -126,15 +126,3 @@ public extension SynchronizationManager {
 
     }
 }
-
-/**
- A simple protocol to bridge `Contentful.Asset` and `ContentfulPersistence.AssetPersistable` to enable
- consistent local storage patterns.
- */
-public protocol Media {
-
-    var id: String { get }
-    var urlString: String? { get }
-}
-
-extension Contentful.Asset: Media {}

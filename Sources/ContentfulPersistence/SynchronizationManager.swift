@@ -257,21 +257,30 @@ public class SynchronizationManager: PersistenceIntegration {
         } else {
             do {
                 persistable = try self.persistentStore.create(type: type)
-                persistable.id = asset.id
             } catch let error {
                 fatalError("Could not create the Asset persistent store\n \(error)")
             }
         }
 
         // Populate persistable with sys and fields data from the `Asset`
+        persistable.id                  = asset.id// Set the localeCode.
+        persistable.localeCode          = asset.currentlySelectedLocale.code
         persistable.title               = asset.title
+        persistable.assetDescription    = asset.description
         persistable.updatedAt           = asset.sys.updatedAt
         persistable.createdAt           = asset.sys.updatedAt
         persistable.urlString           = asset.urlString
-        persistable.assetDescription    = asset.description
-
-        // Set the localeCode.
-        persistable.localeCode = asset.currentlySelectedLocale.code
+        persistable.fileName            = asset.file?.fileName
+        persistable.fileType            = asset.file?.contentType
+        if let size = asset.file?.details?.size {
+            persistable.size = NSNumber(value: size)
+        }
+        if let height = asset.file?.details?.imageInfo?.height {
+            persistable.height = NSNumber(value: height)
+        }
+        if let width = asset.file?.details?.imageInfo?.width {
+            persistable.width = NSNumber(value: width)
+        }
     }
 
     /** Never call this directly.
@@ -440,6 +449,7 @@ public class SynchronizationManager: PersistenceIntegration {
             if let array = fieldValue as? [Any] {
                 fieldValue = NSKeyedArchiver.archivedData(withRootObject: array)
             }
+
             persistable.setValue(fieldValue, forKey: propertyName)
         }
     }
