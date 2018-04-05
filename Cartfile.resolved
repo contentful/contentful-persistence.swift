@@ -1,4 +1,4 @@
 github "AliSoftware/OHHTTPStubs" "6.1.0"
 github "JensRavens/Interstellar" "2.1.0"
 github "Quick/Nimble" "v7.0.3"
-github "contentful/contentful.swift" "2.0.0-alpha1"
+github "contentful/contentful.swift" "2.0.0-alpha2"
