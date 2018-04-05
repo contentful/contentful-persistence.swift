@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode9
+osx_image: xcode9.3beta
 rvm:
   - 2.4.1
 cache: bundler
@@ -11,7 +11,7 @@ branches:
     - /^\d+\.\d+\.\d+(-(beta|alpha|RC)\d*)?/ # Regex to trigger builds for git tags so that we can deploy docs to gh-pages.
 matrix:
   include:
-  - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone 6s,OS=11.0" SCHEME=ContentfulPersistence_iOS
+  - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone 6s,OS=11.3" SCHEME=ContentfulPersistence_iOS
   - env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV 1080p,OS=11.0"
       SCHEME=ContentfulPersistence_tvOS
   - env: SDK=macosx PLATFORM="OS X" SCHEME=ContentfulPersistence_macOS
