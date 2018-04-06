@@ -16,11 +16,20 @@ import ContentfulPersistence
 
 extension ComplexAsset: AssetPersistable {
 
+    // ContentSysPersistable
     @NSManaged var id: String
     @NSManaged var localeCode: String
+    @NSManaged var createdAt: Date?
+    @NSManaged var updatedAt: Date?
+
+    // AssetPersistable
     @NSManaged var title: String?
     @NSManaged var assetDescription: String?
     @NSManaged var urlString: String?
-    @NSManaged var createdAt: Date?
-    @NSManaged var updatedAt: Date?
+    @NSManaged var fileType: String?
+    @NSManaged var fileName: String?
+
+    @NSManaged var size: NSNumber?
+    @NSManaged var width: NSNumber?
+    @NSManaged var height: NSNumber?
 }

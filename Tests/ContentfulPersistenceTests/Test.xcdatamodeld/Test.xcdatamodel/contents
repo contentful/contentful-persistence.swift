@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G29" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E199" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Asset" representedClassName="Asset" syncable="YES">
         <attribute name="assetDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="height" optional="YES" attributeType="Float" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="fileName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fileType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="Double" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="internetMediaType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="localeCode" attributeType="String" syncable="YES"/>
+        <attribute name="size" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="urlString" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="width" optional="YES" attributeType="Float" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="width" optional="YES" attributeType="Double" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="featuredImage_2wKn6yEnZewu2SCCkus4as_Inverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="theFeaturedImage" inverseEntity="Post" syncable="YES"/>
         <relationship name="icon_5KMiN6YPvi42icqAUQMCQe_Inverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="icon" inverseEntity="Category" syncable="YES"/>
         <relationship name="profilePhoto_1kUEViTN4EmGiEaaeC6ouY_Inverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="profilePhoto" inverseEntity="Author" syncable="YES"/>
@@ -54,7 +56,7 @@
         <attribute name="syncToken" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Asset" positionX="0" positionY="0" width="128" height="240"/>
+        <element name="Asset" positionX="0" positionY="0" width="128" height="270"/>
         <element name="Author" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Category" positionX="0" positionY="0" width="128" height="150"/>
         <element name="Post" positionX="0" positionY="0" width="128" height="240"/>

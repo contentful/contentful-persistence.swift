@@ -4,16 +4,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) starting from 1.x releases.
 
 ### Merged, but not yet released
-> ~~All recent changes are published~~
-> #### FIXED
-> - Assets that contained media files that were not images failed to deserialize the metadata about the file properly, see [contentful.swift #182](https://github.com/contentful/contentful.swift/pull/182)
-
+> All recent changes are published
 ---
 
 ## Table of contents
 
 #### 0.x Releases
 
+- `0.10.x` Releases - [0.10.0](#0100)
 - `0.9.x` Releases - [0.9.0](#090) | [0.9.1](#091)
 - `0.8.x` Releases - [0.8.0](#080)
 - `0.7.x` Releases - [0.7.0](#070)
@@ -21,6 +19,20 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040)
 
+---
+
+## [`0.10.0`](https://github.com/contentful/contentful-persistence.swift/releases/tag/0.10.0)
+Released on 2018-04-05
+
+#### Added
+- **BREAKING:** Ability to store _all_ asset metadata in `AssetPersistable` has been added. Conforming to the new protocol contstraints is a breaking change and you should make sure to resync all data to ensure this metedata is stored properly.
+- You can now use the `fetchData(for:with:)` method from contentful.swift on `AssetPersistable` instances
+
+#### Changed
+- **BREAKING:** The library is now upgraded to Swift 4.1 and Xcode 9.3
+
+#### FIXED
+- Assets that contained media files that were not images failed to deserialize the metadata about the file properly, see [contentful.swift #182](https://github.com/contentful/contentful.swift/pull/182)
 
 ---
 

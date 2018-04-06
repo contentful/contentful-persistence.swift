@@ -129,7 +129,7 @@ class ContentfulPersistenceTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    func canStoreAssetPersistables() {
+    func testCanStoreAssetPersistables() {
         let expectation = self.expectation(description: "Can store Asset Persistables expecatation")
 
         self.client.sync { result in
@@ -142,11 +142,22 @@ class ContentfulPersistenceTests: XCTestCase {
                     let alice: Asset? = try! self.store.fetchAll(type: Asset.self, predicate: self.assetPredicate).first
                     expect(alice).toNot(beNil())
                     expect(alice?.title).to(equal("Alice in Wonderland"))
-                    expect(alice?.urlString).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
+                    expect(alice?.urlString).to(equal("https://images.ctfassets.net/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
+                    expect(alice?.width).to(equal(644))
+                    expect(alice?.height).to(equal(610))
+                    expect(alice?.size).to(equal(24238))
+                    expect(alice?.fileName).to(equal("alice-in-wonderland.gif"))
+                    expect(alice?.fileType).to(equal("image/gif"))
+                    self.client.fetchData(for: alice!).then { data in
+                        XCTAssert(true)
+                        expectation.fulfill()
+                    }.error { error in
+                        fail("Data fetch should have succeed \(error)")
+                        expectation.fulfill()
+                    }
                 } catch {
                     XCTAssert(false, "Fetching asset(s) should not throw an error")
                 }
-                expectation.fulfill()
             }
         }
         waitForExpectations(timeout: 10.0, handler: nil)

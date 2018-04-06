@@ -73,7 +73,7 @@ public extension SynchronizationManager {
      - Returns: The full string path for the underlying media file associated with the passed in `Asset` or `AssetPersistabl`.
                 Will return `nil` if no directory exists at your directory name, or if the `Media` does not have a valid `urlString` associated with it.
      */
-    public static func pathInBundle(for media: Media, inDirectoryNamed directory: String, in bundle: Bundle) -> String? {
+    public static func pathInBundle(for media: AssetProtocol, inDirectoryNamed directory: String, in bundle: Bundle) -> String? {
         let fileName = SynchronizationManager.fileName(for: media)
         return bundle.path(forResource: fileName, ofType: nil, inDirectory: directory)
     }
@@ -89,7 +89,7 @@ public extension SynchronizationManager {
      - Returns: The `Data` object for your media file. Will return `nil` if no directory exists at your directory name,
                 or if the `Media` does not have a `urlString` associated with it.
      */
-    public static func bundledData(for media: Media, inDirectoryNamed directory: String, in bundle: Bundle) -> Data? {
+    public static func bundledData(for media: AssetProtocol, inDirectoryNamed directory: String, in bundle: Bundle) -> Data? {
         guard let path = pathInBundle(for: media, inDirectoryNamed: directory, in: bundle) else { return nil }
         let data = FileManager.default.contents(atPath: path)
         return data
@@ -102,7 +102,7 @@ public extension SynchronizationManager {
      - Returns: A filename for the underlying media file. Will return `nil` if the Asset or AssetPersistable
                 does not have a `urlString` associated with it.
      */
-    public static func fileName(for media: Media) -> String? {
+    public static func fileName(for media: AssetProtocol) -> String? {
         guard let urlString = media.urlString, let url = URL(string: urlString) else { return nil }
         let pathExtension = url.pathExtension.isEmpty ? "data" : url.pathExtension
         let fileName = "cache_" + media.id + "." + pathExtension
@@ -126,15 +126,3 @@ public extension SynchronizationManager {
 
     }
 }
-
-/**
- A simple protocol to bridge `Contentful.Asset` and `ContentfulPersistence.AssetPersistable` to enable
- consistent local storage patterns.
- */
-public protocol Media {
-
-    var id: String { get }
-    var urlString: String? { get }
-}
-
-extension Contentful.Asset: Media {}

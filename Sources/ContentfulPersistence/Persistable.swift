@@ -39,14 +39,14 @@ public protocol ContentSysPersistable: class {
     /// The unique identifier of the Resource.
     var id: String { get set }
 
+    /// The code which represents which locale the Resource of interest contains data for.
+    var localeCode: String { get set }
+
     /// The date representing the last time the Contentful Resource was updated.
     var updatedAt: Date? { get set }
 
     /// The date that the Contentful Resource was first created.
     var createdAt: Date? { get set }
-
-    /// The code which represents which locale the Resource of interest contains data for.
-    var localeCode: String { get set }
 }
 
 /**
@@ -64,9 +64,7 @@ public protocol SyncSpacePersistable: class {
  Conform to `AssetPersistable` protocol to enable mapping of your Contentful media Assets to
  your `NSManagedObject` subclass.
  */
-public protocol AssetPersistable: ContentSysPersistable, Media {
-    /// URL of the Asset.
-    var urlString: String? { get set }
+public protocol AssetPersistable: ContentSysPersistable, AssetProtocol {
 
     /// The title of the Asset.
     var title: String? { get set }
@@ -74,6 +72,24 @@ public protocol AssetPersistable: ContentSysPersistable, Media {
     /// The description of the asset. Named `assetDescription` to avoid clashing with `description`
     /// property that all NSObject's have.
     var assetDescription: String? { get set }
+
+    /// URL of the Asset.
+    var urlString: String? { get set }
+
+    /// The name of the underlying binary media file.
+    var fileName: String? { get set }
+
+    /// The type of the underlying binary media file: e.g. `image/png`
+    var fileType: String? { get set }
+
+    /// The byte size of the underlying binary media file.
+    var size: NSNumber? { get set }
+
+    /// If the binary media file is an image, this property describes the images width in pixels.
+    var width: NSNumber? { get set }
+
+    /// If the binary media file is an image, this property describes the images height in pixels.
+    var height: NSNumber? { get set }
 }
 
 /**
