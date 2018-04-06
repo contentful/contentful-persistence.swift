@@ -9,4 +9,4 @@
 	url = https://github.com/Quick/Nimble.git
 [submodule "Carthage/Checkouts/contentful.swift"]
 	path = Carthage/Checkouts/contentful.swift
-	url = /Users/jpwright/Contentful/swift/SDK/contentful.swift
+	url = https://github.com/contentful/contentful.swift.git
