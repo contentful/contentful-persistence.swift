@@ -31,7 +31,7 @@ class NoDataCache: DataCacheProtocol {
     fileprivate func itemsOf(_ types: [ContentSysPersistable.Type], identifier: String) -> EntryPersistable? {
         let predicate = ContentfulPersistence.predicate(for: identifier)
 
-        let items: [EntryPersistable] = types.flatMap {
+        let items: [EntryPersistable] = types.compactMap {
             if let result = try? store.fetchAll(type: $0, predicate: predicate) as [EntryPersistable] {
                 return result.first
             }

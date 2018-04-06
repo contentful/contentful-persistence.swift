@@ -196,7 +196,7 @@ public class SynchronizationManager: PersistenceIntegration {
                     }
                     // Resolve one-to-many links array.
                     if let identifiers = relatedResourceId as? [String] {
-                        let targets = identifiers.flatMap { cache.item(for: $0) }
+                        let targets = identifiers.compactMap { cache.item(for: $0) }
                         entryPersistable.setValue(NSOrderedSet(array: targets), forKey: fieldName)
 
                         // Only clear links to be resolved array if all links in the array have been resolved.

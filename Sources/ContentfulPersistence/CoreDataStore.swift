@@ -91,7 +91,7 @@ public class CoreDataStore: PersistenceStore {
     public func fetchAll<T>(type: Any.Type, predicate: NSPredicate) throws -> [T] {
         let request = try fetchRequest(for: type, predicate: predicate)
         let items: [T] = try context.fetch(request) as! [T]
-        return items.flatMap { $0 as? T }
+        return items
     }
 
     /**
