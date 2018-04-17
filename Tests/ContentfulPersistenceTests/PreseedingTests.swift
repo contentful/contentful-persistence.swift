@@ -15,6 +15,8 @@ import Nimble
 import CoreData
 import CoreLocation
 
+// Regenerate json files with this command
+// contentful-utilities sync-to-bundle --spaceId "dqpnpm0n4e75" --accessToken "95c33f933385aa838825526c5753f3b5a7e59bb45cd6b5d78e15bfeafeef1b13" --output .
 class PreseededDatabaseTests: XCTestCase {
 
     var client: Client!
@@ -42,27 +44,31 @@ class PreseededDatabaseTests: XCTestCase {
         let directoryName = "PreseedJSONFiles"
         let testBundle = Bundle(for: Swift.type(of: self))
 
-        try! syncManager.seedDBFromJSONFiles(in: directoryName, in: testBundle)
+        do {
+            try syncManager.seedDBFromJSONFiles(in: directoryName, in: testBundle)
+            let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+            expect(post).toNot(beNil())
 
-        let post: Post? = try! self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-        expect(post).toNot(beNil())
+            expect(post?.authors).toNot(beNil())
+            expect(post?.authors?.count).to(equal(1))
+            guard let author = post?.authors?.firstObject as? Author else {
+                fail("was unable to make relationship")
+                return
+            }
+            expect(author.name).toNot(beNil())
+            expect(author.name).to(equal("Lewis Carroll"))
 
-        expect(post?.authors).toNot(beNil())
-        expect(post?.authors?.count).to(equal(1))
-        guard let author = post?.authors?.firstObject as? Author else {
-            fail("was unable to make relationship")
-            return
+            let assets: [Asset] = try self.store.fetchAll(type: Asset.self, predicate: NSPredicate(value: true))
+            expect(assets.count).to(equal(6))
+
+            for asset in assets {
+                let assetData = SynchronizationManager.bundledData(for: asset, inDirectoryNamed: directoryName, in: testBundle)
+                expect(assetData).toNot(beNil())
+            }
+        } catch let error {
+            fail(error.localizedDescription)
         }
-        expect(author.name).toNot(beNil())
-        expect(author.name).to(equal("Lewis Carroll"))
 
-        let assets: [Asset] = try! self.store.fetchAll(type: Asset.self, predicate: NSPredicate(value: true))
-        expect(assets.count).to(equal(6))
-
-        for asset in assets {
-            let assetData = SynchronizationManager.bundledData(for: asset, inDirectoryNamed: directoryName, in: testBundle)
-            expect(assetData).toNot(beNil())
-        }
     }
 
     func testsPreseedDBFromMultipageBundleContainsAllEntriesAndAssets() {
