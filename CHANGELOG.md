@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 #### 0.x Releases
 
+- `0.11.x` Releases - [0.11.0](#0110)
 - `0.10.x` Releases - [0.10.0](#0100)
 - `0.9.x` Releases - [0.9.0](#090) | [0.9.1](#091)
 - `0.8.x` Releases - [0.8.0](#080)
@@ -18,6 +19,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061) | [0.6.2](#062)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040)
+
+---
+
+## [`0.10.0`](https://github.com/contentful/contentful-persistence.swift/releases/tag/0.11.0)
+Released on 2018-04-18
+
+#### Changed
+- **BREAKING:** If you were using the methods to seed a CoreData database on first launch, you will need to re-run the command from [contentful-utilities.swift](https://github.com/contentful/contentful-utilties.swift) to generate the bundle files. This change coencides with the fact that environments are now locale specific.
+- **BREAKING:** Upgrades project to Xcode 9.3 and Swift 4.1
 
 ---
 
