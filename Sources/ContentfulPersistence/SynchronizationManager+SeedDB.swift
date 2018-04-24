@@ -26,24 +26,24 @@ public extension SynchronizationManager {
         var fileIndex = 0
         let filePaths = bundle.paths(forResourcesOfType: "json", inDirectory: directory)
 
-        let spaceJSONFilePath = filePaths.filter({ URL(string: $0)?.deletingPathExtension().lastPathComponent == "space" }).first
+        let localesJSONFilePath = filePaths.filter({ URL(string: $0)?.deletingPathExtension().lastPathComponent == "locales" }).first
         let firstFilePath = filePaths.filter({ URL(string: $0)?.deletingPathExtension().lastPathComponent == String(fileIndex) }).first
 
-        guard let initialSyncJSONFilePath = firstFilePath, let spaceFilePath = spaceJSONFilePath else {
+        guard let initialSyncJSONFilePath = firstFilePath, let spaceFilePath = localesJSONFilePath else {
             throw DatabaseSeedingError.invalidFilePath
         }
 
         // Get the space first to give the client context.
-        guard let spaceData = FileManager.default.contents(atPath: spaceFilePath) else {
+        guard let localesData = FileManager.default.contents(atPath: spaceFilePath) else {
             let error = SDKError.invalidURL(string: spaceFilePath)
             throw error
         }
 
         // Extract locale information about the space and inject into the client and sync manager.
         let jsonDecoder = JSONDecoder.withoutLocalizationContext()
-        let space = try jsonDecoder.decode(Space.self, from: spaceData)
-        jsonDecoder.update(with: LocalizationContext(locales: space.locales)!)
-        let localeCodes = space.locales.map { $0.code }
+        let localesResponse = try jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesData)
+        jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
+        let localeCodes = localesResponse.items.map { $0.code }
         update(localeCodes: localeCodes)
 
         var filePath: String? = initialSyncJSONFilePath

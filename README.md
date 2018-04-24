@@ -114,7 +114,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 target :MyApp do
-	pod 'ContentfulPersistenceSwift', '~> 0.10.0'
+	pod 'ContentfulPersistenceSwift', '~> 0.11.0'
 end
 ```
 
@@ -123,7 +123,7 @@ end
 You can also use [Carthage][6] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.10.0
+github "contentful/contentful.swift" ~> 0.11.0
 ```
 
 ## Unit Tests
@@ -139,7 +139,7 @@ or run them directly from Xcode.
 
 ## License
 
-Copyright (c) 2017 Contentful GmbH. See LICENSE for further details.
+Copyright (c) 2018 Contentful GmbH. See LICENSE for further details.
 
 [1]: https://www.contentful.com
 [2]: https://github.com/contentful/contentful.swift

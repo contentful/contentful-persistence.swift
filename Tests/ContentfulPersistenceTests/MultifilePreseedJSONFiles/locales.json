@@ -1,0 +1,21 @@
+{
+  "sys": {
+    "type": "Array"
+  },
+  "total": 1,
+  "skip": 0,
+  "limit": 1000,
+  "items": [
+    {
+      "code": "en-US",
+      "name": "U.S. English",
+      "default": true,
+      "fallbackCode": null,
+      "sys": {
+        "id": "0iQEhldAjjRLh5Hrak03dH",
+        "type": "Locale",
+        "version": 0
+      }
+    }
+  ]
+}
