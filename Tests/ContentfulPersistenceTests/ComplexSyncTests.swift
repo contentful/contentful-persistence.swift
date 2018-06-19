@@ -495,6 +495,8 @@ class ComplexSyncTests: XCTestCase {
             }
             expectation.fulfill()
         }
-        self.waitForExpectations(timeout: 10.0, handler: nil)    }
+        self.waitForExpectations(timeout: 10.0, handler: nil)
+
+    }
 
 }
