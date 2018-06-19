@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/contentful/contentful.swift",
         "state": {
           "branch": null,
-          "revision": "ba493986fff8b8bbd9dd4f3e56f074904c090ab6",
-          "version": "2.0.0"
+          "revision": "5e8440ad3d4903218ce846afdf97e7c5be2a1177",
+          "version": "2.2.0"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/jensravens/Interstellar",
         "state": {
           "branch": null,
-          "revision": "5fb8f1f2b7d869380555cca5f44a8cfdca390633",
-          "version": "2.1.0"
+          "revision": "f5f6287a902524d06d82edc3ac09aa739f43ef09",
+          "version": "2.2.0"
         }
       }
     ]
