@@ -2785,5 +2785,5 @@
       }
     }
   ],
-  "nextPageUrl": "http://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=multi-page-link-resolution-token"
+  "nextPageUrl": "http://cdn.contentful.com/spaces/smf0sqiu0c5s/environments/master/sync?sync_token=multi-page-link-resolution-token"
 }
