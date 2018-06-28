@@ -171,5 +171,5 @@
       }
     }
   ],
-  "nextSyncUrl": "https://cdn.contentful.com/spaces/dqpnpm0n4e75/sync?sync_token=the_end"
+  "nextSyncUrl": "https://cdn.contentful.com/spaces/dqpnpm0n4e75/environments/master/sync?sync_token=the_end"
 }

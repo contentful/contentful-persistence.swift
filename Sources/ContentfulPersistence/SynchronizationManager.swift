@@ -17,8 +17,8 @@ func predicate(for id: String) -> NSPredicate {
     return NSPredicate(format: "id == %@", id)
 }
 
-// A type used to cache relationships that should be deleted in the `resolveRelationships()` method
-private struct DeletedRelationship {}
+// A sentinal value used to represent relationships that should be deleted in the `resolveRelationships()` method
+let deletedRelationshipSentinel = -1
 
 /**
  Configure your SynchronizationManager instance with a localization scheme to define which data should
@@ -206,7 +206,7 @@ public class SynchronizationManager: PersistenceIntegration {
 
                     }
                     // Nullifiy the link if it's nil.
-                    if relatedResourceId is DeletedRelationship {
+                    if let sentinel = relatedResourceId as? Int, sentinel == -1 {
                         entryPersistable.setValue(nil, forKey: fieldName)
                         updatedFieldsRelationships.removeValue(forKey: fieldName)
                     }
@@ -343,7 +343,7 @@ public class SynchronizationManager: PersistenceIntegration {
     /**
      This function is public as a side-effect of implementing `PersistenceDelegate`.
 
-     - parameter assetId: The ID of the deleted Asset
+      - parameter assetId: The ID of the deleted Asset
      */
     public func delete(assetWithId: String) {
         _ = try? persistentStore.delete(type: persistenceModel.assetType, predicate: predicate(for: assetWithId))
@@ -479,7 +479,7 @@ public class SynchronizationManager: PersistenceIntegration {
                     relationships[propertyName] = (linkedValue as! Link).id + "_" + entry.currentlySelectedLocale.code
                 }
             } else if entry.fields[relationshipName] == nil {
-                relationships[propertyName] = DeletedRelationship()
+                relationships[propertyName] = deletedRelationshipSentinel
             }
         }
 

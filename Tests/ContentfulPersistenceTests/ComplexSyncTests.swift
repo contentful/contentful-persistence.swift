@@ -55,7 +55,7 @@ class ComplexSyncTests: XCTestCase {
 
         let expectation = self.expectation(description: "Initial sync succeeded")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let urlString = request.url!.absoluteString
             let queryItems = URLComponents(string: urlString)!.queryItems!
             for queryItem in queryItems {
@@ -101,7 +101,7 @@ class ComplexSyncTests: XCTestCase {
         // ============================NEXT SYNC==================================================
         let nextExpectation = self.expectation(description: "Next sync expectation")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             return OHHTTPStubsResponse(
                 fileAtPath: OHPathForFile("simple-update-next-sync.json", type(of: self))!,
                 statusCode: 200,
@@ -134,7 +134,7 @@ class ComplexSyncTests: XCTestCase {
     func testClearingFieldSetsItToNil() {
         let expectation = self.expectation(description: "Initial sync succeeded")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let stubPath = OHPathForFile("clear-field-initial-sync.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
@@ -170,7 +170,7 @@ class ComplexSyncTests: XCTestCase {
         // ============================NEXT SYNC==================================================
         let nextExpectation = self.expectation(description: "Next sync expectation")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let stubPath = OHPathForFile("clear-field-next-sync.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
         }.name = "Next sync: updated value."
@@ -201,7 +201,7 @@ class ComplexSyncTests: XCTestCase {
     func testLinkResolutionForMultipageSync() {
         let expectation = self.expectation(description: "Initial sync succeeded")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let urlString = request.url!.absoluteString
             let queryItems = URLComponents(string: urlString)!.queryItems!
             for queryItem in queryItems {
@@ -248,7 +248,7 @@ class ComplexSyncTests: XCTestCase {
     func testNullifyingLinkBetweenSyncs() {
         let expectation = self.expectation(description: "Initial sync succeeded")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let stubPath = OHPathForFile("nullified-link-initial.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
         }.name = "Initial sync stub"
@@ -288,7 +288,7 @@ class ComplexSyncTests: XCTestCase {
         // ============================NEXT SYNC==================================================
         let nextExpectation = self.expectation(description: "Next sync expectation")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let stubPath = OHPathForFile("nullified-link-next.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
         }.name = "Next sync: updated value."
@@ -318,7 +318,7 @@ class ComplexSyncTests: XCTestCase {
     func testDeserializingLocation() {
         let expectation = self.expectation(description: "Initial sync succeeded")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let stubPath = OHPathForFile("location.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
@@ -360,7 +360,7 @@ class ComplexSyncTests: XCTestCase {
 
         let expectation = self.expectation(description: "Initial sync succeeded")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let stubPath = OHPathForFile("video-asset.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
@@ -398,7 +398,7 @@ class ComplexSyncTests: XCTestCase {
     func testEntriesLinkingToSameLinkCanResolveLinks() {
         let expectation = self.expectation(description: "Two entries can resolve links to the same asset")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let stubPath = OHPathForFile("shared-linked-asset.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
@@ -440,7 +440,7 @@ class ComplexSyncTests: XCTestCase {
     func testResolvingArrayOfLinkedAssets() {
         let expectation = self.expectation(description: "Can resolve relationship to linked assets array")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let stubPath = OHPathForFile("linked-assets-array.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
@@ -471,7 +471,7 @@ class ComplexSyncTests: XCTestCase {
         // TODO:
         let expectation = self.expectation(description: "Can deserialize linked strings array")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
             let stubPath = OHPathForFile("symbols-array.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"
@@ -495,6 +495,8 @@ class ComplexSyncTests: XCTestCase {
             }
             expectation.fulfill()
         }
-        self.waitForExpectations(timeout: 10.0, handler: nil)    }
+        self.waitForExpectations(timeout: 10.0, handler: nil)
+
+    }
 
 }
