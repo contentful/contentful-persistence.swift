@@ -10,7 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 0.x Releases
-
+- `0.12.x` Releases - [0.12.0](#0120)
 - `0.11.x` Releases - [0.11.0](#0110)
 - `0.10.x` Releases - [0.10.0](#0100)
 - `0.9.x` Releases - [0.9.0](#090) | [0.9.1](#091)
@@ -22,7 +22,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 
 ---
 
-## [`0.10.0`](https://github.com/contentful/contentful-persistence.swift/releases/tag/0.11.0)
+## [`0.12.0`](https://github.com/contentful/contentful-persistence.swift/releases/tag/0.12.0)
+Released on 2018-07-02
+
+#### Changed
+- If there are ever any (currently) unresolvable relationships returned on a page, they will now be cached to disk so that if the user quits the app, the relationship will still be resolved when the target resources are returned in subsequent sync operations. Thanks to [@marcin-bo](https://github.com/marcin-bo) for submitting the fix in [#60](https://github.com/contentful/contentful-persistence.swift/pull/60)
+
+---
+
+## [`0.11.0`](https://github.com/contentful/contentful-persistence.swift/releases/tag/0.11.0)
 Released on 2018-04-18
 
 #### Changed
