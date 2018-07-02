@@ -70,6 +70,9 @@
 		ED4023EA20EA5A15001C6BDD /* unresolvable-links.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4023E920EA5A15001C6BDD /* unresolvable-links.json */; };
 		ED4023EB20EA5A15001C6BDD /* unresolvable-links.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4023E920EA5A15001C6BDD /* unresolvable-links.json */; };
 		ED4023EC20EA5A15001C6BDD /* unresolvable-links.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4023E920EA5A15001C6BDD /* unresolvable-links.json */; };
+		ED4023EE20EA5D43001C6BDD /* now-resolvable-relationships.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4023ED20EA5D43001C6BDD /* now-resolvable-relationships.json */; };
+		ED4023EF20EA5D43001C6BDD /* now-resolvable-relationships.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4023ED20EA5D43001C6BDD /* now-resolvable-relationships.json */; };
+		ED4023F020EA5D43001C6BDD /* now-resolvable-relationships.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4023ED20EA5D43001C6BDD /* now-resolvable-relationships.json */; };
 		ED4C58EB1F161BA6000B65FD /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */; };
 		ED6B67981F191342008EC7C8 /* clear-field-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */; };
 		ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */; };
@@ -279,6 +282,7 @@
 		ED2C99AC1ED42CB70039056E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/tvOS/ObjectMapper.framework; sourceTree = "<group>"; };
 		ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnresolvedRelationshipCacheTests.swift; sourceTree = "<group>"; };
 		ED4023E920EA5A15001C6BDD /* unresolvable-links.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "unresolvable-links.json"; sourceTree = "<group>"; };
+		ED4023ED20EA5D43001C6BDD /* now-resolvable-relationships.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "now-resolvable-relationships.json"; sourceTree = "<group>"; };
 		ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "clear-field-initial-sync.json"; sourceTree = "<group>"; };
 		ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "clear-field-next-sync.json"; sourceTree = "<group>"; };
@@ -469,6 +473,7 @@
 		ED25D7F61F17900900A6BA9A /* ComplexTestStubs */ = {
 			isa = PBXGroup;
 			children = (
+				ED4023ED20EA5D43001C6BDD /* now-resolvable-relationships.json */,
 				ED4023E920EA5A15001C6BDD /* unresolvable-links.json */,
 				EDE5BA37207220F400A650FE /* video-asset.json */,
 				5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */,
@@ -867,6 +872,7 @@
 				5D9309C92003FDE80050786B /* linked-assets-array.json in Resources */,
 				ED6B67A31F1CB350008EC7C8 /* nullified-link-next.json in Resources */,
 				ED8C1E801F6040E0001D059F /* PreseedJSONFiles in Resources */,
+				ED4023EE20EA5D43001C6BDD /* now-resolvable-relationships.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,6 +923,7 @@
 				5D9309CC2003FDEB0050786B /* linked-assets-array.json in Resources */,
 				EDD8F52D1F5402290000D3BB /* space.json in Resources */,
 				ED8C1E811F6040E0001D059F /* PreseedJSONFiles in Resources */,
+				ED4023EF20EA5D43001C6BDD /* now-resolvable-relationships.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,6 +953,7 @@
 				5D9309CB2003FDEA0050786B /* linked-assets-array.json in Resources */,
 				EDD8F5301F5402290000D3BB /* space.json in Resources */,
 				ED8C1E821F6040E0001D059F /* PreseedJSONFiles in Resources */,
+				ED4023F020EA5D43001C6BDD /* now-resolvable-relationships.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

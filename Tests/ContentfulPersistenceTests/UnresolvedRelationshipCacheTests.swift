@@ -51,33 +51,50 @@ class UnresolvedRelationshipCacheTests: XCTestCase {
     }
 
     func testRelationshipsAreCachedMidSync() {
+        var syncSpace: SyncSpace!
+
         let expectation = self.expectation(description: "Initial sync succeeded")
 
         stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
-            let urlString = request.url!.absoluteString
-            let queryItems = URLComponents(string: urlString)!.queryItems!
-            for queryItem in queryItems {
-                if queryItem.name == "initial" {
-                    let stubPath = OHPathForFile("unresolvable-links.json", ComplexSyncTests.self)
-                    return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
-                }
-            }
-            let stubPath = OHPathForFile("simple-update-initial-sync.json", ComplexSyncTests.self)
+            let stubPath = OHPathForFile("unresolvable-links.json", UnresolvedRelationshipCacheTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+
             }.name = "Initial sync stub"
 
         client.sync() { result in
             switch result {
-            case .success:
+            case .success(let space):
                 expect(self.syncManager.cachedUnresolvedRelationships?.isEmpty).to(beFalse())
                 expect((self.syncManager.cachedUnresolvedRelationships?["14XouHzspI44uKCcMicWUY_en-US"])?["linkField"] as? String).to(equal("2XYdAPiR0I6SMAGiCOEukU_en-US"))
-
+                syncSpace = space
             case .error(let error):
                 fail("\(error)")
 
             }
             expectation.fulfill()
         }
+        waitForExpectations(timeout: 10.0, handler: nil)
+        OHHTTPStubs.removeAllStubs()
+
+        // ============================NEXT SYNC==================================================
+        let nextExpectation = self.expectation(description: "Next sync clears the cached JSON after relationships are resolved")
+
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
+            let stubPath = OHPathForFile("now-resolvable-relationships.json", UnresolvedRelationshipCacheTests.self)
+            return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+        }.name = "Next sync: relationships resolved."
+
+        client.sync(for: syncSpace) { result in
+            switch result {
+            case .success:
+                expect(self.syncManager.cachedUnresolvedRelationships).to(beNil())
+            case .error(let error):
+                fail("\(error)")
+
+            }
+            nextExpectation.fulfill()
+        }
+
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
