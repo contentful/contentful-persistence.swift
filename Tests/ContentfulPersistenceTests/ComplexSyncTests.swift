@@ -245,6 +245,7 @@ class ComplexSyncTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
+    
     func testNullifyingLinkBetweenSyncs() {
         let expectation = self.expectation(description: "Initial sync succeeded")
 

@@ -107,7 +107,12 @@ public class SynchronizationManager: PersistenceIntegration {
      Execute queries on your local data store in the callback for this method.
      */
     public func sync(then completion: @escaping ResultsHandler<SyncSpace>) {
+        resolveCachedRelationships { [weak self] in
+            self?.syncSafely(then: completion)
+        }
+    }
 
+    private func syncSafely(then completion: @escaping ResultsHandler<SyncSpace>) {
         let safeCompletion: ResultsHandler<SyncSpace> = { [weak self] result in
             self?.persistentStore.performBlock {
                 completion(result)
@@ -164,8 +169,8 @@ public class SynchronizationManager: PersistenceIntegration {
                 self?.delete(entryWithId: deletedEntryId)
             }
 
-            self?.update(syncToken: syncSpace.syncToken)
             self?.resolveRelationships()
+            self?.update(syncToken: syncSpace.syncToken)
             self?.save()
         }
     }
@@ -220,6 +225,7 @@ public class SynchronizationManager: PersistenceIntegration {
                 }
             }
         }
+        cacheUnresolvedRelationships()
     }
 
     // MARK: - PersistenceDelegate
@@ -370,6 +376,60 @@ public class SynchronizationManager: PersistenceIntegration {
         }
     }
 
+
+    // MARK: Unresolved relationship caching
+
+    /// The local URL where unresolved relationships are cached so that they may be resolved on future app launches. Useful for debugging.
+    public var pendingRelationshipsURL: URL? {
+        guard let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else {
+            return nil
+        }
+        return url.appendingPathComponent("ContentfulRelationshipsToResolve.data")
+    }
+
+    private func cacheUnresolvedRelationships() {
+        guard let localURL = pendingRelationshipsURL else { return }
+
+        if relationshipsToResolve.isEmpty {
+            try? FileManager.default.removeItem(at: localURL)
+            return
+        }
+
+        guard JSONSerialization.isValidJSONObject(relationshipsToResolve) else { return }
+
+        guard let data = try? JSONSerialization.data(withJSONObject: relationshipsToResolve, options: []) else {
+            return
+        }
+        try? data.write(to: localURL, options: [])
+    }
+
+    /// The unsresolved relationships that were cached to disk.
+    public var cachedUnresolvedRelationships: [String: [FieldName: Any]]? {
+        guard let localURL = pendingRelationshipsURL else { return nil}
+        guard let data = try? Data(contentsOf: localURL, options: []) else {
+            return nil
+        }
+
+        guard let relationships = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: [FieldName: Any]] else {
+            return nil
+        }
+
+        return relationships
+    }
+
+    private func resolveCachedRelationships(completion: @escaping (() -> Void)) {
+        guard let relationships = cachedUnresolvedRelationships, !relationships.isEmpty else {
+            completion()
+            return
+        }
+
+        persistentStore.performAndWait { [weak self] in
+            self?.relationshipsToResolve = relationships
+            self?.resolveRelationships()
+            self?.save()
+            completion()
+        }
+    }
 
     // MARK: Private
 
