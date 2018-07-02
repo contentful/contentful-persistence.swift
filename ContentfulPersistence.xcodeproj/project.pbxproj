@@ -64,6 +64,12 @@
 		ED2C99A81ED42C740039056E /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99A21ED42C710039056E /* Interstellar.framework */; };
 		ED2C99B01ED42CBC0039056E /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99AA1ED42CB70039056E /* Contentful.framework */; };
 		ED2C99B11ED42CBC0039056E /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99AB1ED42CB70039056E /* Interstellar.framework */; };
+		ED4023E620EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */; };
+		ED4023E720EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */; };
+		ED4023E820EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */; };
+		ED4023EA20EA5A15001C6BDD /* unresolvable-links.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4023E920EA5A15001C6BDD /* unresolvable-links.json */; };
+		ED4023EB20EA5A15001C6BDD /* unresolvable-links.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4023E920EA5A15001C6BDD /* unresolvable-links.json */; };
+		ED4023EC20EA5A15001C6BDD /* unresolvable-links.json in Resources */ = {isa = PBXBuildFile; fileRef = ED4023E920EA5A15001C6BDD /* unresolvable-links.json */; };
 		ED4C58EB1F161BA6000B65FD /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */; };
 		ED6B67981F191342008EC7C8 /* clear-field-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */; };
 		ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */; };
@@ -271,6 +277,8 @@
 		ED2C99AA1ED42CB70039056E /* Contentful.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contentful.framework; path = Carthage/Build/tvOS/Contentful.framework; sourceTree = "<group>"; };
 		ED2C99AB1ED42CB70039056E /* Interstellar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Interstellar.framework; path = Carthage/Build/tvOS/Interstellar.framework; sourceTree = "<group>"; };
 		ED2C99AC1ED42CB70039056E /* ObjectMapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjectMapper.framework; path = Carthage/Build/tvOS/ObjectMapper.framework; sourceTree = "<group>"; };
+		ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnresolvedRelationshipCacheTests.swift; sourceTree = "<group>"; };
+		ED4023E920EA5A15001C6BDD /* unresolvable-links.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "unresolvable-links.json"; sourceTree = "<group>"; };
 		ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "clear-field-initial-sync.json"; sourceTree = "<group>"; };
 		ED6B67951F1912E1008EC7C8 /* clear-field-next-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "clear-field-next-sync.json"; sourceTree = "<group>"; };
@@ -461,6 +469,7 @@
 		ED25D7F61F17900900A6BA9A /* ComplexTestStubs */ = {
 			isa = PBXGroup;
 			children = (
+				ED4023E920EA5A15001C6BDD /* unresolvable-links.json */,
 				EDE5BA37207220F400A650FE /* video-asset.json */,
 				5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */,
 				ED6B67941F1912E1008EC7C8 /* clear-field-initial-sync.json */,
@@ -570,6 +579,7 @@
 				ED25D7DC1F166B7300A6BA9A /* ComplexTestModels */,
 				ED25D7F61F17900900A6BA9A /* ComplexTestStubs */,
 				ED25D7D71F16654A00A6BA9A /* ComplexSyncTests.swift */,
+				ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */,
 				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
 				EDBDBFD31F28B23B00649F5A /* LocalizationTest.xcdatamodeld */,
 				EDBDBFD11F28B1EB00649F5A /* LocalizationTests.swift */,
@@ -838,6 +848,7 @@
 				5D8851021FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
 				ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */,
 				EDBDBFD81F28B6E800649F5A /* localization-sync.json in Resources */,
+				ED4023EA20EA5A15001C6BDD /* unresolvable-links.json in Resources */,
 				5D001E5E2004019D00AC5A4C /* symbols-array.json in Resources */,
 				ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */,
 				EDCFBF9D1F161EB6002B1B73 /* single-author.json in Resources */,
@@ -887,6 +898,7 @@
 				5D8851031FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
 				EDD8F4F31F5401FD0000D3BB /* multi-page-link-resolution1.json in Resources */,
 				EDD8F4F01F5401FD0000D3BB /* clear-field-next-sync.json in Resources */,
+				ED4023EB20EA5A15001C6BDD /* unresolvable-links.json in Resources */,
 				5D001E5D2004019D00AC5A4C /* symbols-array.json in Resources */,
 				EDD8F52B1F5402290000D3BB /* single-author.json in Resources */,
 				EDD8F4F51F5401FD0000D3BB /* simple-update-initial-sync.json in Resources */,
@@ -915,6 +927,7 @@
 				5D8851041FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
 				EDD8F4FC1F5401FD0000D3BB /* multi-page-link-resolution1.json in Resources */,
 				EDD8F4F91F5401FD0000D3BB /* clear-field-next-sync.json in Resources */,
+				ED4023EC20EA5A15001C6BDD /* unresolvable-links.json in Resources */,
 				5D001E5C2004019C00AC5A4C /* symbols-array.json in Resources */,
 				EDD8F52E1F5402290000D3BB /* single-author.json in Resources */,
 				EDD8F4FE1F5401FD0000D3BB /* simple-update-initial-sync.json in Resources */,
@@ -1033,6 +1046,7 @@
 				ED25D7EC1F17709A00A6BA9A /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,
 				EDCFBFA01F162449002B1B73 /* Test.xcdatamodeld in Sources */,
 				EDBDBFD51F28B23B00649F5A /* LocalizationTest.xcdatamodeld in Sources */,
+				ED4023E620EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */,
 				ED25D7EA1F17706E00A6BA9A /* ComplexSyncInfo.swift in Sources */,
 				ED10E8C81E48BCAE0061741F /* SynchronizationManagerTests.swift in Sources */,
 				ED25D7F51F177D8F00A6BA9A /* ComplexTest.xcdatamodeld in Sources */,
@@ -1105,6 +1119,7 @@
 				EDD8F5031F5402040000D3BB /* ComplexAsset.swift in Sources */,
 				EDD8F5171F5402200000D3BB /* Author.swift in Sources */,
 				EDD8F5181F5402200000D3BB /* Author+CoreDataProperties.swift in Sources */,
+				ED4023E720EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */,
 				EDD8F5311F5402E60000D3BB /* ComplexTest.xcdatamodeld in Sources */,
 				EDD8F51D1F5402200000D3BB /* SyncInfo.swift in Sources */,
 				EDD8F5061F5402040000D3BB /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,
@@ -1138,6 +1153,7 @@
 				EDD8F5231F5402200000D3BB /* Category.swift in Sources */,
 				EDD8F50B1F5402040000D3BB /* ComplexAsset.swift in Sources */,
 				EDD8F5211F5402200000D3BB /* Author.swift in Sources */,
+				ED4023E820EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */,
 				EDD8F5221F5402200000D3BB /* Author+CoreDataProperties.swift in Sources */,
 				EDD8F5271F5402200000D3BB /* SyncInfo.swift in Sources */,
 				EDD8F50E1F5402040000D3BB /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,

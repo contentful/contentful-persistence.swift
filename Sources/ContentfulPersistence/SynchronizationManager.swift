@@ -107,7 +107,7 @@ public class SynchronizationManager: PersistenceIntegration {
      Execute queries on your local data store in the callback for this method.
      */
     public func sync(then completion: @escaping ResultsHandler<SyncSpace>) {
-        resolvePendingRelationships { [weak self] in
+        resolveCachedRelationships { [weak self] in
             self?.syncSafely(then: completion)
         }
     }
@@ -169,8 +169,8 @@ public class SynchronizationManager: PersistenceIntegration {
                 self?.delete(entryWithId: deletedEntryId)
             }
 
-            self?.update(syncToken: syncSpace.syncToken)
             self?.resolveRelationships()
+            self?.update(syncToken: syncSpace.syncToken)
             self?.save()
         }
     }
@@ -225,7 +225,7 @@ public class SynchronizationManager: PersistenceIntegration {
                 }
             }
         }
-        savePendingRelationships()
+        cacheUnresolvedRelationships()
     }
 
     // MARK: - PersistenceDelegate
@@ -377,14 +377,15 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
 
-    // MARK: Persisting relationships to resolve
+    // MARK: Unresolved relationship caching
 
-    private var pendingRelationshipsURL: URL? {
+    /// The local URL where unresolved relationships are cached so that they may be resolved on future app launches. Useful for debugging.
+    public var pendingRelationshipsURL: URL? {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths.first?.appendingPathComponent("CF_relationshipsToResolve.data")
+        return paths.first?.appendingPathComponent("ContentfulRelationshipsToResolve.data")
     }
 
-    private func savePendingRelationships() {
+    private func cacheUnresolvedRelationships() {
         guard let localURL = pendingRelationshipsURL else { return }
 
         if relationshipsToResolve.isEmpty {
@@ -400,7 +401,8 @@ public class SynchronizationManager: PersistenceIntegration {
         try? data.write(to: localURL, options: [])
     }
 
-    private func getPendingRelationships() -> [String: [FieldName: Any]]? {
+    /// The unsresolved relationships that were cached to disk.
+    public var cachedUnresolvedRelationships: [String: [FieldName: Any]]? {
         guard let localURL = pendingRelationshipsURL, let data = try? Data(contentsOf: localURL, options: []) else {
             return nil
         }
@@ -412,8 +414,8 @@ public class SynchronizationManager: PersistenceIntegration {
         return relationships
     }
 
-    private func resolvePendingRelationships(completion: @escaping (() -> Void)) {
-        guard let relationships = getPendingRelationships(), !relationships.isEmpty else {
+    private func resolveCachedRelationships(completion: @escaping (() -> Void)) {
+        guard let relationships = cachedUnresolvedRelationships, !relationships.isEmpty else {
             completion()
             return
         }
