@@ -379,29 +379,29 @@ public class SynchronizationManager: PersistenceIntegration {
 
     // MARK: Persisting relationships to resolve
 
-    private var pendingRelationshipsURL: URL {
+    private var pendingRelationshipsURL: URL? {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0].appendingPathComponent("CF_relationshipsToResolve.data")
+        return paths.first?.appendingPathComponent("CF_relationshipsToResolve.data")
     }
 
     private func savePendingRelationships() {
+        guard let localURL = pendingRelationshipsURL else { return }
+
         if relationshipsToResolve.isEmpty {
-            try? FileManager.default.removeItem(at: pendingRelationshipsURL)
+            try? FileManager.default.removeItem(at: localURL)
             return
         }
 
-        if !JSONSerialization.isValidJSONObject(relationshipsToResolve) {
-            return
-        }
+        guard JSONSerialization.isValidJSONObject(relationshipsToResolve) else { return }
 
         guard let data = try? JSONSerialization.data(withJSONObject: relationshipsToResolve, options: []) else {
             return
         }
-        try? data.write(to: pendingRelationshipsURL, options: [])
+        try? data.write(to: localURL, options: [])
     }
 
     private func getPendingRelationships() -> [String: [FieldName: Any]]? {
-        guard let data = try? Data(contentsOf: pendingRelationshipsURL, options: []) else {
+        guard let localURL = pendingRelationshipsURL, let data = try? Data(contentsOf: localURL, options: []) else {
             return nil
         }
 
@@ -412,7 +412,7 @@ public class SynchronizationManager: PersistenceIntegration {
         return relationships
     }
 
-    private func resolvePendingRelationships(completion: @escaping (() -> ())) {
+    private func resolvePendingRelationships(completion: @escaping (() -> Void)) {
         guard let relationships = getPendingRelationships(), !relationships.isEmpty else {
             completion()
             return
