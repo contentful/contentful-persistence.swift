@@ -381,8 +381,10 @@ public class SynchronizationManager: PersistenceIntegration {
 
     /// The local URL where unresolved relationships are cached so that they may be resolved on future app launches. Useful for debugging.
     public var pendingRelationshipsURL: URL? {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths.first?.appendingPathComponent("ContentfulRelationshipsToResolve.data")
+        guard let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else {
+            return nil
+        }
+        return url.appendingPathComponent("ContentfulRelationshipsToResolve.data")
     }
 
     private func cacheUnresolvedRelationships() {
@@ -403,7 +405,8 @@ public class SynchronizationManager: PersistenceIntegration {
 
     /// The unsresolved relationships that were cached to disk.
     public var cachedUnresolvedRelationships: [String: [FieldName: Any]]? {
-        guard let localURL = pendingRelationshipsURL, let data = try? Data(contentsOf: localURL, options: []) else {
+        guard let localURL = pendingRelationshipsURL else { return nil}
+        guard let data = try? Data(contentsOf: localURL, options: []) else {
             return nil
         }
 
