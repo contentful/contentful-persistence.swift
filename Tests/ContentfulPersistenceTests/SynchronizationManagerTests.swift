@@ -8,13 +8,10 @@
 
 @testable import ContentfulPersistence
 import Contentful
-import Interstellar
 import XCTest
 import Nimble
 import CoreData
 import CoreLocation
-
-typealias TestFunc = (() -> ()) throws -> ()
 
 class ContentfulPersistenceTests: XCTestCase {
 
@@ -45,25 +42,6 @@ class ContentfulPersistenceTests: XCTestCase {
                              persistenceIntegration: synchronizationManager)
 
         self.syncManager = synchronizationManager
-    }
-
-    func postTests(expectations: @escaping TestFunc) {
-        let expectation = self.expectation(description: "PostTests expectation")
-
-        self.client.sync { result in
-            expect(result.value).toNot(beNil())
-
-            self.managedObjectContext.perform {
-                do {
-                    let posts: [Post] = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
-                    expect(posts.count).to(equal(2))
-                    expectation.fulfill()
-                } catch {
-                    fail("Fetching posts should not throw an error")
-                }
-            }
-        }
-        waitForExpectations(timeout: 10.0, handler: nil)
     }
 
     func testPropertyMappingInferredCorrectly() {
@@ -148,11 +126,14 @@ class ContentfulPersistenceTests: XCTestCase {
                     expect(alice?.size).to(equal(24238))
                     expect(alice?.fileName).to(equal("alice-in-wonderland.gif"))
                     expect(alice?.fileType).to(equal("image/gif"))
-                    self.client.fetchData(for: alice!).then { data in
-                        XCTAssert(true)
-                        expectation.fulfill()
-                    }.error { error in
-                        fail("Data fetch should have succeed \(error)")
+
+                    self.client.fetchData(for: alice!) { result in
+                        switch result {
+                        case .success(let data):
+                            XCTAssert(true)
+                        case .error(let error):
+                            fail("Data fetch should have succeed \(error)")
+                        }
                         expectation.fulfill()
                     }
                 } catch {
@@ -163,57 +144,102 @@ class ContentfulPersistenceTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
-    func canStoreEntryPersistables() {
-        self.postTests { done in
-            let post: Post? = try! self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-            expect(post).toNot(beNil())
-            expect(post?.title).to(equal("Down the Rabbit Hole"))
+    func testStoringEntryPersistables() {
 
-            done()
-        }
-    }
+        let expectation = self.expectation(description: "")
 
-    func canMapContentfulAssetLinksAsCoreDataRelationships() {
+        self.client.sync { result in
+            expect(result.value).toNot(beNil())
 
-        self.postTests { done in
-            let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-            expect(post).toNot(beNil())
-            expect(post?.theFeaturedImage).toNot(beNil())
-            expect(post?.theFeaturedImage?.urlString).toNot(beNil())
-            expect(post?.theFeaturedImage?.urlString).to(equal("https://images.contentful.com/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
-
-            done()
-        }
-    }
-
-    func canResolveLinkedEntriesArray() {
-
-        self.postTests { done in
-            let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-            expect(post).toNot(beNil())
-
-            expect(post?.authors).toNot(beNil())
-            expect(post?.authors?.count).to(equal(1))
-            guard let author = post?.authors?.firstObject as? Author else {
-                fail("was unable to make relationship")
-                done()
-                return
+            self.managedObjectContext.perform {
+                do {
+                    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+                    expect(post).toNot(beNil())
+                    expect(post?.title).to(equal("Down the Rabbit Hole"))
+                    expectation.fulfill()
+                } catch {
+                    fail("Fetching posts should not throw an error")
+                    fail("Fetching posts should not throw an error")
+                }
             }
-            expect(author.name).toNot(beNil())
-            expect(author.name).to(equal("Lewis Carroll"))
-            done()
         }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testMappingContentfulAssetLinksAsCoreDataRelationships() {
+        let expectation = self.expectation(description: "")
+
+        self.client.sync { result in
+            expect(result.value).toNot(beNil())
+
+            self.managedObjectContext.perform {
+                do {
+                    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+                    expect(post).toNot(beNil())
+                    expect(post?.theFeaturedImage).toNot(beNil())
+                    expect(post?.theFeaturedImage?.urlString).toNot(beNil())
+                    expect(post?.theFeaturedImage?.urlString).to(equal("https://images.ctfassets.net/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
+                    expectation.fulfill()
+                } catch {
+                    fail("Fetching posts should not throw an error")
+                }
+            }
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
+    func testResolvingLinkedEntriesArray() {
+        let expectation = self.expectation(description: "")
+
+        self.client.sync { result in
+            expect(result.value).toNot(beNil())
+
+            self.managedObjectContext.perform {
+                do {
+                    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+                    expect(post).toNot(beNil())
+
+                    expect(post?.authors).toNot(beNil())
+                    expect(post?.authors?.count).to(equal(1))
+                    guard let author = post?.authors?.firstObject as? Author else {
+                        fail("was unable to make relationship")
+                        expectation.fulfill()
+                        return
+                    }
+                    expect(author.name).toNot(beNil())
+                    expect(author.name).to(equal("Lewis Carroll"))
+                    expectation.fulfill()
+                } catch {
+                    fail("Fetching posts should not throw an error")
+                    fail("Fetching posts should not throw an error")
+                }
+            }
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 
     func testRespectsMappingsWhenCreatingCoreDataEntities() {
-        self.postTests { done in
-            let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-            expect(post).toNot(beNil())
-            expect(post?.comments).to(beNil())
-            expect(post?.title).toNot(beNil())
-            expect(post?.theFeaturedImage).toNot(beNil())
-            done()
+
+        let expectation = self.expectation(description: "")
+
+        self.client.sync { result in
+            expect(result.value).toNot(beNil())
+
+            self.managedObjectContext.perform {
+                do {
+                    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+                    expect(post).toNot(beNil())
+                    expect(post?.comments).to(beNil())
+                    expect(post?.title).toNot(beNil())
+                    expect(post?.theFeaturedImage).toNot(beNil())
+                    expectation.fulfill()
+                } catch {
+                    fail("Fetching posts should not throw an error")
+                    fail("Fetching posts should not throw an error")
+                }
+            }
         }
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 
     func testCanDetermineCoreDataProperties() {

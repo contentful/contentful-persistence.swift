@@ -16,7 +16,7 @@ extension Link: EntryPersistable {
     static let contentTypeId = "link"
 
     @NSManaged var id: String
-    @NSManaged var localeCode: String
+    @NSManaged var localeCode: String?
     @NSManaged var awesomeLinkTitle: String?
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?

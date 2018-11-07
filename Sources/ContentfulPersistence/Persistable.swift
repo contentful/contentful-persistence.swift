@@ -40,7 +40,7 @@ public protocol ContentSysPersistable: class {
     var id: String { get set }
 
     /// The code which represents which locale the Resource of interest contains data for.
-    var localeCode: String { get set }
+    var localeCode: String? { get set }
 
     /// The date representing the last time the Contentful Resource was updated.
     var updatedAt: Date? { get set }

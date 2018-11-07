@@ -9,7 +9,6 @@
 
 @testable import ContentfulPersistence
 import Contentful
-import Interstellar
 import XCTest
 import Nimble
 import Foundation

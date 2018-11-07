@@ -10,6 +10,7 @@
 		5D001E5C2004019C00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
 		5D001E5D2004019D00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
 		5D001E5E2004019D00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
+		5D265076219343DB0072FAEE /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D265075219343DB0072FAEE /* Contentful.framework */; };
 		5D8850FD1FE7CCE900FA2A13 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8850FB1FE7CCD900FA2A13 /* location.json */; };
 		5D8850FE1FE7CCEA00FA2A13 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8850FB1FE7CCD900FA2A13 /* location.json */; };
 		5D8850FF1FE7CCEA00FA2A13 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D8850FB1FE7CCD900FA2A13 /* location.json */; };
@@ -59,11 +60,7 @@
 		ED25D7EC1F17709A00A6BA9A /* ComplexSyncInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED25D7EB1F17709A00A6BA9A /* ComplexSyncInfo+CoreDataProperties.swift */; };
 		ED25D7F51F177D8F00A6BA9A /* ComplexTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED25D7F31F177D8F00A6BA9A /* ComplexTest.xcdatamodeld */; };
 		ED2C999E1ED42C550039056E /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99981ED42C500039056E /* Contentful.framework */; };
-		ED2C999F1ED42C550039056E /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99991ED42C500039056E /* Interstellar.framework */; };
 		ED2C99A71ED42C740039056E /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99A11ED42C710039056E /* Contentful.framework */; };
-		ED2C99A81ED42C740039056E /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99A21ED42C710039056E /* Interstellar.framework */; };
-		ED2C99B01ED42CBC0039056E /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99AA1ED42CB70039056E /* Contentful.framework */; };
-		ED2C99B11ED42CBC0039056E /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99AB1ED42CB70039056E /* Interstellar.framework */; };
 		ED4023E620EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */; };
 		ED4023E720EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */; };
 		ED4023E820EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */; };
@@ -97,7 +94,6 @@
 		ED8C1E881F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */; };
 		ED8C1E891F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */; };
 		ED8C1E8A1F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */; };
-		ED8E98B91F5445B200164DDE /* Interstellar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED882ED01F4F012000FCE253 /* Interstellar.framework */; };
 		ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F9951F18C52E00540DAC /* multi-page-link-resolution1.json */; };
 		ED91F99F1F18C79D00540DAC /* multi-page-link-resolution2.json in Resources */ = {isa = PBXBuildFile; fileRef = ED91F9961F18C52E00540DAC /* multi-page-link-resolution2.json */; };
 		ED91F9A01F18C79D00540DAC /* simple-update-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = ED25D7F91F1790B200A6BA9A /* simple-update-initial-sync.json */; };
@@ -227,6 +223,9 @@
 
 /* Begin PBXFileReference section */
 		5D001E5A2004019700AC5A4C /* symbols-array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "symbols-array.json"; sourceTree = "<group>"; };
+		5D26507321933E320072FAEE /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D265075219343DB0072FAEE /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D52E2A72193399900C88FC9 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8850FB1FE7CCD900FA2A13 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = location.json; sourceTree = "<group>"; };
 		5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "shared-linked-asset.json"; sourceTree = "<group>"; };
 		5D9309C72003FDE20050786B /* linked-assets-array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "linked-assets-array.json"; sourceTree = "<group>"; };
@@ -322,7 +321,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED882EC01F4EFEC600FCE253 /* Contentful.framework in Frameworks */,
-				ED8E98B91F5445B200164DDE /* Interstellar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,8 +337,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED2C99B01ED42CBC0039056E /* Contentful.framework in Frameworks */,
-				ED2C99B11ED42CBC0039056E /* Interstellar.framework in Frameworks */,
+				5D265076219343DB0072FAEE /* Contentful.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,7 +346,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED2C99A71ED42C740039056E /* Contentful.framework in Frameworks */,
-				ED2C99A81ED42C740039056E /* Interstellar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,7 +354,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED2C999E1ED42C550039056E /* Contentful.framework in Frameworks */,
-				ED2C999F1ED42C550039056E /* Interstellar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +491,9 @@
 		ED2C997D1ED42B940039056E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5D265075219343DB0072FAEE /* Contentful.framework */,
+				5D26507321933E320072FAEE /* Contentful.framework */,
+				5D52E2A72193399900C88FC9 /* Contentful.framework */,
 				ED2C997F1ED42BE50039056E /* iOS */,
 				ED2C99811ED42BEF0039056E /* macOS */,
 				ED2C99821ED42BF30039056E /* watchOS */,
@@ -1244,10 +1242,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1298,9 +1298,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1328,7 +1330,7 @@
 				PRODUCT_NAME = ContentfulPersistence;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1352,7 +1354,7 @@
 				PRODUCT_NAME = ContentfulPersistence;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1405,9 +1407,9 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.1;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Debug;
 		};
@@ -1431,9 +1433,9 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.1;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Release;
 		};
@@ -1458,7 +1460,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.1;
 			};
@@ -1485,7 +1487,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.1;
 			};
@@ -1514,7 +1516,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1541,7 +1543,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

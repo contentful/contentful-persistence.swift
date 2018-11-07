@@ -1,11 +1,3 @@
-__SIM_ID=`xcrun simctl list|egrep -m 1 '$(SIM_NAME) \([^(]*\) \([^(]*\)$$'|sed -e 's/.* (\(.*\)) (.*)/\1/'`
-SIM_NAME=iPhone 6s
-SIM_ID=$(shell echo $(__SIM_ID))
-
-ifeq ($(strip $(SIM_ID)),)
-$(error Could not find $(SIM_NAME) simulator)
-endif
-
 PROJECT=ContentfulPersistence.xcodeproj
 WORKSPACE=ContentfulPersistence.xcworkspace
 
@@ -43,6 +35,6 @@ coverage:
 	bundle exec slather coverage -s $(PROJECT)
 
 carthage:
-	carthage build --no-skip-current --platform all
+	carthage build ContentfulPersistence --no-skip-current --platform all
 	carthage archive ContentfulPersistence
 

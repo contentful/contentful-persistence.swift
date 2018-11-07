@@ -1,21 +1,24 @@
 language: objective-c
-osx_image: xcode9.3
+osx_image: xcode10.1
 rvm:
-  - 2.4.1
+  - 2.4.3
 cache: bundler
+
+git:
+  submodules: false # By default travis does a recursive submodule update which we don't want.
 
 # Whitelist `master` branch as the only branch to build pushes for.
 branches:
   only:
     - master
-    - /^\d+\.\d+\.\d+(-(beta|alpha|RC)\d*)?/ # Regex to trigger builds for git tags so that we can deploy docs to gh-pages.
 matrix:
   include:
-  - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone 6s,OS=11.3" SCHEME=ContentfulPersistence_iOS
-  - env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV 1080p,OS=11.0"
-      SCHEME=ContentfulPersistence_tvOS
-  - env: SDK=macosx PLATFORM="OS X" SCHEME=ContentfulPersistence_macOS
+  - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone X,OS=12.1" SCHEME=ContentfulPersistence_iOS
+  - env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV,OS=12.1" SCHEME=ContentfulPersistence_tvOS
+  - env: SDK=macosx PLATFORM="macOS" SCHEME=ContentfulPersistence_macOS
   - env: SWIFT_BUILD=true
+before_install:
+  git submodule update --init #
 script:
   - ./Scripts/travis-build-test.sh
 after_success:

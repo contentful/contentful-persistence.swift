@@ -55,7 +55,8 @@ class NoDataCache: DataCacheProtocol {
 class DataCache: DataCacheProtocol {
 
     public static func cacheKey(for resource: ContentSysPersistable) -> String {
-        let cacheKey =  resource.id + "_" + resource.localeCode
+        let localeCode = resource.localeCode ?? ""
+        let cacheKey =  resource.id + "_" + localeCode
         return cacheKey
     }
 
