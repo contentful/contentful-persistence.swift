@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 0.x Releases
+- `0.13.x` Releases - [0.13.0](#0130)
 - `0.12.x` Releases - [0.12.0](#0120) | [0.12.1](#0121)
 - `0.11.x` Releases - [0.11.0](#0110)
 - `0.10.x` Releases - [0.10.0](#0100)
@@ -19,6 +20,16 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061) | [0.6.2](#062)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040)
+
+---
+
+## [`0.13.0`](https://github.com/contentful/contentful-persistence.swift/releases/tag/0.13.0)
+Released on 2018-11-07
+
+#### Changed
+- **BREAKING:** [contentful.swift](https://github.com/contentful/contentful.swift) has removed its own dependency on [Interestellar](https://github.com/JensRavens/Interstellar) and therefore the package is no longer a required import. The `Contentful` SDK now has its own `Result` type. If you were relying on fetch methods that returned an `Observable`, you will need to update your code to simply switch on the result.
+- **BREAKING:** Another side-effect of the updated dependency on [contentful.swift](https://github.com/contentful/contentful.swift) is that the `localeCode` property on your `NSManagedObject` subclasses must now be marked as optional. Don't forget to check the "Optional" box in the assistant Xcode editor for your `@NSManaged` variable in the CoreData model editor.
+- The project is now updated to Swift 4.2.
 
 ---
 

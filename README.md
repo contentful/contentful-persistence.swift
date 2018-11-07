@@ -34,10 +34,8 @@ self.syncManager = SynchronizationManager(client: self.client,
                                           persistenceStore: self.store, 
                                           persistenceModel: persistenceModel)
 
-
-
 // Sync with the API. 
-self.syncManager.sync() { _ in
+self.syncManager.sync { _ in
   do {
     // Fetch all `Posts` from CoreData
     let post: Post? = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
@@ -51,9 +49,9 @@ self.syncManager.sync() { _ in
 
 To make your model classes work with contentful-persistence.swift you will need to either conform to `ContentSysPersistable` for Contentful Assets, or `EntryPersistable` for Contentful entry types.
 
-Then you will need to make the corresponding model in your projects `xcdatamodel` file. Both `EntryPersistable` and `ContentSysPersistable` types must have a _non-optional_ `id` and `localeCode` properties as well as optional `createdAt` and `updatedAt` date properties.
+Then you will need to make the corresponding model in your projects `xcdatamodel` file. Both `EntryPersistable` and `ContentSysPersistable` types must have a _non-optional_ `id` property as well as optional `localeCode`, `createdAt`, and `updatedAt` properties.
 
-Optionality on CoreData entities is a bit different than swift optionality—optionality means that the property may be absent when a save-to-database operation is performed. To configure a property's optionality, open the "Data Model Inspector" in Xcode's "Utilities" right sidebar and toggle the "Optional" checkbox:
+Optionality on CoreData entities is a bit different than Swift optionality—optionality means that the property may be absent when a save-to-database operation is performed. To configure a property's optionality, open the "Data Model Inspector" in Xcode's "Utilities" right sidebar and toggle the "Optional" checkbox:
 
 ![](Screenshots/CoreDataOptionality.png)
 
@@ -73,10 +71,10 @@ import Contentful
 class Post: NSManagedObject, EntryPersistable {
       
     // The identifier of the corresponding Content Type in Contentful.
-    static let contentTypeId = "2wKn6yEnZewu2SCCkus4as"
+    static let contentTypeId = "post"
 
     @NSManaged var id: String
-    @NSManaged var localeCode: String
+    @NSManaged var localeCode: String?
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
     @NSManaged var body: String?
@@ -110,11 +108,11 @@ For further information, check out the [Developer Documentation][4] or browse th
 [CocoaPods][5] is the dependency manager for Objective-C and Swift, which automates and simplifies the process of using 3rd-party libraries like the ContentfulPersistence in your projects.
 
 ```ruby
-platform :ios, '8.0'
+platform :ios, '9.3'
 use_frameworks!
 
 target :MyApp do
-	pod 'ContentfulPersistenceSwift', '~> 0.12.0'
+	pod 'ContentfulPersistenceSwift', '~> 0.13.0'
 end
 ```
 
@@ -123,7 +121,7 @@ end
 You can also use [Carthage][6] for integration by adding the following to your `Cartfile`:
 
 ```
-github "contentful/contentful.swift" ~> 0.12.0
+github "contentful/contentful.swift" ~> 0.13.0
 ```
 
 ## Unit Tests
@@ -135,6 +133,7 @@ $ make setup_env
 $ carthage bootstrap --platform all
 $ make test
 ```
+
 or run them directly from Xcode.
 
 ## License
