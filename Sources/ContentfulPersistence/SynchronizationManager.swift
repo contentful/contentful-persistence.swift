@@ -137,7 +137,7 @@ public class SynchronizationManager: PersistenceIntegration {
     fileprivate let persistentStore: PersistenceStore
 
     public var syncToken: String? {
-        var syncToken: String? = nil
+        var syncToken: String?
         persistentStore.performAndWait {
             syncToken = self.fetchSpace().syncToken
         }

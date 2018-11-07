@@ -8,7 +8,6 @@
 
 @testable import ContentfulPersistence
 import Contentful
-import Interstellar
 import XCTest
 import Nimble
 import CoreData
@@ -127,11 +126,14 @@ class ContentfulPersistenceTests: XCTestCase {
                     expect(alice?.size).to(equal(24238))
                     expect(alice?.fileName).to(equal("alice-in-wonderland.gif"))
                     expect(alice?.fileType).to(equal("image/gif"))
-                    self.client.fetchData(for: alice!).then { data in
-                        XCTAssert(true)
-                        expectation.fulfill()
-                    }.error { error in
-                        fail("Data fetch should have succeed \(error)")
+
+                    self.client.fetchData(for: alice!) { result in
+                        switch result {
+                        case .success(let data):
+                            XCTAssert(true)
+                        case .error(let error):
+                            fail("Data fetch should have succeed \(error)")
+                        }
                         expectation.fulfill()
                     }
                 } catch {
