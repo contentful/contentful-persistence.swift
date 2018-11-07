@@ -15,7 +15,7 @@ matrix:
   include:
   - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone X,OS=12.1" SCHEME=ContentfulPersistence_iOS
   - env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV,OS=12.1" SCHEME=ContentfulPersistence_tvOS
-  - env: SDK=macosx PLATFORM="OS X" SCHEME=ContentfulPersistence_macOS
+  - env: SDK=macosx PLATFORM="macOS" SCHEME=ContentfulPersistence_macOS
   - env: SWIFT_BUILD=true
 before_install:
   git submodule update --init #
