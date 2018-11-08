@@ -10,7 +10,6 @@
 @testable import ContentfulPersistence
 import Contentful
 import XCTest
-import Nimble
 import Foundation
 import CoreData
 import OHHTTPStubs
@@ -79,9 +78,9 @@ class ComplexSyncTests: XCTestCase {
                 self.managedObjectContext.perform {
                     do {
                         let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI'"))
-                        expect(records.count).to(equal(1))
+                        XCTAssertEqual(records.count, 1)
                         if let helloRecord = records.first {
-                            expect(helloRecord.textBody).to(equal("Hello"))
+                            XCTAssertEqual(helloRecord.textBody, "Hello")
                         }
                     } catch {
                         XCTAssert(false, "Fetching posts should not throw an error")
@@ -89,7 +88,7 @@ class ComplexSyncTests: XCTestCase {
                     expectation.fulfill()
                 }
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 expectation.fulfill()
             }
         }
@@ -114,15 +113,15 @@ class ComplexSyncTests: XCTestCase {
                 self.managedObjectContext.perform {
                     do {
                         let helloSingleRecord: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI'"))
-                        expect(helloSingleRecord.count).to(equal(1))
-                        expect(helloSingleRecord.first!.textBody).to(equal("Hello FooBar"))
+                        XCTAssertEqual(helloSingleRecord.count, 1)
+                        XCTAssertEqual(helloSingleRecord.first!.textBody, "Hello FooBar")
                     } catch {
                         XCTAssert(false, "Fetching posts should not throw an error")
                     }
                     nextExpectation.fulfill()
                 }
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 nextExpectation.fulfill()
             }
         }
@@ -147,9 +146,9 @@ class ComplexSyncTests: XCTestCase {
                 self.managedObjectContext.perform {
                     do {
                         let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
-                        expect(records.count).to(equal(1))
+                        XCTAssertEqual(records.count, 1)
                         if let record = records.first {
-                            expect(record.textBody).to(equal("INITIAL TEXT BODY"))
+                            XCTAssertEqual(record.textBody, "INITIAL TEXT BODY")
                         }
                     } catch {
                         XCTAssert(false, "Fetching posts should not throw an error")
@@ -158,7 +157,7 @@ class ComplexSyncTests: XCTestCase {
                 }
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 expectation.fulfill()
             }
         }
@@ -181,15 +180,15 @@ class ComplexSyncTests: XCTestCase {
                 self.managedObjectContext.perform {
                     do {
                         let blankTextBodyRecord: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
-                        expect(blankTextBodyRecord.count).to(equal(1))
-                        expect(blankTextBodyRecord.first!.textBody).to(beNil())
+                        XCTAssertEqual(blankTextBodyRecord.count, 1)
+                        XCTAssertNil(blankTextBodyRecord.first!.textBody)
                     } catch {
                         XCTAssert(false, "Fetching posts should not throw an error")
                     }
                     nextExpectation.fulfill()
                 }
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 nextExpectation.fulfill()
             }
         }
@@ -223,20 +222,20 @@ class ComplexSyncTests: XCTestCase {
                 self.managedObjectContext.perform {
                     do {
                         let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '14XouHzspI44uKCcMicWUY'"))
-                        expect(records.count).to(equal(1))
+                        XCTAssertEqual(records.count, 1)
                         if let record = records.first {
-                            expect(record.linkField).toNot(beNil())
+                            XCTAssertNotNil(record.linkField)
                             if let linkedField = record.linkField {
-                                expect(linkedField.awesomeLinkTitle).to(equal("AWESOMELINK!!!"))
+                                XCTAssertEqual(linkedField.awesomeLinkTitle, "AWESOMELINK!!!")
                             }
                         }
                     } catch {
-                        fail("Fetching SingleRecord should not throw an error")
+                        XCTFail("Fetching SingleRecord should not throw an error")
                     }
                     expectation.fulfill()
                 }
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 expectation.fulfill()
             }
 
@@ -263,22 +262,22 @@ class ComplexSyncTests: XCTestCase {
                 self.managedObjectContext.perform {
                     do {
                         let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
-                        expect(records.count).to(equal(1))
+                        XCTAssertEqual(records.count, 1)
                         if let record = records.first {
-                            expect(record.linkField).toNot(beNil())
+                            XCTAssertNotNil(record.linkField)
                             if let linkedField = record.linkField {
-                                expect(linkedField.awesomeLinkTitle).to(equal("To be nullified"))
+                                XCTAssertEqual(linkedField.awesomeLinkTitle, "To be nullified")
                             }
                         }
                     }
                     catch {
-                        fail("Fetching SingleRecord should not throw an error")
+                        XCTFail("Fetching SingleRecord should not throw an error")
                     }
                     expectation.fulfill()
                 }
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 expectation.fulfill()
             }
         }
@@ -300,14 +299,14 @@ class ComplexSyncTests: XCTestCase {
                 self.managedObjectContext.perform {
                     do {
                         let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '5GiLOZvY7SiMeUIgIIAssS'"))
-                        expect(records.first!.linkField).to(beNil())
+                        XCTAssertNil(records.first!.linkField)
                     } catch {
                         XCTAssert(false, "Fetching posts should not throw an error")
                     }
                     nextExpectation.fulfill()
                 }
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 nextExpectation.fulfill()
             }
         }
@@ -330,26 +329,26 @@ class ComplexSyncTests: XCTestCase {
                 self.managedObjectContext.perform {
                     do {
                         let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '4VTL2TY7rikiS6c2MI2is4'"))
-                        expect(records.count).to(equal(1))
+                        XCTAssertEqual(records.count, 1)
                         if let record = records.first {
-                            expect(record.locationField).toNot(beNil())
+                            XCTAssertNotNil(record.locationField)
                             if let locationField = record.locationField {
-                                expect(locationField.latitude).to(equal(34.4208305))
+                                XCTAssertEqual(locationField.latitude, 34.4208305)
                             } else {
-                                fail()
+                                XCTFail()
                             }
                         } else {
-                            fail()
+                            XCTFail()
                         }
                     }
                     catch {
-                        fail("Fetching SingleRecord should not throw an error")
+                        XCTFail("Fetching SingleRecord should not throw an error")
                     }
                     expectation.fulfill()
                 }
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 expectation.fulfill()
             }
         }
@@ -372,22 +371,22 @@ class ComplexSyncTests: XCTestCase {
                 self.managedObjectContext.perform {
                     do {
                         let assets: [ComplexAsset] = try self.store.fetchAll(type: ComplexAsset.self,  predicate: NSPredicate(format: "id == 'YokO2rWbOoo68QmiEUkqe'"))
-                        expect(assets.count).to(equal(1))
+                        XCTAssertEqual(assets.count, 1)
                         if let asset = assets.first {
-                            expect(asset.urlString).toNot(beNil())
-                            expect(asset.urlString).to(equal("https://videos.ctfassets.net/r3rkxrglg2d1/YokO2rWbOoo68QmiEUkqe/5cd5ab8fc90e7b9b4d99d56ea29de768/JP_Swift_Demo.mp4"))
+                            XCTAssertNotNil(asset.urlString)
+                            XCTAssertEqual(asset.urlString ,"https://videos.ctfassets.net/r3rkxrglg2d1/YokO2rWbOoo68QmiEUkqe/5cd5ab8fc90e7b9b4d99d56ea29de768/JP_Swift_Demo.mp4")
                         } else {
-                            fail()
+                            XCTFail()
                         }
                     }
                     catch {
-                        fail("Fetching SingleRecord should not throw an error")
+                        XCTFail("Fetching SingleRecord should not throw an error")
                     }
                     expectation.fulfill()
                 }
 
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
                 expectation.fulfill()
             }
         }
@@ -409,27 +408,27 @@ class ComplexSyncTests: XCTestCase {
                 // Test first entry can link to asset.
                 let records: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '4DiVtM6u08uMA2QSgg0OoY'"))
 
-                expect(records.count).to(equal(1))
+                XCTAssertEqual(records.count, 1)
 
                 if let linkedAsset = records.first?.assetLinkField {
-                    expect(linkedAsset.id).to(equal("6Wsz8owhtCGSICg44IUYAm"))
-                    expect(linkedAsset.title).to(equal("First asset in array"))
+                    XCTAssertEqual(linkedAsset.id, "6Wsz8owhtCGSICg44IUYAm")
+                    XCTAssertEqual(linkedAsset.title, "First asset in array")
                 } else {
-                    fail("There should be a linked asset")
+                    XCTFail("There should be a linked asset")
                 }
 
                 // Test second entry can link to same asset
                 let secondRecordsSet: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '12f37qR1CGOOcqoWOgqC2o'"))
-                expect(secondRecordsSet.count).to(equal(1))
+                XCTAssertEqual(secondRecordsSet.count, 1)
 
                 if let linkedAsset = secondRecordsSet.first?.assetLinkField {
-                    expect(linkedAsset.id).to(equal("6Wsz8owhtCGSICg44IUYAm"))
-                    expect(linkedAsset.title).to(equal("First asset in array"))
+                    XCTAssertEqual(linkedAsset.id, "6Wsz8owhtCGSICg44IUYAm")
+                    XCTAssertEqual(linkedAsset.title, "First asset in array")
                 } else {
-                    fail("There should be a linked asset")
+                    XCTFail("There should be a linked asset")
                 }
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -450,17 +449,17 @@ class ComplexSyncTests: XCTestCase {
             case .success:
                 let records: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self, predicate: NSPredicate(format: "id == '2JFSeiPTZYm4goMSUeYSCU'"))
 
-                expect(records.count).to(equal(1))
+                XCTAssertEqual(records.count, 1)
 
                 if let linkedAssetsSet = records.first?.assetsArrayLinkField {
-                    expect(linkedAssetsSet.count).to(equal(2))
-                    expect((linkedAssetsSet.firstObject as? ComplexAsset)?.title).to(equal("First asset in array"))
-                    expect((linkedAssetsSet[1] as? ComplexAsset)?.title).to(equal("Second asset in array"))
+                    XCTAssertEqual(linkedAssetsSet.count, 2)
+                    XCTAssertEqual((linkedAssetsSet.firstObject as? ComplexAsset)?.title, "First asset in array")
+                    XCTAssertEqual((linkedAssetsSet[1] as? ComplexAsset)?.title, "Second asset in array")
                 } else {
-                    fail("There should be a linked assets set")
+                    XCTFail("There should be a linked assets set")
                 }
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
@@ -481,17 +480,17 @@ class ComplexSyncTests: XCTestCase {
             case .success:
                 let records: [SingleRecord] = try! self.store.fetchAll(type: SingleRecord.self, predicate: NSPredicate(format: "id == '2mhGzgf3oQOquo0SyGWCQE'"))
 
-                expect(records.count).to(equal(1))
+                XCTAssertEqual(records.count, 1)
 
                 if let linkedStringsData = records.first?.symbolsArray, let linkedStringsArray = NSKeyedUnarchiver.unarchiveObject(with: linkedStringsData) as? [String] {
-                    expect(linkedStringsArray.count).to(equal(5))
-                    expect(linkedStringsArray.first).to(equal("one"))
-                    expect(linkedStringsArray.last).to(equal("five"))
+                    XCTAssertEqual(linkedStringsArray.count, 5)
+                    XCTAssertEqual(linkedStringsArray.first, "one")
+                    XCTAssertEqual(linkedStringsArray.last, "five")
                 } else {
-                    fail("There should be an array of linked strings")
+                    XCTFail("There should be an array of linked strings")
                 }
             case .error(let error):
-                fail("Should not throw an error \(error)")
+                XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
         }
