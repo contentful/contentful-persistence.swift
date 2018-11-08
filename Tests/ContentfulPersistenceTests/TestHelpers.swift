@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import Nimble
 import XCTest
 
 class TestHelpers {
@@ -22,14 +21,14 @@ class TestHelpers {
     static func managedObjectContext(forMOMInTestBundleNamed momName: String) -> NSManagedObjectContext {
         let modelURL = Bundle(for: TestHelpers.self).url(forResource: momName, withExtension: "momd")
         let mom = NSManagedObjectModel(contentsOf: modelURL!)
-        expect(mom).toNot(beNil())
+        XCTAssertNotNil(mom)
 
         let psc = NSPersistentStoreCoordinator(managedObjectModel: mom!)
 
         do {
             // Store in memory so there is no caching between test methods.
             let store = try psc.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
-            expect(store).toNot(beNil())
+            XCTAssertNotNil(store)
         } catch {
             XCTAssert(false, "Recreating the persistent store SQL files should not throw an error")
         }

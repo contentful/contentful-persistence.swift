@@ -1,9 +1,6 @@
 [submodule "Carthage/Checkouts/OHHTTPStubs"]
 	path = Carthage/Checkouts/OHHTTPStubs
 	url = https://github.com/AliSoftware/OHHTTPStubs.git
-[submodule "Carthage/Checkouts/Nimble"]
-	path = Carthage/Checkouts/Nimble
-	url = https://github.com/Quick/Nimble.git
 [submodule "Carthage/Checkouts/contentful.swift"]
 	path = Carthage/Checkouts/contentful.swift
 	url = https://github.com/contentful/contentful.swift.git

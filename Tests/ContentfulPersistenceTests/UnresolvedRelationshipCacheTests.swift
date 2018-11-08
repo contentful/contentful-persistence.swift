@@ -9,7 +9,6 @@
 @testable import ContentfulPersistence
 import Contentful
 import XCTest
-import Nimble
 import Foundation
 import CoreData
 import OHHTTPStubs
@@ -63,11 +62,11 @@ class UnresolvedRelationshipCacheTests: XCTestCase {
         client.sync() { result in
             switch result {
             case .success(let space):
-                expect(self.syncManager.cachedUnresolvedRelationships?.isEmpty).to(beFalse())
-                expect((self.syncManager.cachedUnresolvedRelationships?["14XouHzspI44uKCcMicWUY_en-US"])?["linkField"] as? String).to(equal("2XYdAPiR0I6SMAGiCOEukU_en-US"))
+                XCTAssertFalse(self.syncManager.cachedUnresolvedRelationships!.isEmpty)
+                XCTAssertEqual((self.syncManager.cachedUnresolvedRelationships?["14XouHzspI44uKCcMicWUY_en-US"])?["linkField"] as? String, "2XYdAPiR0I6SMAGiCOEukU_en-US")
                 syncSpace = space
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
 
             }
             expectation.fulfill()
@@ -86,9 +85,9 @@ class UnresolvedRelationshipCacheTests: XCTestCase {
         client.sync(for: syncSpace) { result in
             switch result {
             case .success:
-                expect(self.syncManager.cachedUnresolvedRelationships).to(beNil())
+                XCTAssertNil(self.syncManager.cachedUnresolvedRelationships)
             case .error(let error):
-                fail("\(error)")
+                XCTFail("\(error)")
 
             }
             nextExpectation.fulfill()

@@ -9,7 +9,6 @@
 @testable import ContentfulPersistence
 import Contentful
 import XCTest
-import Nimble
 import Foundation
 import CoreData
 import OHHTTPStubs
@@ -67,15 +66,15 @@ class LocalizationTests: XCTestCase {
             do {
 
                 let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == 'aNt2d7YR4AIwEAMcG4OwI' AND localeCode == 'es-MX'"))
-                expect(records.count).to(equal(1))
+                XCTAssertEqual(records.count, 1)
                 if let holaRecord = records.first {
-                    expect(holaRecord.textBody).to(equal("Hola"))
+                    XCTAssertEqual(holaRecord.textBody, "Hola")
                 } else {
-                    fail("Expect record to exist")
+                    XCTFail("Expect record to exist")
                 }
 
             } catch {
-                fail("Fetching SingleRecord should not throw an error")
+                XCTFail("Fetching SingleRecord should not throw an error")
             }
 
             expectation.fulfill()
@@ -97,20 +96,20 @@ class LocalizationTests: XCTestCase {
             do {
 
                 let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '14XouHzspI44uKCcMicWUY' AND localeCode == 'es-MX'"))
-                expect(records.count).to(equal(1))
+                XCTAssertEqual(records.count, 1)
                 if let recordWithLink = records.first {
-                    expect(recordWithLink.linkField).toNot(beNil())
+                    XCTAssertNotNil(recordWithLink.linkField)
                     if let linkedField = recordWithLink.linkField {
-                        expect(linkedField.awesomeLinkTitle).to(equal("El segundo link"))
+                        XCTAssertEqual(linkedField.awesomeLinkTitle, "El segundo link")
                     } else {
-                        fail("Link should't be nil")
+                        XCTFail("Link should't be nil")
                     }
                 } else {
-                    fail("Expect record to exist")
+                    XCTFail("Expect record to exist")
                 }
 
             } catch {
-                fail("Fetching SingleRecord should not throw an error")
+                XCTFail("Fetching SingleRecord should not throw an error")
             }
 
             expectation.fulfill()
@@ -135,20 +134,20 @@ class LocalizationTests: XCTestCase {
             do {
 
                 let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '3Ck6MRrAJ2CaiasGKqeyao' AND localeCode == 'es-MX'"))
-                expect(records.count).to(equal(1))
+                XCTAssertEqual(records.count, 1)
                 if let recordWithFallbackLink = records.first {
-                    expect(recordWithFallbackLink.linkField).toNot(beNil())
+                    XCTAssertNotNil(recordWithFallbackLink.linkField)
                     if let linkedField = recordWithFallbackLink.linkField {
-                        expect(linkedField.awesomeLinkTitle).to(equal("Español"))
+                        XCTAssertEqual(linkedField.awesomeLinkTitle, "Español")
                     } else {
-                        fail("Link should't be nil")
+                        XCTFail("Link should't be nil")
                     }
                 } else {
-                    fail("Expect record to exist")
+                    XCTFail("Expect record to exist")
                 }
 
             } catch {
-                fail("Fetching SingleRecord should not throw an error")
+                XCTFail("Fetching SingleRecord should not throw an error")
             }
 
             expectation.fulfill()
@@ -172,22 +171,22 @@ class LocalizationTests: XCTestCase {
 
                 let englishRecords: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '3Ck6MRrAJ2CaiasGKqeyao' AND localeCode == 'en-US'"))
 
-                expect(englishRecords.count).to(equal(0))
+                XCTAssertEqual(englishRecords.count, 0)
 
                 let records: [SingleRecord] = try self.store.fetchAll(type: SingleRecord.self,  predicate: NSPredicate(format: "id == '3Ck6MRrAJ2CaiasGKqeyao' AND localeCode == 'es-MX'"))
                 if let recordWithFallbackLink = records.first {
-                    expect(recordWithFallbackLink.linkField).toNot(beNil())
+                    XCTAssertNotNil(recordWithFallbackLink.linkField)
                     if let linkedField = recordWithFallbackLink.linkField {
-                        expect(linkedField.awesomeLinkTitle).to(equal("Español"))
+                        XCTAssertEqual(linkedField.awesomeLinkTitle, "Español")
                     } else {
-                        fail("Link should't be nil")
+                        XCTFail("Link should't be nil")
                     }
                 } else {
-                    fail("Expect record to exist")
+                    XCTFail("Expect record to exist")
                 }
 
             } catch {
-                fail("Fetching SingleRecord should not throw an error")
+                XCTFail("Fetching SingleRecord should not throw an error")
             }
 
             expectation.fulfill()

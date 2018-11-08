@@ -10,7 +10,6 @@
 @testable import ContentfulPersistence
 import Contentful
 import XCTest
-import Nimble
 import CoreData
 import CoreLocation
 
@@ -46,26 +45,26 @@ class PreseededDatabaseTests: XCTestCase {
         do {
             try syncManager.seedDBFromJSONFiles(in: directoryName, in: testBundle)
             let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-            expect(post).toNot(beNil())
+            XCTAssertNotNil(post)
 
-            expect(post?.authors).toNot(beNil())
-            expect(post?.authors?.count).to(equal(1))
+            XCTAssertNotNil(post?.authors)
+            XCTAssertEqual(post?.authors?.count, 1)
             guard let author = post?.authors?.firstObject as? Author else {
-                fail("was unable to make relationship")
+                XCTFail("was unable to make relationship")
                 return
             }
-            expect(author.name).toNot(beNil())
-            expect(author.name).to(equal("Lewis Carroll"))
+            XCTAssertNotNil(author.name)
+            XCTAssertEqual(author.name, "Lewis Carroll")
 
             let assets: [Asset] = try self.store.fetchAll(type: Asset.self, predicate: NSPredicate(value: true))
-            expect(assets.count).to(equal(6))
+            XCTAssertEqual(assets.count, 6)
 
             for asset in assets {
                 let assetData = SynchronizationManager.bundledData(for: asset, inDirectoryNamed: directoryName, in: testBundle)
-                expect(assetData).toNot(beNil())
+                XCTAssertNotNil(assetData)
             }
         } catch let error {
-            fail(error.localizedDescription)
+            XCTFail(error.localizedDescription)
         }
 
     }
@@ -77,23 +76,23 @@ class PreseededDatabaseTests: XCTestCase {
         try! syncManager.seedDBFromJSONFiles(in: directoryName, in: testBundle)
 
         let posts: [Post] = try! self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
-        expect(posts.count).to(equal(2))
+        XCTAssertEqual(posts.count, 2)
 
         let authors: [Author] = try! self.store.fetchAll(type: Author.self, predicate: NSPredicate(value: true))
-        expect(authors.count).to(equal(2))
+        XCTAssertEqual(authors.count, 2)
 
         let categories: [Category] = try! self.store.fetchAll(type: Category.self, predicate: NSPredicate(value: true))
-        expect(categories.count).to(equal(2))
+        XCTAssertEqual(categories.count, 2)
 
         let lewisCarroll: Author = try! self.store.fetchAll(type: Author.self, predicate: NSPredicate(format: "id == '6EczfGnuHCIYGGwEwIqiq2'")).first!
-        expect(lewisCarroll.name).to(equal("Lewis Carroll"))
+        XCTAssertEqual(lewisCarroll.name, "Lewis Carroll")
 
         let profilePhoto = lewisCarroll.profilePhoto
-        expect(profilePhoto).toNot(beNil())
-        expect(profilePhoto?.urlString).to(equal("https://images.contentful.com/dqpnpm0n4e75/2ReMHJhXoAcy4AyamgsgwQ/0a79951064da28107e2d730cecbf6bab/lewis-carroll-1.jpg"))
+        XCTAssertNotNil(profilePhoto)
+        XCTAssertEqual(profilePhoto?.urlString, "https://images.contentful.com/dqpnpm0n4e75/2ReMHJhXoAcy4AyamgsgwQ/0a79951064da28107e2d730cecbf6bab/lewis-carroll-1.jpg")
 
         // Asser that we've cleared all the relationships that were supposed to be resolved.
-        expect(self.syncManager.relationshipsToResolve.isEmpty).to(be(true))
+        XCTAssert(self.syncManager.relationshipsToResolve.isEmpty)
     }
 }
 
@@ -130,8 +129,8 @@ class MultiLocalePreseedTests: XCTestCase {
         let englishRecords = records.filter { $0.localeCode == "en-US" }
         let spanishRecords = records.filter { $0.localeCode == "es-MX" }
         // There should be one record per locale: the space has 2 locales.
-        expect(records.count).to(equal(2))
-        expect(englishRecords.count).to(equal(1))
-        expect(spanishRecords.count).to(equal(1))
+        XCTAssertEqual(records.count, 2)
+        XCTAssertEqual(englishRecords.count, 1)
+        XCTAssertEqual(spanishRecords.count, 1)
     }
 }

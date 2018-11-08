@@ -80,7 +80,6 @@
 		ED79E92A1FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */ = {isa = PBXBuildFile; fileRef = ED79E9271FCC23E10045F44F /* MultilocalePreseedJSONFiles */; };
 		ED882EC01F4EFEC600FCE253 /* Contentful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99921ED42C350039056E /* Contentful.framework */; };
 		ED882EC91F4EFF9A00FCE253 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED25D7ED1F17758100A6BA9A /* OHHTTPStubs.framework */; };
-		ED882ECA1F4EFF9A00FCE253 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2C99851ED42C190039056E /* Nimble.framework */; };
 		ED8C1E721F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8C1E711F603939001D059F /* SynchronizationManager+SeedDB.swift */; };
 		ED8C1E731F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8C1E711F603939001D059F /* SynchronizationManager+SeedDB.swift */; };
 		ED8C1E741F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8C1E711F603939001D059F /* SynchronizationManager+SeedDB.swift */; };
@@ -112,9 +111,7 @@
 		EDBDBFD81F28B6E800649F5A /* localization-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = EDBDBFD71F28B6E800649F5A /* localization-sync.json */; };
 		EDCFBF9D1F161EB6002B1B73 /* single-author.json in Resources */ = {isa = PBXBuildFile; fileRef = EDCFBF9C1F161EB6002B1B73 /* single-author.json */; };
 		EDCFBFA01F162449002B1B73 /* Test.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EDCFBF9E1F162449002B1B73 /* Test.xcdatamodeld */; };
-		EDD8F4DD1F5401840000D3BB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD8F4DB1F5401840000D3BB /* Nimble.framework */; };
 		EDD8F4DE1F5401840000D3BB /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD8F4DC1F5401840000D3BB /* OHHTTPStubs.framework */; };
-		EDD8F4E11F54019F0000D3BB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD8F4DF1F54019F0000D3BB /* Nimble.framework */; };
 		EDD8F4E21F54019F0000D3BB /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD8F4E01F54019F0000D3BB /* OHHTTPStubs.framework */; };
 		EDD8F4E51F5401E50000D3BB /* SynchronizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */; };
 		EDD8F4E61F5401E50000D3BB /* SynchronizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */; };
@@ -328,7 +325,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED882ECA1F4EFF9A00FCE253 /* Nimble.framework in Frameworks */,
 				ED882EC91F4EFF9A00FCE253 /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,7 +357,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDD8F4E11F54019F0000D3BB /* Nimble.framework in Frameworks */,
 				EDD8F4E21F54019F0000D3BB /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -370,7 +365,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDD8F4DD1F5401840000D3BB /* Nimble.framework in Frameworks */,
 				EDD8F4DE1F5401840000D3BB /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

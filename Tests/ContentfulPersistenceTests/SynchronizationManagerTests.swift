@@ -9,7 +9,6 @@
 @testable import ContentfulPersistence
 import Contentful
 import XCTest
-import Nimble
 import CoreData
 import CoreLocation
 
@@ -60,7 +59,7 @@ class ContentfulPersistenceTests: XCTestCase {
             "biography": "biography"
         ]
         let authorPropertyMapping = syncManager.propertyMapping(for: Author.self, and: author.fields)
-        expect(authorPropertyMapping).to(equal(expectedPropertyMapping))
+        XCTAssertEqual(authorPropertyMapping, expectedPropertyMapping)
     }
 
     func testRelationshipMappingInferredCorrectly() {
@@ -78,7 +77,7 @@ class ContentfulPersistenceTests: XCTestCase {
             "profilePhoto": "profilePhoto"
         ]
         let authorRelationshipMapping = syncManager.relationshipMapping(for: Author.self, and: author.fields)
-        expect(authorRelationshipMapping).to(equal(expectedRelationshipMapping))
+        XCTAssertEqual(authorRelationshipMapping, expectedRelationshipMapping)
     }
 
     func testSyncManagerCanStoreSyncTokens() {
@@ -86,8 +85,8 @@ class ContentfulPersistenceTests: XCTestCase {
 
         self.client.sync { result in
             self.managedObjectContext.perform {
-                expect(result.value!.assets.count).to(beGreaterThan(0))
-                expect(self.syncManager.syncToken?.count).to(beGreaterThan(0))
+                XCTAssertGreaterThan(result.value!.assets.count, 0)
+                XCTAssertGreaterThan(self.syncManager.syncToken!.count, 0)
 
                 expectation.fulfill()
             }
@@ -101,7 +100,7 @@ class ContentfulPersistenceTests: XCTestCase {
         let syncSpace = SyncSpace(syncToken: "w5ZGw6JFwqZmVcKsE8Kow4grw45QdybDqXt4XTFdw6tcwrMiwqpmwq7DlcOqZ8KnwpUiG1sZwr3Cq8OpFcKEUsOyPcOiQMOEITLDnyIkw4fDq8KAw6x_Mh3Dui_Cgw3CnsKswrwhw6hNwostejQDw4nDmUkp")
 
         self.client.sync(for: syncSpace) { result in
-            expect(result.value!.entries.count).to(equal(0))
+            XCTAssertEqual(result.value!.entries.count, 0)
             expectation.fulfill()
         }
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -115,24 +114,24 @@ class ContentfulPersistenceTests: XCTestCase {
             self.managedObjectContext.perform {
                 do {
                     let assets: [Asset] = try self.store.fetchAll(type: Asset.self, predicate: NSPredicate(value: true))
-                    expect(assets.count).to(equal(6))
+                    XCTAssertEqual(assets.count, 6)
 
                     let alice: Asset? = try! self.store.fetchAll(type: Asset.self, predicate: self.assetPredicate).first
-                    expect(alice).toNot(beNil())
-                    expect(alice?.title).to(equal("Alice in Wonderland"))
-                    expect(alice?.urlString).to(equal("https://images.ctfassets.net/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
-                    expect(alice?.width).to(equal(644))
-                    expect(alice?.height).to(equal(610))
-                    expect(alice?.size).to(equal(24238))
-                    expect(alice?.fileName).to(equal("alice-in-wonderland.gif"))
-                    expect(alice?.fileType).to(equal("image/gif"))
+                    XCTAssertNotNil(alice)
+                    XCTAssertEqual(alice?.title, "Alice in Wonderland")
+                    XCTAssertEqual(alice?.urlString, "https://images.ctfassets.net/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif")
+                    XCTAssertEqual(alice?.width, 644)
+                    XCTAssertEqual(alice?.height, 610)
+                    XCTAssertEqual(alice?.size, 24238)
+                    XCTAssertEqual(alice?.fileName, "alice-in-wonderland.gif")
+                    XCTAssertEqual(alice?.fileType, "image/gif")
 
                     self.client.fetchData(for: alice!) { result in
                         switch result {
                         case .success(let data):
                             XCTAssert(true)
                         case .error(let error):
-                            fail("Data fetch should have succeed \(error)")
+                            XCTFail("Data fetch should have succeed \(error)")
                         }
                         expectation.fulfill()
                     }
@@ -149,17 +148,17 @@ class ContentfulPersistenceTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         self.client.sync { result in
-            expect(result.value).toNot(beNil())
+            XCTAssertNotNil(result.value)
 
             self.managedObjectContext.perform {
                 do {
                     let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-                    expect(post).toNot(beNil())
-                    expect(post?.title).to(equal("Down the Rabbit Hole"))
+                    XCTAssertNotNil(post)
+                    XCTAssertEqual(post?.title, "Down the Rabbit Hole")
                     expectation.fulfill()
                 } catch {
-                    fail("Fetching posts should not throw an error")
-                    fail("Fetching posts should not throw an error")
+                    XCTFail("Fetching posts should not throw an error")
+                    XCTFail("Fetching posts should not throw an error")
                 }
             }
         }
@@ -170,18 +169,18 @@ class ContentfulPersistenceTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         self.client.sync { result in
-            expect(result.value).toNot(beNil())
+            XCTAssertNotNil(result.value)
 
             self.managedObjectContext.perform {
                 do {
                     let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-                    expect(post).toNot(beNil())
-                    expect(post?.theFeaturedImage).toNot(beNil())
-                    expect(post?.theFeaturedImage?.urlString).toNot(beNil())
-                    expect(post?.theFeaturedImage?.urlString).to(equal("https://images.ctfassets.net/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif"))
+                    XCTAssertNotNil(post)
+                    XCTAssertNotNil(post?.theFeaturedImage)
+                    XCTAssertNotNil(post?.theFeaturedImage?.urlString)
+                    XCTAssertEqual(post?.theFeaturedImage?.urlString, "https://images.ctfassets.net/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif")
                     expectation.fulfill()
                 } catch {
-                    fail("Fetching posts should not throw an error")
+                    XCTFail("Fetching posts should not throw an error")
                 }
             }
         }
@@ -192,26 +191,26 @@ class ContentfulPersistenceTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         self.client.sync { result in
-            expect(result.value).toNot(beNil())
+            XCTAssertNotNil(result.value)
 
             self.managedObjectContext.perform {
                 do {
                     let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-                    expect(post).toNot(beNil())
+                    XCTAssertNotNil(post)
 
-                    expect(post?.authors).toNot(beNil())
-                    expect(post?.authors?.count).to(equal(1))
+                    XCTAssertNotNil(post?.authors)
+                    XCTAssertEqual(post?.authors?.count, 1)
                     guard let author = post?.authors?.firstObject as? Author else {
-                        fail("was unable to make relationship")
+                        XCTFail("was unable to make relationship")
                         expectation.fulfill()
                         return
                     }
-                    expect(author.name).toNot(beNil())
-                    expect(author.name).to(equal("Lewis Carroll"))
+                    XCTAssertNotNil(author.name)
+                    XCTAssertEqual(author.name, "Lewis Carroll")
                     expectation.fulfill()
                 } catch {
-                    fail("Fetching posts should not throw an error")
-                    fail("Fetching posts should not throw an error")
+                    XCTFail("Fetching posts should not throw an error")
+                    XCTFail("Fetching posts should not throw an error")
                 }
             }
         }
@@ -223,19 +222,19 @@ class ContentfulPersistenceTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         self.client.sync { result in
-            expect(result.value).toNot(beNil())
+            XCTAssertNotNil(result.value)
 
             self.managedObjectContext.perform {
                 do {
                     let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-                    expect(post).toNot(beNil())
-                    expect(post?.comments).to(beNil())
-                    expect(post?.title).toNot(beNil())
-                    expect(post?.theFeaturedImage).toNot(beNil())
+                    XCTAssertNotNil(post)
+                    XCTAssertNil(post?.comments)
+                    XCTAssertNotNil(post?.title)
+                    XCTAssertNotNil(post?.theFeaturedImage)
                     expectation.fulfill()
                 } catch {
-                    fail("Fetching posts should not throw an error")
-                    fail("Fetching posts should not throw an error")
+                    XCTFail("Fetching posts should not throw an error")
+                    XCTFail("Fetching posts should not throw an error")
                 }
             }
         }
@@ -248,9 +247,9 @@ class ContentfulPersistenceTests: XCTestCase {
         do {
             let properties = try store.properties(for: Category.self)
 
-            expect(Set(properties)).to(equal(Set(["title", "id", "createdAt", "updatedAt", "localeCode"])))
+            XCTAssertEqual(Set(properties), Set(["title", "id", "createdAt", "updatedAt", "localeCode"]))
         } catch {
-            fail("Storing properties for Categories should not throw an error")
+            XCTFail("Storing properties for Categories should not throw an error")
         }
     }
 
@@ -260,7 +259,7 @@ class ContentfulPersistenceTests: XCTestCase {
         do {
             let relationships = try store.relationships(for: Post.self)
             let expectedRelationships = Set(["authors", "theFeaturedImage", "category"])
-            expect(Set(relationships)).to(equal(expectedRelationships))
+            XCTAssertEqual(Set(relationships), expectedRelationships)
         } catch {
             XCTAssert(false, "Storing relationships for Posts should not throw an error")
         }
