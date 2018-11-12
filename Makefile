@@ -1,7 +1,7 @@
 PROJECT=ContentfulPersistence.xcodeproj
 WORKSPACE=ContentfulPersistence.xcworkspace
 
-.PHONY: test setup lint coverage carthage clean open
+.PHONY: test setup lint coverage carthage clean open release
 
 open:
 	open $(WORKSPACE)
@@ -17,7 +17,7 @@ kill_simulator:
 
 test: clean
 	set -x -o pipefail && xcodebuild test -workspace $(WORKSPACE) \
-		-scheme ContentfulPersistence_macOS -destination 'platform=OS X' | bundle exec xcpretty -c
+		-scheme ContentfulPersistence_macOS -destination 'platform=macOS' | bundle exec xcpretty -c
 
 setup_env:
 	./Scripts/setup-env.sh
@@ -37,4 +37,7 @@ coverage:
 carthage:
 	carthage build ContentfulPersistence --no-skip-current --platform all
 	carthage archive ContentfulPersistence
+
+release:
+	./Scripts/release.sh
 
