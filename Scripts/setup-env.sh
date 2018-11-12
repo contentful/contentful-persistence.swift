@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 set -e # forward failure to the rest of the program
 
 which -s brew
@@ -12,7 +11,6 @@ else
     brew update
 fi
 
-
 if ! brew ls --versions carthage > /dev/null; then
   echo "Installing carthage via homebrew"
   brew install carthage
@@ -23,17 +21,9 @@ if ! brew ls --versions swiftlint > /dev/null; then
   brew install swiftlint
 fi
 
-if ! brew ls --versions direnv > /dev/null; then
-  echo "Installing direnv via homebrew"
-  brew install direnv
-fi
-
-
-
 # Update carthage and swiftlint
 brew outdated carthage || brew upgrade carthage
 brew outdated swiftlint || brew upgrade swiftlint
-brew outdated direnv || brew upgrade direnv
 
 bundle install
 
