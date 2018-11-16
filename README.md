@@ -7,13 +7,19 @@
 [![Build Status](https://img.shields.io/travis/contentful/contentful-persistence.swift/master.svg?style=flat)](https://travis-ci.org/contentful/contentful-persistence.swift)
 [![Coverage Status](https://img.shields.io/coveralls/contentful/contentful-persistence.swift.svg)](https://coveralls.io/github/contentful/contentful-persistence.swift)
 
-An integration to simplify persisting data from [Contentful][1] to a local CoreData database; built on top of the official Contentful [Swift SDK][2].
+> An integration to simplify persisting data from [Contentful][1] to a local CoreData database; built on top of the official Contentful [Swift SDK][2]. This library specifically uses the [`/sync` endpoint][7] of the Content Delivery API to synchronize all content in a Contentful space to device.
+
+**What is Contentful?**
 
 [Contentful][1] provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship digital products faster.
 
-## Usage
+## Getting started
+
+### Prerequisite
 
 Before getting started, it is highly recommended that you familiarize yourself with Apple's CoreData framework as many issues encountered during development may be CoreData specific. Read the [CoreData Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/index.html) and check out other (non-Contentful) examples. 
+
+### Usage 
 
 The `SynchronizationManager` manages the state of your CoreData database and keeps it in sync with the data from your Contentful Space:
 
@@ -47,11 +53,11 @@ self.syncManager.sync { _ in
 
 ## Define your `CoreData` model
 
-To make your model classes work with contentful-persistence.swift you will need to either conform to `ContentSysPersistable` for Contentful Assets, or `EntryPersistable` for Contentful entry types.
+To make your model classes work with contentful-persistence.swift you will need to either conform to `AssetPersistable` for Contentful Assets, or `EntryPersistable` for Contentful entry types.
 
-Then you will need to make the corresponding model in your projects `xcdatamodel` file. Both `EntryPersistable` and `ContentSysPersistable` types must have a _non-optional_ `id` property as well as optional `localeCode`, `createdAt`, and `updatedAt` properties.
+Then you will need to make the corresponding model in your projects `xcdatamodel` file. Both `EntryPersistable` and `AssetPersistable` types must have a _non-optional_ `id` property as well as optional `localeCode`, `createdAt`, and `updatedAt` properties.
 
-Optionality on CoreData entities is a bit different than Swift optionality—optionality means that the property may be absent when a save-to-database operation is performed. To configure a property's optionality, open the "Data Model Inspector" in Xcode's "Utilities" right sidebar and toggle the "Optional" checkbox:
+**NOTE:** Optionality on CoreData entities is a bit different than Swift optionality. Optionality on CoreData entities means that the property may be absent when a save-to-database operation is performed. To configure a property's optionality, open the "Data Model Inspector" in Xcode's "Utilities" right sidebar and toggle the "Optional" checkbox:
 
 ![](Screenshots/CoreDataOptionality.png)
 
@@ -99,9 +105,7 @@ class Post: NSManagedObject, EntryPersistable {
 }
 ```
 
-## Documentation
-
-For further information, check out the [Developer Documentation][4] or browse the [API documentation][3]. The latter can also be loaded into Xcode as a Docset.
+## Installation
 
 ### CocoaPods installation
 
@@ -112,7 +116,7 @@ platform :ios, '9.3'
 use_frameworks!
 
 target :MyApp do
-	pod 'ContentfulPersistenceSwift', '~> 0.13.0'
+  pod 'ContentfulPersistenceSwift', '~> 0.13.0'
 end
 ```
 
@@ -124,21 +128,24 @@ You can also use [Carthage][6] for integration by adding the following to your `
 github "contentful/contentful.swift" ~> 0.13.0
 ```
 
-## Unit Tests
+## Documentation
 
-To run the tests, do the following steps:
+For further information, check out the [Developer Documentation][4] or browse the [API documentation][3]. The latter can also be loaded into Xcode as a Docset.
 
+## Contributing and development
+
+To get started contributing, clone the project, `cd` into the root directory and run the following: `make setup_env`.
+
+```bash
+make setup_env
+carthage bootstrap --platform all
 ```
-$ make setup_env
-$ carthage bootstrap --platform all
-$ make test
-```
 
-or run them directly from Xcode.
+This command will install all the development dependencies necessary to build the project, and execute the tests. To run the tests from the command line, execute `make test`. Tests should also all run directly from the Xcode app.
 
 ## License
 
-Copyright (c) 2018 Contentful GmbH. See LICENSE for further details.
+Copyright (c) 2018 Contentful GmbH. See [LICENSE](LICENSE) for further details.
 
 [1]: https://www.contentful.com
 [2]: https://github.com/contentful/contentful.swift
@@ -146,4 +153,5 @@ Copyright (c) 2018 Contentful GmbH. See LICENSE for further details.
 [4]: https://www.contentful.com/developers/docs/references/content-delivery-api/
 [5]: https://cocoapods.org/
 [6]: https://github.com/Carthage/Carthage
+[7]: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization
 
