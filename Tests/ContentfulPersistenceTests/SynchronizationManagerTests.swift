@@ -128,7 +128,7 @@ class ContentfulPersistenceTests: XCTestCase {
 
                     self.client.fetchData(for: alice!) { result in
                         switch result {
-                        case .success(let data):
+                        case .success:
                             XCTAssert(true)
                         case .error(let error):
                             XCTFail("Data fetch should have succeed \(error)")
