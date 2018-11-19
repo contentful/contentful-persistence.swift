@@ -21,6 +21,18 @@
 		5D9309C92003FDE80050786B /* linked-assets-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D9309C72003FDE20050786B /* linked-assets-array.json */; };
 		5D9309CB2003FDEA0050786B /* linked-assets-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D9309C72003FDE20050786B /* linked-assets-array.json */; };
 		5D9309CC2003FDEB0050786B /* linked-assets-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D9309C72003FDE20050786B /* linked-assets-array.json */; };
+		5DA9AE0921A2B6AF0033BC4E /* deleted-asset-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9AE0721A2B6AF0033BC4E /* deleted-asset-initial.json */; };
+		5DA9AE0A21A2B6AF0033BC4E /* deleted-asset-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9AE0721A2B6AF0033BC4E /* deleted-asset-initial.json */; };
+		5DA9AE0B21A2B6AF0033BC4E /* deleted-asset-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9AE0721A2B6AF0033BC4E /* deleted-asset-initial.json */; };
+		5DA9AE0C21A2B6AF0033BC4E /* deleted-asset-next.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9AE0821A2B6AF0033BC4E /* deleted-asset-next.json */; };
+		5DA9AE0D21A2B6AF0033BC4E /* deleted-asset-next.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9AE0821A2B6AF0033BC4E /* deleted-asset-next.json */; };
+		5DA9AE0E21A2B6AF0033BC4E /* deleted-asset-next.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DA9AE0821A2B6AF0033BC4E /* deleted-asset-next.json */; };
+		5DD19BA8219F0C980041F483 /* deleted-entry-next.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BA6219F0C940041F483 /* deleted-entry-next.json */; };
+		5DD19BA9219F0C980041F483 /* deleted-entry-next.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BA6219F0C940041F483 /* deleted-entry-next.json */; };
+		5DD19BAA219F0C980041F483 /* deleted-entry-next.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BA6219F0C940041F483 /* deleted-entry-next.json */; };
+		5DD19BAC219F13730041F483 /* deleted-entry-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BAB219F13730041F483 /* deleted-entry-initial.json */; };
+		5DD19BAD219F13730041F483 /* deleted-entry-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BAB219F13730041F483 /* deleted-entry-initial.json */; };
+		5DD19BAE219F13730041F483 /* deleted-entry-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BAB219F13730041F483 /* deleted-entry-initial.json */; };
 		ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
 		ED10E88D1E48AB840061741F /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
@@ -228,6 +240,10 @@
 		5D8F439B21943D8D00B3AE96 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8F439D21943DFC00B3AE96 /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D9309C72003FDE20050786B /* linked-assets-array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "linked-assets-array.json"; sourceTree = "<group>"; };
+		5DA9AE0721A2B6AF0033BC4E /* deleted-asset-initial.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "deleted-asset-initial.json"; sourceTree = "<group>"; };
+		5DA9AE0821A2B6AF0033BC4E /* deleted-asset-next.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "deleted-asset-next.json"; sourceTree = "<group>"; };
+		5DD19BA6219F0C940041F483 /* deleted-entry-next.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "deleted-entry-next.json"; sourceTree = "<group>"; };
+		5DD19BAB219F13730041F483 /* deleted-entry-initial.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "deleted-entry-initial.json"; sourceTree = "<group>"; };
 		A1A9FBE31CABE8EA00430734 /* ContentfulPersistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContentfulPersistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A9FBED1CABE8EA00430734 /* ContentfulPersistenceTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulPersistenceTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED10E8841E48AB840061741F /* SynchronizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SynchronizationManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -465,6 +481,10 @@
 			isa = PBXGroup;
 			children = (
 				ED4023ED20EA5D43001C6BDD /* now-resolvable-relationships.json */,
+				5DA9AE0721A2B6AF0033BC4E /* deleted-asset-initial.json */,
+				5DA9AE0821A2B6AF0033BC4E /* deleted-asset-next.json */,
+				5DD19BA6219F0C940041F483 /* deleted-entry-next.json */,
+				5DD19BAB219F13730041F483 /* deleted-entry-initial.json */,
 				ED4023E920EA5A15001C6BDD /* unresolvable-links.json */,
 				EDE5BA37207220F400A650FE /* video-asset.json */,
 				5D8851001FEAEC6000FA2A13 /* shared-linked-asset.json */,
@@ -847,13 +867,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D8851021FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
+				5DD19BAC219F13730041F483 /* deleted-entry-initial.json in Resources */,
 				ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */,
 				EDBDBFD81F28B6E800649F5A /* localization-sync.json in Resources */,
 				ED4023EA20EA5A15001C6BDD /* unresolvable-links.json in Resources */,
 				5D001E5E2004019D00AC5A4C /* symbols-array.json in Resources */,
+				5DA9AE0C21A2B6AF0033BC4E /* deleted-asset-next.json in Resources */,
 				ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */,
 				EDCFBF9D1F161EB6002B1B73 /* single-author.json in Resources */,
 				ED6B67981F191342008EC7C8 /* clear-field-initial-sync.json in Resources */,
+				5DD19BAA219F0C980041F483 /* deleted-entry-next.json in Resources */,
 				ED91F9A01F18C79D00540DAC /* simple-update-initial-sync.json in Resources */,
 				5D8850FD1FE7CCE900FA2A13 /* location.json in Resources */,
 				ED91F9A11F18C79D00540DAC /* simple-update-initial-sync-page2.json in Resources */,
@@ -865,6 +888,7 @@
 				EDE5BA39207220F900A650FE /* video-asset.json in Resources */,
 				ED6B67A21F1CB350008EC7C8 /* nullified-link-initial.json in Resources */,
 				ED1BA7D31F1645A000E21FD5 /* single-post.json in Resources */,
+				5DA9AE0921A2B6AF0033BC4E /* deleted-asset-initial.json in Resources */,
 				5D9309C92003FDE80050786B /* linked-assets-array.json in Resources */,
 				ED6B67A31F1CB350008EC7C8 /* nullified-link-next.json in Resources */,
 				ED8C1E801F6040E0001D059F /* PreseedJSONFiles in Resources */,
@@ -898,13 +922,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D8851031FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
+				5DD19BAD219F13730041F483 /* deleted-entry-initial.json in Resources */,
 				EDD8F4F31F5401FD0000D3BB /* multi-page-link-resolution1.json in Resources */,
 				EDD8F4F01F5401FD0000D3BB /* clear-field-next-sync.json in Resources */,
 				ED4023EB20EA5A15001C6BDD /* unresolvable-links.json in Resources */,
 				5D001E5D2004019D00AC5A4C /* symbols-array.json in Resources */,
+				5DA9AE0D21A2B6AF0033BC4E /* deleted-asset-next.json in Resources */,
 				EDD8F52B1F5402290000D3BB /* single-author.json in Resources */,
 				EDD8F4F51F5401FD0000D3BB /* simple-update-initial-sync.json in Resources */,
 				EDD8F4F41F5401FD0000D3BB /* multi-page-link-resolution2.json in Resources */,
+				5DD19BA9219F0C980041F483 /* deleted-entry-next.json in Resources */,
 				EDD8F52C1F5402290000D3BB /* single-post.json in Resources */,
 				5D8850FE1FE7CCEA00FA2A13 /* location.json in Resources */,
 				EDD8F4F11F5401FD0000D3BB /* nullified-link-initial.json in Resources */,
@@ -916,6 +943,7 @@
 				EDE5BA3A207220FA00A650FE /* video-asset.json in Resources */,
 				EDD8F4F71F5401FD0000D3BB /* simple-update-next-sync.json in Resources */,
 				EDD8F4F21F5401FD0000D3BB /* nullified-link-next.json in Resources */,
+				5DA9AE0A21A2B6AF0033BC4E /* deleted-asset-initial.json in Resources */,
 				5D9309CC2003FDEB0050786B /* linked-assets-array.json in Resources */,
 				EDD8F52D1F5402290000D3BB /* space.json in Resources */,
 				ED8C1E811F6040E0001D059F /* PreseedJSONFiles in Resources */,
@@ -928,13 +956,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D8851041FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
+				5DD19BAE219F13730041F483 /* deleted-entry-initial.json in Resources */,
 				EDD8F4FC1F5401FD0000D3BB /* multi-page-link-resolution1.json in Resources */,
 				EDD8F4F91F5401FD0000D3BB /* clear-field-next-sync.json in Resources */,
 				ED4023EC20EA5A15001C6BDD /* unresolvable-links.json in Resources */,
 				5D001E5C2004019C00AC5A4C /* symbols-array.json in Resources */,
+				5DA9AE0E21A2B6AF0033BC4E /* deleted-asset-next.json in Resources */,
 				EDD8F52E1F5402290000D3BB /* single-author.json in Resources */,
 				EDD8F4FE1F5401FD0000D3BB /* simple-update-initial-sync.json in Resources */,
 				EDD8F4FD1F5401FD0000D3BB /* multi-page-link-resolution2.json in Resources */,
+				5DD19BA8219F0C980041F483 /* deleted-entry-next.json in Resources */,
 				EDD8F52F1F5402290000D3BB /* single-post.json in Resources */,
 				5D8850FF1FE7CCEA00FA2A13 /* location.json in Resources */,
 				EDD8F4FA1F5401FD0000D3BB /* nullified-link-initial.json in Resources */,
@@ -946,6 +977,7 @@
 				EDE5BA3B207220FA00A650FE /* video-asset.json in Resources */,
 				EDD8F5001F5401FD0000D3BB /* simple-update-next-sync.json in Resources */,
 				EDD8F4FB1F5401FD0000D3BB /* nullified-link-next.json in Resources */,
+				5DA9AE0B21A2B6AF0033BC4E /* deleted-asset-initial.json in Resources */,
 				5D9309CB2003FDEA0050786B /* linked-assets-array.json in Resources */,
 				EDD8F5301F5402290000D3BB /* space.json in Resources */,
 				ED8C1E821F6040E0001D059F /* PreseedJSONFiles in Resources */,

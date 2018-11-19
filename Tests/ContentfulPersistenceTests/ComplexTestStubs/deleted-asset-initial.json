@@ -1,0 +1,42 @@
+{
+    "sys": {
+        "type": "Array"
+    },
+    "items": [
+        {
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "smf0sqiu0c5s"
+                    }
+                },
+                "id": "YokO2rWbOoo68QmiEUkqe",
+                "type": "Asset",
+                "createdAt": "2018-04-02T08:13:10.692Z",
+                "updatedAt": "2018-04-02T08:13:10.692Z",
+                "revision": 1
+            },
+            "fields": {
+                "title": {
+                    "en-US": "Video asset"
+                },
+                "description": {
+                    "en-US": "this is a video"
+                },
+                "file": {
+                    "en-US": {
+                        "url": "//videos.ctfassets.net/smf0sqiu0c5s/YokO2rWbOoo68QmiEUkqe/5cd5ab8fc90e7b9b4d99d56ea29de768/JP_Swift_Demo.mp4",
+                        "details": {
+                            "size": 12429451
+                        },
+                        "fileName": "JP_Swift_Demo.mp4",
+                        "contentType": "video/mp4"
+                    }
+                }
+            }
+        }
+    ],
+    "nextSyncUrl": "https://cdn.contentful.com/spaces/smf0sqiu0c5s/sync?sync_token=deletion-intial"
+}
