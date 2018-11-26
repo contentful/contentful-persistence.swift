@@ -63,7 +63,7 @@ Then you will need to make the corresponding model in your projects `xcdatamodel
 
 The mapping of Contentful fields to your data model entities will be derived automatically, but you can also customize it, by implementing the `static func mapping() -> [FieldName: String]?` on your class.
 
-Here is an example of a model class:
+Below is an example of a model class. Note that for custom date fields, this library can't store `Date` types; use `String` instead and map to `Date` after fetching from CoreData. For `sys` properties however, `Date` should be used
 
 ```swift
 import Foundation
@@ -79,12 +79,18 @@ class Post: NSManagedObject, EntryPersistable {
     // The identifier of the corresponding Content Type in Contentful.
     static let contentTypeId = "post"
 
+    // Properties of the `sys` object of Contentful resources.
     @NSManaged var id: String
     @NSManaged var localeCode: String?
-    @NSManaged var createdAt: Date?
+    @NSManaged var createdAt: Date? 
     @NSManaged var updatedAt: Date?
+
+    // Custom fields on the content type.
     @NSManaged var body: String?
     @NSManaged var comments: NSNumber?
+    // NOTE: Unlike date fields in sys properties, this library can't store `Date` for custom fields.
+    // Use `String` and map to date after fetching from CoreData
+    @NSManaged var customDateField: String? 
     @NSManaged var date: NSDate?
     @NSManaged var slug: String?
     @NSManaged var tags: Data?
