@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode10.1
+osx_image: xcode10.2
 rvm:
   - 2.4.3
 cache: bundler
@@ -13,8 +13,8 @@ branches:
     - master
 matrix:
   include:
-  - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone X,OS=12.1" SCHEME=ContentfulPersistence_iOS
-  - env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV,OS=12.1" SCHEME=ContentfulPersistence_tvOS
+  - env: SDK=iphonesimulator PLATFORM="iOS Simulator,name=iPhone X,OS=12.2" SCHEME=ContentfulPersistence_iOS
+  - env: SDK=appletvsimulator PLATFORM="tvOS Simulator,name=Apple TV,OS=12.2" SCHEME=ContentfulPersistence_tvOS
   - env: SDK=macosx PLATFORM="macOS" SCHEME=ContentfulPersistence_macOS
   - env: SWIFT_BUILD=true
 before_install:
