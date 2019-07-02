@@ -111,6 +111,18 @@ class Post: NSManagedObject, EntryPersistable {
 }
 ```
 
+**HINT:** For **array-based field types** (like `Short text, list`), use the type `Binary Data` in the data model, and the type `Data?` (e.g. `var tags: Data?`) in the Swift code. To access the actual array contents, unpack the `Data` field with `NSKeyedUnarchiver`, e.g.:
+
+```swift
+extension Post {
+
+    var theTags: [String]? {
+        guard let tagsData = self.tags else { return nil }
+        return NSKeyedUnarchiver.unarchiveObject(with: tagsData) as? [String]
+    }
+}
+```
+
 ## Installation
 
 ### CocoaPods installation
