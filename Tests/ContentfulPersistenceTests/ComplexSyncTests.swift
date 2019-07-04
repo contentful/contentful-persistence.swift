@@ -33,7 +33,7 @@ class ComplexSyncTests: XCTestCase {
     override func setUp() {
         OHHTTPStubs.removeAllStubs()
 
-        let persistenceModel = PersistenceModel(spaceType: ComplexSyncInfo.self, assetType: ComplexAsset.self, entryTypes: [SingleRecord.self, Link.self])
+        let persistenceModel = PersistenceModel(spaceType: ComplexSyncInfo.self, assetType: ComplexAsset.self, entryTypes: [SingleRecord.self, Link.self, RecordWithNonOptionalRelation.self])
 
 
         client = Client(spaceId: "smf0sqiu0c5s",
@@ -705,6 +705,67 @@ class ComplexSyncTests: XCTestCase {
         }
         self.waitForExpectations(timeout: 10.0, handler: nil)
 
+    }
+
+    func testNonOptionalLinkResolutionForMultipageSync() {
+        let expectation = self.expectation(description: "Initial sync succeeded")
+
+        stub(
+            condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync"),
+            response: { request -> OHHTTPStubsResponse in
+                let urlString = request.url!.absoluteString
+                let queryItems = URLComponents(string: urlString)!.queryItems!
+                for queryItem in queryItems {
+                    switch queryItem.name {
+                    case "initial":
+                        let stubPath = OHPathForFile(
+                            "multi-page-non-optional-link-resolution1.json",
+                            ComplexSyncTests.self
+                        )
+                        return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+                    case "sync_token" where queryItem.value == "multi-page-non-optional-link-resolution-token":
+                        let stubPath = OHPathForFile(
+                            "multi-page-non-optional-link-resolution2.json",
+                            ComplexSyncTests.self
+                        )
+                        return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
+                    default:
+                        continue
+                    }
+                }
+                XCTFail("Unexpected request cannot be stubbed!")
+                return OHHTTPStubsResponse(
+                    error: NSError(domain: "ComplexSyncTests", code: 10, userInfo: nil)
+                )
+            }
+        ).name = "Initial sync stub"
+
+        client.sync() { result in
+            switch result {
+            case .success:
+
+                self.managedObjectContext.perform {
+                    do {
+                        let records: [RecordWithNonOptionalRelation] = try self.store.fetchAll(
+                            type: RecordWithNonOptionalRelation.self,
+                            predicate: NSPredicate(format: "id == '15OmnIzspI44uKCcNzcPUS'")
+                        )
+                        XCTAssertEqual(records.count, 1)
+                        if let record = records.first {
+                            XCTAssertEqual(record.nonOptionalLink.awesomeLinkTitle, "Non-optional Link")
+                        }
+                    } catch {
+                        XCTFail("Fetching RecordWithNonOptionalRelation should not throw an error")
+                    }
+                    expectation.fulfill()
+                }
+            case .error(let error):
+                XCTFail("\(error)")
+                expectation.fulfill()
+            }
+
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
     }
 
 }
