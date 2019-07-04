@@ -171,7 +171,15 @@ public class SynchronizationManager: PersistenceIntegration {
 
             self?.resolveRelationships()
             self?.update(syncToken: syncSpace.syncToken)
-            self?.save()
+
+            // Only save updates to the persistence store if the sync is completed
+            // (has no more pages). Else, non-optional relations whose nodes
+            // are sent in different pages would fail to be stored. This is the
+            // case because e.g. CoreData validates non-optional relations when
+            // save() is called.
+            if syncSpace.hasMorePages == false {
+                self?.save()
+            }
         }
     }
 
