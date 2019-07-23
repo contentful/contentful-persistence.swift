@@ -33,6 +33,18 @@
 		5DD19BAC219F13730041F483 /* deleted-entry-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BAB219F13730041F483 /* deleted-entry-initial.json */; };
 		5DD19BAD219F13730041F483 /* deleted-entry-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BAB219F13730041F483 /* deleted-entry-initial.json */; };
 		5DD19BAE219F13730041F483 /* deleted-entry-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BAB219F13730041F483 /* deleted-entry-initial.json */; };
+		6F388F5422E73EC50080585F /* RichTextDocumentTransformableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F5322E73EC50080585F /* RichTextDocumentTransformableTests.swift */; };
+		6F388F5522E73EC50080585F /* RichTextDocumentTransformableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F5322E73EC50080585F /* RichTextDocumentTransformableTests.swift */; };
+		6F388F5622E73EC50080585F /* RichTextDocumentTransformableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F5322E73EC50080585F /* RichTextDocumentTransformableTests.swift */; };
+		6F388F5922E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F5722E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld */; };
+		6F388F5A22E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F5722E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld */; };
+		6F388F5B22E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F5722E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld */; };
+		6F388F5D22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F5C22E73FE60080585F /* RichTextDocumentRecord.swift */; };
+		6F388F5E22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F5C22E73FE60080585F /* RichTextDocumentRecord.swift */; };
+		6F388F5F22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F5C22E73FE60080585F /* RichTextDocumentRecord.swift */; };
+		6F388F6122E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F6022E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift */; };
+		6F388F6222E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F6022E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift */; };
+		6F388F6322E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F388F6022E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift */; };
 		ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
 		ED10E88D1E48AB840061741F /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
@@ -244,6 +256,10 @@
 		5DA9AE0821A2B6AF0033BC4E /* deleted-asset-next.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "deleted-asset-next.json"; sourceTree = "<group>"; };
 		5DD19BA6219F0C940041F483 /* deleted-entry-next.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "deleted-entry-next.json"; sourceTree = "<group>"; };
 		5DD19BAB219F13730041F483 /* deleted-entry-initial.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "deleted-entry-initial.json"; sourceTree = "<group>"; };
+		6F388F5322E73EC50080585F /* RichTextDocumentTransformableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextDocumentTransformableTests.swift; sourceTree = "<group>"; };
+		6F388F5822E73F270080585F /* RichTextDocumentTransformable.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RichTextDocumentTransformable.xcdatamodel; sourceTree = "<group>"; };
+		6F388F5C22E73FE60080585F /* RichTextDocumentRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichTextDocumentRecord.swift; sourceTree = "<group>"; };
+		6F388F6022E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RichTextDocumentRecord+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A1A9FBE31CABE8EA00430734 /* ContentfulPersistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContentfulPersistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A9FBED1CABE8EA00430734 /* ContentfulPersistenceTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulPersistenceTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED10E8841E48AB840061741F /* SynchronizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SynchronizationManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -473,6 +489,8 @@
 				ED25D7EB1F17709A00A6BA9A /* ComplexSyncInfo+CoreDataProperties.swift */,
 				ED25D7E11F176D5900A6BA9A /* Link.swift */,
 				ED25D7E31F176D8E00A6BA9A /* Link+CoreDataProperties.swift */,
+				6F388F5C22E73FE60080585F /* RichTextDocumentRecord.swift */,
+				6F388F6022E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift */,
 			);
 			path = ComplexTestModels;
 			sourceTree = "<group>";
@@ -607,6 +625,8 @@
 				EDBDBFD61F28B6CF00649F5A /* LocalizationTestStubs */,
 				ED4C58EA1F161BA6000B65FD /* TestHelpers.swift */,
 				ED8C1E771F603D45001D059F /* PreseedingTests.swift */,
+				6F388F5722E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld */,
+				6F388F5322E73EC50080585F /* RichTextDocumentTransformableTests.swift */,
 				ED8C1E7F1F6040E0001D059F /* PreseedJSONFiles */,
 				ED8C1E871F6175A5001D059F /* MultifilePreseedJSONFiles */,
 				ED79E9271FCC23E10045F44F /* MultilocalePreseedJSONFiles */,
@@ -836,6 +856,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = A1A9FBD91CABE8EA00430734;
@@ -1066,8 +1087,10 @@
 			files = (
 				ED10E8B81E48ACBD0061741F /* Asset+CoreDataProperties.swift in Sources */,
 				ED10E8B71E48ACBD0061741F /* Asset.swift in Sources */,
+				6F388F5D22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
 				ED10E8BA1E48ACBD0061741F /* Author+CoreDataProperties.swift in Sources */,
 				ED10E8BE1E48ACBD0061741F /* Post+CoreDataProperties.swift in Sources */,
+				6F388F5422E73EC50080585F /* RichTextDocumentTransformableTests.swift in Sources */,
 				ED25D7D81F16654A00A6BA9A /* ComplexSyncTests.swift in Sources */,
 				ED10E8B91E48ACBD0061741F /* Author.swift in Sources */,
 				ED10E8BD1E48ACBD0061741F /* Post.swift in Sources */,
@@ -1078,6 +1101,7 @@
 				ED4C58EB1F161BA6000B65FD /* TestHelpers.swift in Sources */,
 				ED25D7E01F166C1700A6BA9A /* SingleRecord+CoreDataProperties.swift in Sources */,
 				ED10E8BB1E48ACBD0061741F /* Category.swift in Sources */,
+				6F388F6122E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift in Sources */,
 				EDBDBFD21F28B1EB00649F5A /* LocalizationTests.swift in Sources */,
 				ED25D7EC1F17709A00A6BA9A /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,
 				EDCFBFA01F162449002B1B73 /* Test.xcdatamodeld in Sources */,
@@ -1085,6 +1109,7 @@
 				ED4023E620EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */,
 				ED25D7EA1F17706E00A6BA9A /* ComplexSyncInfo.swift in Sources */,
 				ED10E8C81E48BCAE0061741F /* SynchronizationManagerTests.swift in Sources */,
+				6F388F5922E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld in Sources */,
 				ED25D7F51F177D8F00A6BA9A /* ComplexTest.xcdatamodeld in Sources */,
 				ED25D7E21F176D5900A6BA9A /* Link.swift in Sources */,
 				ED10E8BC1E48ACBD0061741F /* Category+CoreDataProperties.swift in Sources */,
@@ -1139,8 +1164,10 @@
 			files = (
 				EDD8F4E71F5401E90000D3BB /* ComplexSyncTests.swift in Sources */,
 				EDD8F51B1F5402200000D3BB /* Post.swift in Sources */,
+				6F388F5E22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
 				EDD8F4EB1F5401EF0000D3BB /* TestHelpers.swift in Sources */,
 				EDD8F4E51F5401E50000D3BB /* SynchronizationManagerTests.swift in Sources */,
+				6F388F5522E73EC50080585F /* RichTextDocumentTransformableTests.swift in Sources */,
 				EDD8F5071F5402040000D3BB /* Link.swift in Sources */,
 				EDD8F5021F5402040000D3BB /* SingleRecord+CoreDataProperties.swift in Sources */,
 				EDD8F5161F5402200000D3BB /* Asset+CoreDataProperties.swift in Sources */,
@@ -1151,6 +1178,7 @@
 				EDD8F5051F5402040000D3BB /* ComplexSyncInfo.swift in Sources */,
 				EDD8F5041F5402040000D3BB /* ComplexAsset+CoreDataProperties.swift in Sources */,
 				EDD8F51E1F5402200000D3BB /* SyncInfo+CoreDataProperties.swift in Sources */,
+				6F388F6222E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift in Sources */,
 				EDD8F5191F5402200000D3BB /* Category.swift in Sources */,
 				EDD8F5031F5402040000D3BB /* ComplexAsset.swift in Sources */,
 				EDD8F5171F5402200000D3BB /* Author.swift in Sources */,
@@ -1158,6 +1186,7 @@
 				ED4023E720EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */,
 				EDD8F5311F5402E60000D3BB /* ComplexTest.xcdatamodeld in Sources */,
 				EDD8F51D1F5402200000D3BB /* SyncInfo.swift in Sources */,
+				6F388F5A22E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld in Sources */,
 				EDD8F5061F5402040000D3BB /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,
 				EDD8F5081F5402040000D3BB /* Link+CoreDataProperties.swift in Sources */,
 				EDD8F5131F54020C0000D3BB /* LocalizationTest.xcdatamodeld in Sources */,
@@ -1173,8 +1202,10 @@
 			files = (
 				EDD8F4E81F5401E90000D3BB /* ComplexSyncTests.swift in Sources */,
 				EDD8F5251F5402200000D3BB /* Post.swift in Sources */,
+				6F388F5F22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
 				EDD8F4EC1F5401EF0000D3BB /* TestHelpers.swift in Sources */,
 				EDD8F4E61F5401E50000D3BB /* SynchronizationManagerTests.swift in Sources */,
+				6F388F5622E73EC50080585F /* RichTextDocumentTransformableTests.swift in Sources */,
 				EDD8F50F1F5402040000D3BB /* Link.swift in Sources */,
 				EDD8F50A1F5402040000D3BB /* SingleRecord+CoreDataProperties.swift in Sources */,
 				EDD8F5201F5402200000D3BB /* Asset+CoreDataProperties.swift in Sources */,
@@ -1185,6 +1216,7 @@
 				EDD8F5121F5402090000D3BB /* ComplexTest.xcdatamodeld in Sources */,
 				EDD8F50D1F5402040000D3BB /* ComplexSyncInfo.swift in Sources */,
 				EDD8F50C1F5402040000D3BB /* ComplexAsset+CoreDataProperties.swift in Sources */,
+				6F388F6322E740070080585F /* RichTextDocumentRecord+CoreDataProperties.swift in Sources */,
 				EDD8F5281F5402200000D3BB /* SyncInfo+CoreDataProperties.swift in Sources */,
 				EDD8F5231F5402200000D3BB /* Category.swift in Sources */,
 				EDD8F50B1F5402040000D3BB /* ComplexAsset.swift in Sources */,
@@ -1192,6 +1224,7 @@
 				ED4023E820EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */,
 				EDD8F5221F5402200000D3BB /* Author+CoreDataProperties.swift in Sources */,
 				EDD8F5271F5402200000D3BB /* SyncInfo.swift in Sources */,
+				6F388F5B22E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld in Sources */,
 				EDD8F50E1F5402040000D3BB /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,
 				EDD8F5101F5402040000D3BB /* Link+CoreDataProperties.swift in Sources */,
 				EDD8F5141F54020D0000D3BB /* LocalizationTest.xcdatamodeld in Sources */,
@@ -1733,6 +1766,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		6F388F5722E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				6F388F5822E73F270080585F /* RichTextDocumentTransformable.xcdatamodel */,
+			);
+			currentVersion = 6F388F5822E73F270080585F /* RichTextDocumentTransformable.xcdatamodel */;
+			path = RichTextDocumentTransformableTest.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		ED25D7F31F177D8F00A6BA9A /* ComplexTest.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
