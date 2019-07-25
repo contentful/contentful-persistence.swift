@@ -1,0 +1,45 @@
+{
+    "sys" : {
+        "type" : "Array"
+    },
+    "items" : [
+        {
+            "sys" : {
+                "space" : {
+                    "sys" : {
+                        "type" : "Link",
+                        "linkType" : "Space",
+                        "id" : "smf0sqiu0c5s"
+                    }
+                },
+                "id" : "15OmnIzspI44uKCcNzcPUS",
+                "type" : "Entry",
+                "createdAt" : "2017-06-20T14:03:29.046Z",
+                "updatedAt" : "2017-07-14T09:10:48.128Z",
+                "revision" : 3,
+                "contentType" : {
+                    "sys" : {
+                        "type" : "Link",
+                        "linkType" : "ContentType",
+                        "id" : "recordWithNonOptionalRelation"
+                    }
+                }
+            },
+            "fields" : {
+                "textBody" : {
+                    "en-US" : "Record With Link"
+                },
+                "nonOptionalLink" : {
+                    "en-US" : {
+                        "sys" : {
+                            "type" : "Link",
+                            "linkType" : "Entry",
+                            "id" : "3YYdCPjS0I6TNAFiCOEplO"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "nextPageUrl" : "http://cdn.contentful.com/spaces/smf0sqiu0c5s/environments/master/sync?sync_token=multi-page-non-optional-link-resolution-token"
+}
