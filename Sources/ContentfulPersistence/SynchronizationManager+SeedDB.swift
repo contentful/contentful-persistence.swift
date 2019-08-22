@@ -21,7 +21,7 @@ public extension SynchronizationManager {
      - Throws: Errors if the media the files in the directory can't be deserialized.
 
      */
-    public func seedDBFromJSONFiles(in directory: String, in bundle: Bundle) throws {
+    func seedDBFromJSONFiles(in directory: String, in bundle: Bundle) throws {
 
         var fileIndex = 0
         let filePaths = bundle.paths(forResourcesOfType: "json", inDirectory: directory)
@@ -41,7 +41,10 @@ public extension SynchronizationManager {
 
         // Extract locale information about the space and inject into the client and sync manager.
         let jsonDecoder = JSONDecoder.withoutLocalizationContext()
-        let localesResponse = try jsonDecoder.decode(ArrayResponse<Contentful.Locale>.self, from: localesData)
+        let localesResponse = try jsonDecoder.decode(
+            HomogeneousArrayResponse<Contentful.Locale>.self,
+            from: localesData
+        )
         jsonDecoder.update(with: LocalizationContext(locales: localesResponse.items)!)
         let localeCodes = localesResponse.items.map { $0.code }
         update(localeCodes: localeCodes)
@@ -73,7 +76,7 @@ public extension SynchronizationManager {
      - Returns: The full string path for the underlying media file associated with the passed in `Asset` or `AssetPersistabl`.
                 Will return `nil` if no directory exists at your directory name, or if the `Media` does not have a valid `urlString` associated with it.
      */
-    public static func pathInBundle(for media: AssetProtocol, inDirectoryNamed directory: String, in bundle: Bundle) -> String? {
+    static func pathInBundle(for media: AssetProtocol, inDirectoryNamed directory: String, in bundle: Bundle) -> String? {
         let fileName = SynchronizationManager.fileName(for: media)
         return bundle.path(forResource: fileName, ofType: nil, inDirectory: directory)
     }
@@ -89,7 +92,7 @@ public extension SynchronizationManager {
      - Returns: The `Data` object for your media file. Will return `nil` if no directory exists at your directory name,
                 or if the `Media` does not have a `urlString` associated with it.
      */
-    public static func bundledData(for media: AssetProtocol, inDirectoryNamed directory: String, in bundle: Bundle) -> Data? {
+    static func bundledData(for media: AssetProtocol, inDirectoryNamed directory: String, in bundle: Bundle) -> Data? {
         guard let path = pathInBundle(for: media, inDirectoryNamed: directory, in: bundle) else { return nil }
         let data = FileManager.default.contents(atPath: path)
         return data
@@ -102,7 +105,7 @@ public extension SynchronizationManager {
      - Returns: A filename for the underlying media file. Will return `nil` if the Asset or AssetPersistable
                 does not have a `urlString` associated with it.
      */
-    public static func fileName(for media: AssetProtocol) -> String? {
+    static func fileName(for media: AssetProtocol) -> String? {
         guard let urlString = media.urlString, let url = URL(string: urlString) else { return nil }
         let pathExtension = url.pathExtension.isEmpty ? "data" : url.pathExtension
         let fileName = "cache_" + media.id + "." + pathExtension
@@ -111,7 +114,7 @@ public extension SynchronizationManager {
     /**
      Errors thrown by ContentfulPersistence when trying to seed a database with bundled data.
      */
-    public enum DatabaseSeedingError: Swift.Error, CustomDebugStringConvertible {
+    enum DatabaseSeedingError: Swift.Error, CustomDebugStringConvertible {
 
         /// Thrown if there is not valid JSON stored in the directory the libarary is trying to seed
         /// a database from.
