@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://github.com/contentful/contentful-persistence.swift.git",
                         :tag => spec.version.to_s }
   spec.requires_arc = true
-  spec.swift_version             = '4.2'
+  spec.swift_version             = '5.0'
 
   spec.source_files              = 'Sources/ContentfulPersistence/*.swift'
   spec.module_name               = 'ContentfulPersistence'
@@ -29,6 +29,6 @@ Pod::Spec.new do |spec|
   spec.watchos.deployment_target = '2.0'
   spec.tvos.deployment_target    = '9.3'
 
-  spec.dependency 'Contentful', '~> 4.1.3'
+  spec.dependency 'Contentful', '~> 5.0.5'
 end
 
