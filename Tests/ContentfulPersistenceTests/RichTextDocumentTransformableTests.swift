@@ -38,9 +38,22 @@ class RichTextDocumentTransformableTests: XCTestCase {
         richTextDocumentRecord.richTextDocument = document
 
         try? store.save()
-        managedObjectContext.refresh(richTextDocumentRecord, mergeChanges: false)
+        managedObjectContext.reset()
 
-        XCTAssertEqual(richTextDocumentRecord.richTextDocument?.content.count ?? 0, document.content.count)
+        // For some reason, resetting the managed object context does indeed
+        // lead to `richTextDocumentRecord` being faulted, but its `richTextDocument`
+        // seems to live on (maybe in _CDSnapshot_RichTextDocumentRecord_?) and
+        // comes up again when fetching the first record from the store. A better way
+        // of destroying the linked `RichTextDocument` needs to be found to make this
+        // test case actually useful.
+
+        let documents: [RichTextDocumentRecord]? = try? store.fetchAll(type: RichTextDocumentRecord.self, predicate: NSPredicate(value: true))
+        guard let fetchedDocument = documents?.first else {
+            XCTFail()
+            return
+        }
+
+        XCTAssertEqual(fetchedDocument.richTextDocument?.content.count ?? 0, document.content.count)
     }
 
     private func richTextDocument() -> RichTextDocument {
