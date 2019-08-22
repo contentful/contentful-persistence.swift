@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18G78a" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18G48f" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ComplexAsset" representedClassName="ComplexAsset" syncable="YES">
         <attribute name="assetDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -25,7 +25,15 @@
         <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="localeCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="recordWithNonOptionalRelationInverse" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecordWithNonOptionalRelation" inverseName="nonOptionalLink" inverseEntity="RecordWithNonOptionalRelation" syncable="YES"/>
         <relationship name="singleRecordInverse" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SingleRecord" inverseName="linkField" inverseEntity="SingleRecord" syncable="YES"/>
+    </entity>
+    <entity name="RecordWithNonOptionalRelation" representedClassName="RecordWithNonOptionalRelation" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localeCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="nonOptionalLink" maxCount="1" deletionRule="Nullify" destinationEntity="Link" inverseName="recordWithNonOptionalRelationInverse" inverseEntity="Link" syncable="YES"/>
     </entity>
     <entity name="SingleRecord" representedClassName="SingleRecord" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -43,7 +51,8 @@
     <elements>
         <element name="ComplexAsset" positionX="-63" positionY="-18" width="128" height="255"/>
         <element name="ComplexSyncInfo" positionX="-54" positionY="-9" width="128" height="60"/>
-        <element name="Link" positionX="-18" positionY="99" width="128" height="135"/>
+        <element name="Link" positionX="-18" positionY="99" width="128" height="150"/>
+        <element name="RecordWithNonOptionalRelation" positionX="-36" positionY="126" width="128" height="120"/>
         <element name="SingleRecord" positionX="-36" positionY="90" width="128" height="210"/>
     </elements>
 </model>
