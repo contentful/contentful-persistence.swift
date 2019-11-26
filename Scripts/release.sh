@@ -6,7 +6,7 @@ echo "Making release for version $CONTENTFUL_PERSISTENCE_VERSION of the persiste
 
 git tag $CONTENTFUL_PERSISTENCE_VERSION
 git push --tags
-bundle exec pod trunk push ContentfulPersistenceSwift.podspec
+bundle exec pod trunk push ContentfulPersistenceSwift.podspec --allow-warnings
 make carthage
 git checkout gh-pages
 git rebase master
