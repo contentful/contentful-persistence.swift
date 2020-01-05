@@ -505,29 +505,16 @@ public class SynchronizationManager: PersistenceIntegration {
             if let array = fieldValue as? [Any] {
                 fieldValue = NSKeyedArchiver.archivedData(withRootObject: array)
             }
-            if let attributeInCD = persistable.entity.attributesByName[fieldName], attributeInCD.attributeType == .dateAttributeType, let dateValue = getDate(forValue: fieldValue as? String) {
-                fieldValue = dateValue
+            if persistable.entity.attributesByName[fieldName]?.attributeType == .dateAttributeType, let date = getDate(fieldValue as? String) {
+                fieldValue = date
             }
             persistable.setValue(fieldValue, forKey: propertyName)
         }
     }
 
-    fileprivate func getDate(forValue fieldValue: String?) -> Date? {
+    fileprivate func getDate(_ fieldValue: String?) -> Date? {
         guard let value = fieldValue else { return nil }
-        let dateParser = DateFormatter()
-        dateParser.dateFormat = "yyyy-MM-dd"
-        if let formattedValue = dateParser.date(from: value) {
-            return formattedValue
-        }
-        dateParser.dateFormat = "yyyy-MM-dd'T'HH:mmZZZZZ"
-        if let formattedValue = dateParser.date(from: value) {
-            return formattedValue
-        }
-        dateParser.dateFormat = "yyyy-MM-dd'T'HH:mm"
-        if let formattedValue = dateParser.date(from: value) {
-            return formattedValue
-        }
-        return nil
+        return try? Date.variableISO8601Strategy(fromString: value)
     }
 
     fileprivate func persistableRelationships(for entryPersistable: EntryPersistable,

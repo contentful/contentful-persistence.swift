@@ -36,7 +36,8 @@ extension Post: EntryPersistable {
         return [
             "title": "title",
             "featuredImage": "theFeaturedImage",
-            "author": "authors"
+            "author": "authors",
+            "date": "date"
         ]
 
     }
