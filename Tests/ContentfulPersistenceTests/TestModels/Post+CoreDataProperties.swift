@@ -24,7 +24,7 @@ extension Post: EntryPersistable {
     @NSManaged var updatedAt: Date?
     @NSManaged var body: String?
     @NSManaged var comments: NSNumber?
-    @NSManaged var date: NSDate?
+    @NSManaged var date: Date?
     @NSManaged var slug: String?
     @NSManaged var tags: Data?
     @NSManaged var title: String?

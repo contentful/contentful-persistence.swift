@@ -514,7 +514,23 @@ public class SynchronizationManager: PersistenceIntegration {
 
     fileprivate func getDate(_ fieldValue: String?) -> Date? {
         guard let value = fieldValue else { return nil }
-        return try? Date.variableISO8601Strategy(fromString: value)
+        let formats: [String] = [
+            "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX",
+            "yyyy-MM-dd",
+            "yyyy-MM-dd'T'HH:mm",
+            "yyyy-MM-dd'T'HH:mmxxx",
+            "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        ]
+        let dateParser = DateFormatter()
+        dateParser.locale = Locale(identifier: "en_US_POSIX")
+        dateParser.timeZone = TimeZone(secondsFromGMT: 0)
+        for format in formats {
+            dateParser.dateFormat = format
+            if let date = dateParser.date(from: value) {
+                return date
+            }
+        }
+        return nil
     }
 
     fileprivate func persistableRelationships(for entryPersistable: EntryPersistable,
