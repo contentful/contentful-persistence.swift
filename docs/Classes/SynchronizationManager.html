@@ -17,7 +17,7 @@
     <a title="SynchronizationManager Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">ContentfulPersistence 0.17.7 Docs</a> (83% documented)</p>
+        <p><a href="../index.html">ContentfulPersistence 0.18.1 Docs</a> (83% documented)</p>
         <p class="header-right"><a href="https://github.com/contentful/contentful-persistence.swift"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -43,6 +43,9 @@
                 <a href="../Classes/CoreDataStore.html">CoreDataStore</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/FilePreseedManager.html">FilePreseedManager</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SynchronizationManager.html">SynchronizationManager</a>
               </li>
               <li class="nav-group-task">
@@ -62,6 +65,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/c:objc(cs)NSFileManager">FileManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -74,7 +85,13 @@
                 <a href="../Protocols/EntryPersistable.html">EntryPersistable</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/FileManaging.html">FileManaging</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/PersistenceStore.html">PersistenceStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PreseedStrategy.html">PreseedStrategy</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a>
@@ -86,6 +103,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/PersistenceModel.html">PersistenceModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PreseedConfiguration.html">PreseedConfiguration</a>
               </li>
             </ul>
           </li>
@@ -105,7 +125,7 @@
             <p>Provides the ability to sync content from Contentful to a persistence store.</p>
 
               <div class="slightly-smaller">
-                <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L52-L724">Show on GitHub</a>
+                <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L65-L926">Show on GitHub</a>
               </div>
           </section>
           <section class="section task-group-section">
@@ -137,7 +157,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L54-L56">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L72-L74">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -179,7 +199,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L24">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L23">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -208,7 +228,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L66-L73">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L84-L91">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -278,7 +298,42 @@ reference/synchronization/initial-synchronisation-of-entries-of-a-specific-conte
                         <p>An initialised instance of SynchronizationManager</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L85-L98">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L103-L116">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC6client18localizationScheme16persistenceStore0H5Model13preseedConfig0K8StrategyAC0A06ClientCSg_AA012LocalizationG0OAA0bI0_pAA0bJ0VAA20PreseedConfigurationVAA0pM0_ptKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(client:localizationScheme:persistenceStore:persistenceModel:preseedConfig:preseedStrategy:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC6client18localizationScheme16persistenceStore0H5Model13preseedConfig0K8StrategyAC0A06ClientCSg_AA012LocalizationG0OAA0bI0_pAA0bJ0VAA20PreseedConfigurationVAA0pM0_ptKcfc">init(client:<wbr>localizationScheme:<wbr>persistenceStore:<wbr>persistenceModel:<wbr>preseedConfig:<wbr>preseedStrategy:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">client</span><span class="p">:</span> <span class="kt">Client</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">localizationScheme</span><span class="p">:</span> <span class="kt"><a href="../Enums/LocalizationScheme.html">LocalizationScheme</a></span><span class="p">,</span>
+            <span class="nv">persistenceStore</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PersistenceStore.html">PersistenceStore</a></span><span class="p">,</span>
+            <span class="nv">persistenceModel</span><span class="p">:</span> <span class="kt"><a href="../Structs/PersistenceModel.html">PersistenceModel</a></span><span class="p">,</span>
+            <span class="nv">preseedConfig</span><span class="p">:</span> <span class="kt"><a href="../Structs/PreseedConfiguration.html">PreseedConfiguration</a></span><span class="p">,</span>
+            <span class="nv">preseedStrategy</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PreseedStrategy.html">PreseedStrategy</a></span> <span class="o">=</span> <span class="kt"><a href="../Classes/FilePreseedManager.html">FilePreseedManager</a></span><span class="p">())</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L118-L137">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -307,7 +362,137 @@ reference/synchronization/initial-synchronisation-of-entries-of-a-specific-conte
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L102-L112">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L141-L151">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC4sync0E16SpacePersistable25initialLocalizationScheme5limit9dbVersion19onInitialCompletion0n5FinalP0yxm_AA0iJ0OSiSgSiys6ResultOy0A004SyncF0Cs5Error_pGcyATctKAA0sfG0RzlF"></a>
+                    <a name="//apple_ref/swift/Method/sync(syncSpacePersistable:initialLocalizationScheme:limit:dbVersion:onInitialCompletion:onFinalCompletion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC4sync0E16SpacePersistable25initialLocalizationScheme5limit9dbVersion19onInitialCompletion0n5FinalP0yxm_AA0iJ0OSiSgSiys6ResultOy0A004SyncF0Cs5Error_pGcyATctKAA0sfG0RzlF">sync(syncSpacePersistable:<wbr>initialLocalizationScheme:<wbr>limit:<wbr>dbVersion:<wbr>onInitialCompletion:<wbr>onFinalCompletion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Synchronizes data using the provided localization scheme, performing a follow-up sync with all localizations if required.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p>An assertion failure if <code>initialLocalizationScheme</code> is <code>.all</code>.</p>
+
+</div><ul>
+<li><p>The synchronization process involves two phases:</p>
+
+<ol>
+<li>Synchronizing data with the provided localization scheme.</li>
+<li>Resetting the synchronization token and synchronizing with <code>.all</code> localizations.
+The <code>onInitialCompletion</code> closure is invoked after the first phase, and the final result is passed to the <code>onFinalCompletion</code> closure.</li>
+</ol></li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">sync</span><span class="o">&lt;</span><span class="kt">SSP</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="nv">syncSpacePersistable</span><span class="p">:</span> <span class="kt">SSP</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+    <span class="nv">initialLocalizationScheme</span><span class="p">:</span> <span class="kt"><a href="../Enums/LocalizationScheme.html">LocalizationScheme</a></span><span class="p">,</span>
+    <span class="nv">limit</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">dbVersion</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kt"><a href="../Classes/SynchronizationManager/DBVersions.html">DBVersions</a></span><span class="o">.</span><span class="k">default</span><span class="o">.</span><span class="n">rawValue</span><span class="p">,</span>
+    <span class="nv">onInitialCompletion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">ResultsHandler</span><span class="o">&lt;</span><span class="kt">SyncSpace</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">onFinalCompletion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">ResultsHandler</span><span class="o">&lt;</span><span class="kt">SyncSpace</span><span class="o">&gt;</span>
+<span class="p">)</span> <span class="k">throws</span> <span class="k">where</span> <span class="kt">SSP</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>syncSpacePersistable</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The type conforming to <code><a href="../Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a></code> used for handling synchronization data.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>initialLocalizationScheme</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The localization scheme to use for the initial synchronization phase.
+This must not be <code>.all</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>limit</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An optional limit for the number of records to synchronize in one batch. Defaults to <code>nil</code>, indicating no limit.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dbVersion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The database version targeted for synchronization. Defaults to the application&rsquo;s default database version.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onInitialCompletion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure called upon completion of the initial synchronization phase, with a <code>Result</code> containing either the <code>SyncSpace</code> or an error.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onFinalCompletion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure called upon completion of the final synchronization phase, with a <code>Result</code> containing either the <code>SyncSpace</code> or an error.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L168-L213">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -359,7 +544,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L122-L129">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L223-L232">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -389,7 +574,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L146">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L249">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -419,7 +604,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L149">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L252">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -449,7 +634,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L155-L161">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L258-L264">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -479,7 +664,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L163-L167">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L266-L270">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -508,7 +693,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L169-L200">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L272-L299">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -537,7 +722,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L238-L241">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L337-L340">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -566,7 +751,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L243-L308">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L342-L411">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -628,7 +813,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L362-L373">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L567-L578">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -659,7 +844,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L424-L436">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L629-L641">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -708,7 +893,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L483-L485">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L688-L690">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -757,7 +942,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L492-L500">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L697-L705">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -786,7 +971,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L502-L509">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L707-L714">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -829,7 +1014,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L514-L519">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L719-L724">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -859,7 +1044,7 @@ method is thread safe and will delegate to the thread that your data store is ti
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L538-L549">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L743-L754">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -926,7 +1111,7 @@ Use this method in conjunction with the ContentfulBundleSync command line interf
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift#L24-L66">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/JSON/SynchronizationManager+SeedDB.swift#L24-L66">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1005,7 +1190,7 @@ This only works if you&rsquo;ve used the ContentfulBundleSync command line tool.
        Will return <code>nil</code> if no directory exists at your directory name, or if the <code>Media</code> does not have a valid <code>urlString</code> associated with it.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift#L79-L82">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/JSON/SynchronizationManager+SeedDB.swift#L79-L82">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1084,7 +1269,7 @@ This only works if you&rsquo;ve used the ContentfulBundleSync command line tool.
        or if the <code>Media</code> does not have a <code>urlString</code> associated with it.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift#L95-L99">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/JSON/SynchronizationManager+SeedDB.swift#L95-L99">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1138,7 +1323,7 @@ This only works if you&rsquo;ve used the ContentfulBundleSync command line tool.
        does not have a <code>urlString</code> associated with it.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift#L108-L114">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/JSON/SynchronizationManager+SeedDB.swift#L108-L114">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1169,7 +1354,7 @@ This only works if you&rsquo;ve used the ContentfulBundleSync command line tool.
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift#L118-L131">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/JSON/SynchronizationManager+SeedDB.swift#L118-L131">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1179,8 +1364,8 @@ This only works if you&rsquo;ve used the ContentfulBundleSync command line tool.
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2022-05-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-06-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

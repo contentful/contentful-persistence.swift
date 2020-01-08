@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PreseedConfiguration Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/PreseedConfiguration" class="dashAnchor"></a>
+    <a title="PreseedConfiguration Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ContentfulPersistence 0.18.1 Docs</a> (83% documented)</p>
+        <p class="header-right"><a href="https://github.com/contentful/contentful-persistence.swift"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ContentfulPersistence Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        PreseedConfiguration Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CoreDataStore.html">CoreDataStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FilePreseedManager.html">FilePreseedManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SynchronizationManager.html">SynchronizationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SynchronizationManager/DBVersions.html">– DBVersions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SynchronizationManager/DatabaseSeedingError.html">– DatabaseSeedingError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/LocalizationScheme.html">LocalizationScheme</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/c:objc(cs)NSFileManager">FileManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetPersistable.html">AssetPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ContentSysPersistable.html">ContentSysPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryPersistable.html">EntryPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/FileManaging.html">FileManaging</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PersistenceStore.html">PersistenceStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PreseedStrategy.html">PreseedStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/PersistenceModel.html">PersistenceModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PreseedConfiguration.html">PreseedConfiguration</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>PreseedConfiguration</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">PreseedConfiguration</span></code></pre>
+
+                </div>
+              </div>
+            <p>Describes a bundled seed and the exact directory on disk where
+<code>&lt;resourceName&gt;.&lt;resourceExtension&gt;</code> will be placed.</p>
+
+              <div class="slightly-smaller">
+                <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/PreseedConfiguration.swift#L13-L52">Show on GitHub</a>
+              </div>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence20PreseedConfigurationV12resourceNameSSvp"></a>
+                    <a name="//apple_ref/swift/Property/resourceName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence20PreseedConfigurationV12resourceNameSSvp">resourceName</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>e.g. &ldquo;SeedDB&rdquo; (no “.sqlite”)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">resourceName</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/PreseedConfiguration.swift#L15">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence20PreseedConfigurationV17resourceExtensionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/resourceExtension" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence20PreseedConfigurationV17resourceExtensionSSvp">resourceExtension</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>e.g. &ldquo;sqlite&rdquo;</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">resourceExtension</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/PreseedConfiguration.swift#L18">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence20PreseedConfigurationV12subdirectorySSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/subdirectory" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence20PreseedConfigurationV12subdirectorySSSgvp">subdirectory</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Optional bundle subfolder</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">subdirectory</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/PreseedConfiguration.swift#L21">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence20PreseedConfigurationV6bundleSo8NSBundleCvp"></a>
+                    <a name="//apple_ref/swift/Property/bundle" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence20PreseedConfigurationV6bundleSo8NSBundleCvp">bundle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Bundle containing the resource (default: .main)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/PreseedConfiguration.swift#L24">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence20PreseedConfigurationV19sqliteContainerPath10Foundation3URLVvp"></a>
+                    <a name="//apple_ref/swift/Property/sqliteContainerPath" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence20PreseedConfigurationV19sqliteContainerPath10Foundation3URLVvp">sqliteContainerPath</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Directory on disk where the main <code>.sqlite</code> lives. <strong>Required.</strong></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">sqliteContainerPath</span><span class="p">:</span> <span class="kt">URL</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/PreseedConfiguration.swift#L27">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence20PreseedConfigurationV9dbVersionSivp"></a>
+                    <a name="//apple_ref/swift/Property/dbVersion" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence20PreseedConfigurationV9dbVersionSivp">dbVersion</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The version that this bundled seed represents.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">dbVersion</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/PreseedConfiguration.swift#L30">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence20PreseedConfigurationV12resourceName0E9Extension12subdirectory6bundle19sqliteContainerPath9dbVersionACSS_S2SSgSo8NSBundleC10Foundation3URLVSitcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(resourceName:resourceExtension:subdirectory:bundle:sqliteContainerPath:dbVersion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence20PreseedConfigurationV12resourceName0E9Extension12subdirectory6bundle19sqliteContainerPath9dbVersionACSS_S2SSgSo8NSBundleC10Foundation3URLVSitcfc">init(resourceName:<wbr>resourceExtension:<wbr>subdirectory:<wbr>bundle:<wbr>sqliteContainerPath:<wbr>dbVersion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">resourceName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+            <span class="nv">resourceExtension</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+            <span class="nv">subdirectory</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span> <span class="o">=</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span>
+            <span class="nv">sqliteContainerPath</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span>
+            <span class="nv">dbVersion</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>resourceName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Base name of the bundle file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>resourceExtension</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Extension (e.g. &ldquo;sqlite&rdquo;).</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>subdirectory</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Bundle subfolder (nil = top).</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bundle containing it.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>overrideStoreDirectory</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>On-disk folder to wipe &amp; seed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dbVersion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The migration version for this seed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/PreseedConfiguration.swift#L39-L51">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-06-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

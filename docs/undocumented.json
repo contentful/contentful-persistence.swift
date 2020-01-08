@@ -1,103 +1,131 @@
 {
   "warnings": [
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/CoreDataStore.swift",
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/CoreDataStore.swift",
       "line": 31,
       "symbol": "CoreDataStore.fetchRequest(for:predicate:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/CoreDataStore.swift",
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/CoreDataStore.swift",
       "line": 188,
       "symbol": "CoreDataStore.performBlock(block:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/CoreDataStore.swift",
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/CoreDataStore.swift",
       "line": 201,
       "symbol": "CoreDataStore.performAndWait(block:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/Persistable.swift",
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/Persistable.swift",
       "line": 18,
       "symbol": "PersistenceModel.spaceType",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/Persistable.swift",
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/Persistable.swift",
       "line": 19,
       "symbol": "PersistenceModel.assetType",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/Persistable.swift",
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/Persistable.swift",
       "line": 20,
       "symbol": "PersistenceModel.entryTypes",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/Persistable.swift",
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/Persistable.swift",
       "line": 22,
       "symbol": "PersistenceModel.init(spaceType:assetType:entryTypes:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/Persistable.swift",
-      "line": 38,
-      "symbol": "ContentSysPersistable",
-      "symbol_kind": "source.lang.swift.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/PersistenceStore.swift",
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/PersistenceStore.swift",
       "line": 92,
       "symbol": "PersistenceStore.performBlock(block:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/PersistenceStore.swift",
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/PersistenceStore.swift",
       "line": 94,
       "symbol": "PersistenceStore.performAndWait(block:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/SynchronizationManager.swift",
-      "line": 54,
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/Seeding/BundledDatabase/FileManaging.swift",
+      "line": 13,
+      "symbol": "FileManaging.fileExists(atPath:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/Seeding/BundledDatabase/FileManaging.swift",
+      "line": 14,
+      "symbol": "FileManaging.removeItem(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/Seeding/BundledDatabase/FileManaging.swift",
+      "line": 15,
+      "symbol": "FileManaging.createDirectory(at:withIntermediateDirectories:attributes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/Seeding/BundledDatabase/FileManaging.swift",
+      "line": 18,
+      "symbol": "FileManaging.copyItem(at:to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 72,
       "symbol": "SynchronizationManager.DBVersions",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/SynchronizationManager.swift",
-      "line": 55,
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 73,
       "symbol": "SynchronizationManager.DBVersions.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/SynchronizationManager.swift",
-      "line": 155,
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 118,
+      "symbol": "SynchronizationManager.init(client:localizationScheme:persistenceStore:persistenceModel:preseedConfig:preseedStrategy:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 258,
       "symbol": "SynchronizationManager.syncToken",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence/Sources/ContentfulPersistence/SynchronizationManager.swift",
-      "line": 163,
+      "file": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 266,
       "symbol": "SynchronizationManager.performAndWait(block:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Volumes/Extreme_SSD/Dev/Contentful/ContentfulTests/contentful_persistence"
+  "source_directory": "/Volumes/Extreme_SSD/Dev/Contentful/contentful-persistence.swift"
 }

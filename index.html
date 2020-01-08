@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ContentfulPersistence  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="ContentfulPersistence  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">ContentfulPersistence Docs</a> (70% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">ContentfulPersistence Reference</a>
+        <img id="carat" src="img/carat.png" />
+        ContentfulPersistence  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/CoreDataStore.html">CoreDataStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SynchronizationManager.html">SynchronizationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SynchronizationManager/DatabaseSeedingError.html">– DatabaseSeedingError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/LocalizationScheme.html">LocalizationScheme</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/AssetPersistable.html">AssetPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/ContentSysPersistable.html">ContentSysPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EntryPersistable.html">EntryPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Media.html">Media</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PersistenceStore.html">PersistenceStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/PersistenceModel.html">PersistenceModel</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='contentful-persistence-swift' class='heading'>contentful-persistence.swift</h1>
+
+<p><a href="http://cocoadocs.org/docsets/ContentfulPersistenceSwift"><img src="https://img.shields.io/cocoapods/v/ContentfulPersistenceSwift.svg?style=flat" alt="Version"></a>
+<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a>
+<a href="http://cocoadocs.org/docsets/ContentfulPersistenceSwift"><img src="https://img.shields.io/cocoapods/l/ContentfulPersistenceSwift.svg?style=flat" alt="License"></a>
+<a href="http://cocoadocs.org/docsets/ContentfulPersistenceSwift"><img src="https://img.shields.io/cocoapods/p/ContentfulPersistenceSwift.svg?style=flat" alt="Platform"></a>
+<a href="https://travis-ci.org/contentful/contentful-persistence.swift"><img src="https://img.shields.io/travis/contentful/contentful-persistence.swift/master.svg?style=flat" alt="Build Status"></a>
+<a href="https://coveralls.io/github/contentful/contentful-persistence.swift"><img src="https://img.shields.io/coveralls/contentful/contentful-persistence.swift.svg" alt="Coverage Status"></a></p>
+
+<p>Simplified persistence for the <a href="https://www.contentful.com">Contentful</a> <a href="https://github.com/contentful/contentful.swift">Swift SDK</a>.</p>
+
+<p><a href="https://www.contentful.com">Contentful</a> is a content management platform for web applications, mobile apps and connected devices. It allows you to create, edit &amp; manage content in the cloud and publish it anywhere via powerful API. Contentful offers tools for managing editorial teams and enabling cooperation between organizations.</p>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>The <code><a href="Classes/SynchronizationManager.html">SynchronizationManager</a></code> manages the state of your CoreData database and keeps it in sync with the data from your Contentful Space:</p>
+<pre class="highlight swift"><code><span class="c1">// Tell the library which of your `NSManagedObject` subclasses that conform to `EntryPersistable` should be used when mapping API resonses to CoreData entities.</span>
+<span class="k">let</span> <span class="nv">entryTypes</span> <span class="o">=</span> <span class="p">[</span><span class="kt">Author</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">Category</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">Post</span><span class="o">.</span><span class="k">self</span><span class="p">]</span>
+
+<span class="c1">// Initialize the data store and it's schema.</span>
+<span class="k">let</span> <span class="nv">store</span> <span class="o">=</span> <span class="kt">CoreDataStore</span><span class="p">(</span><span class="nv">context</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">managedObjectContext</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">persistenceModel</span> <span class="o">=</span> <span class="kt">PersistenceModel</span><span class="p">(</span><span class="nv">spaceType</span><span class="p">:</span> <span class="kt">SyncInfo</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">assetType</span><span class="p">:</span> <span class="kt">Asset</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">entryTypes</span><span class="p">:</span> <span class="n">entryTypes</span><span class="p">)</span>
+
+<span class="c1">// Initialize the Contentful.Client with a persistenceIntegration which will receive messages about changes when calling `sync methods`</span>
+<span class="k">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="kt">Client</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="s">"&lt;YOUR_SPACE_ID&gt;"</span><span class="p">,</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="s">"&lt;YOUR_ACCESS_TOKEN&gt;"</span><span class="p">)</span>
+
+<span class="c1">// Create the manager.</span>
+<span class="k">self</span><span class="o">.</span><span class="n">syncManager</span> <span class="o">=</span> <span class="kt">SynchronizationManager</span><span class="p">(</span><span class="nv">client</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
+                                          <span class="nv">localizationScheme</span><span class="p">:</span> <span class="kt">LocalizationScheme</span><span class="o">.</span><span class="n">all</span><span class="p">,</span> <span class="c1">// Save data for all locales your space supports.</span>
+                                          <span class="nv">persistenceStore</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">store</span><span class="p">,</span> 
+                                          <span class="nv">persistenceModel</span><span class="p">:</span> <span class="n">persistenceModel</span><span class="p">)</span>
+
+
+
+<span class="c1">// Sync with the API. </span>
+<span class="k">self</span><span class="o">.</span><span class="n">syncManager</span><span class="o">.</span><span class="nf">sync</span><span class="p">()</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+  <span class="k">do</span> <span class="p">{</span>
+    <span class="c1">// Fetch all `Posts` from CoreData</span>
+    <span class="k">let</span> <span class="nv">post</span><span class="p">:</span> <span class="kt">Post</span><span class="p">?</span> <span class="o">=</span> <span class="k">try</span> <span class="k">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="nf">fetchAll</span><span class="p">(</span><span class="nv">type</span><span class="p">:</span> <span class="kt">Post</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">predicate</span><span class="p">:</span> <span class="kt">NSPredicate</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">))</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+    <span class="c1">// Handle error thrown by CoreData fetches.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='define-your-code-coredata-code-model' class='heading'>Define your <code>CoreData</code> model</h2>
+
+<p>To make your model classes work with contentful-persistence.swift you will need to either conform to <code><a href="Protocols/ContentSysPersistable.html">ContentSysPersistable</a></code> for Contentful Assets, or <code><a href="Protocols/EntryPersistable.html">EntryPersistable</a></code> for Contentful entry types.</p>
+
+<p>Then you will need to make the corresponding model in your projects <code>xcdatamodel</code> file. Both <code><a href="Protocols/EntryPersistable.html">EntryPersistable</a></code> and <code><a href="Protocols/ContentSysPersistable.html">ContentSysPersistable</a></code> types must have a <em>non-optional</em> <code>id</code> and <code>localeCode</code> properties as well as optional <code>createdAt</code> and <code>updatedAt</code> date properties.</p>
+
+<p>Optionality on CoreData entities is a bit different than swift optionality—optionality means that the property may be absent when a save-to-database operation is performed. To configure a property&rsquo;s optionality, open the <q>Data Model Inspector</q> in Xcode&rsquo;s <q>Utilities</q> right sidebar and toggle the <q>Optional</q> checkbox:</p>
+
+<p><img src="Screenshots/CoreDataOptionality.png" alt=""></p>
+
+<p>The mapping of Contentful fields to your data model entities will be derived automatically, but you can also customize it, by implementing the <code>static func mapping() -&gt; [FieldName: String]?</code> on your class.</p>
+
+<p>Here is an example of a model class:</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">CoreData</span>
+<span class="kd">import</span> <span class="kt">ContentfulPersistence</span>
+<span class="kd">import</span> <span class="kt">Contentful</span>
+
+<span class="c1">// The following @objc attribute is only necessary if your xcdatamodel Default configuration doesn't have your module</span>
+<span class="c1">// name prepended to the Swift class. To enable removing the @objc attribute, change the Class for your entity to `ModuleName.Post`</span>
+<span class="kd">@objc(Post)</span> 
+<span class="kd">class</span> <span class="kt">Post</span><span class="p">:</span> <span class="kt">NSManagedObject</span><span class="p">,</span> <span class="kt">EntryPersistable</span> <span class="p">{</span>
+
+    <span class="c1">// The identifier of the corresponding Content Type in Contentful.</span>
+    <span class="kd">static</span> <span class="k">let</span> <span class="nv">contentTypeId</span> <span class="o">=</span> <span class="s">"2wKn6yEnZewu2SCCkus4as"</span>
+
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">localeCode</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">createdAt</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">updatedAt</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">comments</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">date</span><span class="p">:</span> <span class="kt">NSDate</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">slug</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">tags</span><span class="p">:</span> <span class="kt">Data</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">authors</span><span class="p">:</span> <span class="kt">NSOrderedSet</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">category</span><span class="p">:</span> <span class="kt">NSOrderedSet</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">theFeaturedImage</span><span class="p">:</span> <span class="kt">Asset</span><span class="p">?</span>
+
+    <span class="c1">// Define the mapping from the fields on your Contentful.Entry to your model class. </span>
+    <span class="c1">// In the below example, only the `title` and `author` fields and `featuredImage` link will be populated.</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">fieldMapping</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">FieldName</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s">"title"</span><span class="p">:</span> <span class="s">"title"</span><span class="p">,</span>
+            <span class="s">"featuredImage"</span><span class="p">:</span> <span class="s">"theFeaturedImage"</span><span class="p">,</span>
+            <span class="s">"author"</span><span class="p">:</span> <span class="s">"authors"</span>
+        <span class="p">]</span>    
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='documentation' class='heading'>Documentation</h2>
+
+<p>For further information, check out the <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/">Developer Documentation</a> or browse the <a href="http://cocoadocs.org/docsets/ContentfulPersistenceSwift/">API documentation</a>. The latter can also be loaded into Xcode as a Docset.</p>
+<h3 id='cocoapods-installation' class='heading'>CocoaPods installation</h3>
+
+<p><a href="https://cocoapods.org/">CocoaPods</a> is the dependency manager for Objective-C and Swift, which automates and simplifies the process of using 3rd-party libraries like the ContentfulPersistence in your projects.</p>
+<pre class="highlight ruby"><code><span class="n">platform</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s1">'8.0'</span>
+<span class="n">use_frameworks!</span>
+
+<span class="n">target</span> <span class="ss">:MyApp</span> <span class="k">do</span>
+    <span class="n">pod</span> <span class="s1">'ContentfulPersistenceSwift'</span><span class="p">,</span> <span class="s1">'~&gt; 0.7.0'</span>
+<span class="k">end</span>
+</code></pre>
+<h3 id='carthage-installation' class='heading'>Carthage installation</h3>
+
+<p>You can also use <a href="https://github.com/Carthage/Carthage">Carthage</a> for integration by adding the following to your <code>Cartfile</code>:</p>
+<pre class="highlight plaintext"><code>github "contentful/contentful.swift" ~&gt; 0.7.0
+</code></pre>
+<h2 id='unit-tests' class='heading'>Unit Tests</h2>
+
+<p>To run the tests, do the following steps:</p>
+<pre class="highlight plaintext"><code>$ make setup_env
+$ carthage bootstrap --platform all
+$ make test
+</code></pre>
+
+<p>or run them directly from Xcode.</p>
+<h2 id='license' class='heading'>License</h2>
+
+<p>Copyright &copy; 2017 Contentful GmbH. See LICENSE for further details.</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://www.contentful.com" target="_blank" rel="external">Contentful</a>. All rights reserved. (Last updated: 2017-10-25)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

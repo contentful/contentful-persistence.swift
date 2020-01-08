@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LocalizationScheme Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Enum/LocalizationScheme" class="dashAnchor"></a>
+    <a title="LocalizationScheme Enumeration Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ContentfulPersistence Docs</a> (70% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ContentfulPersistence Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        LocalizationScheme Enumeration Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CoreDataStore.html">CoreDataStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SynchronizationManager.html">SynchronizationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SynchronizationManager/DatabaseSeedingError.html">– DatabaseSeedingError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/LocalizationScheme.html">LocalizationScheme</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetPersistable.html">AssetPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ContentSysPersistable.html">ContentSysPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryPersistable.html">EntryPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Media.html">Media</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PersistenceStore.html">PersistenceStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/PersistenceModel.html">PersistenceModel</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>LocalizationScheme</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">LocalizationScheme</span></code></pre>
+
+                </div>
+              </div>
+            <p>Configure your SynchronizationManager instance with a localization scheme to define which data should
+be saved to your persistent store. The <code><a href="../Enums/LocalizationScheme.html#/s:21ContentfulPersistence18LocalizationSchemeO7defaultA2CmF">LocalizationScheme.default</a></code> scheme will save entities representing
+data only for the default locale of your space, while the <code><a href="../Enums/LocalizationScheme.html#/s:21ContentfulPersistence18LocalizationSchemeO3allA2CmF">LocalizationScheme.all</a></code> will save data 
+for all locales.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence18LocalizationSchemeO7defaultA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/default" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence18LocalizationSchemeO7defaultA2CmF">default</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Use the <code>.default</code> scheme to save only for the default locale for your space.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="err">`</span><span class="k">default</span><span class="err">`</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L31">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence18LocalizationSchemeO3oneXeF"></a>
+                    <a name="//apple_ref/swift/Element/one" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence18LocalizationSchemeO3oneXeF">one</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Specify that data should be saved for only one locale using this scheme.
+For example the scheme, <code>LocalizationScheme.one(&quot;es-MX&quot;)</code>, will configure this library to only
+save data for Mexican Spanish. Not that an <code>assertionFailure</code> will be thrown if Mexican Spanish
+is not a valid locale on your space.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="nf">one</span><span class="p">(</span><span class="kt">LocaleCode</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L38">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence18LocalizationSchemeO3allA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/all" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence18LocalizationSchemeO3allA2CmF">all</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Require that data for all locales be saved to your persistent store. Remember to specify a
+predicate that includes pattern matching for the <code>localeCode</code> property of your <code>Persistable</code> model classes
+when fetching from your local database.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="n">all</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L44">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://www.contentful.com" target="_blank" rel="external">Contentful</a>. All rights reserved. (Last updated: 2017-10-25)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

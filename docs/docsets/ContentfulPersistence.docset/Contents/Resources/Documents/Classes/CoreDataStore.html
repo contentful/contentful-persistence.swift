@@ -17,7 +17,7 @@
     <a title="CoreDataStore Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">ContentfulPersistence 0.17.7 Docs</a> (83% documented)</p>
+        <p><a href="../index.html">ContentfulPersistence 0.18.1 Docs</a> (83% documented)</p>
         <p class="header-right"><a href="https://github.com/contentful/contentful-persistence.swift"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -43,6 +43,9 @@
                 <a href="../Classes/CoreDataStore.html">CoreDataStore</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/FilePreseedManager.html">FilePreseedManager</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SynchronizationManager.html">SynchronizationManager</a>
               </li>
               <li class="nav-group-task">
@@ -62,6 +65,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/c:objc(cs)NSFileManager">FileManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -74,7 +85,13 @@
                 <a href="../Protocols/EntryPersistable.html">EntryPersistable</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/FileManaging.html">FileManaging</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/PersistenceStore.html">PersistenceStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PreseedStrategy.html">PreseedStrategy</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a>
@@ -86,6 +103,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/PersistenceModel.html">PersistenceModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PreseedConfiguration.html">PreseedConfiguration</a>
               </li>
             </ul>
           </li>
@@ -105,7 +125,7 @@
             <p>Implementation fo the <code><a href="../Protocols/PersistenceStore.html">PersistenceStore</a></code> protocol using CoreData</p>
 
               <div class="slightly-smaller">
-                <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L17-L213">Show on GitHub</a>
+                <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L17-L213">Show on GitHub</a>
               </div>
           </section>
           <section class="section task-group-section">
@@ -159,7 +179,7 @@
                         <p>An initialised instance of this class</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L27-L29">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L27-L29">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -189,7 +209,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L31-L39">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L31-L39">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -260,7 +280,7 @@
                         <p>A newly created object of the given type</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L52-L63">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L52-L63">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -326,7 +346,7 @@
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L73-L79">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L73-L79">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -396,7 +416,7 @@
                         <p>An array of matching objects</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L91-L95">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L91-L95">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -428,7 +448,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L97-L104">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L97-L104">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -488,7 +508,7 @@
                         <p>An array of property names representing system native types.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L117-L124">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L117-L124">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -546,7 +566,7 @@
                         <p>An array of property names representing related entities.</p>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L135-L138">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L135-L138">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -581,7 +601,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L145-L147">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L145-L147">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -612,7 +632,7 @@ WARNING: all the data will be wipes in the current persistence store associated 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L151-L176">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L151-L176">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -655,7 +675,7 @@ WARNING: all the data will be wipes in the current persistence store associated 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L188-L199">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L188-L199">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -685,7 +705,67 @@ WARNING: all the data will be wipes in the current persistence store associated 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L201-L212">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L201-L212">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC02onE19PreseedingWillBegin2aty10Foundation3URLV_tKF"></a>
+                    <a name="//apple_ref/swift/Method/onStorePreseedingWillBegin(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC02onE19PreseedingWillBegin2aty10Foundation3URLV_tKF">onStorePreseedingWillBegin(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Before swapping: delete WAL/SHM side-cars and remove only the store matching <code>storeFileURL</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onStorePreseedingWillBegin</span><span class="p">(</span><span class="n">at</span> <span class="nv">storeFileURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/CoreDataStore+Preseeding.swift#L13-L30">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC02onE19PreseedingCompleted2aty10Foundation3URLV_tKF"></a>
+                    <a name="//apple_ref/swift/Method/onStorePreseedingCompleted(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC02onE19PreseedingCompleted2aty10Foundation3URLV_tKF">onStorePreseedingCompleted(at:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>After swapping: add the store back <em>and then</em> reset the context.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">onStorePreseedingCompleted</span><span class="p">(</span><span class="n">at</span> <span class="nv">seededFileURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/CoreDataStore+Preseeding.swift#L33-L49">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -695,8 +775,8 @@ WARNING: all the data will be wipes in the current persistence store associated 
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2022-05-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-06-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

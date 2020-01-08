@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CoreDataStore Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/CoreDataStore" class="dashAnchor"></a>
+    <a title="CoreDataStore Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ContentfulPersistence Docs</a> (70% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ContentfulPersistence Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        CoreDataStore Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CoreDataStore.html">CoreDataStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SynchronizationManager.html">SynchronizationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SynchronizationManager/DatabaseSeedingError.html">– DatabaseSeedingError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/LocalizationScheme.html">LocalizationScheme</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetPersistable.html">AssetPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ContentSysPersistable.html">ContentSysPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryPersistable.html">EntryPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Media.html">Media</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PersistenceStore.html">PersistenceStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/PersistenceModel.html">PersistenceModel</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>CoreDataStore</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">CoreDataStore</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PersistenceStore.html">PersistenceStore</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>Implementation fo the <code><a href="../Protocols/PersistenceStore.html">PersistenceStore</a></code> protocol using CoreData</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreCACSo22NSManagedObjectContextC7context_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(context:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreCACSo22NSManagedObjectContextC7context_tcfc">init(context:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize a new CoreData persistence store</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">context</span><span class="p">:</span> <span class="kt">NSManagedObjectContext</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The managed object context used for querying and</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An initialised instance of this class</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/CoreDataStore.swift#L27-L29">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC12fetchRequestSo07NSFetchG0CySo0hG6Result_pGypXp3for_So11NSPredicateC9predicatetKF"></a>
+                    <a name="//apple_ref/swift/Method/fetchRequest(for:predicate:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC12fetchRequestSo07NSFetchG0CySo0hG6Result_pGypXp3for_So11NSPredicateC9predicatetKF">fetchRequest(for:predicate:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">CoreDataStore</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PersistenceStore.html">PersistenceStore</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/CoreDataStore.swift#L31-L39">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/%3CPersistenceStore%3E"></a>
+                <a name="//apple_ref/swift/Section/&lt;PersistenceStore&gt;" class="dashAnchor"></a>
+                <a href="#/%3CPersistenceStore%3E">
+                  <h3 class="section-name">&lt;PersistenceStore&gt;</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC6createxypXp4type_tKlF"></a>
+                    <a name="//apple_ref/swift/Method/create(type:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC6createxypXp4type_tKlF">create(type:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a new object of the given type.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p>If a invalid type was specified</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">create</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">type</span><span class="p">:</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">T</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The type of which a new object should be created</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A newly created object of the given type</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/CoreDataStore.swift#L52-L63">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC6deleteyypXp4type_So11NSPredicateC9predicatetKF"></a>
+                    <a name="//apple_ref/swift/Method/delete(type:predicate:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC6deleteyypXp4type_So11NSPredicateC9predicatetKF">delete(type:predicate:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Delete objects of the given type which also match the predicate.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p>If an invalid type was specified</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="nv">type</span><span class="p">:</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">predicate</span><span class="p">:</span> <span class="kt">NSPredicate</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The type of which objects should be deleted</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>predicate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The predicate used for matching objects to delete</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/CoreDataStore.swift#L73-L79">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC8fetchAllSayxGypXp4type_So11NSPredicateC9predicatetKlF"></a>
+                    <a name="//apple_ref/swift/Method/fetchAll(type:predicate:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC8fetchAllSayxGypXp4type_So11NSPredicateC9predicatetKlF">fetchAll(type:predicate:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetches all objects of a specific type which also match the predicate.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p>If an invalid type was specified</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">fetchAll</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">type</span><span class="p">:</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">predicate</span><span class="p">:</span> <span class="kt">NSPredicate</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">T</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The type of which objects should be fetched</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>predicate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The predicate used for matching object to fetch</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of matching objects</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/CoreDataStore.swift#L91-L94">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC10propertiesSaySSGypXp3for_tKF"></a>
+                    <a name="//apple_ref/swift/Method/properties(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC10propertiesSaySSGypXp3for_tKF">properties(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an array of names of properties the given type stores persistently.</p>
+
+<p>This should omit any properties returned by <code>relationshipsFor(type:)</code>.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p>If an invalid type was specified</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">properties</span><span class="p">(</span><span class="k">for</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The type of which properties should be returned for</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of property names representing system native types.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/CoreDataStore.swift#L107-L114">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC13relationshipsSaySSGypXp3for_tKF"></a>
+                    <a name="//apple_ref/swift/Method/relationships(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC13relationshipsSaySSGypXp3for_tKF">relationships(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an array of property names for any relationship the given type stores persistently.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p>If an invalid type was specified</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">relationships</span><span class="p">(</span><span class="k">for</span> <span class="nv">type</span><span class="p">:</span> <span class="kt">Any</span><span class="o">.</span><span class="k">Type</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>type</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The type of which properties should be returned for</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of property names representing related entities.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/CoreDataStore.swift#L125-L128">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC4saveyyKF"></a>
+                    <a name="//apple_ref/swift/Method/save()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC4saveyyKF">save()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Performs the actual save to the persistence store.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    If any error occured during the save operation
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">save</span><span class="p">()</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/CoreDataStore.swift#L135-L137">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Helper%20methods"></a>
+                <a name="//apple_ref/swift/Section/Helper methods" class="dashAnchor"></a>
+                <a href="#/Helper%20methods">
+                  <h3 class="section-name">Helper methods</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC12performBlockyyyc5block_tF"></a>
+                    <a name="//apple_ref/swift/Method/performBlock(block:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC12performBlockyyyc5block_tF">performBlock(block:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">CoreDataStore</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PersistenceStore.html">PersistenceStore</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/CoreDataStore.swift#L149-L158">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence13CoreDataStoreC14performAndWaityyyc5block_tF"></a>
+                    <a name="//apple_ref/swift/Method/performAndWait(block:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence13CoreDataStoreC14performAndWaityyyc5block_tF">performAndWait(block:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">CoreDataStore</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PersistenceStore.html">PersistenceStore</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/CoreDataStore.swift#L160-L169">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://www.contentful.com" target="_blank" rel="external">Contentful</a>. All rights reserved. (Last updated: 2017-10-25)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

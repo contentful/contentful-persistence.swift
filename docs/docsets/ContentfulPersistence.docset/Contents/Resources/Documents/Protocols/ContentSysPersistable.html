@@ -17,7 +17,7 @@
     <a title="ContentSysPersistable Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">ContentfulPersistence 0.17.7 Docs</a> (83% documented)</p>
+        <p><a href="../index.html">ContentfulPersistence 0.18.1 Docs</a> (83% documented)</p>
         <p class="header-right"><a href="https://github.com/contentful/contentful-persistence.swift"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="../search.json">
@@ -43,6 +43,9 @@
                 <a href="../Classes/CoreDataStore.html">CoreDataStore</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/FilePreseedManager.html">FilePreseedManager</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/SynchronizationManager.html">SynchronizationManager</a>
               </li>
               <li class="nav-group-task">
@@ -62,6 +65,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions.html#/c:objc(cs)NSFileManager">FileManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -74,7 +85,13 @@
                 <a href="../Protocols/EntryPersistable.html">EntryPersistable</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/FileManaging.html">FileManaging</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/PersistenceStore.html">PersistenceStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PreseedStrategy.html">PreseedStrategy</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a>
@@ -86,6 +103,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/PersistenceModel.html">PersistenceModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PreseedConfiguration.html">PreseedConfiguration</a>
               </li>
             </ul>
           </li>
@@ -102,10 +122,10 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Base protocol for all <code><a href="../Protocols/AssetPersistable.html">AssetPersistable</a></code> and <code><a href="../Protocols/EntryPersistable.html">EntryPersistable</a></code>.</p>
 
               <div class="slightly-smaller">
-                <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/Persistable.swift#L38-L50">Show on GitHub</a>
+                <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Persistable.swift#L38-L50">Show on GitHub</a>
               </div>
           </section>
           <section class="section task-group-section">
@@ -136,7 +156,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/Persistable.swift#L40">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Persistable.swift#L40">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -166,7 +186,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/Persistable.swift#L43">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Persistable.swift#L43">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -196,7 +216,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/Persistable.swift#L46">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Persistable.swift#L46">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -226,7 +246,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/Persistable.swift#L49">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Persistable.swift#L49">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -236,8 +256,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2022-05-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-06-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SynchronizationManager Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/SynchronizationManager" class="dashAnchor"></a>
+    <a title="SynchronizationManager Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ContentfulPersistence Docs</a> (70% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ContentfulPersistence Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        SynchronizationManager Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CoreDataStore.html">CoreDataStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SynchronizationManager.html">SynchronizationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SynchronizationManager/DatabaseSeedingError.html">– DatabaseSeedingError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/LocalizationScheme.html">LocalizationScheme</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AssetPersistable.html">AssetPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ContentSysPersistable.html">ContentSysPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EntryPersistable.html">EntryPersistable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Media.html">Media</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PersistenceStore.html">PersistenceStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/PersistenceModel.html">PersistenceModel</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>SynchronizationManager</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SynchronizationManager</span><span class="p">:</span> <span class="kt">PersistenceIntegration</span></code></pre>
+
+                </div>
+              </div>
+            <p>Provides the ability to sync content from Contentful to a persistence store.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Integration"></a>
+                <a name="//apple_ref/swift/Section/Integration" class="dashAnchor"></a>
+                <a href="#/Integration">
+                  <h3 class="section-name">Integration</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC4nameSSv"></a>
+                    <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC4nameSSv">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SynchronizationManager</span><span class="p">:</span> <span class="kt">PersistenceIntegration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC7versionSSv"></a>
+                    <a name="//apple_ref/swift/Property/version" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC7versionSSv">version</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SynchronizationManager</span><span class="p">:</span> <span class="kt">PersistenceIntegration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L54-L61">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerCXeXecfc"></a>
+                    <a name="//apple_ref/swift/Method/init(client:localizationScheme:persistenceStore:persistenceModel:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerCXeXecfc">init(client:localizationScheme:persistenceStore:persistenceModel:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instantiate a new SynchronizationManager.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">client</span><span class="p">:</span> <span class="kt">Client</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                <span class="nv">localizationScheme</span><span class="p">:</span> <span class="kt"><a href="../Enums/LocalizationScheme.html">LocalizationScheme</a></span><span class="p">,</span>
+                <span class="nv">persistenceStore</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PersistenceStore.html">PersistenceStore</a></span><span class="p">,</span>
+                <span class="nv">persistenceModel</span><span class="p">:</span> <span class="kt"><a href="../Structs/PersistenceModel.html">PersistenceModel</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>persistenceStore</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The persistence store to use for storage</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>matching</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An optional query for syncing specific content,
+see <https://www.contentful.com/developers/docs/references/content-delivery-api/#/
+reference/synchronization/initial-synchronisation-of-entries-of-a-specific-content-type></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An initialised instance of SynchronizationManager</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L73-L87">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC6updateXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/update(localeCodes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC6updateXeXeF">update(localeCodes:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SynchronizationManager</span><span class="p">:</span> <span class="kt">PersistenceIntegration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L91-L102">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC4syncXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/sync(then:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC4syncXeXeF">sync(then:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A wrapper method to synchronize data from Contentful to your local data store. The callback for this
+method is thread safe and will delegate to the thread that your data store is tied to.</p>
+
+<p>Execute queries on your local data store in the callback for this method.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sync</span><span class="p">(</span><span class="n">then</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">ResultsHandler</span><span class="o">&lt;</span><span class="kt">SyncSpace</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L110-L123">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC6clientXev"></a>
+                    <a name="//apple_ref/swift/Property/client" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC6clientXev">client</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The Contentful.Client that is configured to retrieve data from your Contentful space.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">client</span><span class="p">:</span> <span class="kt">Client</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L126">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC18localizationSchemeAA012LocalizationF0Ov"></a>
+                    <a name="//apple_ref/swift/Property/localizationScheme" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC18localizationSchemeAA012LocalizationF0Ov">localizationScheme</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The localization scheme with which to synchronize your Contentful space to your data store.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">localizationScheme</span><span class="p">:</span> <span class="kt"><a href="../Enums/LocalizationScheme.html">LocalizationScheme</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L129">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC9syncTokenSSSgv"></a>
+                    <a name="//apple_ref/swift/Property/syncToken" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC9syncTokenSSSgv">syncToken</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SynchronizationManager</span><span class="p">:</span> <span class="kt">PersistenceIntegration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L135-L141">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC14performAndWaityyyc5block_tF"></a>
+                    <a name="//apple_ref/swift/Method/performAndWait(block:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC14performAndWaityyyc5block_tF">performAndWait(block:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SynchronizationManager</span><span class="p">:</span> <span class="kt">PersistenceIntegration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L143-L147">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC6updateXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/update(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC6updateXeXeF">update(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SynchronizationManager</span><span class="p">:</span> <span class="kt">PersistenceIntegration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L149-L172">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC6updateySS9syncToken_tF"></a>
+                    <a name="//apple_ref/swift/Method/update(syncToken:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC6updateySS9syncToken_tF">update(syncToken:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SynchronizationManager</span><span class="p">:</span> <span class="kt">PersistenceIntegration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L174-L177">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC20resolveRelationshipsyyF"></a>
+                    <a name="//apple_ref/swift/Method/resolveRelationships()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC20resolveRelationshipsyyF">resolveRelationships()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SynchronizationManager</span><span class="p">:</span> <span class="kt">PersistenceIntegration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L179-L207">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/PersistenceDelegate"></a>
+                <a name="//apple_ref/swift/Section/PersistenceDelegate" class="dashAnchor"></a>
+                <a href="#/PersistenceDelegate">
+                  <h3 class="section-name">PersistenceDelegate</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC6createXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/create(asset:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC6createXeXeF">create(asset:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This function is public as a side-effect of implementing <code>PersistenceDelegate</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">asset</span><span class="p">:</span> <span class="kt">Asset</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>asset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The newly created Asset</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L216-L230">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC6createXeXeF"></a>
+                    <a name="//apple_ref/swift/Method/create(entry:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC6createXeXeF">create(entry:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Never call this directly.
+ This function is public as a side-effect of implementing <code>SyncSpaceDelegate</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">entry</span><span class="p">:</span> <span class="kt">Entry</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L266-L280">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC6deleteySS11assetWithId_tF"></a>
+                    <a name="//apple_ref/swift/Method/delete(assetWithId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC6deleteySS11assetWithId_tF">delete(assetWithId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This function is public as a side-effect of implementing <code>PersistenceDelegate</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="nv">assetWithId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>assetId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The ID of the deleted Asset</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L323-L325">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC6deleteySS11entryWithId_tF"></a>
+                    <a name="//apple_ref/swift/Method/delete(entryWithId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC6deleteySS11entryWithId_tF">delete(entryWithId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This function is public as a side-effect of implementing <code>SyncSpaceDelegate</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="nv">entryWithId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>entryId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The ID of the deleted Entry</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L332-L338">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC4saveyyF"></a>
+                    <a name="//apple_ref/swift/Method/save()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC4saveyyF">save()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">SynchronizationManager</span><span class="p">:</span> <span class="kt">PersistenceIntegration</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager.swift#L340-L346">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC19seedDBFromJSONFilesySS2in_So6BundleCAEtKF"></a>
+                    <a name="//apple_ref/swift/Method/seedDBFromJSONFiles(in:in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC19seedDBFromJSONFilesySS2in_So6BundleCAEtKF">seedDBFromJSONFiles(in:in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This method will seed a CoreData datastore from a directory of JSON files in the specified Bundle.
+Use this method in conjunction with the ContentfulBundleSync command line interface.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <p>Errors if the media the files in the directory can&rsquo;t be deserialized.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">seedDBFromJSONFiles</span><span class="p">(</span><span class="k">in</span> <span class="nv">directory</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="k">in</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>directory</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the directory in your bundle which contains your Contentful JSON and media assets generated by the CLI.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bundle in which your directory containing your Contentful data is located.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift#L24-L60">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC12pathInBundleSSSgAA5Media_p3for_SS16inDirectoryNamedSo0G0C0J0tFZ"></a>
+                    <a name="//apple_ref/swift/Method/pathInBundle(for:inDirectoryNamed:in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC12pathInBundleSSSgAA5Media_p3for_SS16inDirectoryNamedSo0G0C0J0tFZ">pathInBundle(for:inDirectoryNamed:in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the local path for media assets that have been bundled in your app&rsquo;s bundle for the passed in <code>Asset</code> or <code><a href="../Protocols/AssetPersistable.html">AssetPersistable</a></code>.
+This only works if you&rsquo;ve used the ContentfulBundleSync command line tool.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">pathInBundle</span><span class="p">(</span><span class="k">for</span> <span class="nv">media</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Media.html">Media</a></span><span class="p">,</span> <span class="n">inDirectoryNamed</span> <span class="nv">directory</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="k">in</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>media</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The Asset or AssetPersistable for which on-disk data should be retreived.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>directory</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the directory in your bundle which contains the media data</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bundle in which your directory containing your media files is located.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The full string path for the underlying media file associated with the passed in <code>Asset</code> or <code>AssetPersistabl</code>.
+       Will return <code>nil</code> if no directory exists at your directory name, or if the <code><a href="../Protocols/Media.html">Media</a></code> does not have a valid <code>urlString</code> associated with it.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift#L73-L76">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC11bundledData10Foundation0F0VSgAA5Media_p3for_SS16inDirectoryNamedSo6BundleC0J0tFZ"></a>
+                    <a name="//apple_ref/swift/Method/bundledData(for:inDirectoryNamed:in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC11bundledData10Foundation0F0VSgAA5Media_p3for_SS16inDirectoryNamedSo6BundleC0J0tFZ">bundledData(for:inDirectoryNamed:in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns on-disk data that is bundled in your app&rsquo;s bundle for the passed in <code>Asset</code> or <code><a href="../Protocols/AssetPersistable.html">AssetPersistable</a></code>.
+This only works if you&rsquo;ve used the ContentfulBundleSync command line tool.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">bundledData</span><span class="p">(</span><span class="k">for</span> <span class="nv">media</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Media.html">Media</a></span><span class="p">,</span> <span class="n">inDirectoryNamed</span> <span class="nv">directory</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="k">in</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Data</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>media</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The Asset or AssetPersistable for which on-disk data should be retreived.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>directory</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the directory in your bundle which contains the media data</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bundle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The bundle in which your directory containing your media files is located.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Data</code> object for your media file. Will return <code>nil</code> if no directory exists at your directory name,
+       or if the <code><a href="../Protocols/Media.html">Media</a></code> does not have a <code>urlString</code> associated with it.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift#L89-L93">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC8fileNameSSSgAA5Media_p3for_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/fileName(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC8fileNameSSSgAA5Media_p3for_tFZ">fileName(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a file name to be used for local storage given a passed in <code>Asset</code> or <code><a href="../Protocols/AssetPersistable.html">AssetPersistable</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">fileName</span><span class="p">(</span><span class="k">for</span> <span class="nv">media</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Media.html">Media</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>media</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The Asset or AssetPersistable for which a file name should be computed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A filename for the underlying media file. Will return <code>nil</code> if the Asset or AssetPersistable
+       does not have a <code>urlString</code> associated with it.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift#L102-L107">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence22SynchronizationManagerC20DatabaseSeedingErrorO"></a>
+                    <a name="//apple_ref/swift/Enum/DatabaseSeedingError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence22SynchronizationManagerC20DatabaseSeedingErrorO">DatabaseSeedingError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Errors thrown by ContentfulPersistence when trying to seed a database with bundled data.</p>
+
+                        <a href="../Classes/SynchronizationManager/DatabaseSeedingError.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DatabaseSeedingError</span><span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span><span class="p">,</span> <span class="kt">CustomDebugStringConvertible</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.7.0/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift#L111-L124">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://www.contentful.com" target="_blank" rel="external">Contentful</a>. All rights reserved. (Last updated: 2017-10-25)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

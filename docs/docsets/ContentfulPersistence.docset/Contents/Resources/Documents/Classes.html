@@ -17,7 +17,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">ContentfulPersistence 0.17.7 Docs</a> (83% documented)</p>
+        <p><a href="index.html">ContentfulPersistence 0.18.1 Docs</a> (83% documented)</p>
         <p class="header-right"><a href="https://github.com/contentful/contentful-persistence.swift"><img src="img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="search.json">
@@ -43,6 +43,9 @@
                 <a href="Classes/CoreDataStore.html">CoreDataStore</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/FilePreseedManager.html">FilePreseedManager</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/SynchronizationManager.html">SynchronizationManager</a>
               </li>
               <li class="nav-group-task">
@@ -62,6 +65,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions.html#/c:objc(cs)NSFileManager">FileManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -74,7 +85,13 @@
                 <a href="Protocols/EntryPersistable.html">EntryPersistable</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols/FileManaging.html">FileManaging</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/PersistenceStore.html">PersistenceStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PreseedStrategy.html">PreseedStrategy</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a>
@@ -86,6 +103,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Structs/PersistenceModel.html">PersistenceModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PreseedConfiguration.html">PreseedConfiguration</a>
               </li>
             </ul>
           </li>
@@ -127,7 +147,43 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/CoreDataStore.swift#L17-L213">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/CoreDataStore.swift#L17-L213">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21ContentfulPersistence18FilePreseedManagerC"></a>
+                    <a name="//apple_ref/swift/Class/FilePreseedManager" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21ContentfulPersistence18FilePreseedManagerC">FilePreseedManager</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default strategy that:
+1) calls <code>onStorePreseedingWillBegin(at:)</code>
+2) wipes the entire seed folder
+3) copies <code>&lt;resourceName&gt;.&lt;resourceExtension&gt;</code>
+4) calls <code>onStorePreseedingCompleted(at:)</code>
+5) writes back <code>dbVersion</code></p>
+
+                        <a href="Classes/FilePreseedManager.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">FilePreseedManager</span> <span class="p">:</span> <span class="kt"><a href="Protocols/PreseedStrategy.html">PreseedStrategy</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/Seeding/BundledDatabase/FilePreseedManager.swift#L17-L75">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -158,7 +214,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.17.7/Sources/ContentfulPersistence/SynchronizationManager.swift#L52-L724">Show on GitHub</a>
+                        <a href="https://github.com/contentful/contentful-persistence.swift/tree/0.18.1/Sources/ContentfulPersistence/SynchronizationManager.swift#L65-L926">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -168,8 +224,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2022-05-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-06-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>

@@ -1,0 +1,152 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/CoreDataStore.swift",
+      "line": 31,
+      "symbol": "CoreDataStore.fetchRequest(for:predicate:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/CoreDataStore.swift",
+      "line": 149,
+      "symbol": "CoreDataStore.performBlock(block:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/CoreDataStore.swift",
+      "line": 160,
+      "symbol": "CoreDataStore.performAndWait(block:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/Persistable.swift",
+      "line": 18,
+      "symbol": "PersistenceModel.spaceType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/Persistable.swift",
+      "line": 19,
+      "symbol": "PersistenceModel.assetType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/Persistable.swift",
+      "line": 20,
+      "symbol": "PersistenceModel.entryTypes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/Persistable.swift",
+      "line": 22,
+      "symbol": "PersistenceModel.init(spaceType:assetType:entryTypes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/Persistable.swift",
+      "line": 38,
+      "symbol": "ContentSysPersistable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/PersistenceStore.swift",
+      "line": 77,
+      "symbol": "PersistenceStore.performBlock(block:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/PersistenceStore.swift",
+      "line": 79,
+      "symbol": "PersistenceStore.performAndWait(block:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift",
+      "line": 133,
+      "symbol": "Media.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager+SeedDB.swift",
+      "line": 134,
+      "symbol": "Media.urlString",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 52,
+      "symbol": "SynchronizationManager.name",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 54,
+      "symbol": "SynchronizationManager.version",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 91,
+      "symbol": "SynchronizationManager.update(localeCodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 135,
+      "symbol": "SynchronizationManager.syncToken",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 143,
+      "symbol": "SynchronizationManager.performAndWait(block:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 149,
+      "symbol": "SynchronizationManager.update(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 174,
+      "symbol": "SynchronizationManager.update(syncToken:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 179,
+      "symbol": "SynchronizationManager.resolveRelationships()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift/Sources/ContentfulPersistence/SynchronizationManager.swift",
+      "line": 340,
+      "symbol": "SynchronizationManager.save()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/jpwright/Contentful/swift/SDK/contentful-persistence.swift"
+}

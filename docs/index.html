@@ -16,7 +16,7 @@
     <a title="ContentfulPersistence  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">ContentfulPersistence 0.17.7 Docs</a> (83% documented)</p>
+        <p><a href="index.html">ContentfulPersistence 0.18.1 Docs</a> (83% documented)</p>
         <p class="header-right"><a href="https://github.com/contentful/contentful-persistence.swift"><img src="img/gh.png" alt="GitHub"/>View on GitHub</a></p>
         <div class="header-right">
           <form role="search" action="search.json">
@@ -42,6 +42,9 @@
                 <a href="Classes/CoreDataStore.html">CoreDataStore</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/FilePreseedManager.html">FilePreseedManager</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/SynchronizationManager.html">SynchronizationManager</a>
               </li>
               <li class="nav-group-task">
@@ -61,6 +64,14 @@
             </ul>
           </li>
           <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions.html#/c:objc(cs)NSFileManager">FileManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
@@ -73,7 +84,13 @@
                 <a href="Protocols/EntryPersistable.html">EntryPersistable</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols/FileManaging.html">FileManaging</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/PersistenceStore.html">PersistenceStore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PreseedStrategy.html">PreseedStrategy</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a>
@@ -85,6 +102,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Structs/PersistenceModel.html">PersistenceModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/PreseedConfiguration.html">PreseedConfiguration</a>
               </li>
             </ul>
           </li>
@@ -104,20 +124,20 @@
 <a href="https://coveralls.io/github/contentful/contentful-persistence.swift"><img src="https://img.shields.io/coveralls/contentful/contentful-persistence.swift.svg" alt="Coverage Status"></a></p>
 
 <blockquote>
-<p>An integration to simplify persisting data from <a href="https://www.contentful.com">Contentful</a> to a local CoreData database; built on top of the official Contentful <a href="https://github.com/contentful/contentful.swift">Swift Library</a>. This library specifically uses the <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization"><code>/sync</code> endpoint</a> of the Content Delivery API to synchronize all content in a Contentful space to device.</p>
+<p>An integration to simplify persisting data from <a href="https://www.contentful.com">Contentful</a> to a local CoreData database; built on top of the official Contentful <a href="https://github.com/contentful/contentful.swift">Swift Library</a>. This library specifically uses the <a href="https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization"><code>/sync</code> endpoint</a> of the Content Delivery API to synchronize all content in a Contentful space to a device.</p>
 </blockquote>
 
 <p><strong>What is Contentful?</strong></p>
 
-<p><a href="https://www.contentful.com">Contentful</a> provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship digital products faster.</p>
-<h2 id='getting-started' class='heading'>Getting started</h2>
-<h3 id='prerequisite' class='heading'>Prerequisite</h3>
+<p><a href="https://www.contentful.com">Contentful</a> provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enables developers and content creators to ship digital products faster.</p>
+<h2 id='getting-started' class='heading'>Getting Started</h2>
+<h3 id='prerequisites' class='heading'>Prerequisites</h3>
 
-<p>Before getting started, it is highly recommended that you familiarize yourself with Apple&rsquo;s CoreData framework as many issues encountered during development may be CoreData specific. Read the <a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/index.html">CoreData Programming Guide</a> and check out other (non-Contentful) examples. </p>
+<p>Before getting started, it is highly recommended that you familiarize yourself with Apple&rsquo;s CoreData framework as many issues encountered during development may be CoreData specific. Read the <a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/index.html">CoreData Programming Guide</a> and check out other (non-Contentful) examples.</p>
 <h3 id='usage' class='heading'>Usage</h3>
 
 <p>The <code><a href="Classes/SynchronizationManager.html">SynchronizationManager</a></code> manages the state of your CoreData database and keeps it in sync with the data from your Contentful Space:</p>
-<pre class="highlight swift"><code><span class="c1">// Tell the library which of your `NSManagedObject` subclasses that conform to `EntryPersistable` should be used when mapping API resonses to CoreData entities.</span>
+<pre class="highlight swift"><code><span class="c1">// Tell the library which of your `NSManagedObject` subclasses that conform to `EntryPersistable` should be used when mapping API responses to CoreData entities.</span>
 <span class="k">let</span> <span class="nv">entryTypes</span> <span class="o">=</span> <span class="p">[</span><span class="kt">Author</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">Category</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">Post</span><span class="o">.</span><span class="k">self</span><span class="p">]</span>
 
 <span class="c1">// Initialize the data store and it's schema.</span>
@@ -128,12 +148,14 @@
 <span class="k">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="kt">Client</span><span class="p">(</span><span class="nv">spaceId</span><span class="p">:</span> <span class="s">"&lt;YOUR_SPACE_ID&gt;"</span><span class="p">,</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="s">"&lt;YOUR_ACCESS_TOKEN&gt;"</span><span class="p">)</span>
 
 <span class="c1">// Create the manager.</span>
-<span class="k">self</span><span class="o">.</span><span class="n">syncManager</span> <span class="o">=</span> <span class="kt">SynchronizationManager</span><span class="p">(</span><span class="nv">client</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
-                                          <span class="nv">localizationScheme</span><span class="p">:</span> <span class="kt">LocalizationScheme</span><span class="o">.</span><span class="n">all</span><span class="p">,</span> <span class="c1">// Save data for all locales your space supports.</span>
-                                          <span class="nv">persistenceStore</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">store</span><span class="p">,</span> 
-                                          <span class="nv">persistenceModel</span><span class="p">:</span> <span class="n">persistenceModel</span><span class="p">)</span>
+<span class="k">self</span><span class="o">.</span><span class="n">syncManager</span> <span class="o">=</span> <span class="kt">SynchronizationManager</span><span class="p">(</span>
+    <span class="nv">client</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
+    <span class="nv">localizationScheme</span><span class="p">:</span> <span class="kt">LocalizationScheme</span><span class="o">.</span><span class="n">all</span><span class="p">,</span> <span class="c1">// Save data for all locales your space supports.</span>
+    <span class="nv">persistenceStore</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">store</span><span class="p">,</span>
+    <span class="nv">persistenceModel</span><span class="p">:</span> <span class="n">persistenceModel</span>
+<span class="p">)</span>
 
-<span class="c1">// Sync with the API. </span>
+<span class="c1">// Sync with the API.</span>
 <span class="k">self</span><span class="o">.</span><span class="n">syncManager</span><span class="o">.</span><span class="n">sync</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
   <span class="k">do</span> <span class="p">{</span>
     <span class="c1">// Fetch all `Posts` from CoreData</span>
@@ -143,19 +165,55 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
-<h2 id='define-your-code-coredata-code-model' class='heading'>Define your <code>CoreData</code> model</h2>
+<h3 id='spacetype-and-assettype' class='heading'>SpaceType and AssetType</h3>
 
-<p>To make your model classes work with contentful-persistence.swift you will need to either conform to <code><a href="Protocols/AssetPersistable.html">AssetPersistable</a></code> for Contentful Assets, or <code><a href="Protocols/EntryPersistable.html">EntryPersistable</a></code> for Contentful entry types.</p>
+<p>The <code><a href="Structs/PersistenceModel.html">PersistenceModel</a></code> requires both a <code>spaceType</code> and an <code>assetType</code> to be specified. These correspond to Core Data entities used for storing <code>SyncInfo</code> and <code>Asset</code> objects, respectively.</p>
 
-<p>Then you will need to make the corresponding model in your projects <code>xcdatamodel</code> file. Both <code><a href="Protocols/EntryPersistable.html">EntryPersistable</a></code> and <code><a href="Protocols/AssetPersistable.html">AssetPersistable</a></code> types must have a <em>non-optional</em> <code>id</code> property as well as optional <code>localeCode</code>, <code>createdAt</code>, and <code>updatedAt</code> properties.</p>
+<p>To function correctly, these objects must:</p>
 
-<p><strong>NOTE:</strong> Optionality on CoreData entities is a bit different than Swift optionality. Optionality on CoreData entities means that the property may be absent when a save-to-database operation is performed. To configure a property&rsquo;s optionality, open the &ldquo;Data Model Inspector&rdquo; in Xcode&rsquo;s &ldquo;Utilities&rdquo; right sidebar and toggle the &ldquo;Optional&rdquo; checkbox:</p>
+<ul>
+<li>Be of type <code>NSManagedObject</code>.</li>
+<li>Conform to the <code><a href="Protocols/SyncSpacePersistable.html">SyncSpacePersistable</a></code> and <code><a href="Protocols/AssetPersistable.html">AssetPersistable</a></code> protocols, as appropriate.</li>
+<li>Be defined within the Core Data <code>xcdatamodel</code> file.</li>
+</ul>
+<h4 id='example-implementation' class='heading'>Example Implementation</h4>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">SyncInfo</span><span class="p">:</span> <span class="kt">NSManagedObject</span><span class="p">,</span> <span class="kt">SyncSpacePersistable</span> <span class="p">{</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">syncToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">dbVersion</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">?</span>
+<span class="p">}</span>
 
-<p><img src="Screenshots/CoreDataOptionality.png" alt=""></p>
+<span class="kd">class</span> <span class="kt">Asset</span><span class="p">:</span> <span class="kt">NSManagedObject</span><span class="p">,</span> <span class="kt">AssetPersistable</span> <span class="p">{</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">localeCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">assetDescription</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">urlString</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">createdAt</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">updatedAt</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span>
 
-<p>The mapping of Contentful fields to your data model entities will be derived automatically, but you can also customize it, by implementing the <code>static func mapping() -&gt; [FieldName: String]?</code> on your class.</p>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">fileType</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">fileName</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+<span class="p">}</span>
+</code></pre>
 
-<p>Below is an example of a model class. </p>
+<p>And then in the <code>xcdatamodeld</code> file:
+<img src="Screenshots/Asset.png" alt="">
+<img src="Screenshots/SyncInfo.png" alt=""></p>
+<h2 id='define-your-code-coredata-code-model' class='heading'>Define Your <code>CoreData</code> Model</h2>
+
+<p>To integrate your model classes with <code>contentful-persistence.swift</code>, you must conform to either the <code><a href="Protocols/AssetPersistable.html">AssetPersistable</a></code> protocol for Contentful Assets or the <code><a href="Protocols/EntryPersistable.html">EntryPersistable</a></code> protocol for Contentful entry types.</p>
+
+<p>Next, you&rsquo;ll need to create the corresponding model in your project&rsquo;s <code>xcdatamodel</code> file. Both <code><a href="Protocols/EntryPersistable.html">EntryPersistable</a></code> and <code><a href="Protocols/AssetPersistable.html">AssetPersistable</a></code> types require a <em>non-optional</em> <code>id</code> property, as well as optional <code>localeCode</code>, <code>createdAt</code>, and <code>updatedAt</code> properties.</p>
+
+<p><strong>NOTE:</strong> Optionality in Core Data entities differs from Swift optionality. For Core Data entities, optionality means that a property may be absent during a save-to-database operation. To configure a property&rsquo;s optionality, open the &ldquo;Data Model Inspector&rdquo; in Xcode&rsquo;s &ldquo;Utilities&rdquo; right sidebar and toggle the &ldquo;Optional&rdquo; checkbox.
+<img src="Screenshots/CoreDataOptionality.png" alt=""></p>
+
+<p>The mapping of Contentful fields to your data model entities will be derived automatically, but you can also customize it by implementing the <code>static func fieldMapping() -&gt; [FieldName: String]?</code> on your class.</p>
+
+<p>Below is an example of a model class.</p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Foundation</span>
 <span class="kd">import</span> <span class="kt">CoreData</span>
 <span class="kd">import</span> <span class="kt">ContentfulPersistence</span>
@@ -163,7 +221,7 @@
 
 <span class="c1">// The following @objc attribute is only necessary if your xcdatamodel Default configuration doesn't have your module</span>
 <span class="c1">// name prepended to the Swift class. To enable removing the @objc attribute, change the Class for your entity to `ModuleName.Post`</span>
-<span class="kd">@objc(Post)</span> 
+<span class="kd">@objc(Post)</span>
 <span class="kd">class</span> <span class="kt">Post</span><span class="p">:</span> <span class="kt">NSManagedObject</span><span class="p">,</span> <span class="kt">EntryPersistable</span> <span class="p">{</span>
 
     <span class="c1">// The identifier of the corresponding Content Type in Contentful.</span>
@@ -172,7 +230,7 @@
     <span class="c1">// Properties of the `sys` object of Contentful resources.</span>
     <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span>
     <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">localeCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
-    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">createdAt</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span> 
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">createdAt</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span>
     <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">updatedAt</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span>
 
     <span class="c1">// Custom fields on the content type.</span>
@@ -180,7 +238,7 @@
     <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">comments</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">?</span>
     <span class="c1">// NOTE: Unlike date fields in sys properties, this library can't store `Date` for custom fields.</span>
     <span class="c1">// Use `String` and map to date after fetching from CoreData</span>
-    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">customDateField</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> 
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">customDateField</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
     <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">date</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span>
     <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">slug</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
     <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">tags</span><span class="p">:</span> <span class="kt">Data</span><span class="p">?</span>
@@ -189,29 +247,112 @@
     <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">category</span><span class="p">:</span> <span class="kt">NSOrderedSet</span><span class="p">?</span>
     <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">theFeaturedImage</span><span class="p">:</span> <span class="kt">Asset</span><span class="p">?</span>
 
-    <span class="c1">// Define the mapping from the fields on your Contentful.Entry to your model class. </span>
+    <span class="c1">// Define the mapping from the fields on your Contentful.Entry to your model class.</span>
     <span class="c1">// In the below example, only the `title`, `date` and `author` fields and `featuredImage` link will be populated.</span>
+    <span class="c1">// IMPORTANT: This should not include metadata from the `sys` object (e.g. id, createdAt, etc.)</span>
     <span class="kd">static</span> <span class="kd">func</span> <span class="nf">fieldMapping</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">FieldName</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="p">{</span>
         <span class="k">return</span> <span class="p">[</span>
             <span class="s">"title"</span><span class="p">:</span> <span class="s">"title"</span><span class="p">,</span>
             <span class="s">"featuredImage"</span><span class="p">:</span> <span class="s">"theFeaturedImage"</span><span class="p">,</span>
             <span class="s">"author"</span><span class="p">:</span> <span class="s">"authors"</span>
             <span class="s">"date"</span><span class="p">:</span> <span class="s">"date"</span>
-        <span class="p">]</span>    
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='relationships' class='heading'>Relationships</h2>
+
+<p>Let&rsquo;s say we have the following content model in our Contentful space:</p>
+<pre class="highlight plaintext"><code>Product
+- name: String
+- relatedProducts: [Product]
+</code></pre>
+
+<p>It represents a product with a name and related products.
+This would be translated into our Swift model as follows:</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Product</span><span class="p">:</span> <span class="kt">NSManagedObject</span> <span class="p">{</span>
+    <span class="c1">// Contentful metadata</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">localeCode</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">createdAt</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="k">var</span> <span class="nv">updatedAt</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span>
+
+    <span class="c1">// Defined properties in Contentful</span>
+    <span class="kd">@NSManaged</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="kd">@NSManaged</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">relatedProducts</span><span class="p">:</span> <span class="kt">NSOrderedSet</span><span class="p">?</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">Product</span><span class="p">:</span> <span class="kt">EntryPersistable</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">contentTypeId</span> <span class="o">=</span> <span class="s">"product"</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">fieldMapping</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">FieldName</span><span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="s">"name"</span><span class="p">:</span> <span class="s">"name"</span><span class="p">,</span>
+            <span class="s">"relatedProducts"</span><span class="p">:</span> <span class="s">"relatedProducts"</span><span class="p">,</span>
+        <span class="p">]</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 
-<p><strong>HINT:</strong> For <strong>array-based field types</strong> (like <code>Short text, list</code>), use the type <code>Binary Data</code> in the data model, and the type <code>Data?</code> (e.g. <code>var tags: Data?</code>) in the Swift code. To access the actual array contents, unpack the <code>Data</code> field with <code>NSKeyedUnarchiver</code>, e.g.:</p>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Post</span> <span class="p">{</span>
+<p>The corresponding CoreData entity would look like this:
+<img src="Screenshots/Product.png" alt=""></p>
 
-    <span class="k">var</span> <span class="nv">theTags</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]?</span> <span class="p">{</span>
-        <span class="k">guard</span> <span class="k">let</span> <span class="nv">tagsData</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">tags</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
-        <span class="k">return</span> <span class="kt">NSKeyedUnarchiver</span><span class="o">.</span><span class="nf">unarchiveObject</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">tagsData</span><span class="p">)</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span>
-    <span class="p">}</span>
+<p>Note the type and the arrangement set to <code>ordered</code>.</p>
+
+<p>After fetching products from the DB, related products could be accessed like this:</p>
+<pre class="highlight swift"><code><span class="k">for</span> <span class="n">product</span> <span class="k">in</span> <span class="n">products</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="k">let</span> <span class="nv">relatedProductsSet</span> <span class="o">=</span> <span class="n">product</span><span class="o">.</span><span class="n">relatedProducts</span><span class="p">,</span>
+      <span class="k">let</span> <span class="nv">productsArray</span> <span class="o">=</span> <span class="n">relatedProductsSet</span><span class="o">.</span><span class="n">array</span> <span class="k">as?</span> <span class="p">[</span><span class="kt">Product</span><span class="p">]</span>
+  <span class="p">{</span>
+      <span class="c1">// productsArray is now [Product]</span>
+      <span class="k">for</span> <span class="n">product</span> <span class="k">in</span> <span class="n">productsArray</span> <span class="p">{</span>
+          <span class="c1">// Access product properties here, e.g., product.name</span>
+          <span class="nf">print</span><span class="p">(</span><span class="s">"Related product:"</span><span class="p">,</span> <span class="n">product</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">product</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+      <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nf">print</span><span class="p">(</span><span class="s">"No related products or unable to cast"</span><span class="p">)</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
+<h2 id='preseeding-from-bundled-database' class='heading'>Preseeding from bundled database</h2>
+
+<p>You can provide preseeded database to be copied and used as the end storage. The following example will be for core data, but there can be any custom implementation. Database will be coppied on two conditions: there is no database in the container folder initially or there is one, but dbVersion value is less than the currently provided one.</p>
+
+<p>Follow the steps to provide the custom preseeded database when initializing SDK:</p>
+
+<ol>
+<li><p>Lets say you have Test.sqlite preseeded database in your main bundle.</p></li>
+<li><p>Follow the usual SDK initialization but use a new SynchronizationManager constructor method parameter:</p></li>
+</ol>
+<pre class="highlight swift"><code>   <span class="k">let</span> <span class="nv">sqliteContainerFolderPath</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="kd">final</span> <span class="n">folder</span> <span class="k">where</span> <span class="n">the</span> <span class="n">sqlite</span> <span class="n">would</span> <span class="n">be</span> <span class="n">initialized</span> <span class="n">by</span> <span class="n">core</span> <span class="n">data</span><span class="o">&gt;</span>
+   <span class="k">let</span> <span class="nv">preseedConfig</span> <span class="o">=</span> <span class="kt">PreseedConfiguration</span><span class="p">(</span><span class="nv">resourceName</span><span class="p">:</span> <span class="s">"Test"</span><span class="p">,</span> <span class="c1">// preseeded db name in bundle</span>
+                                            <span class="nv">resourceExtension</span><span class="p">:</span> <span class="s">"sqlite"</span><span class="p">,</span> <span class="c1">// preseeded db extension in bundle</span>
+                                            <span class="nv">sqliteContainerPath</span><span class="p">:</span> <span class="n">sqliteContainerFolderPath</span><span class="p">,</span> <span class="c1">// Folder that core data creates to store sqlite</span>
+                                            <span class="nv">dbVersion</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span> <span class="c1">// New version of the database (should be more than in existing one if app has sqlite db already)</span>
+
+   <span class="k">self</span><span class="o">.</span><span class="n">syncManager</span> <span class="o">=</span> <span class="kt">SynchronizationManager</span><span class="p">(</span>
+       <span class="nv">client</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
+       <span class="nv">localizationScheme</span><span class="p">:</span> <span class="kt">LocalizationScheme</span><span class="o">.</span><span class="n">all</span><span class="p">,</span> <span class="c1">// Save data for all locales your space supports.</span>
+       <span class="nv">persistenceStore</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">store</span><span class="p">,</span>
+       <span class="nv">persistenceModel</span><span class="p">:</span> <span class="n">persistenceModel</span><span class="p">,</span>
+       <span class="nv">preseedConfig</span><span class="p">:</span> <span class="n">preseedConfig</span>
+   <span class="p">)</span>
+</code></pre>
+
+<ol>
+<li>On SDK initialization it will check if the sqlite file already exists in the folder profided, if not - it will copy the bundled db to that location and set the db version on it. Also, if file already exists but version is lower - the same will happen.</li>
+</ol>
+
+<p>If you were using custom database implementation there is additional parameter on SDK initializer called <code>preseedStrategy</code> where you can pass an object defining how the migration of the databases would happen. By default it uses the file manager.</p>
 <h2 id='installation' class='heading'>Installation</h2>
+<h3 id='spm-installation' class='heading'>SPM installation</h3>
+
+<p>You can also use the Swift Package Manager which is bundled with your XCode (Swift 3.0+) to add Contentful Persistence as a dependency to your project. In order to do so, select your project, change tabs to &lsquo;Package Dependencies&rsquo; and add the following URL:</p>
+<pre class="highlight plaintext"><code>
+https://github.com/contentful/contentful-persistence.swift
+
+</code></pre>
+
+<p>You need to use &ldquo;master&rdquo; branch.</p>
 <h3 id='cocoapods-installation' class='heading'>CocoaPods installation</h3>
 
 <p><a href="https://cocoapods.org/">CocoaPods</a> is the dependency manager for Objective-C and Swift, which automates and simplifies the process of using 3rd-party libraries like the ContentfulPersistence in your projects.</p>
@@ -245,8 +386,8 @@ carthage bootstrap --platform all
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2022-05-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+          <p>&copy; 2025 <a class="link" href="https://www.contentful.com" target="_blank" rel="external noopener">Contentful</a>. All rights reserved. (Last updated: 2025-06-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
