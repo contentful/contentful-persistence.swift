@@ -6,8 +6,8 @@
 //  Copyright © 2016 Contentful GmbH. All rights reserved.
 //
 
-import CoreData
 import Contentful
+import CoreData
 
 func predicate(for id: String, localeCode: LocaleCode) -> NSPredicate {
     return NSPredicate(format: "id == %@ AND localeCode == %@", id, localeCode)
@@ -23,30 +23,29 @@ let deletedRelationshipSentinel = -1
 /**
  Configure your SynchronizationManager instance with a localization scheme to define which data should
  be saved to your persistent store. The `LocalizationScheme.default` scheme will save entities representing
- data only for the default locale of your space, while the `LocalizationScheme.all` will save data 
+ data only for the default locale of your space, while the `LocalizationScheme.all` will save data
  for all locales.
  */
 public enum LocalizationScheme {
     /// Use the `.default` scheme to save only for the default locale for your space.
     case `default`
-    /** 
+    /**
      Specify that data should be saved for only one locale using this scheme.
      For example the scheme, `LocalizationScheme.one("es-MX")`, will configure this library to only
      save data for Mexican Spanish. Not that an `assertionFailure` will be thrown if Mexican Spanish
      is not a valid locale on your space.
      */
     case one(LocaleCode)
-    /** 
+    /**
      Require that data for all locales be saved to your persistent store. Remember to specify a
      predicate that includes pattern matching for the `localeCode` property of your `Persistable` model classes
      when fetching from your local database.
-    */
+     */
     case all
 }
 
 /// Provides the ability to sync content from Contentful to a persistence store.
 public class SynchronizationManager: PersistenceIntegration {
-
     // MARK: Integration
 
     public let name: String = "ContentfulPersistence"
@@ -55,7 +54,7 @@ public class SynchronizationManager: PersistenceIntegration {
         guard
             let bundleInfo = Bundle(for: SynchronizationManager.self).infoDictionary,
             let versionNumberString = bundleInfo["CFBundleShortVersionString"] as? String
-            else { return "Unknown" }
+        else { return "Unknown" }
 
         return versionNumberString
     }
@@ -74,11 +73,10 @@ public class SynchronizationManager: PersistenceIntegration {
                 localizationScheme: LocalizationScheme,
                 persistenceStore: PersistenceStore,
                 persistenceModel: PersistenceModel) {
-
-        self.persistentStore = persistenceStore
+        persistentStore = persistenceStore
         self.persistenceModel = persistenceModel
         self.localizationScheme = localizationScheme
-        self.localeCodes = []
+        localeCodes = []
 
         if let client = client {
             client.persistenceIntegration = self
@@ -90,7 +88,7 @@ public class SynchronizationManager: PersistenceIntegration {
 
     public func update(localeCodes: [LocaleCode]) {
         switch localizationScheme {
-        case .one(let localeCode):
+        case let .one(localeCode):
             if localeCodes.contains(localeCode) == false {
                 assertionFailure("LocaleCode that SynchronizationManager is configured"
                     + " to use does not correspond to any locales available for current Contentful.Space")
@@ -103,7 +101,7 @@ public class SynchronizationManager: PersistenceIntegration {
     /**
      A wrapper method to synchronize data from Contentful to your local data store. The callback for this
      method is thread safe and will delegate to the thread that your data store is tied to.
-     
+
      Execute queries on your local data store in the callback for this method.
      */
     public func sync(then completion: @escaping ResultsHandler<SyncSpace>) {
@@ -184,20 +182,17 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
     public func update(syncToken: String) {
-        let space = self.fetchSpace()
+        let space = fetchSpace()
         space.syncToken = syncToken
     }
 
     public func resolveRelationships() {
-
         let cache = DataCache(persistenceStore: persistentStore,
                               assetType: persistenceModel.assetType,
                               entryTypes: persistenceModel.entryTypes)
 
         for (entryId, fields) in relationshipsToResolve {
-
             if let entryPersistable = cache.entry(for: entryId) as? NSObject {
-
                 // Mutable copy of fields to link targets.
                 var updatedFieldsRelationships: [FieldName: Any] = fields
 
@@ -216,7 +211,6 @@ public class SynchronizationManager: PersistenceIntegration {
                         if targets.count == identifiers.count {
                             updatedFieldsRelationships.removeValue(forKey: fieldName)
                         }
-
                     }
                     // Nullifiy the link if it's nil.
                     if let sentinel = relatedResourceId as? Int, sentinel == -1 {
@@ -253,7 +247,7 @@ public class SynchronizationManager: PersistenceIntegration {
                 asset.setLocale(withCode: localeCode)
                 createLocalized(asset: asset)
             }
-        case .one(let localeCode):
+        case let .one(localeCode):
             asset.setLocale(withCode: localeCode)
             createLocalized(asset: asset)
         }
@@ -263,29 +257,29 @@ public class SynchronizationManager: PersistenceIntegration {
         let type = persistenceModel.assetType
 
         let fetchPredicate = predicate(for: asset.id, localeCode: asset.currentlySelectedLocale.code)
-        let fetched: [AssetPersistable]? = try? self.persistentStore.fetchAll(type: type, predicate: fetchPredicate)
+        let fetched: [AssetPersistable]? = try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)
         let persistable: AssetPersistable
 
         if let fetched = fetched?.first {
             persistable = fetched
         } else {
             do {
-                persistable = try self.persistentStore.create(type: type)
+                persistable = try persistentStore.create(type: type)
             } catch let error {
                 fatalError("Could not create the Asset persistent store\n \(error)")
             }
         }
 
         // Populate persistable with sys and fields data from the `Asset`
-        persistable.id                  = asset.id// Set the localeCode.
-        persistable.localeCode          = asset.currentlySelectedLocale.code
-        persistable.title               = asset.title
-        persistable.assetDescription    = asset.description
-        persistable.updatedAt           = asset.sys.updatedAt
-        persistable.createdAt           = asset.sys.updatedAt
-        persistable.urlString           = asset.urlString
-        persistable.fileName            = asset.file?.fileName
-        persistable.fileType            = asset.file?.contentType
+        persistable.id = asset.id // Set the localeCode.
+        persistable.localeCode = asset.currentlySelectedLocale.code
+        persistable.title = asset.title
+        persistable.assetDescription = asset.description
+        persistable.updatedAt = asset.sys.updatedAt
+        persistable.createdAt = asset.sys.updatedAt
+        persistable.urlString = asset.urlString
+        persistable.fileName = asset.file?.fileName
+        persistable.fileType = asset.file?.contentType
         if let size = asset.file?.details?.size {
             persistable.size = NSNumber(value: size)
         }
@@ -312,26 +306,25 @@ public class SynchronizationManager: PersistenceIntegration {
                 entry.setLocale(withCode: localeCode)
                 createLocalized(entry: entry)
             }
-        case .one(let localeCode):
+        case let .one(localeCode):
             entry.setLocale(withCode: localeCode)
             createLocalized(entry: entry)
         }
     }
 
     private func createLocalized(entry: Entry) {
-
         guard let contentTypeId = entry.sys.contentTypeId else { return }
         guard let type = persistenceModel.entryTypes.filter({ $0.contentTypeId == contentTypeId }).first else { return }
 
         let fetchPredicate = predicate(for: entry.id, localeCode: entry.currentlySelectedLocale.code)
-        let fetched: [EntryPersistable]? = try? self.persistentStore.fetchAll(type: type, predicate: fetchPredicate)
+        let fetched: [EntryPersistable]? = try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)
         let persistable: EntryPersistable
 
         if let fetched = fetched?.first {
             persistable = fetched
         } else {
             do {
-                persistable = try self.persistentStore.create(type: type)
+                persistable = try persistentStore.create(type: type)
                 persistable.id = entry.id
             } catch let error {
                 fatalError("Could not create the Entry persistent store\n \(error)")
@@ -345,13 +338,12 @@ public class SynchronizationManager: PersistenceIntegration {
         // Set the localeCode.
         persistable.localeCode = entry.currentlySelectedLocale.code
 
-
         // Update all properties and cache relationships to be resolved.
-        self.updatePropertyFields(for: persistable, of: type, with: entry)
+        updatePropertyFields(for: persistable, of: type, with: entry)
 
         // The key has locale information.
         let entryKey = DataCache.cacheKey(for: entry)
-        self.relationshipsToResolve[entryKey] = self.persistableRelationships(for: persistable, of: type, with: entry)
+        relationshipsToResolve[entryKey] = persistableRelationships(for: persistable, of: type, with: entry)
     }
 
     /**
@@ -372,7 +364,7 @@ public class SynchronizationManager: PersistenceIntegration {
         let predicate = ContentfulPersistence.predicate(for: entryWithId)
 
         for type in persistenceModel.entryTypes {
-            _ = try? self.persistentStore.delete(type: type, predicate: predicate)
+            _ = try? persistentStore.delete(type: type, predicate: predicate)
         }
     }
 
@@ -383,7 +375,6 @@ public class SynchronizationManager: PersistenceIntegration {
             assertionFailure("Could not save the persistent store\n \(error)")
         }
     }
-
 
     // MARK: Unresolved relationship caching
 
@@ -413,7 +404,7 @@ public class SynchronizationManager: PersistenceIntegration {
 
     /// The unsresolved relationships that were cached to disk.
     public var cachedUnresolvedRelationships: [String: [FieldName: Any]]? {
-        guard let localURL = pendingRelationshipsURL else { return nil}
+        guard let localURL = pendingRelationshipsURL else { return nil }
         guard let data = try? Data(contentsOf: localURL, options: []) else {
             return nil
         }
@@ -452,8 +443,7 @@ public class SynchronizationManager: PersistenceIntegration {
     // Returns regular (non-relationship) field to property mappings.
     internal func propertyMapping(for entryType: EntryPersistable.Type,
                                   and fields: [FieldName: Any]) -> [FieldName: String] {
-
-            if let cachedPropertyMapping = cachedPropertyMappingForContentTypeId[entryType.contentTypeId] {
+        if let cachedPropertyMapping = cachedPropertyMappingForContentTypeId[entryType.contentTypeId] {
             return cachedPropertyMapping
         }
 
@@ -468,7 +458,7 @@ public class SynchronizationManager: PersistenceIntegration {
 
         let relationshipPropertyNamesToExclude = Set(persistentRelationshipPropertyNames).intersection(Set(mapping.values))
         let filteredMapping = mapping.filter { (_, propertyName) -> Bool in
-            return relationshipPropertyNamesToExclude.contains(propertyName) == false
+            relationshipPropertyNamesToExclude.contains(propertyName) == false
         }
 
         // Cache.
@@ -478,7 +468,6 @@ public class SynchronizationManager: PersistenceIntegration {
 
     internal func relationshipMapping(for entryType: EntryPersistable.Type,
                                       and fields: [FieldName: Any]) -> [FieldName: String] {
-
         if let cachedRelationshipMapping = cachedRelationshipMappingForContentTypeId[entryType.contentTypeId] {
             return cachedRelationshipMapping
         }
@@ -493,7 +482,7 @@ public class SynchronizationManager: PersistenceIntegration {
         let propertyNamesToExclude = Set(persistentPropertyNames).intersection(Set(mapping.values))
 
         let filteredMapping = mapping.filter { (_, propertyName) -> Bool in
-            return propertyNamesToExclude.contains(propertyName) == false
+            propertyNamesToExclude.contains(propertyName) == false
         }
 
         // Cache.
@@ -504,7 +493,6 @@ public class SynchronizationManager: PersistenceIntegration {
     fileprivate func updatePropertyFields(for entryPersistable: EntryPersistable,
                                           of type: EntryPersistable.Type,
                                           with entry: Entry) {
-
         // Key-Value Coding only works with NSObject types as it's an Obj-C API.
         guard let persistable = entryPersistable as? NSManagedObject else { return }
 
@@ -517,15 +505,37 @@ public class SynchronizationManager: PersistenceIntegration {
             if let array = fieldValue as? [Any] {
                 fieldValue = NSKeyedArchiver.archivedData(withRootObject: array)
             }
-
+            if persistable.entity.attributesByName[fieldName]?.attributeType == .dateAttributeType, let date = getDate(fieldValue as? String) {
+                fieldValue = date
+            }
             persistable.setValue(fieldValue, forKey: propertyName)
         }
+    }
+
+    fileprivate func getDate(_ fieldValue: String?) -> Date? {
+        guard let value = fieldValue else { return nil }
+        let formats: [String] = [
+            "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX",
+            "yyyy-MM-dd",
+            "yyyy-MM-dd'T'HH:mm",
+            "yyyy-MM-dd'T'HH:mmxxx",
+            "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        ]
+        let dateParser = DateFormatter()
+        dateParser.locale = Locale(identifier: "en_US_POSIX")
+        dateParser.timeZone = TimeZone(secondsFromGMT: 0)
+        for format in formats {
+            dateParser.dateFormat = format
+            if let date = dateParser.date(from: value) {
+                return date
+            }
+        }
+        return nil
     }
 
     fileprivate func persistableRelationships(for entryPersistable: EntryPersistable,
                                               of type: EntryPersistable.Type,
                                               with entry: Entry) -> [FieldName: Any] {
-
         // FieldName to either a single entry id or an array of entry id's to be linked.
         var relationships = [FieldName: Any]()
 

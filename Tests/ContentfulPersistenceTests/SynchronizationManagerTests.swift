@@ -177,6 +177,7 @@ class ContentfulPersistenceTests: XCTestCase {
                     XCTAssertNotNil(post)
                     XCTAssertNotNil(post?.theFeaturedImage)
                     XCTAssertNotNil(post?.theFeaturedImage?.urlString)
+                    XCTAssertNotNil(post?.date)
                     XCTAssertEqual(post?.theFeaturedImage?.urlString, "https://images.ctfassets.net/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif")
                     expectation.fulfill()
                 } catch {
@@ -206,6 +207,7 @@ class ContentfulPersistenceTests: XCTestCase {
                         return
                     }
                     XCTAssertNotNil(author.name)
+                    XCTAssertNotNil(post?.date)
                     XCTAssertEqual(author.name, "Lewis Carroll")
                     expectation.fulfill()
                 } catch {
@@ -231,6 +233,7 @@ class ContentfulPersistenceTests: XCTestCase {
                     XCTAssertNil(post?.comments)
                     XCTAssertNotNil(post?.title)
                     XCTAssertNotNil(post?.theFeaturedImage)
+                    XCTAssertNotNil(post?.date)
                     expectation.fulfill()
                 } catch {
                     XCTFail("Fetching posts should not throw an error")
