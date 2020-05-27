@@ -36,7 +36,7 @@ class LocalizationTests: XCTestCase {
 
     // Before each test.
     override func setUp() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
 
         let persistenceModel = PersistenceModel(spaceType: ComplexSyncInfo.self, assetType: ComplexAsset.self, entryTypes: [SingleRecord.self, Link.self])
 
@@ -50,14 +50,14 @@ class LocalizationTests: XCTestCase {
 
     // After each test.
     override func tearDown() {
-        OHHTTPStubs.removeAllStubs()
+        HTTPStubs.removeAllStubs()
     }
 
     func testLocalizedFieldValues() {
 
         let expectation = self.expectation(description: "Initial sync succeeded")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> HTTPStubsResponse in
             let stubPath = OHPathForFile("localization-sync.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
         }.name = "Initial sync stub"
@@ -87,7 +87,7 @@ class LocalizationTests: XCTestCase {
         // that links to different Entries for different locales.
         let expectation = self.expectation(description: "Initial sync succeeded")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> HTTPStubsResponse in
             let stubPath = OHPathForFile("localization-sync.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
         }.name = "Initial sync stub"
@@ -125,7 +125,7 @@ class LocalizationTests: XCTestCase {
         // value.
         let expectation = self.expectation(description: "Initial sync succeeded")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> HTTPStubsResponse in
             let stubPath = OHPathForFile("localization-sync.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
         }.name = "Initial sync stub"
@@ -158,7 +158,7 @@ class LocalizationTests: XCTestCase {
     func testSyncingWithNonDefaultLocale() {
         let expectation = self.expectation(description: "Initial sync succeeded")
 
-        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> OHHTTPStubsResponse in
+        stub(condition: isPath("/spaces/smf0sqiu0c5s/environments/master/sync")) { request -> HTTPStubsResponse in
             let stubPath = OHPathForFile("localization-sync.json", ComplexSyncTests.self)
             return fixture(filePath: stubPath!, headers: ["Content-Type": "application/json"])
             }.name = "Initial sync stub"

@@ -8,6 +8,6 @@
       location = "group:Carthage/Checkouts/contentful.swift/Contentful.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/OHHTTPStubs/OHHTTPStubs/OHHTTPStubs.xcodeproj">
+      location = "group:Carthage/Checkouts/OHHTTPStubs/OHHTTPStubs.xcodeproj">
    </FileRef>
 </Workspace>
