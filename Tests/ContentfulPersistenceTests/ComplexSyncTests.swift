@@ -88,7 +88,7 @@ class ComplexSyncTests: XCTestCase {
                     }
                     expectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -122,7 +122,7 @@ class ComplexSyncTests: XCTestCase {
                     }
                     nextExpectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 nextExpectation.fulfill()
             }
@@ -159,7 +159,7 @@ class ComplexSyncTests: XCTestCase {
                     expectation.fulfill()
                 }
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -191,7 +191,7 @@ class ComplexSyncTests: XCTestCase {
                     }
                     nextExpectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 nextExpectation.fulfill()
             }
@@ -239,7 +239,7 @@ class ComplexSyncTests: XCTestCase {
                     }
                     expectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -281,7 +281,7 @@ class ComplexSyncTests: XCTestCase {
                     expectation.fulfill()
                 }
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -310,7 +310,7 @@ class ComplexSyncTests: XCTestCase {
                     }
                     nextExpectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 nextExpectation.fulfill()
             }
@@ -350,7 +350,7 @@ class ComplexSyncTests: XCTestCase {
                     expectation.fulfill()
                 }
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -380,7 +380,7 @@ class ComplexSyncTests: XCTestCase {
                     }
                     nextExpectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 nextExpectation.fulfill()
             }
@@ -424,7 +424,7 @@ class ComplexSyncTests: XCTestCase {
                     expectation.fulfill()
                 }
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -454,7 +454,7 @@ class ComplexSyncTests: XCTestCase {
                     }
                     nextExpectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 nextExpectation.fulfill()
             }
@@ -494,7 +494,7 @@ class ComplexSyncTests: XCTestCase {
                     expectation.fulfill()
                 }
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -524,7 +524,7 @@ class ComplexSyncTests: XCTestCase {
                     }
                     nextExpectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 nextExpectation.fulfill()
             }
@@ -567,7 +567,7 @@ class ComplexSyncTests: XCTestCase {
                     expectation.fulfill()
                 }
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -606,7 +606,7 @@ class ComplexSyncTests: XCTestCase {
                     expectation.fulfill()
                 }
 
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
@@ -650,7 +650,7 @@ class ComplexSyncTests: XCTestCase {
                 } else {
                     XCTFail("There should be a linked asset")
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -682,7 +682,7 @@ class ComplexSyncTests: XCTestCase {
                 } else {
                     XCTFail("There should be a linked assets set")
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -714,7 +714,7 @@ class ComplexSyncTests: XCTestCase {
                 } else {
                     XCTFail("There should be an array of linked strings")
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }
             expectation.fulfill()
@@ -777,7 +777,7 @@ class ComplexSyncTests: XCTestCase {
                     }
                     expectation.fulfill()
                 }
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
                 expectation.fulfill()
             }
