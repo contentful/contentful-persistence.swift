@@ -65,7 +65,7 @@ class UnresolvedRelationshipCacheTests: XCTestCase {
                 XCTAssertFalse(self.syncManager.cachedUnresolvedRelationships!.isEmpty)
                 XCTAssertEqual((self.syncManager.cachedUnresolvedRelationships?["14XouHzspI44uKCcMicWUY_en-US"])?["linkField"] as? String, "2XYdAPiR0I6SMAGiCOEukU_en-US")
                 syncSpace = space
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
 
             }
@@ -86,7 +86,7 @@ class UnresolvedRelationshipCacheTests: XCTestCase {
             switch result {
             case .success:
                 XCTAssertNil(self.syncManager.cachedUnresolvedRelationships)
-            case .error(let error):
+            case .failure(let error):
                 XCTFail("\(error)")
 
             }

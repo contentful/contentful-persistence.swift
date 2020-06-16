@@ -85,10 +85,16 @@ class ContentfulPersistenceTests: XCTestCase {
 
         self.client.sync { result in
             self.managedObjectContext.perform {
-                XCTAssertGreaterThan(result.value!.assets.count, 0)
-                XCTAssertGreaterThan(self.syncManager.syncToken!.count, 0)
+                switch result {
+                case .success(let space):
+                    XCTAssertGreaterThan(space.assets.count, 0)
+                    XCTAssertGreaterThan(self.syncManager.syncToken!.count, 0)
 
-                expectation.fulfill()
+                    expectation.fulfill()
+
+                case .failure:
+                    XCTFail()
+                }
             }
         }
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -100,8 +106,13 @@ class ContentfulPersistenceTests: XCTestCase {
         let syncSpace = SyncSpace(syncToken: "w5ZGw6JFwqZmVcKsE8Kow4grw45QdybDqXt4XTFdw6tcwrMiwqpmwq7DlcOqZ8KnwpUiG1sZwr3Cq8OpFcKEUsOyPcOiQMOEITLDnyIkw4fDq8KAw6x_Mh3Dui_Cgw3CnsKswrwhw6hNwostejQDw4nDmUkp")
 
         self.client.sync(for: syncSpace) { result in
-            XCTAssertEqual(result.value!.entries.count, 0)
-            expectation.fulfill()
+            switch result {
+            case .success(let space):
+                XCTAssertEqual(space.entries.count, 0)
+                expectation.fulfill()
+            case .failure:
+                XCTFail()
+            }
         }
         waitForExpectations(timeout: 10.0, handler: nil)
     }
@@ -130,7 +141,7 @@ class ContentfulPersistenceTests: XCTestCase {
                         switch result {
                         case .success:
                             XCTAssert(true)
-                        case .error(let error):
+                        case .failure(let error):
                             XCTFail("Data fetch should have succeed \(error)")
                         }
                         expectation.fulfill()
@@ -148,18 +159,22 @@ class ContentfulPersistenceTests: XCTestCase {
         let expectation = self.expectation(description: "")
 
         self.client.sync { result in
-            XCTAssertNotNil(result.value)
-
-            self.managedObjectContext.perform {
-                do {
-                    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-                    XCTAssertNotNil(post)
-                    XCTAssertEqual(post?.title, "Down the Rabbit Hole")
-                    expectation.fulfill()
-                } catch {
-                    XCTFail("Fetching posts should not throw an error")
-                    XCTFail("Fetching posts should not throw an error")
+            switch result {
+            case .success(let space):
+                self.managedObjectContext.perform {
+                    do {
+                        let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+                        XCTAssertNotNil(post)
+                        XCTAssertEqual(post?.title, "Down the Rabbit Hole")
+                        expectation.fulfill()
+                    } catch {
+                        XCTFail("Fetching posts should not throw an error")
+                        XCTFail("Fetching posts should not throw an error")
+                    }
                 }
+
+            case .failure:
+                XCTFail()
             }
         }
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -168,21 +183,27 @@ class ContentfulPersistenceTests: XCTestCase {
     func testMappingContentfulAssetLinksAsCoreDataRelationships() {
         let expectation = self.expectation(description: "")
 
-        self.client.sync { result in
-            XCTAssertNotNil(result.value)
+        self.client.sync { [weak self] result in
+            switch result {
+            case .success:
+                guard let self = self else { return }
 
-            self.managedObjectContext.perform {
-                do {
-                    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-                    XCTAssertNotNil(post)
-                    XCTAssertNotNil(post?.theFeaturedImage)
-                    XCTAssertNotNil(post?.theFeaturedImage?.urlString)
-                    XCTAssertNotNil(post?.date)
-                    XCTAssertEqual(post?.theFeaturedImage?.urlString, "https://images.ctfassets.net/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif")
-                    expectation.fulfill()
-                } catch {
-                    XCTFail("Fetching posts should not throw an error")
+                self.managedObjectContext.perform {
+                    do {
+                        let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+                        XCTAssertNotNil(post)
+                        XCTAssertNotNil(post?.theFeaturedImage)
+                        XCTAssertNotNil(post?.theFeaturedImage?.urlString)
+                        XCTAssertNotNil(post?.date)
+                        XCTAssertEqual(post?.theFeaturedImage?.urlString, "https://images.ctfassets.net/dqpnpm0n4e75/bXvdSYHB3Guy2uUmuEco8/608761ef6c0ef23815b410d5629208f9/alice-in-wonderland.gif")
+                        expectation.fulfill()
+                    } catch {
+                        XCTFail("Fetching posts should not throw an error")
+                    }
                 }
+
+            case .failure:
+                XCTFail()
             }
         }
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -191,29 +212,35 @@ class ContentfulPersistenceTests: XCTestCase {
     func testResolvingLinkedEntriesArray() {
         let expectation = self.expectation(description: "")
 
-        self.client.sync { result in
-            XCTAssertNotNil(result.value)
+        self.client.sync { [weak self] result in
+            guard let self = self else { return }
 
-            self.managedObjectContext.perform {
-                do {
-                    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-                    XCTAssertNotNil(post)
+            switch result {
+            case .success:
+                self.managedObjectContext.perform {
+                    do {
+                        let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+                        XCTAssertNotNil(post)
 
-                    XCTAssertNotNil(post?.authors)
-                    XCTAssertEqual(post?.authors?.count, 1)
-                    guard let author = post?.authors?.firstObject as? Author else {
-                        XCTFail("was unable to make relationship")
+                        XCTAssertNotNil(post?.authors)
+                        XCTAssertEqual(post?.authors?.count, 1)
+                        guard let author = post?.authors?.firstObject as? Author else {
+                            XCTFail("was unable to make relationship")
+                            expectation.fulfill()
+                            return
+                        }
+                        XCTAssertNotNil(author.name)
+                        XCTAssertNotNil(post?.date)
+                        XCTAssertEqual(author.name, "Lewis Carroll")
                         expectation.fulfill()
-                        return
+                    } catch {
+                        XCTFail("Fetching posts should not throw an error")
+                        XCTFail("Fetching posts should not throw an error")
                     }
-                    XCTAssertNotNil(author.name)
-                    XCTAssertNotNil(post?.date)
-                    XCTAssertEqual(author.name, "Lewis Carroll")
-                    expectation.fulfill()
-                } catch {
-                    XCTFail("Fetching posts should not throw an error")
-                    XCTFail("Fetching posts should not throw an error")
                 }
+
+            case .failure:
+                XCTFail()
             }
         }
         waitForExpectations(timeout: 10.0, handler: nil)
@@ -223,22 +250,28 @@ class ContentfulPersistenceTests: XCTestCase {
 
         let expectation = self.expectation(description: "")
 
-        self.client.sync { result in
-            XCTAssertNotNil(result.value)
-
-            self.managedObjectContext.perform {
-                do {
-                    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
-                    XCTAssertNotNil(post)
-                    XCTAssertNil(post?.comments)
-                    XCTAssertNotNil(post?.title)
-                    XCTAssertNotNil(post?.theFeaturedImage)
-                    XCTAssertNotNil(post?.date)
-                    expectation.fulfill()
-                } catch {
-                    XCTFail("Fetching posts should not throw an error")
-                    XCTFail("Fetching posts should not throw an error")
+        self.client.sync { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success:
+                self.managedObjectContext.perform {
+                    do {
+                        let post: Post? = try self.store.fetchAll(type: Post.self, predicate: self.postPredicate).first
+                        XCTAssertNotNil(post)
+                        XCTAssertNil(post?.comments)
+                        XCTAssertNotNil(post?.title)
+                        XCTAssertNotNil(post?.theFeaturedImage)
+                        XCTAssertNotNil(post?.date)
+                        expectation.fulfill()
+                    } catch {
+                        XCTFail("Fetching posts should not throw an error")
+                        XCTFail("Fetching posts should not throw an error")
+                    }
                 }
+
+            case .failure:
+                XCTFail()
             }
         }
         waitForExpectations(timeout: 10.0, handler: nil)
