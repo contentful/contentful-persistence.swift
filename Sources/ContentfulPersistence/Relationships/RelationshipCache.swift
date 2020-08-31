@@ -22,26 +22,33 @@ final class RelationshipCache {
 
     private let cacheFileName: String
 
-    // Backing storage for the relationships.
+    // Backing storage for the relationships. Do not read that value outside of the `relationships` get/set
+    // to make sure relationships are loaded from disk.
     private var _relationships = [Relationship]()
 
     init(cacheFileName: String) {
         self.cacheFileName = cacheFileName
     }
 
-    var relationships: [Relationship] {
-        if _relationships.isEmpty {
-            _relationships = loadFromCache()
+    private(set) var relationships: [Relationship] {
+        get {
+            if _relationships.isEmpty {
+                _relationships = loadFromCache()
+            }
+            return _relationships
         }
-        return _relationships
+
+        set {
+            _relationships = newValue
+        }
     }
 
     func add(relationship: Relationship) {
-        _relationships.append(relationship)
+        relationships.append(relationship)
     }
 
     func delete(parentId: String) {
-        _relationships = _relationships.filter { relationship in
+        relationships = relationships.filter { relationship in
             switch relationship {
             case .toOne(let nested):
                 return nested.parentId != parentId
@@ -52,7 +59,7 @@ final class RelationshipCache {
     }
 
     func delete(parentId: String, fieldName: String, localeCode: String?) {
-        _relationships = _relationships.filter { relationship in
+        relationships = relationships.filter { relationship in
             switch relationship {
             case .toOne(let nested):
                 return !(nested.parentId == parentId
@@ -73,7 +80,7 @@ final class RelationshipCache {
         do {
             guard let localUrl = cacheUrl() else { return }
 
-            let array = try _relationships.compactMap { try JSONEncoder().encode($0) }
+            let array = try relationships.compactMap { try JSONEncoder().encode($0) }
             let data = NSKeyedArchiver.archivedData(withRootObject: array)
             try data.write(to: localUrl)
         } catch let error {

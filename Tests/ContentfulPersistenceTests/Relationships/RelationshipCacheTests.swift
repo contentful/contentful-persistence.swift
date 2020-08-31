@@ -21,7 +21,10 @@ class RelationshipCacheTests: XCTestCase {
 
         // Verify
         let verifyCache = RelationshipCache(cacheFileName: fileName)
-        XCTAssertEqual(verifyCache.relationships.count, 3)
+
+        verifyCache.add(relationship: .toOne(makeToOne1(localeCode: "en-US")))
+
+        XCTAssertEqual(verifyCache.relationships.count, 4)
     }
 
     func test_relationship_isDeleted() {
