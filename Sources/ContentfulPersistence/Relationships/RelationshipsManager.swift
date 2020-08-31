@@ -4,7 +4,8 @@
 
 import Foundation
 
-///
+/// Manages relationships of the entries using internal cache. It is used to recreate relationship when
+/// unpublished entry is published again.
 final class RelationshipsManager {
 
     private let cache: RelationshipCache
