@@ -46,6 +46,11 @@ public enum LocalizationScheme {
 
 /// Provides the ability to sync content from Contentful to a persistence store.
 public class SynchronizationManager: PersistenceIntegration {
+
+    private enum Constants {
+        static let cacheFileName = "ContentfulPersistenceRelationships.data"
+    }
+
     // MARK: Integration
 
     public let name: String = "ContentfulPersistence"
@@ -192,18 +197,33 @@ public class SynchronizationManager: PersistenceIntegration {
                               entryTypes: persistenceModel.entryTypes)
 
         for (entryId, fields) in relationshipsToResolve {
-            if let entryPersistable = cache.entry(for: entryId) as? NSObject {
+            if let entryPersistable = cache.entry(for: entryId) {
                 // Mutable copy of fields to link targets.
                 var updatedFieldsRelationships: [FieldName: Any] = fields
 
                 for (fieldName, relatedResourceId) in fields {
                     // Resolve one-to-one link.
-                    if let identifier = relatedResourceId as? String, let target = cache.item(for: identifier) {
-                        entryPersistable.setValue(target, forKey: fieldName)
-                        updatedFieldsRelationships.removeValue(forKey: fieldName)
+                    if let identifier = relatedResourceId as? String {
+                        relationshipsManager.cacheToOneRelationship(
+                            parent: entryPersistable,
+                            childId: identifier,
+                            fieldName: fieldName
+                        )
+
+                        if let target = cache.item(for: identifier) {
+                            entryPersistable.setValue(target, forKey: fieldName)
+                            updatedFieldsRelationships.removeValue(forKey: fieldName)
+                        }
                     }
+
                     // Resolve one-to-many links array.
                     if let identifiers = relatedResourceId as? [String] {
+                        relationshipsManager.cacheToManyRelationship(
+                            parent: entryPersistable,
+                            childIds: identifiers,
+                            fieldName: fieldName
+                        )
+
                         let targets = identifiers.compactMap { cache.item(for: $0) }
                         entryPersistable.setValue(NSOrderedSet(array: targets), forKey: fieldName)
 
@@ -212,10 +232,16 @@ public class SynchronizationManager: PersistenceIntegration {
                             updatedFieldsRelationships.removeValue(forKey: fieldName)
                         }
                     }
+
                     // Nullifiy the link if it's nil.
                     if let sentinel = relatedResourceId as? Int, sentinel == -1 {
                         entryPersistable.setValue(nil, forKey: fieldName)
                         updatedFieldsRelationships.removeValue(forKey: fieldName)
+                        relationshipsManager.delete(
+                            parentId: entryPersistable.id,
+                            fieldName: fieldName,
+                            localeCode: entryPersistable.localeCode
+                        )
                     }
                 }
 
@@ -225,9 +251,67 @@ public class SynchronizationManager: PersistenceIntegration {
                 } else {
                     relationshipsToResolve[entryId] = updatedFieldsRelationships
                 }
+
+                updateRelationships(with: entryPersistable)
             }
         }
         cacheUnresolvedRelationships()
+    }
+
+    /// Find and update relationships where the entry should be set as a child.
+    private func updateRelationships(with entry: EntryPersistable) {
+        updateToOneRelationships(with: entry)
+        updateToManyRelationships(with: entry)
+    }
+
+    private func updateToOneRelationships(with entry: EntryPersistable) {
+        let filteredRelationships: [ToOneRelationship] = relationshipsManager.relationships
+            .compactMap { $0.value() }
+            .filter { $0.childId.id == entry.id && $0.childId.localeCode == entry.localeCode }
+
+        for relationship in filteredRelationships {
+            if let parentType = persistenceModel.entryTypes.first(where: { $0.contentTypeId == relationship.parentType }) {
+                // The same parent with several locale codes may be returned.
+                let candidates: [EntryPersistable] = (try? persistentStore.fetchAll(
+                    type: parentType,
+                    predicate: NSPredicate(format: "id == %@", relationship.parentId)
+                )) ?? []
+
+                guard let parent = candidates.first(where: { $0.localeCode == entry.localeCode }) else { return }
+
+                parent.setValue(entry, forKey: relationship.fieldName)
+            }
+        }
+    }
+
+    private func updateToManyRelationships(with entry: EntryPersistable) {
+        let filteredRelationships: [ToManyRelationship] = relationshipsManager.relationships
+            .compactMap { $0.value() }
+            .filter { $0.childIds.map({ $0.id }).contains(entry.id) && $0.childIds.first?.localeCode == entry.localeCode }
+
+        for relationship in filteredRelationships {
+            if let parentType = persistenceModel.entryTypes.first(where: { $0.contentTypeId == relationship.parentType }) {
+                // The same parent with several locale codes may be returned.
+                let candidates: [EntryPersistable] = (try? persistentStore.fetchAll(
+                    type: parentType,
+                    predicate: NSPredicate(format: "id == %@", relationship.parentId)
+                )) ?? []
+
+                guard let parent = candidates.first(where: { $0.localeCode == entry.localeCode }) else { return }
+
+                guard let collection = parent.value(forKey: relationship.fieldName) else { continue }
+
+                if let set = collection as? NSSet {
+                    let mutableSet = NSMutableSet(set: set)
+                    mutableSet.add(entry)
+                    parent.setValue(NSSet(set: mutableSet), forKey: relationship.fieldName)
+                } else if let set = collection as? NSOrderedSet {
+                    var array = set.array
+                    array.append(entry)
+                    parent.setValue(NSOrderedSet(array: array), forKey: relationship.fieldName)
+                }
+            }
+        }
     }
 
     // MARK: - PersistenceDelegate
@@ -366,11 +450,14 @@ public class SynchronizationManager: PersistenceIntegration {
         for type in persistenceModel.entryTypes {
             _ = try? persistentStore.delete(type: type, predicate: predicate)
         }
+
+        relationshipsManager.delete(parentId: entryWithId)
     }
 
     public func save() {
         do {
             try persistentStore.save()
+            relationshipsManager.save()
         } catch let error {
             assertionFailure("Could not save the persistent store\n \(error)")
         }
@@ -431,6 +518,7 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
     // MARK: Private
+    private let relationshipsManager = RelationshipsManager(cacheFileName: Constants.cacheFileName)
 
     // Dictionary mapping source Entry id's concatenated with locale code to a dictionary with linking fieldName to target entry id's.
     internal var relationshipsToResolve = [String: [FieldName: Any]]()
