@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true
   spec.swift_version             = '5.0'
 
-  spec.source_files              = 'Sources/ContentfulPersistence/*.swift'
+  spec.source_files              = 'Sources/**/*.swift'
   spec.module_name               = 'ContentfulPersistence'
   spec.frameworks                = 'CoreData'
 
@@ -29,6 +29,6 @@ Pod::Spec.new do |spec|
   spec.watchos.deployment_target = '2.0'
   spec.tvos.deployment_target    = '9.3'
 
-  spec.dependency 'Contentful', '~> 5.0.11'
+  spec.dependency 'Contentful', '~> 5.2.0'
 end
 

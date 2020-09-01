@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 ## Table of contents
 
 #### 0.x Releases
+- `0.15.x` Releases - [0.15.3](#0153)
 - `0.13.x` Releases - [0.13.0](#0130)
 - `0.12.x` Releases - [0.12.0](#0120) | [0.12.1](#0121)
 - `0.11.x` Releases - [0.11.0](#0110)
@@ -20,6 +21,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) starting from 
 - `0.6.x` Releases - [0.6.0](#060) | [0.6.1](#061) | [0.6.2](#062)
 - `0.5.x` Releases - [0.5.0](#050)
 - `0.4.x` Releases - [0.4.0](#040)
+
+---
+
+## [`0.15.3`](https://github.com/contentful/contentful-persistence.swift/releases/tag/0.15.3)
+Released on 2020-08-31
+
+#### Changed
+- Updated [contentful.swift](https://github.com/contentful/contentful.swift) dependency to 5.2.0.
+- Fixed updating relationships between entry and its parent when that entry has been unpublished and published between synchronization calls.
 
 ---
 

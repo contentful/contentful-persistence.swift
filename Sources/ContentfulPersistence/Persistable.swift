@@ -35,7 +35,7 @@ public struct PersistenceModel {
 // Protocols are marked with @objc attribute for two reasons:
 // 1) CoreData requires that model classes inherit from `NSManagedObject`
 // 2) @objc enables optional protocol methods that don't require implementation.
-public protocol ContentSysPersistable: class {
+public protocol ContentSysPersistable: NSObject {
     /// The unique identifier of the Resource.
     var id: String { get set }
 
