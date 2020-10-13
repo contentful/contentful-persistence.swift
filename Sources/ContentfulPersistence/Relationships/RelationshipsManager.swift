@@ -10,8 +10,8 @@ final class RelationshipsManager {
 
     private let cache: RelationshipCache
 
-    var relationships: [Relationship] {
-        return cache.relationships
+    var relationships: RelationshipData {
+        cache.relationships
     }
 
     init(cacheFileName: String) {
@@ -24,8 +24,6 @@ final class RelationshipsManager {
         childId: String,
         fieldName: String
     ) {
-        let theChildId = RelationshipChildId(value: childId)
-        delete(parentId: parent.id, fieldName: fieldName, localeCode: theChildId.localeCode)
 
         let parentType = type(of: parent).contentTypeId
 
@@ -45,8 +43,6 @@ final class RelationshipsManager {
         fieldName: String
     ) {
         let theChildIds: [RelationshipChildId] = childIds.map { .init(value: $0) }
-        delete(parentId: parent.id, fieldName: fieldName, localeCode: theChildIds.first?.localeCode)
-
         let parentType = type(of: parent).contentTypeId
 
         let relationship = ToManyRelationship(

@@ -265,9 +265,10 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
     private func updateToOneRelationships(with entry: EntryPersistable) {
-        let filteredRelationships: [ToOneRelationship] = relationshipsManager.relationships
-            .compactMap { $0.value() }
-            .filter { $0.childId.id == entry.id && $0.childId.localeCode == entry.localeCode }
+        let filteredRelationships: [ToOneRelationship] = relationshipsManager.relationships.findToOne(
+            childId: entry.id,
+            localeCode: entry.localeCode
+        )
 
         for relationship in filteredRelationships {
             if let parentType = persistenceModel.entryTypes.first(where: { $0.contentTypeId == relationship.parentType }) {
@@ -285,9 +286,10 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
     private func updateToManyRelationships(with entry: EntryPersistable) {
-        let filteredRelationships: [ToManyRelationship] = relationshipsManager.relationships
-            .compactMap { $0.value() }
-            .filter { $0.childIds.map({ $0.id }).contains(entry.id) && $0.childIds.first?.localeCode == entry.localeCode }
+        let filteredRelationships: [ToManyRelationship] = relationshipsManager.relationships.findToMany(
+            childId: entry.id,
+            localeCode: entry.localeCode
+        )
 
         for relationship in filteredRelationships {
             if let parentType = persistenceModel.entryTypes.first(where: { $0.contentTypeId == relationship.parentType }) {

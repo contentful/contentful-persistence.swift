@@ -22,66 +22,28 @@ final class RelationshipCache {
 
     private let cacheFileName: String
 
-    // Backing storage for the relationships. Do not read that value outside of the `relationships` get/set
-    // to make sure relationships are loaded from disk.
-    private var _relationships = [Relationship]()
-
     init(cacheFileName: String) {
         self.cacheFileName = cacheFileName
     }
 
-    private(set) var relationships: [Relationship] {
-        get {
-            if _relationships.isEmpty {
-                _relationships = loadFromCache()
-            }
-            return _relationships
-        }
-
-        set {
-            _relationships = newValue
-        }
-    }
+    private(set) lazy var relationships: RelationshipData = loadFromCache()
 
     func add(relationship: Relationship) {
         relationships.append(relationship)
     }
 
     func delete(parentId: String) {
-        relationships = relationships.filter { relationship in
-            switch relationship {
-            case .toOne(let nested):
-                return nested.parentId != parentId
-            case .toMany(let nested):
-                return nested.parentId != parentId
-            }
-        }
+        relationships.delete(parentId: parentId)
     }
 
     func delete(parentId: String, fieldName: String, localeCode: String?) {
-        relationships = relationships.filter { relationship in
-            switch relationship {
-            case .toOne(let nested):
-                return !(nested.parentId == parentId
-                    && nested.fieldName == fieldName
-                    && nested.childId.localeCode == localeCode
-                )
-            case .toMany(let nested):
-                /// All childs in the relationship have the same locale code.
-                return !(nested.parentId == parentId
-                    && nested.fieldName == fieldName
-                    && nested.childIds.first?.localeCode == localeCode
-                )
-            }
-        }
+        relationships.delete(parentId: parentId, fieldName: fieldName, localeCode: localeCode)
     }
 
     func save() {
         do {
             guard let localUrl = cacheUrl() else { return }
-
-            let array = try relationships.compactMap { try JSONEncoder().encode($0) }
-            let data = NSKeyedArchiver.archivedData(withRootObject: array)
+            let data = try JSONEncoder().encode(relationships)
             try data.write(to: localUrl)
         } catch let error {
             print("Couldn't persist relationships: \(error)")
@@ -101,12 +63,13 @@ final class RelationshipCache {
         return url.appendingPathComponent(cacheFileName)
     }
 
-    private func loadFromCache() -> [Relationship] {
-        guard let localURL = cacheUrl(),
-            let data = try? Data(contentsOf: localURL, options: []),
-            let array = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Data]
-        else { return [] }
-
-        return (try? array.compactMap { try JSONDecoder().decode(Relationship.self, from: $0) }) ?? []
+    private func loadFromCache() -> RelationshipData {
+        do {
+            guard let localURL = cacheUrl() else { return .empty }
+            let data = try Data(contentsOf: localURL, options: [])
+            return try JSONDecoder().decode(RelationshipData.self, from: data)
+        } catch {
+            return .empty
+        }
     }
 }
