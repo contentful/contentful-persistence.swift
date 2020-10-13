@@ -592,7 +592,7 @@ public class SynchronizationManager: PersistenceIntegration {
             var fieldValue = entry.fields[fieldName]
 
             // handle symbol arrays
-            if let array = fieldValue as? [Any] {
+            if let array = fieldValue as? [NSCoding] {
                 fieldValue = NSKeyedArchiver.archivedData(withRootObject: array)
             }
             if persistable.entity.attributesByName[fieldName]?.attributeType == .dateAttributeType, let date = getDate(fieldValue as? String) {
