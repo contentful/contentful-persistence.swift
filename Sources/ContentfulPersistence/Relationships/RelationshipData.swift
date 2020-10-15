@@ -43,7 +43,9 @@ struct RelationshipData: Codable {
             let fieldKey = FieldLocaleKey(parentId: nested.parentId, field: nested.fieldName, locale: nested.childIds.first?.localeCode)
             let childIds = Set(nested.childIds.map { $0.id })
             // append quick access cache
-            childIdsByParent[nested.parentId] = (childIdsByParent[nested.parentId] ?? Set()).union(nested.childIds.map { $0.id })
+            var current = childIdsByParent[nested.parentId] ?? Set()
+            current.formUnion(nested.childIds.map { $0.id })
+            childIdsByParent[nested.parentId] = current
 
             let relationShipId = nested.id
             toManyRelationShips[relationShipId] = nested
@@ -57,7 +59,10 @@ struct RelationshipData: Codable {
         case .toOne(let nested):
             let fieldKey = FieldLocaleKey(parentId: nested.parentId, field: nested.fieldName, locale: nested.childId.localeCode)
             // append quick access cache
-            childIdsByParent[nested.parentId] = (childIdsByParent[nested.parentId] ?? Set()).union([nested.childId.id])
+            
+            var current = childIdsByParent[nested.parentId] ?? Set()
+            current.insert(nested.childId.id)
+            childIdsByParent[nested.parentId] = current
 
             var relationsByFieldAndLocale = toOneRelationShiptsByEntryId[nested.childId.id] ?? [:]
             relationsByFieldAndLocale[fieldKey] = nested
@@ -68,6 +73,7 @@ struct RelationshipData: Codable {
     mutating func delete(parentId: String) {
         guard var childIdsByParent = childIdsByParent[parentId] else { return }
 
+        var cleanupToMany = false
         for childId in childIdsByParent {
 
             var emptyToOne = false
@@ -87,6 +93,7 @@ struct RelationshipData: Codable {
                 keyForParent.forEach { toMany[$0] = nil }
                 emptyToMany = toMany.isEmpty
                 toManyRelationShipsbyEntryId[childId] = emptyToMany ? nil : toMany
+                cleanupToMany = true
             } else {
                 emptyToMany = true
             }
@@ -98,7 +105,9 @@ struct RelationshipData: Codable {
         }
         self.childIdsByParent[parentId] = childIdsByParent.isEmpty ? nil : childIdsByParent
 
-        cleanup()
+        if cleanupToMany {
+            cleanupToManyRelationShips()
+        }
     }
 
     mutating func delete(parentId: ParentId, fieldName: String, localeCode: String?) {
@@ -107,6 +116,7 @@ struct RelationshipData: Codable {
 
         let fieldKey = FieldLocaleKey(parentId: parentId, field: fieldName, locale: localeCode)
 
+        var cleanupToMany = false
         for childId in childIdsByParent {
             var emptyToOne = false
             var emptyToMany = false
@@ -123,6 +133,7 @@ struct RelationshipData: Codable {
                 toMany[fieldKey] = nil
                 emptyToMany = toMany.isEmpty
                 toManyRelationShipsbyEntryId[childId] = emptyToMany ? nil : toMany
+                cleanupToMany = true
             } else {
                 emptyToMany = true
             }
@@ -135,7 +146,9 @@ struct RelationshipData: Codable {
 
         self.childIdsByParent[parentId] = childIdsByParent.isEmpty ? nil : childIdsByParent
 
-        cleanup()
+        if cleanupToMany {
+            cleanupToManyRelationShips()
+        }
     }
 
     func findToOne(childId: ChildId, localeCode: String?) -> [ToOneRelationship] {
@@ -155,13 +168,18 @@ struct RelationshipData: Codable {
             .compactMap { toManyRelationShips[$0] }
     }
 
-    private mutating func cleanup() {
+    private mutating func cleanupToManyRelationShips() {
         // remove unused to many references
-        let stored = Set(toManyRelationShips.keys)
-        let used = Set(toManyRelationShipsbyEntryId.map { $0.value.map { $0.value } }.flatMap { $0 })
-
-        stored.subtracting(used).forEach {
-            toManyRelationShips[$0] = nil
+        var stored = Set(toManyRelationShips.keys)
+        
+        for (_, value) in toManyRelationShipsbyEntryId {
+            for(_, v) in value {
+                stored.remove(v)
+            }
+        }
+        
+        stored.forEach {
+            toManyRelationShips.removeValue(forKey: $0)
         }
     }
 }
