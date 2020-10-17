@@ -714,6 +714,15 @@ class ComplexSyncTests: XCTestCase {
                 } else {
                     XCTFail("There should be an array of linked strings")
                 }
+                
+                if let linkedStringsArray = records.first?.symbolsArrayTransformable {
+                    XCTAssertFalse(records.first!.hasChanges, "Record has not yet been saved")
+                    XCTAssertEqual(linkedStringsArray.count, 5)
+                    XCTAssertEqual(linkedStringsArray.first, "one")
+                    XCTAssertEqual(linkedStringsArray.last, "five")
+                } else {
+                    XCTFail("There should be an array of linked strings")
+                }
             case .failure(let error):
                 XCTFail("Should not throw an error \(error)")
             }

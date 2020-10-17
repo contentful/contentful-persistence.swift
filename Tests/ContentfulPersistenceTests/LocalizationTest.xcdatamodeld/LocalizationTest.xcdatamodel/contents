@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G3025" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ComplexAsset" representedClassName="ComplexAsset" syncable="YES">
         <attribute name="assetDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -34,6 +34,7 @@
         <attribute name="locationField" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="postedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="symbolsArray" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="symbolsArrayTransformable" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="textBody" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="assetLinkField" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ComplexAsset" inverseName="singleRecordAssetLinkInverse" inverseEntity="ComplexAsset" syncable="YES"/>
@@ -44,6 +45,6 @@
         <element name="ComplexAsset" positionX="-63" positionY="-18" width="128" height="255"/>
         <element name="ComplexSyncInfo" positionX="-54" positionY="-9" width="128" height="60"/>
         <element name="Link" positionX="-18" positionY="99" width="128" height="135"/>
-        <element name="SingleRecord" positionX="-36" positionY="90" width="128" height="210"/>
+        <element name="SingleRecord" positionX="-36" positionY="90" width="128" height="223"/>
     </elements>
 </model>

@@ -589,11 +589,12 @@ public class SynchronizationManager: PersistenceIntegration {
         for (fieldName, propertyName) in mapping {
             var fieldValue = entry.fields[fieldName]
 
-            // handle symbol arrays
-            if let array = fieldValue as? [Any] {
+            let attributeType = persistable.entity.attributesByName[fieldName]?.attributeType
+            // handle symbol arrays as NSData if field is of type .binaryDataAttributeType, otherwise use .transformableAttributeType
+            if attributeType == .binaryDataAttributeType, let array = fieldValue as? [Codable] {
                 fieldValue = NSKeyedArchiver.archivedData(withRootObject: array)
             }
-            if persistable.entity.attributesByName[fieldName]?.attributeType == .dateAttributeType, let date = getDate(fieldValue as? String) {
+            if attributeType == .dateAttributeType, let date = getDate(fieldValue as? String) {
                 fieldValue = date
             }
             persistable.setValue(fieldValue, forKey: propertyName)
