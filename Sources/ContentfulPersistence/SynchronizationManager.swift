@@ -591,7 +591,7 @@ public class SynchronizationManager: PersistenceIntegration {
 
             let attributeType = persistable.entity.attributesByName[fieldName]?.attributeType
             // handle symbol arrays as NSData if field is of type .binaryDataAttributeType, otherwise use .transformableAttributeType
-            if attributeType == .binaryDataAttributeType, let array = fieldValue as? [Codable] {
+            if attributeType == .binaryDataAttributeType, let array = fieldValue as? [NSCoding] {
                 fieldValue = NSKeyedArchiver.archivedData(withRootObject: array)
             }
             if attributeType == .dateAttributeType, let date = getDate(fieldValue as? String) {
