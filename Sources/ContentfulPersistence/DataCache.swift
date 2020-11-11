@@ -9,11 +9,13 @@
 import Foundation
 import Contentful
 
+typealias CacheKey = String
+
 protocol DataCacheProtocol {
     init(persistenceStore: PersistenceStore, assetType: AssetPersistable.Type, entryTypes: [EntryPersistable.Type])
 
-    func entry(for identifier: String) -> EntryPersistable?
-    func item(for identifier: String) -> NSObject?
+    func entry(for cacheKey: CacheKey) -> EntryPersistable?
+    func item(for cacheKey: CacheKey) -> NSObject?
 }
 
 /// Does not actually cache anything, but directly uses the persistence store instead
@@ -28,7 +30,7 @@ class NoDataCache: DataCacheProtocol {
         self.store = persistenceStore
     }
 
-    fileprivate func itemsOf(_ types: [ContentSysPersistable.Type], identifier: String) -> EntryPersistable? {
+    fileprivate func itemsOf(_ types: [ContentSysPersistable.Type], cacheKey: CacheKey) -> EntryPersistable? {
         let predicate = ContentfulPersistence.predicate(for: identifier)
 
         let items: [EntryPersistable] = types.compactMap {
@@ -41,12 +43,12 @@ class NoDataCache: DataCacheProtocol {
         return items.first
     }
 
-    func entry(for identifier: String) -> EntryPersistable? {
-        return itemsOf(entryTypes, identifier: identifier)
+    func entry(for cacheKey: CacheKey) -> EntryPersistable? {
+        return itemsOf(entryTypes, cacheKey: cacheKey)
     }
 
-    func item(for identifier: String) -> NSObject? {
-        return itemsOf([assetType] + entryTypes, identifier: identifier) as? NSObject
+    func item(for cacheKey: CacheKey) -> NSObject? {
+        return itemsOf([assetType] + entryTypes, cacheKey: cacheKey)
     }
 }
 
@@ -54,14 +56,19 @@ class NoDataCache: DataCacheProtocol {
 /// Implemented using `NSCache`
 class DataCache: DataCacheProtocol {
 
-    public static func cacheKey(for resource: ContentSysPersistable) -> String {
+    public static func cacheKey(for resource: ContentSysPersistable) -> CacheKey {
         let localeCode = resource.localeCode ?? ""
         let cacheKey =  resource.id + "_" + localeCode
         return cacheKey
     }
 
-    public static func cacheKey(for resource: LocalizableResource) -> String {
+    public static func cacheKey(for resource: LocalizableResource) -> CacheKey {
         let cacheKey =  resource.id + "_" + resource.currentlySelectedLocale.code
+        return cacheKey
+    }
+    
+    public static func cacheKey(for identifier: String, localeCode: String?) -> CacheKey {
+        let cacheKey = identifier + "_" + (localeCode ?? "")
         return cacheKey
     }
 
@@ -80,19 +87,19 @@ class DataCache: DataCacheProtocol {
         }
     }
 
-    func asset(for identifier: String) -> AssetPersistable? {
-        return assetCache.object(forKey: identifier as AnyObject) as? AssetPersistable
+    func asset(for cacheKey: CacheKey) -> AssetPersistable? {
+        return assetCache.object(forKey: cacheKey as AnyObject) as? AssetPersistable
     }
 
-    func entry(for identifier: String) -> EntryPersistable? {
-        return entryCache.object(forKey: identifier as AnyObject) as? EntryPersistable
+    func entry(for cacheKey: CacheKey) -> EntryPersistable? {
+        return entryCache.object(forKey: cacheKey as AnyObject) as? EntryPersistable
     }
 
-    func item(for identifier: String) -> NSObject? {
-        var target = self.asset(for: identifier) as? NSObject
+    func item(for cacheKey: CacheKey) -> NSObject? {
+        var target = self.asset(for: identifier)
 
         if target == nil {
-            target = self.entry(for: identifier) as? NSObject
+            target = self.entry(for: identifier)
         }
 
         return target
