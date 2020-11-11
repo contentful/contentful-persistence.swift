@@ -74,10 +74,9 @@ struct RelationshipData: Codable {
         }
     }
 
-    mutating func delete(parentId: String) {
+    mutating func delete(parentId: ParentId) {
         guard var childIdsByParent = childIdsByParent[parentId] else { return }
 
-        var cleanupToMany = false
         for childId in childIdsByParent {
 
             var emptyToOne = false
@@ -99,10 +98,14 @@ struct RelationshipData: Codable {
 
             if var toMany = toManyRelationShipsbyEntryId[childId] {
                 let keyForParent = toMany.keys.filter { $0.parentId == parentId }
-                keyForParent.forEach { toMany[$0] = nil }
+                keyForParent.forEach {
+                    if let relationId = toMany[$0] {
+                        toMany[$0] = nil
+                        toManyRelationShips.removeValue(forKey: relationId)
+                    }
+                }
                 emptyToMany = toMany.isEmpty
                 toManyRelationShipsbyEntryId[childId] = emptyToMany ? nil : toMany
-                cleanupToMany = true
             } else {
                 emptyToMany = true
             }
@@ -112,11 +115,8 @@ struct RelationshipData: Codable {
                 childIdsByParent.remove(childId)
             }
         }
+        
         self.childIdsByParent[parentId] = childIdsByParent.isEmpty ? nil : childIdsByParent
-
-        if cleanupToMany {
-            cleanupToManyRelationShips()
-        }
     }
 
     mutating func delete(parentId: ParentId, fieldName: String, localeCode: String?) {
@@ -125,7 +125,6 @@ struct RelationshipData: Codable {
 
         let fieldKey = FieldLocaleKey(parentId: parentId, field: fieldName, locale: localeCode)
 
-        var cleanupToMany = false
         for childId in childIdsByParent {
             var emptyToOne = false
             var emptyToMany = false
@@ -142,10 +141,12 @@ struct RelationshipData: Codable {
             }
 
             if var toMany = toManyRelationShipsbyEntryId[childId] {
-                toMany[fieldKey] = nil
+                if let relationId = toMany[fieldKey] {
+                    toMany[fieldKey] = nil
+                    toManyRelationShips.removeValue(forKey: relationId)
+                }
                 emptyToMany = toMany.isEmpty
                 toManyRelationShipsbyEntryId[childId] = emptyToMany ? nil : toMany
-                cleanupToMany = true
             } else {
                 emptyToMany = true
             }
@@ -157,10 +158,6 @@ struct RelationshipData: Codable {
         }
 
         self.childIdsByParent[parentId] = childIdsByParent.isEmpty ? nil : childIdsByParent
-
-        if cleanupToMany {
-            cleanupToManyRelationShips()
-        }
     }
 
     func findToOne(childId: ChildId, localeCode: String?) -> [ToOneRelationship] {
@@ -178,20 +175,5 @@ struct RelationshipData: Codable {
             .filter { $0.locale == localeCode }
             .compactMap { relations[$0] }
             .compactMap { toManyRelationShips[$0] }
-    }
-
-    private mutating func cleanupToManyRelationShips() {
-        // remove unused to many references
-        var stored = Set(toManyRelationShips.keys)
-        
-        for (_, value) in toManyRelationShipsbyEntryId {
-            for(_, v) in value {
-                stored.remove(v)
-            }
-        }
-        
-        stored.forEach {
-            toManyRelationShips.removeValue(forKey: $0)
-        }
     }
 }
