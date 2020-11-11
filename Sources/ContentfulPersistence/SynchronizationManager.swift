@@ -252,66 +252,53 @@ public class SynchronizationManager: PersistenceIntegration {
                     relationshipsToResolve[entryId] = updatedFieldsRelationships
                 }
 
-                updateRelationships(with: entryPersistable)
+                updateRelationships(with: entryPersistable, cache: cache)
             }
         }
         cacheUnresolvedRelationships()
     }
 
     /// Find and update relationships where the entry should be set as a child.
-    private func updateRelationships(with entry: EntryPersistable) {
-        updateToOneRelationships(with: entry)
-        updateToManyRelationships(with: entry)
+    private func updateRelationships(with entry: EntryPersistable, cache: DataCache) {
+        updateToOneRelationships(with: entry, cache: cache)
+        updateToManyRelationships(with: entry, cache: cache)
     }
 
-    private func updateToOneRelationships(with entry: EntryPersistable) {
+    private func updateToOneRelationships(with entry: EntryPersistable, cache: DataCache) {
         let filteredRelationships: [ToOneRelationship] = relationshipsManager.relationships.findToOne(
             childId: entry.id,
             localeCode: entry.localeCode
         )
 
         for relationship in filteredRelationships {
-            if let parentType = persistenceModel.entryTypes.first(where: { $0.contentTypeId == relationship.parentType }) {
-                // The same parent with several locale codes may be returned.
-                let candidates: [EntryPersistable] = (try? persistentStore.fetchAll(
-                    type: parentType,
-                    predicate: NSPredicate(format: "id == %@", relationship.parentId)
-                )) ?? []
-
-                guard let parent = candidates.first(where: { $0.localeCode == entry.localeCode }) else { return }
-
-                parent.setValue(entry, forKey: relationship.fieldName)
+            guard let parent = cache.entry(for: DataCache.cacheKey(for: relationship.parentId, localeCode: entry.localeCode)) else {
+                return
             }
+            parent.setValue(entry, forKey: relationship.fieldName)
         }
     }
 
-    private func updateToManyRelationships(with entry: EntryPersistable) {
+    private func updateToManyRelationships(with entry: EntryPersistable, cache: DataCache) {
         let filteredRelationships: [ToManyRelationship] = relationshipsManager.relationships.findToMany(
             childId: entry.id,
             localeCode: entry.localeCode
         )
 
         for relationship in filteredRelationships {
-            if let parentType = persistenceModel.entryTypes.first(where: { $0.contentTypeId == relationship.parentType }) {
-                // The same parent with several locale codes may be returned.
-                let candidates: [EntryPersistable] = (try? persistentStore.fetchAll(
-                    type: parentType,
-                    predicate: NSPredicate(format: "id == %@", relationship.parentId)
-                )) ?? []
+            guard let parent = cache.entry(for: DataCache.cacheKey(for: relationship.parentId, localeCode: entry.localeCode)) else {
+                return
+            }
 
-                guard let parent = candidates.first(where: { $0.localeCode == entry.localeCode }) else { return }
+            guard let collection = parent.value(forKey: relationship.fieldName) else { continue }
 
-                guard let collection = parent.value(forKey: relationship.fieldName) else { continue }
-
-                if let set = collection as? NSSet {
-                    let mutableSet = NSMutableSet(set: set)
-                    mutableSet.add(entry)
-                    parent.setValue(NSSet(set: mutableSet), forKey: relationship.fieldName)
-                } else if let set = collection as? NSOrderedSet {
-                    var array = set.array
-                    array.append(entry)
-                    parent.setValue(NSOrderedSet(array: array), forKey: relationship.fieldName)
-                }
+            if let set = collection as? NSSet {
+                let mutableSet = NSMutableSet(set: set)
+                mutableSet.add(entry)
+                parent.setValue(NSSet(set: mutableSet), forKey: relationship.fieldName)
+            } else if let set = collection as? NSOrderedSet {
+                var array = set.array
+                array.append(entry)
+                parent.setValue(NSOrderedSet(array: array), forKey: relationship.fieldName)
             }
         }
     }
