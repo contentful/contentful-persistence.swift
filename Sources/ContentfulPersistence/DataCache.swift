@@ -31,7 +31,7 @@ class NoDataCache: DataCacheProtocol {
     }
 
     fileprivate func itemsOf(_ types: [ContentSysPersistable.Type], cacheKey: CacheKey) -> EntryPersistable? {
-        let predicate = ContentfulPersistence.predicate(for: identifier)
+        let predicate = ContentfulPersistence.predicate(for: cacheKey)
 
         let items: [EntryPersistable] = types.compactMap {
             if let result = try? store.fetchAll(type: $0, predicate: predicate) as [EntryPersistable] {
@@ -96,10 +96,10 @@ class DataCache: DataCacheProtocol {
     }
 
     func item(for cacheKey: CacheKey) -> NSObject? {
-        var target = self.asset(for: identifier)
+        var target: NSObject? = self.asset(for: cacheKey)
 
         if target == nil {
-            target = self.entry(for: identifier)
+            target = self.entry(for: cacheKey)
         }
 
         return target
