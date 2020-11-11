@@ -20,22 +20,17 @@ struct RelationshipData: Codable {
     private(set) internal var toOneRelationShiptsByEntryId = [ChildId: [FieldLocaleKey: ToOneRelationship]]()
     private(set) internal var toManyRelationShipsbyEntryId = [ChildId: [FieldLocaleKey: ToManyRelationship.Id]]()
     private var toManyRelationShips = [ToManyRelationship.Id: ToManyRelationship]()
+    private var toOneRelationShips = Set<ToOneRelationship.Id>()
 
     var isEmpty: Bool {
-        toOneRelationShiptsByEntryId.isEmpty && toManyRelationShipsbyEntryId.isEmpty
+        toOneRelationShips.isEmpty && toManyRelationShipsbyEntryId.isEmpty
     }
 
     var count: Int {
-        let numberOfToOneRelationships = toOneRelationShiptsByEntryId.values.map { $0.count }.reduce(0, +)
-        return numberOfToOneRelationships + toManyRelationShips.count
+        toOneRelationShips.count + toManyRelationShips.count
     }
 
-    static let empty: RelationshipData = .init(
-        childIdsByParent: [:],
-        toOneRelationShiptsByEntryId: [:],
-        toManyRelationShipsbyEntryId: [:],
-        toManyRelationShips: [:]
-    )
+    static let empty: RelationshipData = .init()
 
     mutating func append(_ relationship: Relationship) {
         switch relationship {
@@ -62,6 +57,9 @@ struct RelationshipData: Codable {
             }
 
         case .toOne(let nested):
+            guard !toOneRelationShips.contains(nested.id) else { return }
+            toOneRelationShips.insert(nested.id)
+            
             let fieldKey = FieldLocaleKey(parentId: nested.parentId, field: nested.fieldName, locale: nested.childId.localeCode)
             // append quick access cache
             
@@ -87,7 +85,12 @@ struct RelationshipData: Codable {
 
             if var toOne = toOneRelationShiptsByEntryId[childId] {
                 let keyForParent = toOne.keys.filter { $0.parentId == parentId }
-                keyForParent.forEach { toOne[$0] = nil }
+                keyForParent.forEach {
+                    if let relation = toOne[$0] {
+                        toOne[$0] = nil
+                        toOneRelationShips.remove(relation.id)
+                    }
+                }
                 emptyToOne = toOne.isEmpty
                 toOneRelationShiptsByEntryId[childId] = emptyToOne ? nil : toOne
             } else {
@@ -128,7 +131,10 @@ struct RelationshipData: Codable {
             var emptyToMany = false
 
             if var toOne = toOneRelationShiptsByEntryId[childId] {
-                toOne[fieldKey] = nil
+                if let relation = toOne[fieldKey] {
+                    toOne[fieldKey] = nil
+                    toOneRelationShips.remove(relation.id)
+                }
                 emptyToOne = toOne.isEmpty
                 toOneRelationShiptsByEntryId[childId] = emptyToOne ? nil : toOne
             } else {
