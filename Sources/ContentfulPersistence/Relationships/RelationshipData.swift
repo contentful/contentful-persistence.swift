@@ -40,14 +40,19 @@ struct RelationshipData: Codable {
     mutating func append(_ relationship: Relationship) {
         switch relationship {
         case .toMany(let nested):
+            
+            let relationShipId = nested.id
+            guard toManyRelationShips[relationShipId] == nil else { return }
+            
             let fieldKey = FieldLocaleKey(parentId: nested.parentId, field: nested.fieldName, locale: nested.childIds.first?.localeCode)
+                        
             let childIds = Set(nested.childIds.map { $0.id })
             // append quick access cache
             var current = childIdsByParent[nested.parentId] ?? Set()
             current.formUnion(nested.childIds.map { $0.id })
             childIdsByParent[nested.parentId] = current
 
-            let relationShipId = nested.id
+            
             toManyRelationShips[relationShipId] = nested
 
             for childId in childIds {
@@ -62,6 +67,7 @@ struct RelationshipData: Codable {
             
             var current = childIdsByParent[nested.parentId] ?? Set()
             current.insert(nested.childId.id)
+            
             childIdsByParent[nested.parentId] = current
 
             var relationsByFieldAndLocale = toOneRelationShiptsByEntryId[nested.childId.id] ?? [:]
