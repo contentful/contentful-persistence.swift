@@ -183,17 +183,3 @@ struct RelationshipData: Codable {
         }
     }
 }
-
-extension ToManyRelationship: Identifiable {
-    typealias Id = String
-    var id: Id {
-        ([parentType, parentId, fieldName, childIds.first?.localeCode ?? "-"] + childIds.map { $0.id }.sorted()).joined(separator: ",")
-    }
-}
-
-extension ToOneRelationship: Identifiable {
-    typealias Id = String
-    var id: Id {
-        [parentType, parentId, fieldName, childId.id, childId.localeCode ?? "-"].joined(separator: ",")
-    }
-}
