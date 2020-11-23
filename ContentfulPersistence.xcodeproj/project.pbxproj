@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02E58FA12535C9E30039F3A5 /* RelationshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E58FA02535C9E30039F3A5 /* RelationshipData.swift */; };
+		02E58FA22535C9E30039F3A5 /* RelationshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E58FA02535C9E30039F3A5 /* RelationshipData.swift */; };
+		02E58FA32535C9E30039F3A5 /* RelationshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E58FA02535C9E30039F3A5 /* RelationshipData.swift */; };
+		02E58FA42535C9E30039F3A5 /* RelationshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E58FA02535C9E30039F3A5 /* RelationshipData.swift */; };
 		5D001E5C2004019C00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
 		5D001E5D2004019D00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
 		5D001E5E2004019D00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
@@ -297,6 +301,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02E58FA02535C9E30039F3A5 /* RelationshipData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipData.swift; sourceTree = "<group>"; };
 		5D001E5A2004019700AC5A4C /* symbols-array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "symbols-array.json"; sourceTree = "<group>"; };
 		5D26507321933E320072FAEE /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D265075219343DB0072FAEE /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -332,7 +337,7 @@
 		6FD0311822CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "multi-page-non-optional-link-resolution2.json"; sourceTree = "<group>"; };
 		A1A9FBE31CABE8EA00430734 /* ContentfulPersistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContentfulPersistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A9FBED1CABE8EA00430734 /* ContentfulPersistenceTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulPersistenceTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED10E8841E48AB840061741F /* SynchronizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SynchronizationManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		ED10E8841E48AB840061741F /* SynchronizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SynchronizationManager.swift; sourceTree = "<group>"; };
 		ED10E8851E48AB840061741F /* CoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		ED10E8861E48AB840061741F /* DataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
 		ED10E8921E48AC720061741F /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
@@ -482,6 +487,7 @@
 				6D5CEDB724FC2493005E8B41 /* Relationship.swift */,
 				6D5CEDB624FC2493005E8B41 /* RelationshipCache.swift */,
 				6D87843624FCEBC7003E69CD /* RelationshipChildId.swift */,
+				02E58FA02535C9E30039F3A5 /* RelationshipData.swift */,
 				6D5CEDC924FC24B1005E8B41 /* RelationshipsManager.swift */,
 				6D5CEDB524FC2493005E8B41 /* ToManyRelationship.swift */,
 				6D5CEDB824FC2493005E8B41 /* ToOneRelationship.swift */,
@@ -1192,6 +1198,7 @@
 				ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */,
 				ED9C21F51EF2C4FB00882ABF /* Persistable.swift in Sources */,
 				ED10E88D1E48AB840061741F /* DataCache.swift in Sources */,
+				02E58FA12535C9E30039F3A5 /* RelationshipData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1257,6 +1264,7 @@
 				ED10E8D61E48BF1D0061741F /* SynchronizationManager.swift in Sources */,
 				ED9C21F61EF2C4FB00882ABF /* Persistable.swift in Sources */,
 				ED10E8D81E48BF1D0061741F /* DataCache.swift in Sources */,
+				02E58FA22535C9E30039F3A5 /* RelationshipData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1276,6 +1284,7 @@
 				ED10E9011E48CD1E0061741F /* SynchronizationManager.swift in Sources */,
 				ED9C21F71EF2C4FB00882ABF /* Persistable.swift in Sources */,
 				ED10E9031E48CD1E0061741F /* DataCache.swift in Sources */,
+				02E58FA32535C9E30039F3A5 /* RelationshipData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1295,6 +1304,7 @@
 				ED10E9071E48CD1F0061741F /* SynchronizationManager.swift in Sources */,
 				ED9C21F81EF2C4FB00882ABF /* Persistable.swift in Sources */,
 				ED10E9091E48CD1F0061741F /* DataCache.swift in Sources */,
+				02E58FA42535C9E30039F3A5 /* RelationshipData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

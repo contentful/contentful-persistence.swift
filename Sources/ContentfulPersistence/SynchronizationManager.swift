@@ -9,6 +9,10 @@
 import Contentful
 import CoreData
 
+func predicate(for id: String, localeCodes: [LocaleCode]) -> NSPredicate {
+    return NSPredicate(format: "id == %@ AND localeCode IN %@", id, localeCodes)
+}
+
 func predicate(for id: String, localeCode: LocaleCode) -> NSPredicate {
     return NSPredicate(format: "id == %@ AND localeCode == %@", id, localeCode)
 }
@@ -252,64 +256,53 @@ public class SynchronizationManager: PersistenceIntegration {
                     relationshipsToResolve[entryId] = updatedFieldsRelationships
                 }
 
-                updateRelationships(with: entryPersistable)
+                updateRelationships(with: entryPersistable, cache: cache)
             }
         }
         cacheUnresolvedRelationships()
     }
 
     /// Find and update relationships where the entry should be set as a child.
-    private func updateRelationships(with entry: EntryPersistable) {
-        updateToOneRelationships(with: entry)
-        updateToManyRelationships(with: entry)
+    private func updateRelationships(with entry: EntryPersistable, cache: DataCache) {
+        updateToOneRelationships(with: entry, cache: cache)
+        updateToManyRelationships(with: entry, cache: cache)
     }
 
-    private func updateToOneRelationships(with entry: EntryPersistable) {
-        let filteredRelationships: [ToOneRelationship] = relationshipsManager.relationships
-            .compactMap { $0.value() }
-            .filter { $0.childId.id == entry.id && $0.childId.localeCode == entry.localeCode }
+    private func updateToOneRelationships(with entry: EntryPersistable, cache: DataCache) {
+        let filteredRelationships: [ToOneRelationship] = relationshipsManager.relationships.findToOne(
+            childId: entry.id,
+            localeCode: entry.localeCode
+        )
 
         for relationship in filteredRelationships {
-            if let parentType = persistenceModel.entryTypes.first(where: { $0.contentTypeId == relationship.parentType }) {
-                // The same parent with several locale codes may be returned.
-                let candidates: [EntryPersistable] = (try? persistentStore.fetchAll(
-                    type: parentType,
-                    predicate: NSPredicate(format: "id == %@", relationship.parentId)
-                )) ?? []
-
-                guard let parent = candidates.first(where: { $0.localeCode == entry.localeCode }) else { return }
-
-                parent.setValue(entry, forKey: relationship.fieldName)
+            guard let parent = cache.entry(for: DataCache.cacheKey(for: relationship.parentId, localeCode: entry.localeCode)) else {
+                return
             }
+            parent.setValue(entry, forKey: relationship.fieldName)
         }
     }
 
-    private func updateToManyRelationships(with entry: EntryPersistable) {
-        let filteredRelationships: [ToManyRelationship] = relationshipsManager.relationships
-            .compactMap { $0.value() }
-            .filter { $0.childIds.map({ $0.id }).contains(entry.id) && $0.childIds.first?.localeCode == entry.localeCode }
+    private func updateToManyRelationships(with entry: EntryPersistable, cache: DataCache) {
+        let filteredRelationships: [ToManyRelationship] = relationshipsManager.relationships.findToMany(
+            childId: entry.id,
+            localeCode: entry.localeCode
+        )
 
         for relationship in filteredRelationships {
-            if let parentType = persistenceModel.entryTypes.first(where: { $0.contentTypeId == relationship.parentType }) {
-                // The same parent with several locale codes may be returned.
-                let candidates: [EntryPersistable] = (try? persistentStore.fetchAll(
-                    type: parentType,
-                    predicate: NSPredicate(format: "id == %@", relationship.parentId)
-                )) ?? []
+            guard let parent = cache.entry(for: DataCache.cacheKey(for: relationship.parentId, localeCode: entry.localeCode)) else {
+                return
+            }
 
-                guard let parent = candidates.first(where: { $0.localeCode == entry.localeCode }) else { return }
+            guard let collection = parent.value(forKey: relationship.fieldName) else { continue }
 
-                guard let collection = parent.value(forKey: relationship.fieldName) else { continue }
-
-                if let set = collection as? NSSet {
-                    let mutableSet = NSMutableSet(set: set)
-                    mutableSet.add(entry)
-                    parent.setValue(NSSet(set: mutableSet), forKey: relationship.fieldName)
-                } else if let set = collection as? NSOrderedSet {
-                    var array = set.array
-                    array.append(entry)
-                    parent.setValue(NSOrderedSet(array: array), forKey: relationship.fieldName)
-                }
+            if let set = collection as? NSSet {
+                let mutableSet = NSMutableSet(set: set)
+                mutableSet.add(entry)
+                parent.setValue(NSSet(set: mutableSet), forKey: relationship.fieldName)
+            } else if let set = collection as? NSOrderedSet {
+                var array = set.array
+                array.append(entry)
+                parent.setValue(NSOrderedSet(array: array), forKey: relationship.fieldName)
             }
         }
     }
@@ -325,54 +318,56 @@ public class SynchronizationManager: PersistenceIntegration {
         switch localizationScheme {
         case .default:
             // Don't change the locale.
-            createLocalized(asset: asset)
+            createLocalized(asset: asset, localeCodes: [asset.currentlySelectedLocale.code])
         case .all:
-            for localeCode in localeCodes {
-                asset.setLocale(withCode: localeCode)
-                createLocalized(asset: asset)
-            }
+            createLocalized(asset: asset, localeCodes: localeCodes)
+
         case let .one(localeCode):
-            asset.setLocale(withCode: localeCode)
-            createLocalized(asset: asset)
+            createLocalized(asset: asset, localeCodes: [localeCode])
         }
     }
 
-    private func createLocalized(asset: Asset) {
+    private func createLocalized(asset: Asset, localeCodes: [LocaleCode]) {
         let type = persistenceModel.assetType
 
-        let fetchPredicate = predicate(for: asset.id, localeCode: asset.currentlySelectedLocale.code)
+        let fetchPredicate = predicate(for: asset.id, localeCodes: localeCodes)
         let fetched: [AssetPersistable]? = try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)
-        let persistable: AssetPersistable
 
-        if let fetched = fetched?.first {
-            persistable = fetched
-        } else {
-            do {
-                persistable = try persistentStore.create(type: type)
-            } catch let error {
-                fatalError("Could not create the Asset persistent store\n \(error)")
+        for localeCode in localeCodes {
+            asset.setLocale(withCode: localeCode)
+
+            let persistable: AssetPersistable
+            if let fetched = (fetched?.first { $0.localeCode == localeCode }) {
+                persistable = fetched
+            } else {
+                do {
+                    persistable = try persistentStore.create(type: type)
+                } catch let error {
+                    fatalError("Could not create the Asset persistent store\n \(error)")
+                }
+            }
+
+            // Populate persistable with sys and fields data from the `Asset`
+            persistable.id = asset.id // Set the localeCode.
+            persistable.localeCode = asset.currentlySelectedLocale.code
+            persistable.title = asset.title
+            persistable.assetDescription = asset.description
+            persistable.updatedAt = asset.sys.updatedAt
+            persistable.createdAt = asset.sys.updatedAt
+            persistable.urlString = asset.urlString
+            persistable.fileName = asset.file?.fileName
+            persistable.fileType = asset.file?.contentType
+            if let size = asset.file?.details?.size {
+                persistable.size = NSNumber(value: size)
+            }
+            if let height = asset.file?.details?.imageInfo?.height {
+                persistable.height = NSNumber(value: height)
+            }
+            if let width = asset.file?.details?.imageInfo?.width {
+                persistable.width = NSNumber(value: width)
             }
         }
 
-        // Populate persistable with sys and fields data from the `Asset`
-        persistable.id = asset.id // Set the localeCode.
-        persistable.localeCode = asset.currentlySelectedLocale.code
-        persistable.title = asset.title
-        persistable.assetDescription = asset.description
-        persistable.updatedAt = asset.sys.updatedAt
-        persistable.createdAt = asset.sys.updatedAt
-        persistable.urlString = asset.urlString
-        persistable.fileName = asset.file?.fileName
-        persistable.fileType = asset.file?.contentType
-        if let size = asset.file?.details?.size {
-            persistable.size = NSNumber(value: size)
-        }
-        if let height = asset.file?.details?.imageInfo?.height {
-            persistable.height = NSNumber(value: height)
-        }
-        if let width = asset.file?.details?.imageInfo?.width {
-            persistable.width = NSNumber(value: width)
-        }
     }
 
     /** Never call this directly.
@@ -384,50 +379,53 @@ public class SynchronizationManager: PersistenceIntegration {
         switch localizationScheme {
         case .default:
             // Don't change the locale.
-            createLocalized(entry: entry)
+            createLocalized(entry: entry, localeCodes: [entry.currentlySelectedLocale.code])
+
         case .all:
-            for localeCode in localeCodes {
-                entry.setLocale(withCode: localeCode)
-                createLocalized(entry: entry)
-            }
+            createLocalized(entry: entry, localeCodes: localeCodes)
+
         case let .one(localeCode):
-            entry.setLocale(withCode: localeCode)
-            createLocalized(entry: entry)
+            createLocalized(entry: entry, localeCodes: [localeCode])
         }
     }
 
-    private func createLocalized(entry: Entry) {
+    private func createLocalized(entry: Entry, localeCodes: [LocaleCode]) {
+
         guard let contentTypeId = entry.sys.contentTypeId else { return }
         guard let type = persistenceModel.entryTypes.filter({ $0.contentTypeId == contentTypeId }).first else { return }
 
-        let fetchPredicate = predicate(for: entry.id, localeCode: entry.currentlySelectedLocale.code)
+        let fetchPredicate = predicate(for: entry.id, localeCodes: localeCodes)
         let fetched: [EntryPersistable]? = try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)
-        let persistable: EntryPersistable
 
-        if let fetched = fetched?.first {
-            persistable = fetched
-        } else {
-            do {
-                persistable = try persistentStore.create(type: type)
-                persistable.id = entry.id
-            } catch let error {
-                fatalError("Could not create the Entry persistent store\n \(error)")
+        for localeCode in localeCodes {
+            entry.setLocale(withCode: localeCode)
+            let persistable: EntryPersistable
+
+            if let fetched = (fetched?.first { $0.localeCode == localeCode }) {
+                persistable = fetched
+            } else {
+                do {
+                    persistable = try persistentStore.create(type: type)
+                    persistable.id = entry.id
+                } catch let error {
+                    fatalError("Could not create the Entry persistent store\n \(error)")
+                }
             }
+
+            // Populate persistable with sys and fields data from the `Entry`
+            persistable.updatedAt = entry.sys.updatedAt
+            persistable.createdAt = entry.sys.createdAt
+
+            // Set the localeCode.
+            persistable.localeCode = entry.currentlySelectedLocale.code
+
+            // Update all properties and cache relationships to be resolved.
+            updatePropertyFields(for: persistable, of: type, with: entry)
+
+            // The key has locale information.
+            let entryKey = DataCache.cacheKey(for: entry)
+            relationshipsToResolve[entryKey] = persistableRelationships(for: persistable, of: type, with: entry)
         }
-
-        // Populate persistable with sys and fields data from the `Entry`
-        persistable.updatedAt = entry.sys.updatedAt
-        persistable.createdAt = entry.sys.createdAt
-
-        // Set the localeCode.
-        persistable.localeCode = entry.currentlySelectedLocale.code
-
-        // Update all properties and cache relationships to be resolved.
-        updatePropertyFields(for: persistable, of: type, with: entry)
-
-        // The key has locale information.
-        let entryKey = DataCache.cacheKey(for: entry)
-        relationshipsToResolve[entryKey] = persistableRelationships(for: persistable, of: type, with: entry)
     }
 
     /**

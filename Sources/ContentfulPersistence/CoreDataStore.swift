@@ -155,6 +155,8 @@ public class CoreDataStore: PersistenceStore {
             context.perform {
                 block()
             }
+        @unknown default:
+            fatalError("Unknown concurrencyType")
         }
     }
 
@@ -166,6 +168,8 @@ public class CoreDataStore: PersistenceStore {
             context.performAndWait {
                 block()
             }
+        @unknown default:
+            fatalError("Unknown concurrencyType")
         }
     }
 }
