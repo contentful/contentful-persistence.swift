@@ -26,6 +26,7 @@ extension SingleRecord: EntryPersistable {
     @NSManaged var assetLinkField: ComplexAsset?
     @NSManaged var assetsArrayLinkField: NSOrderedSet?
     @NSManaged var symbolsArray: Data?
+    @NSManaged var symbolsArrayTransformable: [String]?
     
     static func fieldMapping() -> [FieldName: String] {
         return [
@@ -35,7 +36,8 @@ extension SingleRecord: EntryPersistable {
             "postedDate": "postedDate",
             "assetLinkField": "assetLinkField",
             "assetsArrayLinkField": "assetsArrayLinkField",
-            "symbolsArray": "symbolsArray"
+            "symbolsArray": "symbolsArray",
+            "symbolsArrayTransformable": "symbolsArrayTransformable"
         ]
     }
 }

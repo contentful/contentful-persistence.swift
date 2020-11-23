@@ -44,6 +44,15 @@
             "four",
             "five"
           ]
+        },
+        "symbolsArrayTransformable": {
+          "en-US": [
+            "one",
+            "two",
+            "three",
+            "four",
+            "five"
+          ]
         }
       }
     },
