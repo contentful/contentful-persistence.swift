@@ -112,14 +112,16 @@ public class SynchronizationManager: PersistenceIntegration {
      method is thread safe and will delegate to the thread that your data store is tied to.
 
      Execute queries on your local data store in the callback for this method.
+
+     - parameter limit: Number of elements per page. See documentation for details.
      */
-    public func sync(then completion: @escaping ResultsHandler<SyncSpace>) {
+    public func sync(limit: Int = 100, then completion: @escaping ResultsHandler<SyncSpace>) {
         resolveCachedRelationships { [weak self] in
-            self?.syncSafely(then: completion)
+            self?.syncSafely(limit: limit, then: completion)
         }
     }
 
-    private func syncSafely(then completion: @escaping ResultsHandler<SyncSpace>) {
+    private func syncSafely(limit: Int, then completion: @escaping ResultsHandler<SyncSpace>) {
         let safeCompletion: ResultsHandler<SyncSpace> = { [weak self] result in
             self?.persistentStore.performBlock {
                 completion(result)
@@ -127,9 +129,9 @@ public class SynchronizationManager: PersistenceIntegration {
         }
 
         if let syncToken = self.syncToken {
-            client?.sync(for: SyncSpace(syncToken: syncToken), then: safeCompletion)
+            client?.sync(for: SyncSpace(syncToken: syncToken, limit: limit), then: safeCompletion)
         } else {
-            client?.sync(for: SyncSpace(), then: safeCompletion)
+            client?.sync(for: SyncSpace(limit: limit), then: safeCompletion)
         }
     }
 
