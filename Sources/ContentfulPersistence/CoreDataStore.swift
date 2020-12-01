@@ -94,6 +94,15 @@ public class CoreDataStore: PersistenceStore {
         return items
     }
 
+    public func fetchOne<T>(
+        type: Any.Type,
+        predicate: NSPredicate
+    ) throws -> T {
+        let request = try fetchRequest(for: type, predicate: predicate)
+        request.fetchLimit = 1
+        return try context.fetch(request).first as! T
+    }
+
     /**
      Returns an array of names of properties the given type stores persistently.
 

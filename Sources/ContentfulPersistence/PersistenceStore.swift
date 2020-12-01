@@ -44,6 +44,18 @@ public protocol PersistenceStore {
     func fetchAll<T>(type: Any.Type, predicate: NSPredicate) throws -> [T]
 
     /**
+        Fetches one object of a specific type which matches the predicate.
+
+        - parameter type: Type of which object should be fetched.
+        - parameter predicate: The predicate used for matching object to fetch.
+
+        - throws: If an invalid type was specified
+
+        - returns: Matching object
+     */
+     func fetchOne<T>(type: Any.Type, predicate: NSPredicate) throws -> T
+
+    /**
      Returns an array of names of properties the given type stores persistently.
 
      This should omit any properties returned by `relationshipsFor(type:)`.

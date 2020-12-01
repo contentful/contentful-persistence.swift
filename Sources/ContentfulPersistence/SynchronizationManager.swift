@@ -331,13 +331,13 @@ public class SynchronizationManager: PersistenceIntegration {
         let type = persistenceModel.assetType
 
         let fetchPredicate = predicate(for: asset.id, localeCodes: localeCodes)
-        let fetched: [AssetPersistable]? = try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)
+        let fetched: AssetPersistable? = try? persistentStore.fetchOne(type: type, predicate: fetchPredicate)
 
         for localeCode in localeCodes {
             asset.setLocale(withCode: localeCode)
 
             let persistable: AssetPersistable
-            if let fetched = (fetched?.first { $0.localeCode == localeCode }) {
+            if let fetched = fetched, fetched.localeCode == localeCode {
                 persistable = fetched
             } else {
                 do {
@@ -395,13 +395,13 @@ public class SynchronizationManager: PersistenceIntegration {
         guard let type = persistenceModel.entryTypes.filter({ $0.contentTypeId == contentTypeId }).first else { return }
 
         let fetchPredicate = predicate(for: entry.id, localeCodes: localeCodes)
-        let fetched: [EntryPersistable]? = try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)
+        let fetched: EntryPersistable? = try? persistentStore.fetchOne(type: type, predicate: fetchPredicate)
 
         for localeCode in localeCodes {
             entry.setLocale(withCode: localeCode)
             let persistable: EntryPersistable
 
-            if let fetched = (fetched?.first { $0.localeCode == localeCode }) {
+            if let fetched = fetched, fetched.localeCode == localeCode {
                 persistable = fetched
             } else {
                 do {
