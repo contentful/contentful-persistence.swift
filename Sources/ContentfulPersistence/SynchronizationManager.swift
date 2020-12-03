@@ -115,13 +115,13 @@ public class SynchronizationManager: PersistenceIntegration {
 
      - parameter limit: Number of elements per page. See documentation for details.
      */
-    public func sync(limit: Int = 100, then completion: @escaping ResultsHandler<SyncSpace>) {
+    public func sync(limit: Int? = nil, then completion: @escaping ResultsHandler<SyncSpace>) {
         resolveCachedRelationships { [weak self] in
             self?.syncSafely(limit: limit, then: completion)
         }
     }
 
-    private func syncSafely(limit: Int, then completion: @escaping ResultsHandler<SyncSpace>) {
+    private func syncSafely(limit: Int?, then completion: @escaping ResultsHandler<SyncSpace>) {
         let safeCompletion: ResultsHandler<SyncSpace> = { [weak self] result in
             self?.persistentStore.performBlock {
                 completion(result)
