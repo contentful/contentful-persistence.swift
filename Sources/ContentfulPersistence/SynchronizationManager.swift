@@ -333,13 +333,14 @@ public class SynchronizationManager: PersistenceIntegration {
         let type = persistenceModel.assetType
 
         let fetchPredicate = predicate(for: asset.id, localeCodes: localeCodes)
-        let fetched: AssetPersistable? = try? persistentStore.fetchOne(type: type, predicate: fetchPredicate)
+        let fetchedAssets: [AssetPersistable] = (try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)) ?? []
+        let localeToAssetDict = Dictionary(grouping: fetchedAssets, by: { $0.localeCode })
 
         for localeCode in localeCodes {
             asset.setLocale(withCode: localeCode)
 
             let persistable: AssetPersistable
-            if let fetched = fetched, fetched.localeCode == localeCode {
+            if let fetched = localeToAssetDict[localeCode]?.first {
                 persistable = fetched
             } else {
                 do {
