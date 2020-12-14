@@ -398,12 +398,13 @@ public class SynchronizationManager: PersistenceIntegration {
 
         let fetchPredicate = predicate(for: entry.id, localeCodes: localeCodes)
         let fetchedEntries: [EntryPersistable] = (try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)) ?? []
+        let localeToEntryDict = Dictionary(grouping: fetchedEntries, by: { $0.localeCode })
 
         for localeCode in localeCodes {
             entry.setLocale(withCode: localeCode)
             let persistable: EntryPersistable
 
-            if let fetched = (fetchedEntries.first { $0.localeCode == localeCode }) {
+            if let fetched = localeToEntryDict[localeCode]?.first {
                 persistable = fetched
             } else {
                 do {
