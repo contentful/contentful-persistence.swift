@@ -21,6 +21,18 @@ func predicate(for id: String) -> NSPredicate {
     return NSPredicate(format: "id == %@", id)
 }
 
+func predicate(ids: [String], localeCodes: [LocaleCode]) -> NSPredicate {
+    return NSPredicate(format: "id IN %@ AND localeCode IN %@", ids, localeCodes)
+}
+
+func predicate(ids: [String], localeCode: LocaleCode) -> NSPredicate {
+    return NSPredicate(format: "id IN %@ AND localeCode == %@", ids, localeCode)
+}
+
+func predicate(ids: [String]) -> NSPredicate {
+    return NSPredicate(format: "id IN %@", ids)
+}
+
 // A sentinal value used to represent relationships that should be deleted in the `resolveRelationships()` method
 let deletedRelationshipSentinel = -1
 
@@ -161,14 +173,10 @@ public class SynchronizationManager: PersistenceIntegration {
 
     public func update(with syncSpace: SyncSpace) {
         persistentStore.performAndWait { [weak self] in
-            for asset in syncSpace.assets {
-                self?.create(asset: asset)
-            }
+            self?.create(assets: syncSpace.assets)
 
             // Update and deduplicate all entries.
-            for entry in syncSpace.entries {
-                self?.create(entry: entry)
-            }
+            self?.create(entries: syncSpace.entries)
 
             for deletedAssetId in syncSpace.deletedAssetIds {
                 self?.delete(assetWithId: deletedAssetId)
@@ -429,6 +437,135 @@ public class SynchronizationManager: PersistenceIntegration {
             // The key has locale information.
             let entryKey = DataCache.cacheKey(for: entry)
             relationshipsToResolve[entryKey] = persistableRelationships(for: persistable, of: type, with: entry)
+        }
+    }
+    
+    /**
+     This function is public as a side-effect of implementing `PersistenceDelegate`.
+
+     - parameter assets: The newly created Assets
+     */
+    public func create(assets: [Asset]) {
+        switch localizationScheme {
+        case .default:
+            // Don't change the locale.
+            createLocalized(assets: assets, localeCodes: [])
+        case .all:
+            createLocalized(assets: assets, localeCodes: localeCodes)
+
+        case let .one(localeCode):
+            createLocalized(assets: assets, localeCodes: [localeCode])
+        }
+    }
+
+    private func createLocalized(assets: [Asset], localeCodes: [LocaleCode]) {
+        let type = persistenceModel.assetType
+
+        let fetchPredicate = localeCodes.isEmpty ? predicate(ids: assets.map { $0.id }) : predicate(ids: assets.map { $0.id }, localeCodes: localeCodes)
+        let fetchedAssets: [AssetPersistable] = (try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)) ?? []
+        let localeToAssetDict = Dictionary(grouping: fetchedAssets, by: { "\($0.id)-\($0.localeCode ?? "")" })
+
+        for asset in assets {
+            let codes = localeCodes.isEmpty ? [asset.currentlySelectedLocale.code] : localeCodes
+            for localeCode in codes {
+                asset.setLocale(withCode: localeCode)
+
+                let persistable: AssetPersistable
+                if let fetched = localeToAssetDict["\(asset.id)-\(localeCode)"]?.first {
+                    persistable = fetched
+                } else {
+                    do {
+                        persistable = try persistentStore.create(type: type)
+                    } catch let error {
+                        fatalError("Could not create the Asset persistent store\n \(error)")
+                    }
+                }
+
+                // Populate persistable with sys and fields data from the `Asset`
+                persistable.id = asset.id // Set the localeCode.
+                persistable.localeCode = asset.currentlySelectedLocale.code
+                persistable.title = asset.title
+                persistable.assetDescription = asset.description
+                persistable.updatedAt = asset.sys.updatedAt
+                persistable.createdAt = asset.sys.updatedAt
+                persistable.urlString = asset.urlString
+                persistable.fileName = asset.file?.fileName
+                persistable.fileType = asset.file?.contentType
+                if let size = asset.file?.details?.size {
+                    persistable.size = NSNumber(value: size)
+                }
+                if let height = asset.file?.details?.imageInfo?.height {
+                    persistable.height = NSNumber(value: height)
+                }
+                if let width = asset.file?.details?.imageInfo?.width {
+                    persistable.width = NSNumber(value: width)
+                }
+            }
+        }
+    }
+
+    /** Never call this directly.
+     This function is public as a side-effect of implementing `SyncSpaceDelegate`.
+
+     - parameter entries: The newly created Entries
+     */
+    public func create(entries: [Entry]) {
+        switch localizationScheme {
+        case .default:
+            // Don't change the locale.
+            createLocalized(entries: entries, localeCodes: [])
+
+        case .all:
+            createLocalized(entries: entries, localeCodes: localeCodes)
+
+        case let .one(localeCode):
+            createLocalized(entries: entries, localeCodes: [localeCode])
+        }
+    }
+
+    private func createLocalized(entries: [Entry], localeCodes: [LocaleCode]) {
+        let typeToEntry = Dictionary(grouping: entries, by: { $0.sys.contentTypeId })
+        for typeId in typeToEntry.keys {
+            guard let contentTypeId = typeId,
+                  let type = persistenceModel.entryTypes.first(where: { $0.contentTypeId == contentTypeId }),
+                  let typeEntries = typeToEntry[contentTypeId] else {
+                continue
+            }
+            let fetchPredicate = localeCodes.isEmpty ? predicate(ids: typeEntries.map { $0.id }) : predicate(ids: typeEntries.map { $0.id }, localeCodes: localeCodes)
+            let fetchedEntries: [EntryPersistable] = (try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)) ?? []
+            let localeToEntryDict = Dictionary(grouping: fetchedEntries, by: { "\($0.id)-\($0.localeCode ?? "")" })
+            for entry in typeEntries {
+                let codes = localeCodes.isEmpty ? [entry.currentlySelectedLocale.code] : localeCodes
+                for localeCode in codes {
+                    entry.setLocale(withCode: localeCode)
+                    let persistable: EntryPersistable
+
+                    if let fetched = localeToEntryDict["\(entry.id)-\(localeCode)"]?.first {
+                        persistable = fetched
+                    } else {
+                        do {
+                            persistable = try persistentStore.create(type: type)
+                            persistable.id = entry.id
+                        } catch let error {
+                            fatalError("Could not create the Entry persistent store\n \(error)")
+                        }
+                    }
+
+                    // Populate persistable with sys and fields data from the `Entry`
+                    persistable.updatedAt = entry.sys.updatedAt
+                    persistable.createdAt = entry.sys.createdAt
+
+                    // Set the localeCode.
+                    persistable.localeCode = entry.currentlySelectedLocale.code
+
+                    // Update all properties and cache relationships to be resolved.
+                    updatePropertyFields(for: persistable, of: type, with: entry)
+
+                    // The key has locale information.
+                    let entryKey = DataCache.cacheKey(for: entry)
+                    relationshipsToResolve[entryKey] = persistableRelationships(for: persistable, of: type, with: entry)
+                }
+            }
         }
     }
 
