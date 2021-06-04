@@ -35,8 +35,7 @@ coverage:
 	bundle exec slather coverage -s $(PROJECT)
 
 carthage:
-	carthage build ContentfulPersistence --no-skip-current --platform all
-	carthage archive ContentfulPersistence
+	carthage build ContentfulPersistence --no-skip-current --platform all --use-xcframeworks
 
 release:
 	./Scripts/release.sh
