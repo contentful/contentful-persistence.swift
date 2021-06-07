@@ -26,8 +26,8 @@ public extension SynchronizationManager {
         var fileIndex = 0
         let filePaths = bundle.paths(forResourcesOfType: "json", inDirectory: directory)
 
-        let localesJSONFilePath = filePaths.filter({ URL(string: $0)?.deletingPathExtension().lastPathComponent == "locales" }).first
-        let firstFilePath = filePaths.filter({ URL(string: $0)?.deletingPathExtension().lastPathComponent == String(fileIndex) }).first
+        let localesJSONFilePath = filePaths.filter({ URL(fileURLWithPath: $0).deletingPathExtension().lastPathComponent == "locales" }).first
+        let firstFilePath = filePaths.filter({ URL(fileURLWithPath: $0).deletingPathExtension().lastPathComponent == String(fileIndex) }).first
 
         guard let initialSyncJSONFilePath = firstFilePath, let spaceFilePath = localesJSONFilePath else {
             throw DatabaseSeedingError.invalidFilePath
@@ -61,7 +61,7 @@ public extension SynchronizationManager {
             self.update(with: syncSpace)
 
             fileIndex += 1
-            filePath = filePaths.filter({ URL(string: $0)?.deletingPathExtension().lastPathComponent == String(fileIndex)}).first
+            filePath = filePaths.filter({ URL(fileURLWithPath: $0).deletingPathExtension().lastPathComponent == String(fileIndex)}).first
         }
     }
 
@@ -106,7 +106,8 @@ public extension SynchronizationManager {
                 does not have a `urlString` associated with it.
      */
     static func fileName(for media: AssetProtocol) -> String? {
-        guard let urlString = media.urlString, let url = URL(string: urlString) else { return nil }
+        guard let urlString = media.urlString else { return nil }
+        let url = URL(fileURLWithPath: urlString)
         let pathExtension = url.pathExtension.isEmpty ? "data" : url.pathExtension
         let fileName = "cache_" + media.id + "." + pathExtension
         return fileName
