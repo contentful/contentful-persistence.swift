@@ -7,7 +7,7 @@
 [![Build Status](https://img.shields.io/travis/contentful/contentful-persistence.swift/master.svg?style=flat)](https://travis-ci.org/contentful/contentful-persistence.swift)
 [![Coverage Status](https://img.shields.io/coveralls/contentful/contentful-persistence.swift.svg)](https://coveralls.io/github/contentful/contentful-persistence.swift)
 
-> An integration to simplify persisting data from [Contentful][1] to a local CoreData database; built on top of the official Contentful [Swift SDK][2]. This library specifically uses the [`/sync` endpoint][7] of the Content Delivery API to synchronize all content in a Contentful space to device.
+> An integration to simplify persisting data from [Contentful][1] to a local CoreData database; built on top of the official Contentful [Swift Library][2]. This library specifically uses the [`/sync` endpoint][7] of the Content Delivery API to synchronize all content in a Contentful space to device.
 
 **What is Contentful?**
 
@@ -173,4 +173,3 @@ Copyright (c) 2018 Contentful GmbH. See [LICENSE](LICENSE) for further details.
 [5]: https://cocoapods.org/
 [6]: https://github.com/Carthage/Carthage
 [7]: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization
-
