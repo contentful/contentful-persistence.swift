@@ -178,8 +178,10 @@ public class SynchronizationManager: PersistenceIntegration {
             }
             
             dispatchGroup.notify(queue: privateQueue) { [weak self] in
-                self?.resolveRelationships()
-                self?.save()
+                self?.persistentStore.performAndWait {
+                    self?.resolveRelationships()
+                    self?.save()
+                }
                 safeCompletion(.success(.init()))
             }
         } else if let syncToken = getSyncToken(from: "") {
