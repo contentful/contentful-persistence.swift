@@ -106,6 +106,8 @@ public class SynchronizationManager: PersistenceIntegration {
     }
 
     fileprivate var localeCodes: [LocaleCode]
+    fileprivate let privateQueue: DispatchQueue = .init(label: "private.contentful.synchronization.service.queue")
+    fileprivate let dispatchGroup: DispatchGroup = .init()
 
     public func update(localeCodes: [LocaleCode]) {
         switch localizationScheme {
@@ -127,20 +129,60 @@ public class SynchronizationManager: PersistenceIntegration {
 
      - parameter limit: Number of elements per page. See documentation for details.
      */
-    public func sync(limit: Int? = nil, then completion: @escaping ResultsHandler<SyncSpace>) {
+    public func sync(contentTypeIds: [String]? = nil, limit: Int? = nil, then completion: @escaping ResultsHandler<SyncSpace>) {
         resolveCachedRelationships { [weak self] in
-            self?.syncSafely(limit: limit, then: completion)
+            self?.syncSafely(contentTypeIds: contentTypeIds, limit: limit, then: completion)
         }
     }
 
-    private func syncSafely(limit: Int?, then completion: @escaping ResultsHandler<SyncSpace>) {
+    private func syncSafely(contentTypeIds: [String]?, limit: Int?, then completion: @escaping ResultsHandler<SyncSpace>) {
         let safeCompletion: ResultsHandler<SyncSpace> = { [weak self] result in
             self?.persistentStore.performBlock {
                 completion(result)
             }
         }
-
-        if let syncToken = self.syncToken {
+        
+        if let contentTypeIds = contentTypeIds {
+            contentTypeIds.forEach { contentTypeId in
+                dispatchGroup.enter()
+                if let syncToken = getSyncToken(from: contentTypeId) {
+                    client?.sync(for: SyncSpace(syncToken: syncToken, limit: limit, contentTypeId: contentTypeId), then: { [weak self] _ in
+                        self?.dispatchGroup.leave()
+                    })
+                } else {
+                    client?.sync(for: SyncSpace(limit: limit, typeId: contentTypeId), syncableTypes: SyncSpace.SyncableTypes.entriesOfContentType(withId: contentTypeId), then: { [weak self] _ in
+                        self?.dispatchGroup.leave()
+                    })
+                }
+                
+            }
+            dispatchGroup.enter()
+            if let assetsSyncToken = getSyncToken(from: "contentful_assets") {
+                client?.sync(for: SyncSpace(syncToken: assetsSyncToken, limit: limit, typeId: "contentful_assets"), then: { [weak self] _ in
+                    self?.dispatchGroup.leave()
+                })
+            } else {
+                client?.sync(for: SyncSpace(limit: limit, typeId: "contentful_assets"), syncableTypes: SyncSpace.SyncableTypes.assets, then: { [weak self] _ in
+                    self?.dispatchGroup.leave()
+                })
+            }
+            dispatchGroup.enter()
+            if let deletionsSyncToken = getSyncToken(from: "contentful_deleted") {
+                client?.sync(for: SyncSpace(syncToken: deletionsSyncToken, limit: limit, typeId: "contentful_deleted"), then: { [weak self] _ in
+                    self?.dispatchGroup.leave()
+                })
+            } else {
+                client?.sync(for: SyncSpace(limit: limit, typeId: "contentful_deleted"), syncableTypes: SyncSpace.SyncableTypes.allDeletions, then: { [weak self] _ in
+                    self?.dispatchGroup.leave()
+                })
+            }
+            
+            dispatchGroup.notify(queue: privateQueue) { [weak self] in
+                self?.resolveRelationships()
+                self?.save()
+                safeCompletion(.success(.init()))
+            }
+        } else if let syncToken = self.syncToken {
             client?.sync(for: SyncSpace(syncToken: syncToken, limit: limit), then: safeCompletion)
         } else {
             client?.sync(for: SyncSpace(limit: limit), then: safeCompletion)
@@ -157,10 +199,10 @@ public class SynchronizationManager: PersistenceIntegration {
 
     fileprivate let persistentStore: PersistenceStore
 
-    public var syncToken: String? {
+    public func getSyncToken(from contentTypeId: String) -> String? {
         var syncToken: String?
         persistentStore.performAndWait {
-            syncToken = self.fetchSpace().syncToken
+            syncToken = self.fetchSpace(for: contentTypeId).syncToken
         }
         return syncToken
     }
@@ -186,23 +228,24 @@ public class SynchronizationManager: PersistenceIntegration {
                 self?.delete(entryWithId: deletedEntryId)
             }
 
-            self?.resolveRelationships()
-            self?.update(syncToken: syncSpace.syncToken)
+//            self?.resolveRelationships()
+            self?.update(syncSpace: syncSpace)
 
             // Only save updates to the persistence store if the sync is completed
             // (has no more pages). Else, non-optional relations whose nodes
             // are sent in different pages would fail to be stored. This is the
             // case because e.g. CoreData validates non-optional relations when
             // save() is called.
-            if syncSpace.hasMorePages == false {
-                self?.save()
-            }
+//            if syncSpace.hasMorePages == false {
+//                self?.save()
+//            }
         }
     }
 
-    public func update(syncToken: String) {
-        let space = fetchSpace()
-        space.syncToken = syncToken
+    public func update(syncSpace: SyncSpace) {
+        let space = fetchSpace(for: syncSpace.contentTypeId)
+        space.syncToken = syncSpace.syncToken
+        space.id = syncSpace.typeId
     }
 
     public func resolveRelationships() {
@@ -792,27 +835,25 @@ public class SynchronizationManager: PersistenceIntegration {
         return relationships
     }
 
-    fileprivate func fetchSpace() -> SyncSpacePersistable {
+    fileprivate func fetchSpace(for contentTypeId: String) -> SyncSpacePersistable {
         let createNewPersistentSpace: () -> (SyncSpacePersistable) = {
             do {
                 let spacePersistable: SyncSpacePersistable = try self.persistentStore.create(type: self.persistenceModel.spaceType)
+                spacePersistable.id = contentTypeId
                 return spacePersistable
             } catch let error {
                 fatalError("Could not create the Sync Space persistent store\n \(error)")
             }
         }
 
-        guard let fetchedResults = try? persistentStore.fetchAll(type: persistenceModel.spaceType,
-                                                                 predicate: NSPredicate(value: true)) as [SyncSpacePersistable] else {
+        guard let fetchedResults = try? persistentStore.fetchAll(type: persistenceModel.spaceType, predicate: NSPredicate(value: true)) as [SyncSpacePersistable] else {
             return createNewPersistentSpace()
         }
 
-        assert(fetchedResults.count <= 1)
-
-        guard let space = fetchedResults.first else {
+        guard let space = fetchedResults.first(where: { $0.id == contentTypeId }) else {
             return createNewPersistentSpace()
         }
-
+        
         return space
     }
 }
