@@ -150,7 +150,7 @@ public class SynchronizationManager: PersistenceIntegration {
                         self?.dispatchGroup.leave()
                     })
                 } else {
-                    client?.sync(for: SyncSpace(limit: limit, typeId: contentTypeId), syncableTypes: SyncSpace.SyncableTypes.entriesOfContentType(withId: contentTypeId), then: { [weak self] _ in
+                    client?.sync(for: SyncSpace(limit: limit, contentTypeId: contentTypeId), syncableTypes: SyncSpace.SyncableTypes.entriesOfContentType(withId: contentTypeId), then: { [weak self] _ in
                         self?.dispatchGroup.leave()
                     })
                 }
@@ -158,21 +158,21 @@ public class SynchronizationManager: PersistenceIntegration {
             }
             dispatchGroup.enter()
             if let assetsSyncToken = getSyncToken(from: "contentful_assets") {
-                client?.sync(for: SyncSpace(syncToken: assetsSyncToken, limit: limit, typeId: "contentful_assets"), then: { [weak self] _ in
+                client?.sync(for: SyncSpace(syncToken: assetsSyncToken, limit: limit, contentTypeId: "contentful_assets"), then: { [weak self] _ in
                     self?.dispatchGroup.leave()
                 })
             } else {
-                client?.sync(for: SyncSpace(limit: limit, typeId: "contentful_assets"), syncableTypes: SyncSpace.SyncableTypes.assets, then: { [weak self] _ in
+                client?.sync(for: SyncSpace(limit: limit, contentTypeId: "contentful_assets"), syncableTypes: SyncSpace.SyncableTypes.assets, then: { [weak self] _ in
                     self?.dispatchGroup.leave()
                 })
             }
             dispatchGroup.enter()
             if let deletionsSyncToken = getSyncToken(from: "contentful_deleted") {
-                client?.sync(for: SyncSpace(syncToken: deletionsSyncToken, limit: limit, typeId: "contentful_deleted"), then: { [weak self] _ in
+                client?.sync(for: SyncSpace(syncToken: deletionsSyncToken, limit: limit, contentTypeId: "contentful_deleted"), then: { [weak self] _ in
                     self?.dispatchGroup.leave()
                 })
             } else {
-                client?.sync(for: SyncSpace(limit: limit, typeId: "contentful_deleted"), syncableTypes: SyncSpace.SyncableTypes.allDeletions, then: { [weak self] _ in
+                client?.sync(for: SyncSpace(limit: limit, contentTypeId: "contentful_deleted"), syncableTypes: SyncSpace.SyncableTypes.allDeletions, then: { [weak self] _ in
                     self?.dispatchGroup.leave()
                 })
             }
@@ -182,7 +182,7 @@ public class SynchronizationManager: PersistenceIntegration {
                 self?.save()
                 safeCompletion(.success(.init()))
             }
-        } else if let syncToken = self.syncToken {
+        } else if let syncToken = getSyncToken(from: "") {
             client?.sync(for: SyncSpace(syncToken: syncToken, limit: limit), then: safeCompletion)
         } else {
             client?.sync(for: SyncSpace(limit: limit), then: safeCompletion)
@@ -245,7 +245,7 @@ public class SynchronizationManager: PersistenceIntegration {
     public func update(syncSpace: SyncSpace) {
         let space = fetchSpace(for: syncSpace.contentTypeId)
         space.syncToken = syncSpace.syncToken
-        space.id = syncSpace.typeId
+        space.id = syncSpace.contentTypeId
     }
 
     public func resolveRelationships() {
