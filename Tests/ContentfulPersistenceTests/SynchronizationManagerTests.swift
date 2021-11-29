@@ -103,7 +103,7 @@ class ContentfulPersistenceTests: XCTestCase {
     func testCanContinueSyncWithExistingToken() {
         let expectation = self.expectation(description: "Can continue sync")
 
-        let syncSpace = SyncSpace(syncToken: "w5ZGw6JFwqZmVcKsE8Kow4grw45QdybDqXt4XTFdw6tcwrMiwqpmwq7DlcOqZ8KnwpUiG1sZwr3Cq8OpFcKEUsOyPcOiQMOEITLDnyIkw4fDq8KAw6x_Mh3Dui_Cgw3CnsKswrwhw6hNwostejQDw4nDmUkp")
+        let syncSpace = SyncSpace(syncToken: "FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORI8Oewq4AwrIybcKxaS7DosKAwqPChsKFccO9fsOQDjjCu8KYMcKFwrB6w5NuwoEWwoPDuMO-AVAHNMK6wrcpE8OOwojCo8Oqw7DCvAZ8w7JcAjFlZ1DDui7Dq8KUCMK_JcK2")
 
         self.client.sync(for: syncSpace) { result in
             switch result {
