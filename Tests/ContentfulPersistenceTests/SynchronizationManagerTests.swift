@@ -117,6 +117,16 @@ class ContentfulPersistenceTests: XCTestCase {
         waitForExpectations(timeout: 10.0, handler: nil)
     }
 
+    func testFetchOneAssetFromTheStore() {
+        let expectation = self.expectation(description: "Can fetch single asset from the store.")
+        self.client.sync { _ in
+            let asset: Asset? = try? self.store.fetchOne(type: Asset.self, predicate: self.assetPredicate)
+            XCTAssertEqual(asset?.id, "bXvdSYHB3Guy2uUmuEco8")
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+
     func testCanStoreAssetPersistables() {
         let expectation = self.expectation(description: "Can store Asset Persistables expecatation")
 

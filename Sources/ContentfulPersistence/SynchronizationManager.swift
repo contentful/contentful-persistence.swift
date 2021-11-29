@@ -112,14 +112,16 @@ public class SynchronizationManager: PersistenceIntegration {
      method is thread safe and will delegate to the thread that your data store is tied to.
 
      Execute queries on your local data store in the callback for this method.
+
+     - parameter limit: Number of elements per page. See documentation for details.
      */
-    public func sync(then completion: @escaping ResultsHandler<SyncSpace>) {
+    public func sync(limit: Int? = nil, then completion: @escaping ResultsHandler<SyncSpace>) {
         resolveCachedRelationships { [weak self] in
-            self?.syncSafely(then: completion)
+            self?.syncSafely(limit: limit, then: completion)
         }
     }
 
-    private func syncSafely(then completion: @escaping ResultsHandler<SyncSpace>) {
+    private func syncSafely(limit: Int?, then completion: @escaping ResultsHandler<SyncSpace>) {
         let safeCompletion: ResultsHandler<SyncSpace> = { [weak self] result in
             self?.persistentStore.performBlock {
                 completion(result)
@@ -127,9 +129,9 @@ public class SynchronizationManager: PersistenceIntegration {
         }
 
         if let syncToken = self.syncToken {
-            client?.sync(for: SyncSpace(syncToken: syncToken), then: safeCompletion)
+            client?.sync(for: SyncSpace(syncToken: syncToken, limit: limit), then: safeCompletion)
         } else {
-            client?.sync(for: SyncSpace(), then: safeCompletion)
+            client?.sync(for: SyncSpace(limit: limit), then: safeCompletion)
         }
     }
 
@@ -331,13 +333,14 @@ public class SynchronizationManager: PersistenceIntegration {
         let type = persistenceModel.assetType
 
         let fetchPredicate = predicate(for: asset.id, localeCodes: localeCodes)
-        let fetched: [AssetPersistable]? = try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)
+        let fetchedAssets: [AssetPersistable] = (try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)) ?? []
+        let localeToAssetDict = Dictionary(grouping: fetchedAssets, by: { $0.localeCode })
 
         for localeCode in localeCodes {
             asset.setLocale(withCode: localeCode)
 
             let persistable: AssetPersistable
-            if let fetched = (fetched?.first { $0.localeCode == localeCode }) {
+            if let fetched = localeToAssetDict[localeCode]?.first {
                 persistable = fetched
             } else {
                 do {
@@ -395,13 +398,14 @@ public class SynchronizationManager: PersistenceIntegration {
         guard let type = persistenceModel.entryTypes.filter({ $0.contentTypeId == contentTypeId }).first else { return }
 
         let fetchPredicate = predicate(for: entry.id, localeCodes: localeCodes)
-        let fetched: [EntryPersistable]? = try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)
+        let fetchedEntries: [EntryPersistable] = (try? persistentStore.fetchAll(type: type, predicate: fetchPredicate)) ?? []
+        let localeToEntryDict = Dictionary(grouping: fetchedEntries, by: { $0.localeCode })
 
         for localeCode in localeCodes {
             entry.setLocale(withCode: localeCode)
             let persistable: EntryPersistable
 
-            if let fetched = (fetched?.first { $0.localeCode == localeCode }) {
+            if let fetched = localeToEntryDict[localeCode]?.first {
                 persistable = fetched
             } else {
                 do {
