@@ -266,28 +266,9 @@ public class SynchronizationManager: PersistenceIntegration {
 
     /// Find and update relationships where the entry should be set as a child.
     private func updateRelationships(with entry: EntryPersistable, cache: DataCache) {
-        updateToOneRelationships(with: entry, cache: cache)
-        updateToManyRelationships(with: entry, cache: cache)
-    }
-
-    private func updateToOneRelationships(with entry: EntryPersistable, cache: DataCache) {
-        let filteredRelationships: [ToOneRelationship] = relationshipsManager.relationships.findToOne(
-            childId: entry.id,
-            localeCode: entry.localeCode
-        )
-
-        for relationship in filteredRelationships {
-            guard let parent = cache.entry(for: DataCache.cacheKey(for: relationship.parentId, localeCode: entry.localeCode)) else {
-                return
-            }
-            parent.setValue(entry, forKey: relationship.fieldName)
-        }
-    }
-
-    private func updateToManyRelationships(with entry: EntryPersistable, cache: DataCache) {
-        let filteredRelationships: [ToManyRelationship] = relationshipsManager.relationships.findToMany(
-            childId: entry.id,
-            localeCode: entry.localeCode
+        let filteredRelationships = relationshipsManager.relationships.relationships(
+            for: entry.id,
+            with: entry.localeCode
         )
 
         for relationship in filteredRelationships {
@@ -295,16 +276,21 @@ public class SynchronizationManager: PersistenceIntegration {
                 return
             }
 
-            guard let collection = parent.value(forKey: relationship.fieldName) else { continue }
+            switch relationship.children {
+            case .one:
+                parent.setValue(entry, forKey: relationship.fieldName)
+            case .many:
+                guard let collection = parent.value(forKey: relationship.fieldName) else { continue }
 
-            if let set = collection as? NSSet {
-                let mutableSet = NSMutableSet(set: set)
-                mutableSet.add(entry)
-                parent.setValue(NSSet(set: mutableSet), forKey: relationship.fieldName)
-            } else if let set = collection as? NSOrderedSet {
-                var array = set.array
-                array.append(entry)
-                parent.setValue(NSOrderedSet(array: array), forKey: relationship.fieldName)
+                if let set = collection as? NSSet {
+                    let mutableSet = NSMutableSet(set: set)
+                    mutableSet.add(entry)
+                    parent.setValue(NSSet(set: mutableSet), forKey: relationship.fieldName)
+                } else if let set = collection as? NSOrderedSet {
+                    var array = set.array
+                    array.append(entry)
+                    parent.setValue(NSOrderedSet(array: array), forKey: relationship.fieldName)
+                }
             }
         }
     }

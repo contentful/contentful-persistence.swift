@@ -59,39 +59,60 @@ class RelationshipManagerTests: XCTestCase {
         XCTAssertEqual(manager.relationships.count, 0)
     }
 
-    private func makeToOne1(localeCode: String? = nil) -> ToOneRelationship {
-        var childId = "dog-1"
-        if let localeCode = localeCode {
-            childId += "_\(localeCode)"
-        }
+    func testStaleToOneRelationshipsAreRemoved() {
+        let manager = RelationshipsManager(cacheFileName: makeFileName())
 
-        return .init(
-            parentType: "person",
-            parentId: "person-1",
-            fieldName: "dog",
-            childId: .init(value: childId)
+        let entry1 = EntryA(id: "person-1")
+        manager.cacheToOneRelationship(
+            parent: entry1,
+            childId: "dog-1",
+            fieldName: "dog"
         )
+
+        XCTAssertNotNil(manager.relationships.relationships(for: "dog-1", with: nil))
+
+        manager.cacheToOneRelationship(
+            parent: entry1,
+            childId: "dog-2",
+            fieldName: "dog"
+        )
+
+        XCTAssertTrue(manager.relationships.relationships(for: "dog-1", with: nil).isEmpty)
+        XCTAssertFalse(manager.relationships.relationships(for: "dog-2", with: nil).isEmpty)
     }
 
-    private func makeToOne2() -> ToOneRelationship {
-        .init(
-            parentType: "person",
-            parentId: "person-2",
-            fieldName: "cat",
-            childId: .init(value: "cat-1")
-        )
-    }
+    func testStaleToManyRelationshipsAreRemoved() {
+        let manager = RelationshipsManager(cacheFileName: makeFileName())
 
-    private func makeToMany1() -> ToManyRelationship {
-        .init(
-            parentType: "person",
-            parentId: "person-3",
-            fieldName: "things",
+        let entry1 = EntryA(id: "person-1")
+        manager.cacheToManyRelationship(
+            parent: entry1,
             childIds: [
-                .init(value: "cat-1"),
-                .init(value: "dog-2")
-            ]
+                "cat-1",
+                "cat-2",
+                "cat-3"
+            ],
+            fieldName: "cats"
         )
+
+        XCTAssertFalse(manager.relationships.relationships(for: "cat-1", with: nil).isEmpty)
+        XCTAssertFalse(manager.relationships.relationships(for: "cat-2", with: nil).isEmpty)
+        XCTAssertFalse(manager.relationships.relationships(for: "cat-3", with: nil).isEmpty)
+
+        manager.cacheToManyRelationship(
+            parent: entry1,
+            childIds: [
+                "cat-1",
+                "cat-2",
+                "cat-4"
+            ],
+            fieldName: "cats"
+        )
+
+        XCTAssertFalse(manager.relationships.relationships(for: "cat-1", with: nil).isEmpty)
+        XCTAssertFalse(manager.relationships.relationships(for: "cat-2", with: nil).isEmpty)
+        XCTAssertTrue(manager.relationships.relationships(for: "cat-3", with: nil).isEmpty)
+        XCTAssertFalse(manager.relationships.relationships(for: "cat-4", with: nil).isEmpty)
     }
 
     private func makeFileName() -> String {

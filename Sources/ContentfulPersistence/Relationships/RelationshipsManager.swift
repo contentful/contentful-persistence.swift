@@ -27,14 +27,14 @@ final class RelationshipsManager {
 
         let parentType = type(of: parent).contentTypeId
 
-        let relationship = ToOneRelationship(
+        let relationship = Relationship(
             parentType: parentType,
             parentId: parent.id,
             fieldName: fieldName,
             childId: .init(value: childId)
         )
 
-        cache.add(relationship: .toOne(relationship))
+        cache.add(relationship: relationship)
     }
 
     func cacheToManyRelationship(
@@ -45,14 +45,14 @@ final class RelationshipsManager {
         let theChildIds: [RelationshipChildId] = childIds.map { .init(value: $0) }
         let parentType = type(of: parent).contentTypeId
 
-        let relationship = ToManyRelationship(
+        let relationship = Relationship(
             parentType: parentType,
             parentId: parent.id,
             fieldName: fieldName,
             childIds: theChildIds
         )
 
-        cache.add(relationship: .toMany(relationship))
+        cache.add(relationship: relationship)
     }
 
     func delete(parentId: String) {

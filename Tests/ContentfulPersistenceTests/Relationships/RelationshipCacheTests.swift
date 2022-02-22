@@ -13,16 +13,16 @@ class RelationshipCacheTests: XCTestCase {
 
         XCTAssertEqual(cache.relationships.count, 0)
 
-        cache.add(relationship: .toOne(makeToOne1()))
-        cache.add(relationship: .toOne(makeToOne2()))
-        cache.add(relationship: .toMany(makeToMany1()))
+        cache.add(relationship: makeToOne1())
+        cache.add(relationship: makeToOne2())
+        cache.add(relationship: makeToMany1())
 
         cache.save()
 
         // Verify
         let verifyCache = RelationshipCache(cacheFileName: fileName)
 
-        verifyCache.add(relationship: .toOne(makeToOne1(localeCode: "en-US")))
+        verifyCache.add(relationship: makeToOne1(localeCode: "en-US"))
 
         XCTAssertEqual(verifyCache.relationships.count, 4)
     }
@@ -33,13 +33,13 @@ class RelationshipCacheTests: XCTestCase {
 
         XCTAssertEqual(cache.relationships.count, 0)
 
-        cache.add(relationship: .toOne(makeToOne1()))
+        cache.add(relationship: makeToOne1())
 
         let toOne2 = makeToOne2()
-        cache.add(relationship: .toOne(toOne2))
+        cache.add(relationship: toOne2)
 
         let toMany1 = makeToMany1()
-        cache.add(relationship: .toMany(toMany1))
+        cache.add(relationship: toMany1)
 
         XCTAssertEqual(cache.relationships.count, 3)
 
@@ -49,13 +49,13 @@ class RelationshipCacheTests: XCTestCase {
         cache.delete(parentId: toMany1.parentId)
         XCTAssertEqual(cache.relationships.count, 1)
 
-        cache.add(relationship: .toOne(toOne2))
-        cache.add(relationship: .toMany(toMany1))
+        cache.add(relationship: toOne2)
+        cache.add(relationship: toMany1)
 
         cache.delete(
             parentId: toOne2.parentId,
             fieldName: toOne2.fieldName,
-            localeCode: toOne2.childId.localeCode
+            localeCode: toOne2.localeCode
         )
 
         XCTAssertEqual(cache.relationships.count, 2)
@@ -63,7 +63,7 @@ class RelationshipCacheTests: XCTestCase {
         cache.delete(
             parentId: toMany1.parentId,
             fieldName: toMany1.fieldName,
-            localeCode: toMany1.childIds.first?.localeCode
+            localeCode: toMany1.localeCode
         )
 
         XCTAssertEqual(cache.relationships.count, 1)
@@ -77,8 +77,8 @@ class RelationshipCacheTests: XCTestCase {
 
         let toOne1a = makeToOne1(localeCode: "en-US")
         let toOne1b = makeToOne1(localeCode: "pl-PL")
-        cache.add(relationship: .toOne(toOne1a))
-        cache.add(relationship: .toOne(toOne1b))
+        cache.add(relationship: toOne1a)
+        cache.add(relationship: toOne1b)
 
         cache.delete(
             parentId: toOne1a.parentId,
@@ -99,7 +99,7 @@ class RelationshipCacheTests: XCTestCase {
         cache.delete(
             parentId: toOne1a.parentId,
             fieldName: toOne1a.fieldName,
-            localeCode: toOne1a.childId.localeCode
+            localeCode: toOne1a.localeCode
         )
 
         XCTAssertEqual(cache.relationships.count, 1)
@@ -107,13 +107,13 @@ class RelationshipCacheTests: XCTestCase {
         cache.delete(
             parentId: toOne1b.parentId,
             fieldName: toOne1b.fieldName,
-            localeCode: toOne1b.childId.localeCode
+            localeCode: toOne1b.localeCode
         )
 
         XCTAssertEqual(cache.relationships.count, 0)
     }
 
-    private func makeToOne1(localeCode: String? = nil) -> ToOneRelationship {
+    private func makeToOne1(localeCode: String? = nil) -> Relationship {
         var childId = "dog-1"
         if let localeCode = localeCode {
             childId += "_\(localeCode)"
@@ -127,7 +127,7 @@ class RelationshipCacheTests: XCTestCase {
         )
     }
 
-    private func makeToOne2() -> ToOneRelationship {
+    private func makeToOne2() -> Relationship {
         .init(
             parentType: "person",
             parentId: "person-2",
@@ -136,7 +136,7 @@ class RelationshipCacheTests: XCTestCase {
         )
     }
 
-    private func makeToMany1() -> ToManyRelationship {
+    private func makeToMany1() -> Relationship {
         .init(
             parentType: "person",
             parentId: "person-3",

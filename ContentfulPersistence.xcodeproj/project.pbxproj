@@ -37,10 +37,6 @@
 		5DD19BAC219F13730041F483 /* deleted-entry-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BAB219F13730041F483 /* deleted-entry-initial.json */; };
 		5DD19BAD219F13730041F483 /* deleted-entry-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BAB219F13730041F483 /* deleted-entry-initial.json */; };
 		5DD19BAE219F13730041F483 /* deleted-entry-initial.json in Resources */ = {isa = PBXBuildFile; fileRef = 5DD19BAB219F13730041F483 /* deleted-entry-initial.json */; };
-		6D5CEDB924FC2493005E8B41 /* ToManyRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB524FC2493005E8B41 /* ToManyRelationship.swift */; };
-		6D5CEDBA24FC2493005E8B41 /* ToManyRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB524FC2493005E8B41 /* ToManyRelationship.swift */; };
-		6D5CEDBB24FC2493005E8B41 /* ToManyRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB524FC2493005E8B41 /* ToManyRelationship.swift */; };
-		6D5CEDBC24FC2493005E8B41 /* ToManyRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB524FC2493005E8B41 /* ToManyRelationship.swift */; };
 		6D5CEDBD24FC2493005E8B41 /* RelationshipCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB624FC2493005E8B41 /* RelationshipCache.swift */; };
 		6D5CEDBE24FC2493005E8B41 /* RelationshipCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB624FC2493005E8B41 /* RelationshipCache.swift */; };
 		6D5CEDBF24FC2493005E8B41 /* RelationshipCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB624FC2493005E8B41 /* RelationshipCache.swift */; };
@@ -49,20 +45,10 @@
 		6D5CEDC224FC2493005E8B41 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB724FC2493005E8B41 /* Relationship.swift */; };
 		6D5CEDC324FC2493005E8B41 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB724FC2493005E8B41 /* Relationship.swift */; };
 		6D5CEDC424FC2493005E8B41 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB724FC2493005E8B41 /* Relationship.swift */; };
-		6D5CEDC524FC2493005E8B41 /* ToOneRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB824FC2493005E8B41 /* ToOneRelationship.swift */; };
-		6D5CEDC624FC2493005E8B41 /* ToOneRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB824FC2493005E8B41 /* ToOneRelationship.swift */; };
-		6D5CEDC724FC2493005E8B41 /* ToOneRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB824FC2493005E8B41 /* ToOneRelationship.swift */; };
-		6D5CEDC824FC2493005E8B41 /* ToOneRelationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDB824FC2493005E8B41 /* ToOneRelationship.swift */; };
 		6D5CEDCA24FC24B1005E8B41 /* RelationshipsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDC924FC24B1005E8B41 /* RelationshipsManager.swift */; };
 		6D5CEDCB24FC24B1005E8B41 /* RelationshipsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDC924FC24B1005E8B41 /* RelationshipsManager.swift */; };
 		6D5CEDCC24FC24B1005E8B41 /* RelationshipsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDC924FC24B1005E8B41 /* RelationshipsManager.swift */; };
 		6D5CEDCD24FC24B1005E8B41 /* RelationshipsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5CEDC924FC24B1005E8B41 /* RelationshipsManager.swift */; };
-		6D87842724FCD62C003E69CD /* ToOneRelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D87842624FCD62C003E69CD /* ToOneRelationshipTests.swift */; };
-		6D87842824FCD62C003E69CD /* ToOneRelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D87842624FCD62C003E69CD /* ToOneRelationshipTests.swift */; };
-		6D87842924FCD62C003E69CD /* ToOneRelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D87842624FCD62C003E69CD /* ToOneRelationshipTests.swift */; };
-		6D87842B24FCD747003E69CD /* ToManyRelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D87842A24FCD747003E69CD /* ToManyRelationshipTests.swift */; };
-		6D87842C24FCD747003E69CD /* ToManyRelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D87842A24FCD747003E69CD /* ToManyRelationshipTests.swift */; };
-		6D87842D24FCD747003E69CD /* ToManyRelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D87842A24FCD747003E69CD /* ToManyRelationshipTests.swift */; };
 		6D87842F24FCD7C2003E69CD /* RelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D87842E24FCD7C2003E69CD /* RelationshipTests.swift */; };
 		6D87843024FCD7C2003E69CD /* RelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D87842E24FCD7C2003E69CD /* RelationshipTests.swift */; };
 		6D87843124FCD7C2003E69CD /* RelationshipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D87842E24FCD7C2003E69CD /* RelationshipTests.swift */; };
@@ -315,13 +301,9 @@
 		5DA9AE0821A2B6AF0033BC4E /* deleted-asset-next.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "deleted-asset-next.json"; sourceTree = "<group>"; };
 		5DD19BA6219F0C940041F483 /* deleted-entry-next.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "deleted-entry-next.json"; sourceTree = "<group>"; };
 		5DD19BAB219F13730041F483 /* deleted-entry-initial.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "deleted-entry-initial.json"; sourceTree = "<group>"; };
-		6D5CEDB524FC2493005E8B41 /* ToManyRelationship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToManyRelationship.swift; sourceTree = "<group>"; };
 		6D5CEDB624FC2493005E8B41 /* RelationshipCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipCache.swift; sourceTree = "<group>"; };
 		6D5CEDB724FC2493005E8B41 /* Relationship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
-		6D5CEDB824FC2493005E8B41 /* ToOneRelationship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToOneRelationship.swift; sourceTree = "<group>"; };
 		6D5CEDC924FC24B1005E8B41 /* RelationshipsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipsManager.swift; sourceTree = "<group>"; };
-		6D87842624FCD62C003E69CD /* ToOneRelationshipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToOneRelationshipTests.swift; sourceTree = "<group>"; };
-		6D87842A24FCD747003E69CD /* ToManyRelationshipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToManyRelationshipTests.swift; sourceTree = "<group>"; };
 		6D87842E24FCD7C2003E69CD /* RelationshipTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipTests.swift; sourceTree = "<group>"; };
 		6D87843224FCDB7D003E69CD /* RelationshipCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipCacheTests.swift; sourceTree = "<group>"; };
 		6D87843624FCEBC7003E69CD /* RelationshipChildId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipChildId.swift; sourceTree = "<group>"; };
@@ -489,8 +471,6 @@
 				6D87843624FCEBC7003E69CD /* RelationshipChildId.swift */,
 				02E58FA02535C9E30039F3A5 /* RelationshipData.swift */,
 				6D5CEDC924FC24B1005E8B41 /* RelationshipsManager.swift */,
-				6D5CEDB524FC2493005E8B41 /* ToManyRelationship.swift */,
-				6D5CEDB824FC2493005E8B41 /* ToOneRelationship.swift */,
 			);
 			path = Relationships;
 			sourceTree = "<group>";
@@ -499,8 +479,6 @@
 			isa = PBXGroup;
 			children = (
 				6D87842E24FCD7C2003E69CD /* RelationshipTests.swift */,
-				6D87842A24FCD747003E69CD /* ToManyRelationshipTests.swift */,
-				6D87842624FCD62C003E69CD /* ToOneRelationshipTests.swift */,
 				6D87843224FCDB7D003E69CD /* RelationshipCacheTests.swift */,
 				6D87843B24FD0069003E69CD /* RelationshipChildIdTests.swift */,
 				6D87843F24FD026F003E69CD /* RelationshipManagerTests.swift */,
@@ -1188,10 +1166,8 @@
 			files = (
 				6D5CEDCA24FC24B1005E8B41 /* RelationshipsManager.swift in Sources */,
 				6D5CEDBD24FC2493005E8B41 /* RelationshipCache.swift in Sources */,
-				6D5CEDC524FC2493005E8B41 /* ToOneRelationship.swift in Sources */,
 				6D87843724FCEBC7003E69CD /* RelationshipChildId.swift in Sources */,
 				6D5CEDC124FC2493005E8B41 /* Relationship.swift in Sources */,
-				6D5CEDB924FC2493005E8B41 /* ToManyRelationship.swift in Sources */,
 				ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */,
 				ED8C1E721F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FA1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
@@ -1209,7 +1185,6 @@
 				ED10E8B81E48ACBD0061741F /* Asset+CoreDataProperties.swift in Sources */,
 				ED10E8B71E48ACBD0061741F /* Asset.swift in Sources */,
 				6F388F5D22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
-				6D87842B24FCD747003E69CD /* ToManyRelationshipTests.swift in Sources */,
 				ED10E8BA1E48ACBD0061741F /* Author+CoreDataProperties.swift in Sources */,
 				ED10E8BE1E48ACBD0061741F /* Post+CoreDataProperties.swift in Sources */,
 				6FCA36BB22C65731004F9A5E /* RecordWithNonOptionalRelation.swift in Sources */,
@@ -1236,7 +1211,6 @@
 				EDBDBFD51F28B23B00649F5A /* LocalizationTest.xcdatamodeld in Sources */,
 				ED4023E620EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */,
 				ED25D7EA1F17706E00A6BA9A /* ComplexSyncInfo.swift in Sources */,
-				6D87842724FCD62C003E69CD /* ToOneRelationshipTests.swift in Sources */,
 				ED10E8C81E48BCAE0061741F /* SynchronizationManagerTests.swift in Sources */,
 				6F388F5922E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld in Sources */,
 				ED25D7F51F177D8F00A6BA9A /* ComplexTest.xcdatamodeld in Sources */,
@@ -1254,10 +1228,8 @@
 			files = (
 				6D5CEDCB24FC24B1005E8B41 /* RelationshipsManager.swift in Sources */,
 				6D5CEDBE24FC2493005E8B41 /* RelationshipCache.swift in Sources */,
-				6D5CEDC624FC2493005E8B41 /* ToOneRelationship.swift in Sources */,
 				6D87843824FCEBC7003E69CD /* RelationshipChildId.swift in Sources */,
 				6D5CEDC224FC2493005E8B41 /* Relationship.swift in Sources */,
-				6D5CEDBA24FC2493005E8B41 /* ToManyRelationship.swift in Sources */,
 				ED10E8D71E48BF1D0061741F /* CoreDataStore.swift in Sources */,
 				ED8C1E731F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FB1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
@@ -1274,10 +1246,8 @@
 			files = (
 				6D5CEDCC24FC24B1005E8B41 /* RelationshipsManager.swift in Sources */,
 				6D5CEDBF24FC2493005E8B41 /* RelationshipCache.swift in Sources */,
-				6D5CEDC724FC2493005E8B41 /* ToOneRelationship.swift in Sources */,
 				6D87843924FCEBC7003E69CD /* RelationshipChildId.swift in Sources */,
 				6D5CEDC324FC2493005E8B41 /* Relationship.swift in Sources */,
-				6D5CEDBB24FC2493005E8B41 /* ToManyRelationship.swift in Sources */,
 				ED10E9021E48CD1E0061741F /* CoreDataStore.swift in Sources */,
 				ED8C1E741F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FC1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
@@ -1294,10 +1264,8 @@
 			files = (
 				6D5CEDCD24FC24B1005E8B41 /* RelationshipsManager.swift in Sources */,
 				6D5CEDC024FC2493005E8B41 /* RelationshipCache.swift in Sources */,
-				6D5CEDC824FC2493005E8B41 /* ToOneRelationship.swift in Sources */,
 				6D87843A24FCEBC7003E69CD /* RelationshipChildId.swift in Sources */,
 				6D5CEDC424FC2493005E8B41 /* Relationship.swift in Sources */,
-				6D5CEDBC24FC2493005E8B41 /* ToManyRelationship.swift in Sources */,
 				ED10E9081E48CD1F0061741F /* CoreDataStore.swift in Sources */,
 				ED8C1E751F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FD1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
@@ -1315,7 +1283,6 @@
 				EDD8F4E71F5401E90000D3BB /* ComplexSyncTests.swift in Sources */,
 				EDD8F51B1F5402200000D3BB /* Post.swift in Sources */,
 				6F388F5E22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
-				6D87842C24FCD747003E69CD /* ToManyRelationshipTests.swift in Sources */,
 				EDD8F4EB1F5401EF0000D3BB /* TestHelpers.swift in Sources */,
 				EDD8F4E51F5401E50000D3BB /* SynchronizationManagerTests.swift in Sources */,
 				6FCA36BC22C65731004F9A5E /* RecordWithNonOptionalRelation.swift in Sources */,
@@ -1342,7 +1309,6 @@
 				EDD8F5181F5402200000D3BB /* Author+CoreDataProperties.swift in Sources */,
 				ED4023E720EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */,
 				EDD8F5311F5402E60000D3BB /* ComplexTest.xcdatamodeld in Sources */,
-				6D87842824FCD62C003E69CD /* ToOneRelationshipTests.swift in Sources */,
 				EDD8F51D1F5402200000D3BB /* SyncInfo.swift in Sources */,
 				6F388F5A22E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld in Sources */,
 				EDD8F5061F5402040000D3BB /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,
@@ -1361,7 +1327,6 @@
 				EDD8F4E81F5401E90000D3BB /* ComplexSyncTests.swift in Sources */,
 				EDD8F5251F5402200000D3BB /* Post.swift in Sources */,
 				6F388F5F22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
-				6D87842D24FCD747003E69CD /* ToManyRelationshipTests.swift in Sources */,
 				EDD8F4EC1F5401EF0000D3BB /* TestHelpers.swift in Sources */,
 				EDD8F4E61F5401E50000D3BB /* SynchronizationManagerTests.swift in Sources */,
 				6FCA36BD22C65731004F9A5E /* RecordWithNonOptionalRelation.swift in Sources */,
@@ -1388,7 +1353,6 @@
 				EDD8F5211F5402200000D3BB /* Author.swift in Sources */,
 				ED4023E820EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift in Sources */,
 				EDD8F5221F5402200000D3BB /* Author+CoreDataProperties.swift in Sources */,
-				6D87842924FCD62C003E69CD /* ToOneRelationshipTests.swift in Sources */,
 				EDD8F5271F5402200000D3BB /* SyncInfo.swift in Sources */,
 				6F388F5B22E73F270080585F /* RichTextDocumentTransformableTest.xcdatamodeld in Sources */,
 				EDD8F50E1F5402040000D3BB /* ComplexSyncInfo+CoreDataProperties.swift in Sources */,
