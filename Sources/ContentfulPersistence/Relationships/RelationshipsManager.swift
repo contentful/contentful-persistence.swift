@@ -21,7 +21,7 @@ final class RelationshipsManager {
     /// Creates one-to-one relationship if does not exist yet.
     func cacheToOneRelationship(
         parent: EntryPersistable,
-        childId: String,
+        childId: RelationshipChildId,
         fieldName: String
     ) {
 
@@ -31,7 +31,7 @@ final class RelationshipsManager {
             parentType: parentType,
             parentId: parent.id,
             fieldName: fieldName,
-            childId: .init(value: childId)
+            childId: childId
         )
 
         cache.add(relationship: relationship)
@@ -39,17 +39,16 @@ final class RelationshipsManager {
 
     func cacheToManyRelationship(
         parent: EntryPersistable,
-        childIds: [String],
+        childIds: [RelationshipChildId],
         fieldName: String
     ) {
-        let theChildIds: [RelationshipChildId] = childIds.map { .init(value: $0) }
         let parentType = type(of: parent).contentTypeId
 
         let relationship = Relationship(
             parentType: parentType,
             parentId: parent.id,
             fieldName: fieldName,
-            childIds: theChildIds
+            childIds: childIds
         )
 
         cache.add(relationship: relationship)

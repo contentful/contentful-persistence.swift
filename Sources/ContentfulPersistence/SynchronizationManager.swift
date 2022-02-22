@@ -210,9 +210,11 @@ public class SynchronizationManager: PersistenceIntegration {
                 for (fieldName, relatedResourceId) in fields {
                     // Resolve one-to-one link.
                     if let identifier = relatedResourceId as? String {
+                        let childId = RelationshipChildId(rawValue: identifier)
+
                         relationshipsManager.cacheToOneRelationship(
                             parent: entryPersistable,
-                            childId: identifier,
+                            childId: childId,
                             fieldName: fieldName
                         )
 
@@ -224,9 +226,11 @@ public class SynchronizationManager: PersistenceIntegration {
 
                     // Resolve one-to-many links array.
                     if let identifiers = relatedResourceId as? [String] {
+                        let childIds = identifiers.map(RelationshipChildId.init)
+
                         relationshipsManager.cacheToManyRelationship(
                             parent: entryPersistable,
-                            childIds: identifiers,
+                            childIds: childIds,
                             fieldName: fieldName
                         )
 
@@ -266,10 +270,7 @@ public class SynchronizationManager: PersistenceIntegration {
 
     /// Find and update relationships where the entry should be set as a child.
     private func updateRelationships(with entry: EntryPersistable, cache: DataCache) {
-        let filteredRelationships = relationshipsManager.relationships.relationships(
-            for: entry.id,
-            with: entry.localeCode
-        )
+        let filteredRelationships = relationshipsManager.relationships.relationships(for: .init(id: entry.id, localeCode: entry.localeCode))
 
         for relationship in filteredRelationships {
             guard let parent = cache.entry(for: DataCache.cacheKey(for: relationship.parentId, localeCode: entry.localeCode)) else {

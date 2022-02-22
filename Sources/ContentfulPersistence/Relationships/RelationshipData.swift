@@ -5,33 +5,38 @@
 import Foundation
 import Contentful
 
-struct RelationshipKeyPath: Codable, Hashable {
-
-    var localeCode: Relationship.LocaleCode
-    var parentId: Relationship.ParentId
-    var fieldName: Relationship.FieldName
-
-}
-
 struct RelationshipData: Codable {
 
-    typealias ChildId = String
+    private typealias FieldId = String
+    private typealias ChildLookupKey = String
+
+    private struct RelationshipKeyPath: Codable, Hashable {
+
+        var parentId: Relationship.ParentId
+        var fieldId: FieldId
+
+        init(parentId: Relationship.ParentId, fieldName: Relationship.FieldName, localeCode: Relationship.LocaleCode) {
+            let fieldId = "\(fieldName),\(localeCode ?? "-")"
+            self.init(parentId: parentId, fieldId: fieldId)
+        }
+
+        init(parentId: Relationship.ParentId, fieldId: FieldId) {
+            self.parentId = parentId
+            self.fieldId = fieldId
+        }
+
+    }
 
     var count: Int {
-        relationships.keys
-            .flatMap { localeCode -> [Int] in
-                relationships[localeCode]?.keys
-                    .compactMap { relationships[localeCode]?[$0]?.count } ?? []
-            }
-            .reduce(0, +)
+        relationships.reduce(0) { $0 + $1.value.count }
     }
 
     var isEmpty: Bool {
         relationships.isEmpty
     }
 
-    private var relationships: [Relationship.LocaleCode: [Relationship.ParentId: [Relationship.FieldName: Relationship]]] = [:]
-    private var relationshipKeyPathByChild: [ChildId: Set<RelationshipKeyPath>] = [:]
+    private var relationships: [Relationship.ParentId: [FieldId: Relationship]] = [:]
+    private var relationshipKeyPathsByChild: [RelationshipChildId.RawValue: Set<RelationshipKeyPath>] = [:]
 
     mutating func append(_ relationship: Relationship) {
         let keyPath = Self.keyPath(for: relationship)
@@ -39,11 +44,8 @@ struct RelationshipData: Codable {
     }
 
     mutating func delete(parentId: Relationship.ParentId) {
-        let keyPaths = relationships.keys
-            .flatMap { localeCode -> [RelationshipKeyPath] in
-                relationships[localeCode]?[parentId]?.keys
-                    .map { RelationshipKeyPath(localeCode: localeCode, parentId: parentId, fieldName: $0) } ?? []
-            }
+        let keyPaths = relationships[parentId]?.keys
+            .map { RelationshipKeyPath(parentId: parentId, fieldId: $0) } ?? []
 
         for keyPath in keyPaths {
             setRelationship(nil, for: keyPath)
@@ -51,61 +53,53 @@ struct RelationshipData: Codable {
     }
 
     mutating func delete(parentId: Relationship.ParentId, fieldName: Relationship.FieldName, localeCode: Relationship.LocaleCode) {
-        let keyPath = RelationshipKeyPath(localeCode: localeCode, parentId: parentId, fieldName: fieldName)
+        let keyPath = RelationshipKeyPath(parentId: parentId, fieldName: fieldName, localeCode: localeCode)
         setRelationship(nil, for: keyPath)
     }
 
-    func relationships(for childId: ChildId, with localeCode: Relationship.LocaleCode) -> [Relationship] {
-        relationshipKeyPathByChild[childId]?
-            .filter { $0.localeCode == localeCode }
+    func relationships(for childId: RelationshipChildId) -> [Relationship] {
+        relationshipKeyPathsByChild[childId.rawValue]?
             .compactMap(relationship) ?? []
     }
 
     private func relationship(keyPath: RelationshipKeyPath) -> Relationship? {
-        relationships[keyPath.localeCode]?[keyPath.parentId]?[keyPath.fieldName]
+        relationships[keyPath.parentId]?[keyPath.fieldId]
     }
 
     private mutating func setRelationship(_ relationship: Relationship?, for keyPath: RelationshipKeyPath) {
-        var relationshipsByParentId = relationships[keyPath.localeCode] ?? [:]
-        var relationshipsByFieldName = relationshipsByParentId[keyPath.parentId] ?? [:]
+        var relationshipsByFieldIdentifier = relationships[keyPath.parentId] ?? [:]
 
         let newChildIds = Set(relationship?.children.elements.map { $0.id } ?? [])
 
-        if let existingRelationship = relationshipsByFieldName[keyPath.fieldName] {
+        if let existingRelationship = relationshipsByFieldIdentifier[keyPath.fieldId] {
             let existingChildIds = Set(existingRelationship.children.elements.map { $0.id })
             let removedChildIds = existingChildIds.subtracting(newChildIds)
 
             for childId in removedChildIds {
-                if var keyPaths = relationshipKeyPathByChild[childId] {
+                if var keyPaths = relationshipKeyPathsByChild[childId] {
                     keyPaths.remove(keyPath)
-                    relationshipKeyPathByChild[childId] = keyPaths
+                    relationshipKeyPathsByChild[childId] = keyPaths
                 }
             }
         }
 
         for childId in newChildIds {
-            var keyPaths = relationshipKeyPathByChild[childId] ?? Set()
+            var keyPaths = relationshipKeyPathsByChild[childId] ?? Set()
             keyPaths.insert(keyPath)
-            relationshipKeyPathByChild[childId] = keyPaths
+            relationshipKeyPathsByChild[childId] = keyPaths
         }
 
-        relationshipsByFieldName[keyPath.fieldName] = relationship
+        relationshipsByFieldIdentifier[keyPath.fieldId] = relationship
 
-        if relationshipsByFieldName.isEmpty {
-            relationshipsByParentId[keyPath.parentId] = nil
+        if relationshipsByFieldIdentifier.isEmpty {
+            relationships[keyPath.parentId] = nil
         } else {
-            relationshipsByParentId[keyPath.parentId] = relationshipsByFieldName
-        }
-
-        if relationshipsByParentId.isEmpty {
-            relationships[keyPath.localeCode] = nil
-        } else {
-            relationships[keyPath.localeCode] = relationshipsByParentId
+            relationships[keyPath.parentId] = relationshipsByFieldIdentifier
         }
     }
 
     private static func keyPath(for relationship: Relationship) -> RelationshipKeyPath {
-        RelationshipKeyPath(localeCode: relationship.localeCode, parentId: relationship.parentId, fieldName: relationship.fieldName)
+        RelationshipKeyPath(parentId: relationship.parentId, fieldName: relationship.fieldName, localeCode: relationship.localeCode)
     }
 
 }

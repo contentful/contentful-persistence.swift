@@ -123,7 +123,7 @@ class RelationshipCacheTests: XCTestCase {
             parentType: "person",
             parentId: "person-1",
             fieldName: "dog",
-            childId: .init(value: childId)
+            childId: .init(rawValue: childId)
         )
     }
 
@@ -132,7 +132,7 @@ class RelationshipCacheTests: XCTestCase {
             parentType: "person",
             parentId: "person-2",
             fieldName: "cat",
-            childId: .init(value: "cat-1")
+            childId: .init(rawValue: "cat-1")
         )
     }
 
@@ -142,8 +142,8 @@ class RelationshipCacheTests: XCTestCase {
             parentId: "person-3",
             fieldName: "things",
             childIds: [
-                .init(value: "cat-1"),
-                .init(value: "dog-2")
+                .init(rawValue: "cat-1"),
+                .init(rawValue: "dog-2")
             ]
         )
     }
