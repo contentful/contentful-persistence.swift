@@ -27,7 +27,8 @@ class TestHelpers {
 
         do {
             // Store in memory so there is no caching between test methods.
-            let store = try psc.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
+            let cacheFolder = FileManager.default.temporaryDirectory.appendingPathComponent("SQLiteTestFile.sqlite")
+            let store = try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: cacheFolder, options: nil)
             XCTAssertNotNil(store)
         } catch {
             XCTAssert(false, "Recreating the persistent store SQL files should not throw an error")

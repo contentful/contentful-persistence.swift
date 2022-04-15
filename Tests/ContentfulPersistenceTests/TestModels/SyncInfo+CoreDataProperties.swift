@@ -16,4 +16,6 @@ import ContentfulPersistence
 extension SyncInfo: SyncSpacePersistable {
 
     @NSManaged var syncToken: String?
+    
+    @NSManaged var dbVersion: NSNumber?
 }

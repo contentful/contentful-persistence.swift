@@ -145,6 +145,35 @@ public class CoreDataStore: PersistenceStore {
     public func save() throws {
         try context.save()
     }
+    
+    /// Remove persistence store and add a new one in its place
+    /// WARNING: all the data will be wipes in the current persistence store associated with the NSManagedObjectContext
+    public func wipe() throws {
+        // Clear the context changes
+        context.reset()
+        
+        // Dirty solution. Taking the first store in the list as there should only be 1 store
+        // as (should be advised) in documentation. Also it should be a separate stack for Contentful
+        guard let coordinator = context.persistentStoreCoordinator,
+              let store = coordinator.persistentStores.first else {
+                  fatalError("No persistence store found")
+              }
+        // Save values
+        let storeLocation = coordinator.url(for: store)
+        let storeType = store.type
+        let storeOptions = store.options
+        
+        // Reset the store at the same location with the same options.
+        // TODO: let user pass-in configurations if needed. For now assumed its nil.
+        if #available(iOS 15.0, *) {
+            let storeTypeObject = NSPersistentStore.StoreType(rawValue: storeType)
+            try coordinator.destroyPersistentStore(at: storeLocation, type: storeTypeObject, options: storeOptions)
+            try _ = coordinator.addPersistentStore(type: storeTypeObject, configuration: nil, at: storeLocation, options: storeOptions)
+        } else {
+            try coordinator.destroyPersistentStore(at: storeLocation, ofType: storeType, options: storeOptions)
+            try _ = coordinator.addPersistentStore(ofType: storeType, configurationName: nil, at: storeLocation, options: storeOptions)
+        }
+    }
 
     // MARK: - Helper methods
 

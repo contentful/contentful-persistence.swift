@@ -115,13 +115,13 @@ public class SynchronizationManager: PersistenceIntegration {
 
      - parameter limit: Number of elements per page. See documentation for details.
      */
-    public func sync(limit: Int? = nil, then completion: @escaping ResultsHandler<SyncSpace>) {
+    public func sync(limit: Int? = nil, dbVersion: Int = SyncSpace.DBVersions.default.rawValue, then completion: @escaping ResultsHandler<SyncSpace>) {
         resolveCachedRelationships { [weak self] in
-            self?.syncSafely(limit: limit, then: completion)
+            self?.syncSafely(limit: limit, dbVersion: dbVersion, then: completion)
         }
     }
 
-    private func syncSafely(limit: Int?, then completion: @escaping ResultsHandler<SyncSpace>) {
+    private func syncSafely(limit: Int?, dbVersion: Int = SyncSpace.DBVersions.default.rawValue, then completion: @escaping ResultsHandler<SyncSpace>) {
         let safeCompletion: ResultsHandler<SyncSpace> = { [weak self] result in
             self?.persistentStore.performBlock {
                 completion(result)
@@ -129,9 +129,9 @@ public class SynchronizationManager: PersistenceIntegration {
         }
 
         if let syncToken = self.syncToken {
-            client?.sync(for: SyncSpace(syncToken: syncToken, limit: limit), then: safeCompletion)
+            client?.sync(for: SyncSpace(syncToken: syncToken, dbVersion: dbVersion, limit: limit), then: safeCompletion)
         } else {
-            client?.sync(for: SyncSpace(limit: limit), then: safeCompletion)
+            client?.sync(for: SyncSpace(dbVersion: dbVersion, limit: limit), then: safeCompletion)
         }
     }
 
@@ -161,6 +161,10 @@ public class SynchronizationManager: PersistenceIntegration {
 
     public func update(with syncSpace: SyncSpace) {
         persistentStore.performAndWait { [weak self] in
+            
+            // If the migration is required - it will be performed before any new changed takes affect
+            self?.migrateDbIfNeeded(dbVersion: syncSpace.dbVersion)
+            
             for asset in syncSpace.assets {
                 self?.create(asset: asset)
             }
@@ -189,6 +193,33 @@ public class SynchronizationManager: PersistenceIntegration {
             if syncSpace.hasMorePages == false {
                 self?.save()
             }
+        }
+    }
+    
+    private func migrateDbIfNeeded(dbVersion: Int) {
+        do {
+            // Get current sync space persistable with the db information
+            let space = fetchSpace()
+            
+            // If current version lower than the new one - set the new db version number as the current one
+            if let dbVersionNumber = space.dbVersion?.intValue,
+               dbVersionNumber > 0, // Core data bug where optional integers default to 0
+               dbVersionNumber < dbVersion {
+                
+                try persistentStore.wipe()
+                relationshipsManager.wipe()
+                relationshipsToResolve = [String: [FieldName: Any]]()
+                cachedPropertyMappingForContentTypeId = [ContentTypeId: [FieldName: String]]()
+                cachedRelationshipMappingForContentTypeId = [ContentTypeId: [FieldName: String]]()
+                
+                // Force creation of a new SyncSpacePersistable in the store
+                let newSpace = fetchSpace()
+                newSpace.dbVersion = NSNumber(value: dbVersion)
+                save()
+            }
+        }
+        catch {
+            print("Error. Could not migrate the database:\n\n\n \(error)")
         }
     }
 

@@ -66,4 +66,8 @@ final class RelationshipsManager {
     func save() {
         cache.save()
     }
+    
+    func wipe() {
+        cache.wipe()
+    }
 }
