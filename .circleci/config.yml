@@ -1,26 +1,65 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+orbs:
+  ruby-orbs: sue445/ruby-orbs@1.6.2
+  carthage: ngs/carthage@0.0.3
+
+commands:
+  setup-deps:
     steps:
       - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      - restore_cache:
+          keys:
+            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
+      - ruby-orbs/bundle-install:
+          bundle_clean: true
+          bundle_extra_args: ""
+          bundle_gemfile: Gemfile
+          bundle_jobs: 4
+          bundle_path: vendor/bundle
+          bundle_retry: 3
+          bundle_without: development test
+          cache_key_prefix: v1-bundle
+          restore_bundled_with: true
+      - run: carthage checkout
+      - save_cache:
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
+          paths:
+            - vendor/bundle
+            - Carthage
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+jobs:
+  test-ios:
+    macos:
+      xcode: 13.3.1
+    steps:
+      - setup-deps
+      - run: fastlane test_ios
+
+  test-macos:
+    macos:
+      xcode: 13.3.1
+    steps:
+      - setup-deps
+      - run: fastlane test_macos
+
+  test-tvos:
+    macos:
+      xcode: 13.3.1
+    steps:
+      - setup-deps
+      - run: fastlane test_tvos
+
+  build:
+    macos:
+      xcode: 13.3.1
+    steps:
+      - setup-deps
+      - run: fastlane build
 workflows:
-  say-hello-workflow:
+  test-workflow:
     jobs:
-      - say-hello
+      - test-ios
+      - test-macos
+      - test-tvos
+      - build
