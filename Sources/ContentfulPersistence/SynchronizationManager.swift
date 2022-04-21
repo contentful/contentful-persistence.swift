@@ -773,7 +773,7 @@ public class SynchronizationManager: PersistenceIntegration {
         for (fieldName, propertyName) in mapping {
             var fieldValue = entry.fields[fieldName]
 
-            let attributeType = persistable.entity.attributesByName[fieldName]?.attributeType
+            let attributeType = persistable.entity.attributesByName[propertyName]?.attributeType
             // handle symbol arrays as NSData if field is of type .binaryDataAttributeType, otherwise use .transformableAttributeType
             if attributeType == .binaryDataAttributeType, let array = fieldValue as? [NSCoding] {
                 fieldValue = NSKeyedArchiver.archivedData(withRootObject: array)
