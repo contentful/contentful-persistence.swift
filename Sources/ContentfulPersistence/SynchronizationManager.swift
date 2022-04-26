@@ -161,10 +161,6 @@ public class SynchronizationManager: PersistenceIntegration {
 
     public func update(with syncSpace: SyncSpace) {
         persistentStore.performAndWait { [weak self] in
-            
-            // If the migration is required - it will be performed before any new changed takes affect
-            self?.migrateDbIfNeeded(dbVersion: syncSpace.dbVersion)
-            
             for asset in syncSpace.assets {
                 self?.create(asset: asset)
             }
@@ -196,31 +192,41 @@ public class SynchronizationManager: PersistenceIntegration {
         }
     }
     
-    private func migrateDbIfNeeded(dbVersion: Int) {
+    public func migrate(dbVersion: Int) {
         do {
+            
             // Get current sync space persistable with the db information
             let space = fetchSpace()
+
+            guard
+                let dbVersionNumber = space.dbVersion?.intValue,
+                dbVersionNumber > 0 // Core data bug where optional integers default to 0
+            else {
+                saveNewDbVersion(version: dbVersion) // No version was stored yet, save given version
+                return
+            }
             
             // If current version lower than the new one - set the new db version number as the current one
-            if let dbVersionNumber = space.dbVersion?.intValue,
-               dbVersionNumber > 0, // Core data bug where optional integers default to 0
-               dbVersionNumber < dbVersion {
-                
+            if dbVersionNumber < dbVersion {
                 try persistentStore.wipe()
                 relationshipsManager.wipe()
                 relationshipsToResolve = [String: [FieldName: Any]]()
                 cachedPropertyMappingForContentTypeId = [ContentTypeId: [FieldName: String]]()
                 cachedRelationshipMappingForContentTypeId = [ContentTypeId: [FieldName: String]]()
-                
-                // Force creation of a new SyncSpacePersistable in the store
-                let newSpace = fetchSpace()
-                newSpace.dbVersion = NSNumber(value: dbVersion)
-                save()
+
+                saveNewDbVersion(version: dbVersion)
             }
         }
         catch {
             print("Error. Could not migrate the database:\n\n\n \(error)")
         }
+    }
+
+    private func saveNewDbVersion(version: Int) {
+        // Force creation of a new SyncSpacePersistable in the store
+        let newSpace = fetchSpace()
+        newSpace.dbVersion = NSNumber(value: version)
+        save()
     }
 
     public func update(syncToken: String) {
