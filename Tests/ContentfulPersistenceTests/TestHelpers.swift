@@ -17,7 +17,7 @@ class TestHelpers {
         let urlPath = bundle.path(forResource: fileName, ofType: "json")!
         return try! Data(contentsOf: URL(fileURLWithPath: urlPath))
     }
-
+    
     static func managedObjectContext(forMOMInTestBundleNamed momName: String) -> NSManagedObjectContext {
         let modelURL = Bundle(for: TestHelpers.self).url(forResource: momName, withExtension: "momd")
         let mom = NSManagedObjectModel(contentsOf: modelURL!)
@@ -27,8 +27,7 @@ class TestHelpers {
 
         do {
             // Store in memory so there is no caching between test methods.
-            let cacheFolder = FileManager.default.temporaryDirectory.appendingPathComponent("SQLiteTestFile.sqlite")
-            let store = try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: cacheFolder, options: nil)
+            let store = try psc.addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
             XCTAssertNotNil(store)
         } catch {
             XCTAssert(false, "Recreating the persistent store SQL files should not throw an error")

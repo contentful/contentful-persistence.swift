@@ -116,6 +116,9 @@ public class SynchronizationManager: PersistenceIntegration {
      - parameter limit: Number of elements per page. See documentation for details.
      */
     public func sync(limit: Int? = nil, dbVersion: Int = SyncSpace.DBVersions.default.rawValue, then completion: @escaping ResultsHandler<SyncSpace>) {
+        // If the migration is required - it will be performed before any new changed takes affect
+        migrateDbIfNeeded(dbVersion: dbVersion)
+        
         resolveCachedRelationships { [weak self] in
             self?.syncSafely(limit: limit, dbVersion: dbVersion, then: completion)
         }
@@ -192,9 +195,8 @@ public class SynchronizationManager: PersistenceIntegration {
         }
     }
     
-    public func migrate(dbVersion: Int) {
+    private func migrateDbIfNeeded(dbVersion: Int) {
         do {
-            
             // Get current sync space persistable with the db information
             let space = fetchSpace()
 
