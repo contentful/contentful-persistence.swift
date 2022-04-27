@@ -169,7 +169,7 @@ public class CoreDataStore: PersistenceStore {
             let storeTypeObject = NSPersistentStore.StoreType(rawValue: storeType)
             try coordinator.destroyPersistentStore(at: storeLocation, type: storeTypeObject, options: storeOptions)
             try _ = coordinator.addPersistentStore(type: storeTypeObject, configuration: nil, at: storeLocation, options: storeOptions)
-        } else {
+        } else if #available(iOS 10.0, macOS 10.12, tvOS 9.2, watchOS 3.1, *)  {
             try coordinator.destroyPersistentStore(at: storeLocation, ofType: storeType, options: storeOptions)
             try _ = coordinator.addPersistentStore(ofType: storeType, configurationName: nil, at: storeLocation, options: storeOptions)
         }
