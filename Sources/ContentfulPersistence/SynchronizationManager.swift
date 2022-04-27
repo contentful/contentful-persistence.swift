@@ -51,6 +51,10 @@ public enum LocalizationScheme {
 /// Provides the ability to sync content from Contentful to a persistence store.
 public class SynchronizationManager: PersistenceIntegration {
 
+    public enum DBVersions: Int { case
+        `default` = 1
+    }
+    
     private enum Constants {
         static let cacheFileName = "ContentfulPersistenceRelationships.data"
     }
@@ -115,16 +119,16 @@ public class SynchronizationManager: PersistenceIntegration {
 
      - parameter limit: Number of elements per page. See documentation for details.
      */
-    public func sync(limit: Int? = nil, dbVersion: Int = SyncSpace.DBVersions.default.rawValue, then completion: @escaping ResultsHandler<SyncSpace>) {
+    public func sync(limit: Int? = nil, dbVersion: Int = DBVersions.default.rawValue, then completion: @escaping ResultsHandler<SyncSpace>) {
         // If the migration is required - it will be performed before any new changed takes affect
         migrateDbIfNeeded(dbVersion: dbVersion)
         
         resolveCachedRelationships { [weak self] in
-            self?.syncSafely(limit: limit, dbVersion: dbVersion, then: completion)
+            self?.syncSafely(limit: limit, then: completion)
         }
     }
 
-    private func syncSafely(limit: Int?, dbVersion: Int = SyncSpace.DBVersions.default.rawValue, then completion: @escaping ResultsHandler<SyncSpace>) {
+    private func syncSafely(limit: Int?, then completion: @escaping ResultsHandler<SyncSpace>) {
         let safeCompletion: ResultsHandler<SyncSpace> = { [weak self] result in
             self?.persistentStore.performBlock {
                 completion(result)
@@ -132,9 +136,9 @@ public class SynchronizationManager: PersistenceIntegration {
         }
 
         if let syncToken = self.syncToken {
-            client?.sync(for: SyncSpace(syncToken: syncToken, dbVersion: dbVersion, limit: limit), then: safeCompletion)
+            client?.sync(for: SyncSpace(syncToken: syncToken, limit: limit), then: safeCompletion)
         } else {
-            client?.sync(for: SyncSpace(dbVersion: dbVersion, limit: limit), then: safeCompletion)
+            client?.sync(for: SyncSpace(limit: limit), then: safeCompletion)
         }
     }
 
