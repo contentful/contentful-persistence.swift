@@ -55,7 +55,7 @@ public protocol ContentSysPersistable: NSObject {
  during an initialSync. See [Contentful's Content Delivery API docs](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization/pagination-and-subsequent-syncs) 
  for more information.
  */
-public protocol SyncSpacePersistable: class {
+public protocol SyncSpacePersistable: AnyObject {
     /// The current synchronization token
     var syncToken: String? { get set }
     
