@@ -51,6 +51,10 @@ public enum LocalizationScheme {
 /// Provides the ability to sync content from Contentful to a persistence store.
 public class SynchronizationManager: PersistenceIntegration {
 
+    public enum DBVersions: Int { case
+        `default` = 1
+    }
+    
     private enum Constants {
         static let cacheFileName = "ContentfulPersistenceRelationships.data"
     }
@@ -115,7 +119,10 @@ public class SynchronizationManager: PersistenceIntegration {
 
      - parameter limit: Number of elements per page. See documentation for details.
      */
-    public func sync(limit: Int? = nil, then completion: @escaping ResultsHandler<SyncSpace>) {
+    public func sync(limit: Int? = nil, dbVersion: Int = DBVersions.default.rawValue, then completion: @escaping ResultsHandler<SyncSpace>) {
+        // If the migration is required - it will be performed before any new changed takes affect
+        migrateDbIfNeeded(dbVersion: dbVersion)
+        
         resolveCachedRelationships { [weak self] in
             self?.syncSafely(limit: limit, then: completion)
         }
@@ -190,6 +197,42 @@ public class SynchronizationManager: PersistenceIntegration {
                 self?.save()
             }
         }
+    }
+    
+    private func migrateDbIfNeeded(dbVersion: Int) {
+        do {
+            // Get current sync space persistable with the db information
+            let space = fetchSpace()
+
+            guard
+                let dbVersionNumber = space.dbVersion?.intValue,
+                dbVersionNumber > 0 // Core data bug where optional integers default to 0
+            else {
+                saveNewDbVersion(version: dbVersion) // No version was stored yet, save given version
+                return
+            }
+            
+            // If current version lower than the new one - set the new db version number as the current one
+            if dbVersionNumber < dbVersion {
+                try persistentStore.wipe()
+                relationshipsManager.wipe()
+                relationshipsToResolve = [String: [FieldName: Any]]()
+                cachedPropertyMappingForContentTypeId = [ContentTypeId: [FieldName: String]]()
+                cachedRelationshipMappingForContentTypeId = [ContentTypeId: [FieldName: String]]()
+
+                saveNewDbVersion(version: dbVersion)
+            }
+        }
+        catch {
+            print("Error. Could not migrate the database:\n\n\n \(error)")
+        }
+    }
+
+    private func saveNewDbVersion(version: Int) {
+        // Force creation of a new SyncSpacePersistable in the store
+        let newSpace = fetchSpace()
+        newSpace.dbVersion = NSNumber(value: version)
+        save()
     }
 
     public func update(syncToken: String) {
