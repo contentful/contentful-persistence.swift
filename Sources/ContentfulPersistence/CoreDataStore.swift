@@ -165,7 +165,7 @@ public class CoreDataStore: PersistenceStore {
         
         // Reset the store at the same location with the same options.
         // TODO: let user pass-in configurations if needed. For now assumed its nil.
-        if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *) {
+        if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOSApplicationExtension 8.0, watchOS 8.0, *) {
             let storeTypeObject = NSPersistentStore.StoreType(rawValue: storeType)
             try coordinator.destroyPersistentStore(at: storeLocation, type: storeTypeObject, options: storeOptions)
             try _ = coordinator.addPersistentStore(type: storeTypeObject, configuration: nil, at: storeLocation, options: storeOptions)
