@@ -1558,7 +1558,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(FRAMEWORK_SEARCH_PATHS) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulPersistence;
 				PRODUCT_NAME = ContentfulPersistence;
 				SKIP_INSTALL = YES;
@@ -1584,7 +1584,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(FRAMEWORK_SEARCH_PATHS) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulPersistence;
 				PRODUCT_NAME = ContentfulPersistence;
 				SKIP_INSTALL = YES;
@@ -1639,7 +1639,7 @@
 				INFOPLIST_FILE = "${SRCROOT}/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-tvOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = appletvos;
@@ -1666,7 +1666,7 @@
 				INFOPLIST_FILE = "${SRCROOT}/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-tvOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = appletvos;
@@ -1694,7 +1694,7 @@
 				INFOPLIST_FILE = "${SRCROOT}/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-watchOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = watchos;
@@ -1722,7 +1722,7 @@
 				INFOPLIST_FILE = "${SRCROOT}/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-watchOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = watchos;
@@ -1752,7 +1752,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-macOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = macosx;
@@ -1780,7 +1780,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-macOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = macosx;
