@@ -103,15 +103,6 @@
 		6FD0311922CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json in Resources */ = {isa = PBXBuildFile; fileRef = 6FD0311822CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json */; };
 		6FD0311A22CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json in Resources */ = {isa = PBXBuildFile; fileRef = 6FD0311822CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json */; };
 		6FD0311B22CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json in Resources */ = {isa = PBXBuildFile; fileRef = 6FD0311822CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json */; };
-		AE1A2B912684BE4E00904D31 /* BatchSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1A2B902684BE4E00904D31 /* BatchSyncTests.swift */; };
-		AE1A2B922684BE4E00904D31 /* BatchSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1A2B902684BE4E00904D31 /* BatchSyncTests.swift */; };
-		AE1A2B932684BE4E00904D31 /* BatchSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1A2B902684BE4E00904D31 /* BatchSyncTests.swift */; };
-		AE1A2B962685166B00904D31 /* batch-update-initial-sync-page2.json in Resources */ = {isa = PBXBuildFile; fileRef = AE1A2B942685166B00904D31 /* batch-update-initial-sync-page2.json */; };
-		AE1A2B972685166B00904D31 /* batch-update-initial-sync-page2.json in Resources */ = {isa = PBXBuildFile; fileRef = AE1A2B942685166B00904D31 /* batch-update-initial-sync-page2.json */; };
-		AE1A2B982685166B00904D31 /* batch-update-initial-sync-page2.json in Resources */ = {isa = PBXBuildFile; fileRef = AE1A2B942685166B00904D31 /* batch-update-initial-sync-page2.json */; };
-		AE1A2B992685166B00904D31 /* batch-update-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = AE1A2B952685166B00904D31 /* batch-update-initial-sync.json */; };
-		AE1A2B9A2685166B00904D31 /* batch-update-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = AE1A2B952685166B00904D31 /* batch-update-initial-sync.json */; };
-		AE1A2B9B2685166B00904D31 /* batch-update-initial-sync.json in Resources */ = {isa = PBXBuildFile; fileRef = AE1A2B952685166B00904D31 /* batch-update-initial-sync.json */; };
 		ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8841E48AB840061741F /* SynchronizationManager.swift */; };
 		ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8851E48AB840061741F /* CoreDataStore.swift */; };
 		ED10E88D1E48AB840061741F /* DataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED10E8861E48AB840061741F /* DataCache.swift */; };
@@ -346,9 +337,6 @@
 		6FD0311822CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "multi-page-non-optional-link-resolution2.json"; sourceTree = "<group>"; };
 		A1A9FBE31CABE8EA00430734 /* ContentfulPersistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ContentfulPersistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1A9FBED1CABE8EA00430734 /* ContentfulPersistenceTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContentfulPersistenceTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AE1A2B902684BE4E00904D31 /* BatchSyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchSyncTests.swift; sourceTree = "<group>"; };
-		AE1A2B942685166B00904D31 /* batch-update-initial-sync-page2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "batch-update-initial-sync-page2.json"; sourceTree = "<group>"; };
-		AE1A2B952685166B00904D31 /* batch-update-initial-sync.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "batch-update-initial-sync.json"; sourceTree = "<group>"; };
 		ED10E8841E48AB840061741F /* SynchronizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SynchronizationManager.swift; sourceTree = "<group>"; };
 		ED10E8851E48AB840061741F /* CoreDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		ED10E8861E48AB840061741F /* DataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCache.swift; sourceTree = "<group>"; };
@@ -614,8 +602,6 @@
 		ED25D7F61F17900900A6BA9A /* ComplexTestStubs */ = {
 			isa = PBXGroup;
 			children = (
-				AE1A2B942685166B00904D31 /* batch-update-initial-sync-page2.json */,
-				AE1A2B952685166B00904D31 /* batch-update-initial-sync.json */,
 				ED4023ED20EA5D43001C6BDD /* now-resolvable-relationships.json */,
 				5DA9AE0721A2B6AF0033BC4E /* deleted-asset-initial.json */,
 				5DA9AE0821A2B6AF0033BC4E /* deleted-asset-next.json */,
@@ -740,7 +726,6 @@
 				ED25D7DC1F166B7300A6BA9A /* ComplexTestModels */,
 				ED25D7F61F17900900A6BA9A /* ComplexTestStubs */,
 				ED25D7D71F16654A00A6BA9A /* ComplexSyncTests.swift */,
-				AE1A2B902684BE4E00904D31 /* BatchSyncTests.swift */,
 				ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */,
 				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
 				EDBDBFD31F28B23B00649F5A /* LocalizationTest.xcdatamodeld */,
@@ -1019,7 +1004,6 @@
 				6FD0311522CE3A4600790FDB /* multi-page-non-optional-link-resolution1.json in Resources */,
 				5DA9AE0C21A2B6AF0033BC4E /* deleted-asset-next.json in Resources */,
 				ED91F99E1F18C79D00540DAC /* multi-page-link-resolution1.json in Resources */,
-				AE1A2B962685166B00904D31 /* batch-update-initial-sync-page2.json in Resources */,
 				EDCFBF9D1F161EB6002B1B73 /* single-author.json in Resources */,
 				ED6B67981F191342008EC7C8 /* clear-field-initial-sync.json in Resources */,
 				5DD19BAA219F0C980041F483 /* deleted-entry-next.json in Resources */,
@@ -1030,7 +1014,6 @@
 				ED1BA7D01F16288100E21FD5 /* space.json in Resources */,
 				ED8C1E881F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				ED91F99F1F18C79D00540DAC /* multi-page-link-resolution2.json in Resources */,
-				AE1A2B992685166B00904D31 /* batch-update-initial-sync.json in Resources */,
 				6FD0311922CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json in Resources */,
 				ED79E9281FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
 				EDE5BA39207220F900A650FE /* video-asset.json in Resources */,
@@ -1078,7 +1061,6 @@
 				6FD0311622CE3A4600790FDB /* multi-page-non-optional-link-resolution1.json in Resources */,
 				5DA9AE0D21A2B6AF0033BC4E /* deleted-asset-next.json in Resources */,
 				EDD8F52B1F5402290000D3BB /* single-author.json in Resources */,
-				AE1A2B972685166B00904D31 /* batch-update-initial-sync-page2.json in Resources */,
 				EDD8F4F51F5401FD0000D3BB /* simple-update-initial-sync.json in Resources */,
 				EDD8F4F41F5401FD0000D3BB /* multi-page-link-resolution2.json in Resources */,
 				5DD19BA9219F0C980041F483 /* deleted-entry-next.json in Resources */,
@@ -1089,7 +1071,6 @@
 				EDD8F4EF1F5401FD0000D3BB /* clear-field-initial-sync.json in Resources */,
 				ED8C1E891F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				EDD8F4ED1F5401F50000D3BB /* localization-sync.json in Resources */,
-				AE1A2B9A2685166B00904D31 /* batch-update-initial-sync.json in Resources */,
 				6FD0311A22CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json in Resources */,
 				ED79E9291FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
 				EDE5BA3A207220FA00A650FE /* video-asset.json in Resources */,
@@ -1116,7 +1097,6 @@
 				6FD0311722CE3A4600790FDB /* multi-page-non-optional-link-resolution1.json in Resources */,
 				5DA9AE0E21A2B6AF0033BC4E /* deleted-asset-next.json in Resources */,
 				EDD8F52E1F5402290000D3BB /* single-author.json in Resources */,
-				AE1A2B982685166B00904D31 /* batch-update-initial-sync-page2.json in Resources */,
 				EDD8F4FE1F5401FD0000D3BB /* simple-update-initial-sync.json in Resources */,
 				EDD8F4FD1F5401FD0000D3BB /* multi-page-link-resolution2.json in Resources */,
 				5DD19BA8219F0C980041F483 /* deleted-entry-next.json in Resources */,
@@ -1127,7 +1107,6 @@
 				EDD8F4F81F5401FD0000D3BB /* clear-field-initial-sync.json in Resources */,
 				ED8C1E8A1F6175A5001D059F /* MultifilePreseedJSONFiles in Resources */,
 				EDD8F4EE1F5401F60000D3BB /* localization-sync.json in Resources */,
-				AE1A2B9B2685166B00904D31 /* batch-update-initial-sync.json in Resources */,
 				6FD0311B22CE3A7800790FDB /* multi-page-non-optional-link-resolution2.json in Resources */,
 				ED79E92A1FCC23E10045F44F /* MultilocalePreseedJSONFiles in Resources */,
 				EDE5BA3B207220FA00A650FE /* video-asset.json in Resources */,
@@ -1236,7 +1215,6 @@
 				6FCA36BB22C65731004F9A5E /* RecordWithNonOptionalRelation.swift in Sources */,
 				6F388F5422E73EC50080585F /* RichTextDocumentTransformableTests.swift in Sources */,
 				ED25D7D81F16654A00A6BA9A /* ComplexSyncTests.swift in Sources */,
-				AE1A2B912684BE4E00904D31 /* BatchSyncTests.swift in Sources */,
 				6D87844024FD026F003E69CD /* RelationshipManagerTests.swift in Sources */,
 				ED10E8B91E48ACBD0061741F /* Author.swift in Sources */,
 				ED10E8BD1E48ACBD0061741F /* Post.swift in Sources */,
@@ -1343,7 +1321,6 @@
 				6FCA36BC22C65731004F9A5E /* RecordWithNonOptionalRelation.swift in Sources */,
 				6F388F5522E73EC50080585F /* RichTextDocumentTransformableTests.swift in Sources */,
 				EDD8F5071F5402040000D3BB /* Link.swift in Sources */,
-				AE1A2B922684BE4E00904D31 /* BatchSyncTests.swift in Sources */,
 				6D87844124FD026F003E69CD /* RelationshipManagerTests.swift in Sources */,
 				EDD8F5021F5402040000D3BB /* SingleRecord+CoreDataProperties.swift in Sources */,
 				EDD8F5161F5402200000D3BB /* Asset+CoreDataProperties.swift in Sources */,
@@ -1390,7 +1367,6 @@
 				6FCA36BD22C65731004F9A5E /* RecordWithNonOptionalRelation.swift in Sources */,
 				6F388F5622E73EC50080585F /* RichTextDocumentTransformableTests.swift in Sources */,
 				EDD8F50F1F5402040000D3BB /* Link.swift in Sources */,
-				AE1A2B932684BE4E00904D31 /* BatchSyncTests.swift in Sources */,
 				6D87844224FD026F003E69CD /* RelationshipManagerTests.swift in Sources */,
 				EDD8F50A1F5402040000D3BB /* SingleRecord+CoreDataProperties.swift in Sources */,
 				EDD8F5201F5402200000D3BB /* Asset+CoreDataProperties.swift in Sources */,
@@ -1580,8 +1556,9 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "${SRCROOT}/Supporting Files/Info_iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(FRAMEWORK_SEARCH_PATHS) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulPersistence;
 				PRODUCT_NAME = ContentfulPersistence;
 				SKIP_INSTALL = YES;
@@ -1605,8 +1582,9 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "${SRCROOT}/Supporting Files/Info_iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) $(FRAMEWORK_SEARCH_PATHS) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulPersistence;
 				PRODUCT_NAME = ContentfulPersistence;
 				SKIP_INSTALL = YES;
@@ -1622,6 +1600,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "${SRCROOT}/Tests/ContentfulPersistenceTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks ${FRAMEWORK_SEARCH_PATHS}";
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulPersistenceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1636,6 +1615,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "${SRCROOT}/Tests/ContentfulPersistenceTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks ${FRAMEWORK_SEARCH_PATHS}";
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulPersistenceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1659,7 +1639,7 @@
 				INFOPLIST_FILE = "${SRCROOT}/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-tvOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = appletvos;
@@ -1686,7 +1666,7 @@
 				INFOPLIST_FILE = "${SRCROOT}/Supporting Files/Info_tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-tvOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = appletvos;
@@ -1714,7 +1694,7 @@
 				INFOPLIST_FILE = "${SRCROOT}/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-watchOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = watchos;
@@ -1742,7 +1722,7 @@
 				INFOPLIST_FILE = "${SRCROOT}/Supporting Files/Info_watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-watchOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = watchos;
@@ -1772,7 +1752,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-macOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = macosx;
@@ -1800,7 +1780,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 0.17.6;
+				MARKETING_VERSION = 0.17.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-macOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = macosx;

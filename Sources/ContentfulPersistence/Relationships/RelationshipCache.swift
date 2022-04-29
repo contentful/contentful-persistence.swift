@@ -50,6 +50,15 @@ final class RelationshipCache {
         }
     }
 
+    func wipe() {
+        do {
+            guard let localUrl = cacheUrl() else { return }
+            try FileManager.default.removeItem(at: localUrl)
+        } catch let error {
+            print("Couldn't delete relationships: \(error)")
+        }
+    }
+    
     private func cacheUrl() -> URL? {
         guard let url = try? FileManager.default.url(
             for: .documentDirectory,

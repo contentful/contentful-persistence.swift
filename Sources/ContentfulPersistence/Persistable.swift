@@ -58,8 +58,9 @@ public protocol ContentSysPersistable: NSObject {
 public protocol SyncSpacePersistable: AnyObject {
     /// The current synchronization token
     var syncToken: String? { get set }
-    /// The current content type id
-    var id: String? { get set }
+    
+    /// Database version to do migrations
+    var dbVersion: NSNumber? { get set }
 }
 
 /**

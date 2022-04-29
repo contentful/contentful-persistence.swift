@@ -12,10 +12,13 @@ import XCTest
 import CoreData
 import CoreLocation
 
+let categoryId = "random id"
+
 class ContentfulPersistenceTests: XCTestCase {
 
     let assetPredicate = NSPredicate(format: "id == 'bXvdSYHB3Guy2uUmuEco8'")
     let postPredicate = NSPredicate(format: "id == '1asN98Ph3mUiCYIYiiqwko'")
+    let categoryPredicate = NSPredicate(format: "id == '\(categoryId)'")
 
     lazy var managedObjectContext: NSManagedObjectContext = {
         return TestHelpers.managedObjectContext(forMOMInTestBundleNamed: "Test")

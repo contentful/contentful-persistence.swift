@@ -17,7 +17,7 @@ class TestHelpers {
         let urlPath = bundle.path(forResource: fileName, ofType: "json")!
         return try! Data(contentsOf: URL(fileURLWithPath: urlPath))
     }
-
+    
     static func managedObjectContext(forMOMInTestBundleNamed momName: String) -> NSManagedObjectContext {
         let modelURL = Bundle(for: TestHelpers.self).url(forResource: momName, withExtension: "momd")
         let mom = NSManagedObjectModel(contentsOf: modelURL!)
