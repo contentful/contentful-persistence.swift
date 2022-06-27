@@ -120,8 +120,10 @@ public class SynchronizationManager: PersistenceIntegration {
      - parameter limit: Number of elements per page. See documentation for details.
      */
     public func sync(limit: Int? = nil, dbVersion: Int = DBVersions.default.rawValue, then completion: @escaping ResultsHandler<SyncSpace>) {
-        // If the migration is required - it will be performed before any new changed takes affect
-        migrateDbIfNeeded(dbVersion: dbVersion)
+        persistentStore.performAndWait { [weak self] in
+            // If the migration is required - it will be performed before any new changed takes affect
+            self?.migrateDbIfNeeded(dbVersion: dbVersion)
+        }
         
         resolveCachedRelationships { [weak self] in
             self?.syncSafely(limit: limit, then: completion)
