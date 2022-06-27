@@ -85,6 +85,9 @@ public protocol PersistenceStore {
      - throws: If any error occured during the save operation
      */
     func save() throws
+    
+    /// Deletes all the data in the database
+    func wipe() throws
 
     func performBlock(block: @escaping () -> Void)
 
