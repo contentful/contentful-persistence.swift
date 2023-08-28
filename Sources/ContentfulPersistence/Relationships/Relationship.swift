@@ -2,25 +2,74 @@
 //  ContentfulPersistenceSwift
 //
 
-enum Relationship: Codable {
+import Contentful
+
+/// Represents a relationship between two entries.
+struct Relationship: Codable, Equatable, Identifiable {
+
+    typealias ID = String
+    typealias ParentId = String
+    typealias FieldName = String
+    typealias LocaleCode = String?
+
+    let id: ID
+    let parentType: ContentTypeId
+    let parentId: ParentId
+    let fieldName: FieldName
+    let children: RelationshipChildren
+
+    var localeCode: LocaleCode {
+        Self.localeCode(for: children)
+    }
+
+    init(parentType: ContentTypeId, parentId: ParentId, fieldName: FieldName, childId: RelationshipChildId) {
+        self.init(parentType: parentType, parentId: parentId, fieldName: fieldName, children: .one(childId))
+    }
+
+    init(parentType: ContentTypeId, parentId: ParentId, fieldName: FieldName, childIds: [RelationshipChildId]) {
+        self.init(parentType: parentType, parentId: parentId, fieldName: fieldName, children: .many(childIds))
+    }
+
+    private init(parentType: ContentTypeId, parentId: ParentId, fieldName: FieldName, children: RelationshipChildren) {
+        self.parentType = parentType
+        self.parentId = parentId
+        self.fieldName = fieldName
+        self.children = children
+        self.id = [parentType, parentId, fieldName, Self.localeCode(for: children) ?? "-"].joined(separator: ",")
+    }
+
+    private static func localeCode(for children: RelationshipChildren) -> LocaleCode {
+        switch children {
+        case .one(let childId):
+            return childId.localeCode
+        case .many(let childIds):
+            return childIds.first?.localeCode
+        }
+    }
+
+}
+
+enum RelationshipChildren: Codable, Equatable {
 
     private enum CodingKeys: CodingKey {
-        case type
+        case kind
+        case value
     }
 
-    enum Error: Swift.Error {
-        case invalidRelationship
+    private enum Kind: String, Codable {
+        case one
+        case many
     }
 
-    case toOne(ToOneRelationship)
-    case toMany(ToManyRelationship)
+    case one(RelationshipChildId)
+    case many([RelationshipChildId])
 
-    func value<T>() -> T? {
+    var elements: [RelationshipChildId] {
         switch self {
-        case .toOne(let relationship):
-            return relationship as? T
-        case .toMany(let relationship):
-            return relationship as? T
+        case .one(let relationshipChildId):
+            return [relationshipChildId]
+        case .many(let relationshipChildIds):
+            return relationshipChildIds
         }
     }
 
@@ -28,30 +77,27 @@ enum Relationship: Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let typeString = try container.decode(String.self, forKey: .type)
+        let kind = try container.decode(Kind.self, forKey: .kind)
 
-        switch RelationshipType(rawValue: typeString) {
-        case .toOne:
-            self = try .toOne(ToOneRelationship(from: decoder))
-        case .toMany:
-            self = try .toMany(ToManyRelationship(from: decoder))
-        case .none:
-            throw Error.invalidRelationship
+        switch kind {
+        case .one:
+            self = .one(try container.decode(RelationshipChildId.self, forKey: .value))
+        case .many:
+            self = .many(try container.decode([RelationshipChildId].self, forKey: .value))
         }
     }
 
     func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
         switch self {
-        case .toOne(let relationship):
-            try relationship.encode(to: encoder)
-        case .toMany(let relationship):
-            try relationship.encode(to: encoder)
+        case .one(let childId):
+            try container.encode(Kind.one, forKey: .kind)
+            try container.encode(childId, forKey: .value)
+        case .many(let childIds):
+            try container.encode(Kind.many, forKey: .kind)
+            try container.encode(childIds, forKey: .value)
         }
     }
-}
 
-
-enum RelationshipType: String, Codable {
-    case toOne
-    case toMany
 }
