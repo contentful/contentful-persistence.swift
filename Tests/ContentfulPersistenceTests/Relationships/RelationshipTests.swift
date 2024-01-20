@@ -7,31 +7,30 @@ import XCTest
 
 class RelationshipTests: XCTestCase {
 
-    func testToOneRelationshipValue() {
-        let nested = ToOneRelationship(
-            parentType: "1",
-            parentId: "2",
-            fieldName: "3",
-            childId: .init(value: "4")
+    func testInitWithOneChild() {
+        let child1 = RelationshipChildId(id: "child1", localeCode: nil)
+        let relationship = Relationship(
+            parentType: "parentType",
+            parentId: "parentId",
+            fieldName: "fieldName",
+            childId: child1
         )
 
-        let relationship = Relationship.toOne(nested)
-
-        let value: ToOneRelationship? = relationship.value()
-        XCTAssertEqual(value, nested)
+        XCTAssertEqual(relationship.children, .one(child1))
     }
 
-    func testToManyRelationshipValue() {
-        let nested = ToManyRelationship(
-            parentType: "1",
-            parentId: "2",
-            fieldName: "3",
-            childIds: [.init(value: "4"), .init(value: "5")]
+    func testInitWithManyChildren() {
+        let child1 = RelationshipChildId(id: "child1", localeCode: nil)
+        let child2 = RelationshipChildId(id: "child2", localeCode: nil)
+        let child3 = RelationshipChildId(id: "child3", localeCode: nil)
+        let relationship = Relationship(
+            parentType: "parentType",
+            parentId: "parentId",
+            fieldName: "fieldName",
+            childIds: [child1, child2, child3]
         )
 
-        let relationship = Relationship.toMany(nested)
-
-        let value: ToManyRelationship? = relationship.value()
-        XCTAssertEqual(value, nested)
+        XCTAssertEqual(relationship.children, .many([child1, child2, child3]))
     }
+
 }

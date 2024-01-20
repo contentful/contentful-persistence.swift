@@ -3,177 +3,103 @@
 //
 
 import Foundation
+import Contentful
 
 struct RelationshipData: Codable {
 
-    typealias ParentId = String
-    typealias ChildId = String
-    struct FieldLocaleKey: Codable, Hashable {
-        let parentId: ParentId
-        let field: String
-        let locale: String?
-    }
+    private typealias FieldId = String
+    private typealias ChildLookupKey = String
 
-    // quick access to all child ids by parent and relation type
-    private var childIdsByParent = [ParentId: Set<ChildId>]()
-    // quick access to all field/locale relationships by child id
-    private(set) internal var toOneRelationShiptsByEntryId = [ChildId: [FieldLocaleKey: ToOneRelationship]]()
-    private(set) internal var toManyRelationShipsbyEntryId = [ChildId: [FieldLocaleKey: ToManyRelationship.Id]]()
-    private var toManyRelationShips = [ToManyRelationship.Id: ToManyRelationship]()
-    private var toOneRelationShips = Set<ToOneRelationship.Id>()
+    private struct RelationshipKeyPath: Codable, Hashable {
 
-    var isEmpty: Bool {
-        toOneRelationShips.isEmpty && toManyRelationShipsbyEntryId.isEmpty
+        var parentId: Relationship.ParentId
+        var fieldId: FieldId
+
+        init(parentId: Relationship.ParentId, fieldName: Relationship.FieldName, localeCode: Relationship.LocaleCode) {
+            let fieldId = "\(fieldName),\(localeCode ?? "-")"
+            self.init(parentId: parentId, fieldId: fieldId)
+        }
+
+        init(parentId: Relationship.ParentId, fieldId: FieldId) {
+            self.parentId = parentId
+            self.fieldId = fieldId
+        }
+
     }
 
     var count: Int {
-        toOneRelationShips.count + toManyRelationShips.count
+        relationships.reduce(0) { $0 + $1.value.count }
     }
 
-    static let empty: RelationshipData = .init()
+    var isEmpty: Bool {
+        relationships.isEmpty
+    }
+
+    private var relationships: [Relationship.ParentId: [FieldId: Relationship]] = [:]
+    private var relationshipKeyPathsByChild: [RelationshipChildId.RawValue: Set<RelationshipKeyPath>] = [:]
 
     mutating func append(_ relationship: Relationship) {
-        switch relationship {
-        case .toMany(let nested):
-            
-            let relationShipId = nested.id
-            guard toManyRelationShips[relationShipId] == nil else { return }
-            
-            let fieldKey = FieldLocaleKey(parentId: nested.parentId, field: nested.fieldName, locale: nested.childIds.first?.localeCode)
-                        
-            let childIds = Set(nested.childIds.map { $0.id })
-            // append quick access cache
-            var current = childIdsByParent[nested.parentId] ?? Set()
-            current.formUnion(nested.childIds.map { $0.id })
-            childIdsByParent[nested.parentId] = current
+        let keyPath = Self.keyPath(for: relationship)
+        setRelationship(relationship, for: keyPath)
+    }
 
-            
-            toManyRelationShips[relationShipId] = nested
+    mutating func delete(parentId: Relationship.ParentId) {
+        let keyPaths = relationships[parentId]?.keys
+            .map { RelationshipKeyPath(parentId: parentId, fieldId: $0) } ?? []
 
-            for childId in childIds {
-                var relationsByFieldAndLocale = toManyRelationShipsbyEntryId[childId] ?? [:]
-                relationsByFieldAndLocale[fieldKey] = relationShipId
-                toManyRelationShipsbyEntryId[childId] = relationsByFieldAndLocale
-            }
-
-        case .toOne(let nested):
-            guard !toOneRelationShips.contains(nested.id) else { return }
-            toOneRelationShips.insert(nested.id)
-            
-            let fieldKey = FieldLocaleKey(parentId: nested.parentId, field: nested.fieldName, locale: nested.childId.localeCode)
-            // append quick access cache
-            
-            var current = childIdsByParent[nested.parentId] ?? Set()
-            current.insert(nested.childId.id)
-            
-            childIdsByParent[nested.parentId] = current
-
-            var relationsByFieldAndLocale = toOneRelationShiptsByEntryId[nested.childId.id] ?? [:]
-            relationsByFieldAndLocale[fieldKey] = nested
-            toOneRelationShiptsByEntryId[nested.childId.id] = relationsByFieldAndLocale
+        for keyPath in keyPaths {
+            setRelationship(nil, for: keyPath)
         }
     }
 
-    mutating func delete(parentId: ParentId) {
-        guard var childIdsByParent = childIdsByParent[parentId] else { return }
-
-        for childId in childIdsByParent {
-
-            var emptyToOne = false
-            var emptyToMany = false
-
-            if var toOne = toOneRelationShiptsByEntryId[childId] {
-                let keyForParent = toOne.keys.filter { $0.parentId == parentId }
-                keyForParent.forEach {
-                    if let relation = toOne[$0] {
-                        toOne[$0] = nil
-                        toOneRelationShips.remove(relation.id)
-                    }
-                }
-                emptyToOne = toOne.isEmpty
-                toOneRelationShiptsByEntryId[childId] = emptyToOne ? nil : toOne
-            } else {
-                emptyToOne = true
-            }
-
-            if var toMany = toManyRelationShipsbyEntryId[childId] {
-                let keyForParent = toMany.keys.filter { $0.parentId == parentId }
-                keyForParent.forEach {
-                    if let relationId = toMany[$0] {
-                        toMany[$0] = nil
-                        toManyRelationShips.removeValue(forKey: relationId)
-                    }
-                }
-                emptyToMany = toMany.isEmpty
-                toManyRelationShipsbyEntryId[childId] = emptyToMany ? nil : toMany
-            } else {
-                emptyToMany = true
-            }
-
-            // remove unused parent
-            if emptyToOne && emptyToMany {
-                childIdsByParent.remove(childId)
-            }
-        }
-        
-        self.childIdsByParent[parentId] = childIdsByParent.isEmpty ? nil : childIdsByParent
+    mutating func delete(parentId: Relationship.ParentId, fieldName: Relationship.FieldName, localeCode: Relationship.LocaleCode) {
+        let keyPath = RelationshipKeyPath(parentId: parentId, fieldName: fieldName, localeCode: localeCode)
+        setRelationship(nil, for: keyPath)
     }
 
-    mutating func delete(parentId: ParentId, fieldName: String, localeCode: String?) {
+    func relationships(for childId: RelationshipChildId) -> [Relationship] {
+        relationshipKeyPathsByChild[childId.rawValue]?
+            .compactMap(relationship) ?? []
+    }
 
-        guard var childIdsByParent = childIdsByParent[parentId] else { return }
+    private func relationship(keyPath: RelationshipKeyPath) -> Relationship? {
+        relationships[keyPath.parentId]?[keyPath.fieldId]
+    }
 
-        let fieldKey = FieldLocaleKey(parentId: parentId, field: fieldName, locale: localeCode)
+    private mutating func setRelationship(_ relationship: Relationship?, for keyPath: RelationshipKeyPath) {
+        var relationshipsByFieldIdentifier = relationships[keyPath.parentId] ?? [:]
 
-        for childId in childIdsByParent {
-            var emptyToOne = false
-            var emptyToMany = false
+        let newChildIds = Set(relationship?.children.elements.map { $0.id } ?? [])
 
-            if var toOne = toOneRelationShiptsByEntryId[childId] {
-                if let relation = toOne[fieldKey] {
-                    toOne[fieldKey] = nil
-                    toOneRelationShips.remove(relation.id)
+        if let existingRelationship = relationshipsByFieldIdentifier[keyPath.fieldId] {
+            let existingChildIds = Set(existingRelationship.children.elements.map { $0.id })
+            let removedChildIds = existingChildIds.subtracting(newChildIds)
+
+            for childId in removedChildIds {
+                if var keyPaths = relationshipKeyPathsByChild[childId] {
+                    keyPaths.remove(keyPath)
+                    relationshipKeyPathsByChild[childId] = keyPaths
                 }
-                emptyToOne = toOne.isEmpty
-                toOneRelationShiptsByEntryId[childId] = emptyToOne ? nil : toOne
-            } else {
-                emptyToOne = true
-            }
-
-            if var toMany = toManyRelationShipsbyEntryId[childId] {
-                if let relationId = toMany[fieldKey] {
-                    toMany[fieldKey] = nil
-                    toManyRelationShips.removeValue(forKey: relationId)
-                }
-                emptyToMany = toMany.isEmpty
-                toManyRelationShipsbyEntryId[childId] = emptyToMany ? nil : toMany
-            } else {
-                emptyToMany = true
-            }
-
-            // remove unused parent
-            if emptyToOne && emptyToMany {
-                childIdsByParent.remove(childId)
             }
         }
 
-        self.childIdsByParent[parentId] = childIdsByParent.isEmpty ? nil : childIdsByParent
+        for childId in newChildIds {
+            var keyPaths = relationshipKeyPathsByChild[childId] ?? Set()
+            keyPaths.insert(keyPath)
+            relationshipKeyPathsByChild[childId] = keyPaths
+        }
+
+        relationshipsByFieldIdentifier[keyPath.fieldId] = relationship
+
+        if relationshipsByFieldIdentifier.isEmpty {
+            relationships[keyPath.parentId] = nil
+        } else {
+            relationships[keyPath.parentId] = relationshipsByFieldIdentifier
+        }
     }
 
-    func findToOne(childId: ChildId, localeCode: String?) -> [ToOneRelationship] {
-        guard let relations = toOneRelationShiptsByEntryId[childId] else { return [] }
-
-        return relations.keys
-            .filter { $0.locale == localeCode }
-            .compactMap { relations[$0] }
+    private static func keyPath(for relationship: Relationship) -> RelationshipKeyPath {
+        RelationshipKeyPath(parentId: relationship.parentId, fieldName: relationship.fieldName, localeCode: relationship.localeCode)
     }
 
-    func findToMany(childId: ChildId, localeCode: String?) -> [ToManyRelationship] {
-        guard let relations = toManyRelationShipsbyEntryId[childId] else { return [] }
-
-        return relations.keys
-            .filter { $0.locale == localeCode }
-            .compactMap { relations[$0] }
-            .compactMap { toManyRelationShips[$0] }
-    }
 }

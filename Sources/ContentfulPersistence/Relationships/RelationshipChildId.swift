@@ -2,10 +2,11 @@
 //  ContentfulPersistence
 //
 
-struct RelationshipChildId: Codable, Equatable {
+struct RelationshipChildId: RawRepresentable, Codable, Equatable {
 
-    /// Id of entry that may include locale code.
-    let value: String
+    typealias RawValue = String
+
+    let rawValue: RawValue
 
     /// Id without locale code.
     let id: String
@@ -13,15 +14,25 @@ struct RelationshipChildId: Codable, Equatable {
     /// Locale code associated with the id.
     let localeCode: String?
 
-    init(value: String) {
-        self.value = value
-        (self.id, self.localeCode) = value.splitToIdAndLocaleCode()
+    init(rawValue: String) {
+        self.rawValue = rawValue
+        (self.id, self.localeCode) = rawValue.splitToIdAndLocaleCode()
+    }
+
+    init(id: String, localeCode: String?) {
+        self.rawValue = [id, localeCode]
+            .compactMap { $0 }
+            .joined(separator: "_")
+
+        self.id = id
+        self.localeCode = localeCode
     }
 }
 
 private extension String {
 
     func splitToIdAndLocaleCode() -> (String, String?) {
+
         if let index = self.firstIndex(of: "_") {
             let localeCodeStartIndex = self.index(index, offsetBy: 1)
             return (String(self[self.startIndex..<index]), String(self[localeCodeStartIndex..<self.endIndex]))
