@@ -11,6 +11,15 @@
 		02E58FA22535C9E30039F3A5 /* RelationshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E58FA02535C9E30039F3A5 /* RelationshipData.swift */; };
 		02E58FA32535C9E30039F3A5 /* RelationshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E58FA02535C9E30039F3A5 /* RelationshipData.swift */; };
 		02E58FA42535C9E30039F3A5 /* RelationshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E58FA02535C9E30039F3A5 /* RelationshipData.swift */; };
+		403F22B42B90F5DE003964E8 /* BatchSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403F22B32B90F5DE003964E8 /* BatchSyncTests.swift */; };
+		403F22B52B90F5DE003964E8 /* BatchSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403F22B32B90F5DE003964E8 /* BatchSyncTests.swift */; };
+		403F22B62B90F5DE003964E8 /* BatchSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403F22B32B90F5DE003964E8 /* BatchSyncTests.swift */; };
+		403F22B92B90F5F7003964E8 /* batch-page.json in Resources */ = {isa = PBXBuildFile; fileRef = 403F22B72B90F5F7003964E8 /* batch-page.json */; };
+		403F22BA2B90F5F7003964E8 /* batch-page.json in Resources */ = {isa = PBXBuildFile; fileRef = 403F22B72B90F5F7003964E8 /* batch-page.json */; };
+		403F22BB2B90F5F7003964E8 /* batch-page.json in Resources */ = {isa = PBXBuildFile; fileRef = 403F22B72B90F5F7003964E8 /* batch-page.json */; };
+		403F22BC2B90F5F7003964E8 /* batch-page2.json in Resources */ = {isa = PBXBuildFile; fileRef = 403F22B82B90F5F7003964E8 /* batch-page2.json */; };
+		403F22BD2B90F5F7003964E8 /* batch-page2.json in Resources */ = {isa = PBXBuildFile; fileRef = 403F22B82B90F5F7003964E8 /* batch-page2.json */; };
+		403F22BE2B90F5F7003964E8 /* batch-page2.json in Resources */ = {isa = PBXBuildFile; fileRef = 403F22B82B90F5F7003964E8 /* batch-page2.json */; };
 		5D001E5C2004019C00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
 		5D001E5D2004019D00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
 		5D001E5E2004019D00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
@@ -288,6 +297,9 @@
 
 /* Begin PBXFileReference section */
 		02E58FA02535C9E30039F3A5 /* RelationshipData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipData.swift; sourceTree = "<group>"; };
+		403F22B32B90F5DE003964E8 /* BatchSyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchSyncTests.swift; sourceTree = "<group>"; };
+		403F22B72B90F5F7003964E8 /* batch-page.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "batch-page.json"; sourceTree = "<group>"; };
+		403F22B82B90F5F7003964E8 /* batch-page2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "batch-page2.json"; sourceTree = "<group>"; };
 		5D001E5A2004019700AC5A4C /* symbols-array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "symbols-array.json"; sourceTree = "<group>"; };
 		5D26507321933E320072FAEE /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D265075219343DB0072FAEE /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -580,6 +592,8 @@
 		ED25D7F61F17900900A6BA9A /* ComplexTestStubs */ = {
 			isa = PBXGroup;
 			children = (
+				403F22B72B90F5F7003964E8 /* batch-page.json */,
+				403F22B82B90F5F7003964E8 /* batch-page2.json */,
 				ED4023ED20EA5D43001C6BDD /* now-resolvable-relationships.json */,
 				5DA9AE0721A2B6AF0033BC4E /* deleted-asset-initial.json */,
 				5DA9AE0821A2B6AF0033BC4E /* deleted-asset-next.json */,
@@ -695,6 +709,7 @@
 		ED8C1E9D1F617A8E001D059F /* ContentfulPersistenceTests */ = {
 			isa = PBXGroup;
 			children = (
+				403F22B32B90F5DE003964E8 /* BatchSyncTests.swift */,
 				6D87842524FCD612003E69CD /* Relationships */,
 				ED10E8AA1E48AC870061741F /* Info.plist */,
 				ED4C58EC1F161DDE000B65FD /* ContentStubs */,
@@ -976,6 +991,7 @@
 				5D8851021FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
 				5DD19BAC219F13730041F483 /* deleted-entry-initial.json in Resources */,
 				ED6B67991F191342008EC7C8 /* clear-field-next-sync.json in Resources */,
+				403F22B92B90F5F7003964E8 /* batch-page.json in Resources */,
 				EDBDBFD81F28B6E800649F5A /* localization-sync.json in Resources */,
 				ED4023EA20EA5A15001C6BDD /* unresolvable-links.json in Resources */,
 				5D001E5E2004019D00AC5A4C /* symbols-array.json in Resources */,
@@ -1001,6 +1017,7 @@
 				5D9309C92003FDE80050786B /* linked-assets-array.json in Resources */,
 				ED6B67A31F1CB350008EC7C8 /* nullified-link-next.json in Resources */,
 				ED8C1E801F6040E0001D059F /* PreseedJSONFiles in Resources */,
+				403F22BC2B90F5F7003964E8 /* batch-page2.json in Resources */,
 				ED4023EE20EA5D43001C6BDD /* now-resolvable-relationships.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1033,6 +1050,7 @@
 				5D8851031FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
 				5DD19BAD219F13730041F483 /* deleted-entry-initial.json in Resources */,
 				EDD8F4F31F5401FD0000D3BB /* multi-page-link-resolution1.json in Resources */,
+				403F22BA2B90F5F7003964E8 /* batch-page.json in Resources */,
 				EDD8F4F01F5401FD0000D3BB /* clear-field-next-sync.json in Resources */,
 				ED4023EB20EA5A15001C6BDD /* unresolvable-links.json in Resources */,
 				5D001E5D2004019D00AC5A4C /* symbols-array.json in Resources */,
@@ -1058,6 +1076,7 @@
 				5D9309CC2003FDEB0050786B /* linked-assets-array.json in Resources */,
 				EDD8F52D1F5402290000D3BB /* space.json in Resources */,
 				ED8C1E811F6040E0001D059F /* PreseedJSONFiles in Resources */,
+				403F22BD2B90F5F7003964E8 /* batch-page2.json in Resources */,
 				ED4023EF20EA5D43001C6BDD /* now-resolvable-relationships.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1069,6 +1088,7 @@
 				5D8851041FEAEC6400FA2A13 /* shared-linked-asset.json in Resources */,
 				5DD19BAE219F13730041F483 /* deleted-entry-initial.json in Resources */,
 				EDD8F4FC1F5401FD0000D3BB /* multi-page-link-resolution1.json in Resources */,
+				403F22BB2B90F5F7003964E8 /* batch-page.json in Resources */,
 				EDD8F4F91F5401FD0000D3BB /* clear-field-next-sync.json in Resources */,
 				ED4023EC20EA5A15001C6BDD /* unresolvable-links.json in Resources */,
 				5D001E5C2004019C00AC5A4C /* symbols-array.json in Resources */,
@@ -1094,6 +1114,7 @@
 				5D9309CB2003FDEA0050786B /* linked-assets-array.json in Resources */,
 				EDD8F5301F5402290000D3BB /* space.json in Resources */,
 				ED8C1E821F6040E0001D059F /* PreseedJSONFiles in Resources */,
+				403F22BE2B90F5F7003964E8 /* batch-page2.json in Resources */,
 				ED4023F020EA5D43001C6BDD /* now-resolvable-relationships.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1183,6 +1204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED10E8B81E48ACBD0061741F /* Asset+CoreDataProperties.swift in Sources */,
+				403F22B42B90F5DE003964E8 /* BatchSyncTests.swift in Sources */,
 				ED10E8B71E48ACBD0061741F /* Asset.swift in Sources */,
 				6F388F5D22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
 				ED10E8BA1E48ACBD0061741F /* Author+CoreDataProperties.swift in Sources */,
@@ -1281,6 +1303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDD8F4E71F5401E90000D3BB /* ComplexSyncTests.swift in Sources */,
+				403F22B52B90F5DE003964E8 /* BatchSyncTests.swift in Sources */,
 				EDD8F51B1F5402200000D3BB /* Post.swift in Sources */,
 				6F388F5E22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
 				EDD8F4EB1F5401EF0000D3BB /* TestHelpers.swift in Sources */,
@@ -1325,6 +1348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDD8F4E81F5401E90000D3BB /* ComplexSyncTests.swift in Sources */,
+				403F22B62B90F5DE003964E8 /* BatchSyncTests.swift in Sources */,
 				EDD8F5251F5402200000D3BB /* Post.swift in Sources */,
 				6F388F5F22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
 				EDD8F4EC1F5401EF0000D3BB /* TestHelpers.swift in Sources */,
