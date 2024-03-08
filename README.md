@@ -126,6 +126,16 @@ extension Post {
 
 ## Installation
 
+
+### SPM installation
+
+You can also use the Swift Package Manager which is bundled with your XCode (Swift 3.0+) to add Contentful Persistence as a dependency to your project. In order to do so, select your project, change tabs to 'Package Dependencies' and add the following URL:
+
+```
+https://github.com/contentful/contentful-persistence.swift
+```
+You need to use "master" branch. 
+
 ### CocoaPods installation
 
 [CocoaPods][5] is the dependency manager for Objective-C and Swift, which automates and simplifies the process of using 3rd-party libraries like the ContentfulPersistence in your projects.
