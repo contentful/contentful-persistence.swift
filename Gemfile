@@ -5,3 +5,6 @@ gem 'xcpretty'
 gem 'slather'
 gem 'jazzy'
 gem 'dotenv'
+
+gem 'rb-readline'
+gem "fastlane"
