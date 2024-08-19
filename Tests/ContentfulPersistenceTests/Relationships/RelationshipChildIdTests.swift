@@ -13,7 +13,7 @@ class RelationshipChildIdTests: XCTestCase {
 
         let value = "\(id)_\(localeCode)"
 
-        let childId = RelationshipChildId(value: value)
+        let childId = RelationshipChildId(rawValue: value)
         XCTAssertEqual(childId.id, id)
         XCTAssertEqual(childId.localeCode, localeCode)
     }
@@ -21,7 +21,7 @@ class RelationshipChildIdTests: XCTestCase {
     func test_id_isSet() {
         let id = "abc-def"
 
-        let childId = RelationshipChildId(value: id)
+        let childId = RelationshipChildId(rawValue: id)
         XCTAssertEqual(childId.id, id)
         XCTAssertNil(childId.localeCode)
     }

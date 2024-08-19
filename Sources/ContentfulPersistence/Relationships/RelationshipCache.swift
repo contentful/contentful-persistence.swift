@@ -50,6 +50,15 @@ final class RelationshipCache {
         }
     }
 
+    func wipe() {
+        do {
+            guard let localUrl = cacheUrl() else { return }
+            try FileManager.default.removeItem(at: localUrl)
+        } catch let error {
+            print("Couldn't delete relationships: \(error)")
+        }
+    }
+    
     private func cacheUrl() -> URL? {
         guard let url = try? FileManager.default.url(
             for: .documentDirectory,
@@ -65,11 +74,11 @@ final class RelationshipCache {
 
     private func loadFromCache() -> RelationshipData {
         do {
-            guard let localURL = cacheUrl() else { return .empty }
+            guard let localURL = cacheUrl() else { return .init() }
             let data = try Data(contentsOf: localURL, options: [])
             return try JSONDecoder().decode(RelationshipData.self, from: data)
         } catch {
-            return .empty
+            return .init()
         }
     }
 }
