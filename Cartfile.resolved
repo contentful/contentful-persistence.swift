@@ -1,2 +1,2 @@
-github "AliSoftware/OHHTTPStubs" "9.1.0"
-github "contentful/contentful.swift" "5.4.1"
+github "contentful/contentful.swift" "5.5.12"
+github "mariuskatcontentful/OHHTTPStubs" "9.1.0"
