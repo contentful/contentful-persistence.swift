@@ -772,11 +772,8 @@ public class SynchronizationManager: PersistenceIntegration {
             "yyyy-MM-dd'T'HH:mmxxx",
             "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         ]
-        let dateParser = DateFormatter()
-        dateParser.locale = Locale(identifier: "en_US_POSIX")
-        dateParser.timeZone = TimeZone(secondsFromGMT: 0)
         for format in formats {
-            dateParser.dateFormat = format
+            let dateParser = DateFormatterCache.shared.get(format)
             if let date = dateParser.date(from: value) {
                 return date
             }
