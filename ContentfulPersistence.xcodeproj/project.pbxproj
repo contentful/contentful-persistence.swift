@@ -27,6 +27,10 @@
 		40EA007F2C735166009E4698 /* OHHTTPStubs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40EA007E2C735166009E4698 /* OHHTTPStubs.xcframework */; };
 		40EA00802C735166009E4698 /* OHHTTPStubs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40EA007E2C735166009E4698 /* OHHTTPStubs.xcframework */; };
 		40EA00812C735166009E4698 /* OHHTTPStubs.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40EA007E2C735166009E4698 /* OHHTTPStubs.xcframework */; };
+		40FA937D2C91C0DB0017E879 /* DateFormatterCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FA937C2C91C0DB0017E879 /* DateFormatterCache.swift */; };
+		40FA937E2C91C0DB0017E879 /* DateFormatterCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FA937C2C91C0DB0017E879 /* DateFormatterCache.swift */; };
+		40FA937F2C91C0DB0017E879 /* DateFormatterCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FA937C2C91C0DB0017E879 /* DateFormatterCache.swift */; };
+		40FA93802C91C0DB0017E879 /* DateFormatterCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FA937C2C91C0DB0017E879 /* DateFormatterCache.swift */; };
 		5D001E5C2004019C00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
 		5D001E5D2004019D00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
 		5D001E5E2004019D00AC5A4C /* symbols-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D001E5A2004019700AC5A4C /* symbols-array.json */; };
@@ -306,6 +310,7 @@
 		403F22B82B90F5F7003964E8 /* batch-page2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "batch-page2.json"; sourceTree = "<group>"; };
 		40754A2D2BDFF02E00EF4006 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = SOURCE_ROOT; };
 		40EA007E2C735166009E4698 /* OHHTTPStubs.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OHHTTPStubs.xcframework; path = Carthage/Build/OHHTTPStubs.xcframework; sourceTree = "<group>"; };
+		40FA937C2C91C0DB0017E879 /* DateFormatterCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterCache.swift; sourceTree = "<group>"; };
 		5D001E5A2004019700AC5A4C /* symbols-array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "symbols-array.json"; sourceTree = "<group>"; };
 		5D26507321933E320072FAEE /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D265075219343DB0072FAEE /* Contentful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Contentful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -710,6 +715,7 @@
 				ED9C21F91EF3DBD600882ABF /* PersistenceStore.swift */,
 				ED10E8851E48AB840061741F /* CoreDataStore.swift */,
 				ED10E8861E48AB840061741F /* DataCache.swift */,
+				40FA937C2C91C0DB0017E879 /* DateFormatterCache.swift */,
 			);
 			path = ContentfulPersistence;
 			sourceTree = "<group>";
@@ -1202,6 +1208,7 @@
 				6D87843724FCEBC7003E69CD /* RelationshipChildId.swift in Sources */,
 				6D5CEDC124FC2493005E8B41 /* Relationship.swift in Sources */,
 				ED10E88C1E48AB840061741F /* CoreDataStore.swift in Sources */,
+				40FA937D2C91C0DB0017E879 /* DateFormatterCache.swift in Sources */,
 				ED8C1E721F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FA1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
 				ED10E88B1E48AB840061741F /* SynchronizationManager.swift in Sources */,
@@ -1265,6 +1272,7 @@
 				6D87843824FCEBC7003E69CD /* RelationshipChildId.swift in Sources */,
 				6D5CEDC224FC2493005E8B41 /* Relationship.swift in Sources */,
 				ED10E8D71E48BF1D0061741F /* CoreDataStore.swift in Sources */,
+				40FA937E2C91C0DB0017E879 /* DateFormatterCache.swift in Sources */,
 				ED8C1E731F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FB1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
 				ED10E8D61E48BF1D0061741F /* SynchronizationManager.swift in Sources */,
@@ -1283,6 +1291,7 @@
 				6D87843924FCEBC7003E69CD /* RelationshipChildId.swift in Sources */,
 				6D5CEDC324FC2493005E8B41 /* Relationship.swift in Sources */,
 				ED10E9021E48CD1E0061741F /* CoreDataStore.swift in Sources */,
+				40FA937F2C91C0DB0017E879 /* DateFormatterCache.swift in Sources */,
 				ED8C1E741F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FC1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
 				ED10E9011E48CD1E0061741F /* SynchronizationManager.swift in Sources */,
@@ -1301,6 +1310,7 @@
 				6D87843A24FCEBC7003E69CD /* RelationshipChildId.swift in Sources */,
 				6D5CEDC424FC2493005E8B41 /* Relationship.swift in Sources */,
 				ED10E9081E48CD1F0061741F /* CoreDataStore.swift in Sources */,
+				40FA93802C91C0DB0017E879 /* DateFormatterCache.swift in Sources */,
 				ED8C1E751F603939001D059F /* SynchronizationManager+SeedDB.swift in Sources */,
 				ED9C21FD1EF3DBD600882ABF /* PersistenceStore.swift in Sources */,
 				ED10E9071E48CD1F0061741F /* SynchronizationManager.swift in Sources */,
