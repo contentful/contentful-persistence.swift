@@ -15,7 +15,7 @@
 
 ## Getting Started
 
-### Prerequisite
+### Prerequisites
 
 Before getting started, it is highly recommended that you familiarize yourself with Apple's CoreData framework as many issues encountered during development may be CoreData specific. Read the [CoreData Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/index.html) and check out other (non-Contentful) examples.
 
@@ -101,7 +101,7 @@ Next, you'll need to create the corresponding model in your project's `xcdatamod
 **NOTE:** Optionality in Core Data entities differs from Swift optionality. For Core Data entities, optionality means that a property may be absent during a save-to-database operation. To configure a property's optionality, open the "Data Model Inspector" in Xcode's "Utilities" right sidebar and toggle the "Optional" checkbox.
 ![](Screenshots/CoreDataOptionality.png)
 
-The mapping of Contentful fields to your data model entities will be derived automatically, but you can also customize it, by implementing the `static func fieldMapping() -> [FieldName: String]?` on your class.
+The mapping of Contentful fields to your data model entities will be derived automatically, but you can also customize it by implementing the `static func fieldMapping() -> [FieldName: String]?` on your class.
 
 Below is an example of a model class.
 
