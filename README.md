@@ -7,24 +7,24 @@
 [![Build Status](https://img.shields.io/travis/contentful/contentful-persistence.swift/master.svg?style=flat)](https://travis-ci.org/contentful/contentful-persistence.swift)
 [![Coverage Status](https://img.shields.io/coveralls/contentful/contentful-persistence.swift.svg)](https://coveralls.io/github/contentful/contentful-persistence.swift)
 
-> An integration to simplify persisting data from [Contentful][1] to a local CoreData database; built on top of the official Contentful [Swift Library][2]. This library specifically uses the [`/sync` endpoint][7] of the Content Delivery API to synchronize all content in a Contentful space to device.
+> An integration to simplify persisting data from [Contentful][1] to a local CoreData database; built on top of the official Contentful [Swift Library][2]. This library specifically uses the [`/sync` endpoint][7] of the Content Delivery API to synchronize all content in a Contentful space to a device.
 
 **What is Contentful?**
 
-[Contentful][1] provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship digital products faster.
+[Contentful][1] provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enables developers and content creators to ship digital products faster.
 
-## Getting started
+## Getting Started
 
-### Prerequisite
+### Prerequisites
 
-Before getting started, it is highly recommended that you familiarize yourself with Apple's CoreData framework as many issues encountered during development may be CoreData specific. Read the [CoreData Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/index.html) and check out other (non-Contentful) examples. 
+Before getting started, it is highly recommended that you familiarize yourself with Apple's CoreData framework as many issues encountered during development may be CoreData specific. Read the [CoreData Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/index.html) and check out other (non-Contentful) examples.
 
-### Usage 
+### Usage
 
 The `SynchronizationManager` manages the state of your CoreData database and keeps it in sync with the data from your Contentful Space:
 
 ```swift
-// Tell the library which of your `NSManagedObject` subclasses that conform to `EntryPersistable` should be used when mapping API resonses to CoreData entities.
+// Tell the library which of your `NSManagedObject` subclasses that conform to `EntryPersistable` should be used when mapping API responses to CoreData entities.
 let entryTypes = [Author.self, Category.self, Post.self]
 
 // Initialize the data store and it's schema.
@@ -35,12 +35,14 @@ let persistenceModel = PersistenceModel(spaceType: SyncInfo.self, assetType: Ass
 self.client = Client(spaceId: "<YOUR_SPACE_ID>", accessToken: "<YOUR_ACCESS_TOKEN>")
 
 // Create the manager.
-self.syncManager = SynchronizationManager(client: self.client,
-                                          localizationScheme: LocalizationScheme.all, // Save data for all locales your space supports.
-                                          persistenceStore: self.store, 
-                                          persistenceModel: persistenceModel)
+self.syncManager = SynchronizationManager(
+    client: self.client,
+    localizationScheme: LocalizationScheme.all, // Save data for all locales your space supports.
+    persistenceStore: self.store,
+    persistenceModel: persistenceModel
+)
 
-// Sync with the API. 
+// Sync with the API.
 self.syncManager.sync { _ in
   do {
     // Fetch all `Posts` from CoreData
@@ -51,19 +53,57 @@ self.syncManager.sync { _ in
 }
 ```
 
-## Define your `CoreData` model
+### SpaceType and AssetType
 
-To make your model classes work with contentful-persistence.swift you will need to either conform to `AssetPersistable` for Contentful Assets, or `EntryPersistable` for Contentful entry types.
+The `PersistenceModel` requires both a `spaceType` and an `assetType` to be specified. These correspond to Core Data entities used for storing `SyncInfo` and `Asset` objects, respectively.
 
-Then you will need to make the corresponding model in your projects `xcdatamodel` file. Both `EntryPersistable` and `AssetPersistable` types must have a _non-optional_ `id` property as well as optional `localeCode`, `createdAt`, and `updatedAt` properties.
+To function correctly, these objects must:
 
-**NOTE:** Optionality on CoreData entities is a bit different than Swift optionality. Optionality on CoreData entities means that the property may be absent when a save-to-database operation is performed. To configure a property's optionality, open the "Data Model Inspector" in Xcode's "Utilities" right sidebar and toggle the "Optional" checkbox:
+- Be of type `NSManagedObject`.
+- Conform to the `SyncSpacePersistable` and `AssetPersistable` protocols, as appropriate.
+- Be defined within the Core Data `xcdatamodel` file.
 
+#### Example Implementation
+
+```swift
+class SyncInfo: NSManagedObject, SyncSpacePersistable {
+    @NSManaged var syncToken: String?
+    @NSManaged var dbVersion: NSNumber?
+}
+
+class Asset: NSManagedObject, AssetPersistable {
+    @NSManaged var id: String
+    @NSManaged var localeCode: String?
+    @NSManaged var title: String?
+    @NSManaged var assetDescription: String?
+    @NSManaged var urlString: String?
+    @NSManaged var createdAt: Date?
+    @NSManaged var updatedAt: Date?
+
+    @NSManaged var size: NSNumber?
+    @NSManaged var width: NSNumber?
+    @NSManaged var height: NSNumber?
+    @NSManaged var fileType: String?
+    @NSManaged var fileName: String?
+}
+```
+
+And then in the `xcdatamodeld` file:
+![](Screenshots/Asset.png)
+![](Screenshots/SyncInfo.png)
+
+## Define Your `CoreData` Model
+
+To integrate your model classes with `contentful-persistence.swift`, you must conform to either the `AssetPersistable` protocol for Contentful Assets or the `EntryPersistable` protocol for Contentful entry types.
+
+Next, you'll need to create the corresponding model in your project's `xcdatamodel` file. Both `EntryPersistable` and `AssetPersistable` types require a _non-optional_ `id` property, as well as optional `localeCode`, `createdAt`, and `updatedAt` properties.
+
+**NOTE:** Optionality in Core Data entities differs from Swift optionality. For Core Data entities, optionality means that a property may be absent during a save-to-database operation. To configure a property's optionality, open the "Data Model Inspector" in Xcode's "Utilities" right sidebar and toggle the "Optional" checkbox.
 ![](Screenshots/CoreDataOptionality.png)
 
-The mapping of Contentful fields to your data model entities will be derived automatically, but you can also customize it, by implementing the `static func mapping() -> [FieldName: String]?` on your class.
+The mapping of Contentful fields to your data model entities will be derived automatically, but you can also customize it by implementing the `static func fieldMapping() -> [FieldName: String]?` on your class.
 
-Below is an example of a model class. 
+Below is an example of a model class.
 
 ```swift
 import Foundation
@@ -73,16 +113,16 @@ import Contentful
 
 // The following @objc attribute is only necessary if your xcdatamodel Default configuration doesn't have your module
 // name prepended to the Swift class. To enable removing the @objc attribute, change the Class for your entity to `ModuleName.Post`
-@objc(Post) 
+@objc(Post)
 class Post: NSManagedObject, EntryPersistable {
-      
+
     // The identifier of the corresponding Content Type in Contentful.
     static let contentTypeId = "post"
 
     // Properties of the `sys` object of Contentful resources.
     @NSManaged var id: String
     @NSManaged var localeCode: String?
-    @NSManaged var createdAt: Date? 
+    @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
 
     // Custom fields on the content type.
@@ -90,7 +130,7 @@ class Post: NSManagedObject, EntryPersistable {
     @NSManaged var comments: NSNumber?
     // NOTE: Unlike date fields in sys properties, this library can't store `Date` for custom fields.
     // Use `String` and map to date after fetching from CoreData
-    @NSManaged var customDateField: String? 
+    @NSManaged var customDateField: String?
     @NSManaged var date: Date?
     @NSManaged var slug: String?
     @NSManaged var tags: Data?
@@ -99,42 +139,93 @@ class Post: NSManagedObject, EntryPersistable {
     @NSManaged var category: NSOrderedSet?
     @NSManaged var theFeaturedImage: Asset?
 
-    // Define the mapping from the fields on your Contentful.Entry to your model class. 
+    // Define the mapping from the fields on your Contentful.Entry to your model class.
     // In the below example, only the `title`, `date` and `author` fields and `featuredImage` link will be populated.
+    // IMPORTANT: This should not include metadata from the `sys` object (e.g. id, createdAt, etc.)
     static func fieldMapping() -> [FieldName: String] {
         return [
             "title": "title",
             "featuredImage": "theFeaturedImage",
             "author": "authors"
             "date": "date"
-        ]    
+        ]
     }
 }
 ```
 
-**HINT:** For **array-based field types** (like `Short text, list`), use the type `Binary Data` in the data model, and the type `Data?` (e.g. `var tags: Data?`) in the Swift code. To access the actual array contents, unpack the `Data` field with `NSKeyedUnarchiver`, e.g.:
+## Relationships
+
+Let's say we have the following content model in our Contentful space:
+
+```
+Product
+- name: String
+- relatedProducts: [Product]
+```
+
+It represents a product with a name and related products.
+This would be translated into our Swift model as follows:
 
 ```swift
-extension Post {
+class Product: NSManagedObject {
+    // Contentful metadata
+    @NSManaged var id: String
+    @NSManaged var localeCode: String?
+    @NSManaged var createdAt: Date?
+    @NSManaged var updatedAt: Date?
 
-    var theTags: [String]? {
-        guard let tagsData = self.tags else { return nil }
-        return NSKeyedUnarchiver.unarchiveObject(with: tagsData) as? [String]
+    // Defined properties in Contentful
+    @NSManaged public var name: String?
+    @NSManaged public var relatedProducts: NSOrderedSet?
+}
+
+extension Product: EntryPersistable {
+    public static var contentTypeId = "product"
+    public static func fieldMapping() -> [FieldName: String] {
+        return [
+            "name": "name",
+            "relatedProducts": "relatedProducts",
+        ]
     }
+}
+```
+
+The corresponding CoreData entity would look like this:
+![](Screenshots/Product.png)
+
+Note the type and the arrangement set to `ordered`.
+
+After fetching products from the DB, related products could be accessed like this:
+
+```swift
+for product in products {
+  if let relatedProductsSet = product.relatedProducts,
+      let productsArray = relatedProductsSet.array as? [Product]
+  {
+      // productsArray is now [Product]
+      for product in productsArray {
+          // Access product properties here, e.g., product.name
+          print("Related product:", product.id, product.name)
+      }
+  } else {
+      print("No related products or unable to cast")
+  }
 }
 ```
 
 ## Installation
-
 
 ### SPM installation
 
 You can also use the Swift Package Manager which is bundled with your XCode (Swift 3.0+) to add Contentful Persistence as a dependency to your project. In order to do so, select your project, change tabs to 'Package Dependencies' and add the following URL:
 
 ```
+
 https://github.com/contentful/contentful-persistence.swift
+
 ```
-You need to use "master" branch. 
+
+You need to use "master" branch.
 
 ### CocoaPods installation
 
