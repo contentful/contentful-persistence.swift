@@ -5,11 +5,13 @@ import XCTest
 class SynchronizationManagerSyncTests: XCTestCase {
     var sut: SynchronizationManager!
     var client: Client!
-    var partialCompletion: ResultsHandler<SyncSpace>!
-    var finalCompletion: ResultsHandler<SyncSpace>!
+    var persistenceStore: MockPersistenceStore!
 
     override func setUp() {
         super.setUp()
+        
+        persistenceStore = MockPersistenceStore()
+        persistenceStore.returnValue = MockSyncSpacePersistable()
 
         client = Client(
             spaceId: "spaceId",
@@ -20,30 +22,7 @@ class SynchronizationManagerSyncTests: XCTestCase {
                 return config
             }()
         )
-
-        sut = SynchronizationManager(
-            client: client,
-            localizationScheme: .all,
-            persistenceStore: MockPersistenceStore(),
-            persistenceModel: .init(spaceType: MockSyncSpacePersistable.self, assetType: Asset.self, entryTypes: [])
-        )
-    }
-
-    func testInvalidLocalizationScheme() throws {
-        XCTAssertThrowsError(
-            try sut
-                .sync(
-                    syncSpacePersistable: MockSyncSpacePersistable.self,
-                    initialLocalizationScheme: .all,
-                    onInitialCompletion: { _ in },
-                    onFinalCompletion: { _ in }
-                )
-        )
-    }
-
-    func testPartialResultIsCalled() throws {
-        let expectation = self.expectation(description: "Partial result is called")
-
+        
         MockURLProtocol.mockURLs =
             [
                 .sync: (
@@ -66,36 +45,92 @@ class SynchronizationManagerSyncTests: XCTestCase {
                         headerFields: nil
                     )
                 ),
+                .contentTypes: (
+                    nil,
+                    Data.contentTypes,
+                    HTTPURLResponse(
+                        url: .contentTypes,
+                        statusCode: 200,
+                        httpVersion: nil,
+                        headerFields: nil
+                        )
+                    )
             ]
 
-        partialCompletion = { result in
-            print("###", result)
-            expectation.fulfill()
-        }
+        sut = SynchronizationManager(
+            client: client,
+            localizationScheme: .all,
+            persistenceStore: persistenceStore,
+            persistenceModel: .init(spaceType: MockSyncSpacePersistable.self, assetType: Asset.self, entryTypes: [])
+        )
+    }
 
-        finalCompletion = { result in
-            print("###", result)
-            expectation.fulfill()
-        }
+    func testInvalidLocalizationScheme() throws {
+        XCTAssertThrowsError(
+            try sut
+                .sync(
+                    syncSpacePersistable: MockSyncSpacePersistable.self,
+                    initialLocalizationScheme: .all,
+                    onInitialCompletion: { _ in },
+                    onFinalCompletion: { _ in }
+                )
+        )
+    }
+
+    func testPartialResultIsCalled() throws {
+        let expectation = self.expectation(description: "Partial result is called")
 
         try sut
             .sync(
                 syncSpacePersistable: MockSyncSpacePersistable.self,
                 initialLocalizationScheme: .default,
-                onInitialCompletion: partialCompletion,
-                onFinalCompletion: finalCompletion
+                onInitialCompletion: { _ in
+                    expectation.fulfill()
+                },
+                onFinalCompletion: { _ in }
             )
 
-        wait(for: [expectation], timeout: 5)
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testSecondSyncIsCalledWithLocalizationSchemeAll() throws {
+        let expectation = self.expectation(description: "Second sync is called with all")
+        
+        try sut
+            .sync(
+                syncSpacePersistable: MockSyncSpacePersistable.self,
+                initialLocalizationScheme: .default,
+                onInitialCompletion: { _ in },
+                onFinalCompletion: { _ in
+                    expectation.fulfill()
+                }
+                )
+        
+        wait(for: [expectation], timeout: 1)
+        XCTAssertEqual(sut.localizationScheme, .all)
+    }
+}
+
+extension LocalizationScheme: @retroactive Equatable {
+    public static func == (lhs: LocalizationScheme, rhs: LocalizationScheme) -> Bool {
+        switch (lhs, rhs) {
+        case (.default, .default), (.all, .all):
+            return true
+        default:
+            fatalError("Not implemented")
+        }
     }
 }
 
 extension URL {
     static var locales: URL =
-        URL(string: "https://cdn.contentful.com/spaces/spaceId/environments/master/locales?limit=1000")!
-    
+        .init(string: "https://cdn.contentful.com/spaces/spaceId/environments/master/locales?limit=1000")!
+
     static var sync: URL =
-        URL(string: "https://cdn.contentful.com/spaces/spaceId/environments/master/sync?initial=true")!
+        .init(string: "https://cdn.contentful.com/spaces/spaceId/environments/master/sync?initial=true")!
+
+    static var contentTypes: URL =
+        .init(string: "https://cdn.contentful.com/spaces/spaceId/environments/master/content_types")!
 }
 
 extension Data {
@@ -272,6 +307,72 @@ extension Data {
             }
           ],
           "nextSyncUrl": "https://cdn.contentful.com/spaces/tqsqhc19q5j2/environments/master/sync?sync_token=FEnChMOBwr1Yw4TCqsK2LcKpCH3CjsORI8KGIUJqw6HDpsOHTMKUw7vDt2Azw6PCq8OAwozCqlVSWsKRwq7CtMK4wqfCuGNUUMO3WDoNaMO8AcOFw5nCh8O3w48cwqDCpkvDnMK0w5QCwpxKw6XDhgbDmxl4SsK7Z1HDtgk"
+        }
+        """.data(using: .utf8)!
+    }
+
+    static var contentTypes: Data {
+        """
+        {
+          "sys": {
+            "type": "Array"
+          },
+          "total": 1,
+          "skip": 0,
+          "limit": 100,
+          "items": [
+            {
+              "sys": {
+                "space": {
+                  "sys": {
+                    "type": "Link",
+                    "linkType": "Space",
+                    "id": "tqsqhc19q5j2"
+                  }
+                },
+                "id": "product",
+                "type": "ContentType",
+                "createdAt": "2024-11-12T09:28:03.362Z",
+                "updatedAt": "2024-11-12T10:27:00.096Z",
+                "environment": {
+                  "sys": {
+                    "id": "master",
+                    "type": "Link",
+                    "linkType": "Environment"
+                  }
+                },
+                "revision": 8
+              },
+              "displayField": "name",
+              "name": "Product",
+              "description": "",
+              "fields": [
+                {
+                  "id": "name",
+                  "name": "Name",
+                  "type": "Symbol",
+                  "localized": false,
+                  "required": true,
+                  "disabled": false,
+                  "omitted": false
+                },
+                {
+                  "id": "relatedProducts",
+                  "name": "Related Products",
+                  "type": "Array",
+                  "localized": false,
+                  "required": false,
+                  "disabled": false,
+                  "omitted": false,
+                  "items": {
+                    "type": "Link",
+                    "validations": [],
+                    "linkType": "Entry"
+                  }
+                }
+              ]
+            }
+          ]
         }
         """.data(using: .utf8)!
     }
