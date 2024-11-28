@@ -66,6 +66,7 @@ public class SynchronizationManager: PersistenceIntegration {
     
     enum Error: Swift.Error {
         case deallocatedClient
+        case invalidLocalizationScheme
     }
     
     public enum DBVersions: Int { case
