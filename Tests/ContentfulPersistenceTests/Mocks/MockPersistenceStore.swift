@@ -29,7 +29,7 @@ class MockPersistenceStore: PersistenceStore {
             return returnValue
         } else {
             fatalError(
-                "MockPersistenceStore.create was called without a return value being set."
+                "MockPersistenceStore.fetchOne was called without a return value being set."
             )
         }
     }
