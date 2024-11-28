@@ -150,11 +150,10 @@ public class SynchronizationManager: PersistenceIntegration {
         dbVersion: Int = DBVersions.default.rawValue,
         onInitialCompletion: @escaping ResultsHandler<SyncSpace>,
         onFinalCompletion: @escaping ResultsHandler<SyncSpace>
-    ) where SSP: SyncSpacePersistable {
+    ) throws where SSP: SyncSpacePersistable  {
         // Ensure the initial localization scheme is valid
         if case .all = initialLocalizationScheme {
-            assertionFailure("`initialLocalizationScheme` must not be `.all` for this method.")
-            return
+            throw Error.invalidLocalizationScheme
         }
 
         // Closure to handle intermediate sync completion
