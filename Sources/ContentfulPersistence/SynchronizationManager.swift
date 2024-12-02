@@ -63,7 +63,12 @@ public enum LocalizationScheme {
 
 /// Provides the ability to sync content from Contentful to a persistence store.
 public class SynchronizationManager: PersistenceIntegration {
-
+    
+    enum Error: Swift.Error {
+        case deallocatedClient
+        case invalidLocalizationScheme
+    }
+    
     public enum DBVersions: Int { case
         `default` = 1
     }
@@ -122,6 +127,68 @@ public class SynchronizationManager: PersistenceIntegration {
         default: break
         }
         self.localeCodes = localeCodes
+    }
+    
+    /// Synchronizes data using the provided localization scheme, performing a follow-up sync with all localizations if required.
+    /// - Parameters:
+    ///   - syncSpacePersistable: The type conforming to `SyncSpacePersistable` used for handling synchronization data.
+    ///   - initialLocalizationScheme: The localization scheme to use for the initial synchronization phase.
+    ///     This must not be `.all`.
+    ///   - limit: An optional limit for the number of records to synchronize in one batch. Defaults to `nil`, indicating no limit.
+    ///   - dbVersion: The database version targeted for synchronization. Defaults to the application's default database version.
+    ///   - onInitialCompletion: A closure called upon completion of the initial synchronization phase, with a `Result` containing either the `SyncSpace` or an error.
+    ///   - onFinalCompletion: A closure called upon completion of the final synchronization phase, with a `Result` containing either the `SyncSpace` or an error.
+    /// - Throws: An assertion failure if `initialLocalizationScheme` is `.all`.
+    ///
+    /// - The synchronization process involves two phases:
+    ///     1. Synchronizing data with the provided localization scheme.
+    ///     2. Resetting the synchronization token and synchronizing with `.all` localizations.
+    ///     The `onInitialCompletion` closure is invoked after the first phase, and the final result is passed to the `onFinalCompletion` closure.
+    public func sync<SSP>(
+        syncSpacePersistable: SSP.Type,
+        initialLocalizationScheme: LocalizationScheme,
+        limit: Int? = nil,
+        dbVersion: Int = DBVersions.default.rawValue,
+        onInitialCompletion: @escaping ResultsHandler<SyncSpace>,
+        onFinalCompletion: @escaping ResultsHandler<SyncSpace>
+    ) throws where SSP: SyncSpacePersistable  {
+        // Ensure the initial localization scheme is valid
+        if case .all = initialLocalizationScheme {
+            throw Error.invalidLocalizationScheme
+        }
+
+        // Closure to handle intermediate sync completion
+        let handlePartialCompletion: ResultsHandler<SyncSpace> = { [weak self] result in
+            // Invoke the initial completion handler with the result
+            onInitialCompletion(result)
+
+            // Ensure `self` is still available
+            guard let self = self else {
+                onFinalCompletion(.failure(Error.deallocatedClient))
+                return
+            }
+
+            // Reset the synchronization token
+            do {
+                let syncInfo: SSP = try persistentStore.fetchOne(
+                    type: syncSpacePersistable,
+                    predicate: NSPredicate(value: true)
+                )
+                syncInfo.syncToken = nil
+                save()
+            } catch {
+                onFinalCompletion(.failure(error))
+                return
+            }
+
+            // Proceed to sync with `.all` localizations
+            self.localizationScheme = .all
+            self.sync(limit: limit, dbVersion: dbVersion, then: onFinalCompletion)
+        }
+
+        // Begin the initial synchronization
+        self.localizationScheme = initialLocalizationScheme
+        sync(limit: limit, dbVersion: dbVersion, then: handlePartialCompletion)
     }
 
     /**
