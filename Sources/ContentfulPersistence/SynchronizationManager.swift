@@ -738,7 +738,7 @@ public class SynchronizationManager: PersistenceIntegration {
             return
         }
 
-        persistentStore.performAndWait { [weak self] in
+        persistentStore.performBlock { [weak self] in
             self?.relationshipsToResolve = relationships
             self?.resolveRelationships()
             self?.save()
@@ -861,7 +861,7 @@ public class SynchronizationManager: PersistenceIntegration {
         for relationshipName in relationshipFieldNames {
             guard let propertyName = relationshipMapping[relationshipName] else { continue }
 
-            // Get the name of the propery to be linked to.
+            // Get the name of the property to be linked to.
             if let linkedValue = entry.fields[relationshipName] {
                 if let targets = linkedValue as? [Link] {
                     // One-to-many.
