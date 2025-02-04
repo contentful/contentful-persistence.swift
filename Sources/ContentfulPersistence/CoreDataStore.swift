@@ -174,7 +174,60 @@ public class CoreDataStore: PersistenceStore {
             try _ = coordinator.addPersistentStore(ofType: storeType, configurationName: nil, at: storeLocation, options: storeOptions)
         }
     }
+    
+    public func replaceStoreWithBundledDatabase(url: URL) throws {
+        guard let coordinator = context.persistentStoreCoordinator else {
+            throw NSError(domain: "CoreDataStore", code: 11, userInfo: [
+                NSLocalizedDescriptionKey: "No persistentStoreCoordinator on the context."
+            ])
+        }
 
+        // If there is an existing store, remove/destroy it:
+        guard let existingStore = coordinator.persistentStores.first
+        else {
+            throw NSError(domain: "CoreDataStore", code: 12, userInfo: [
+                NSLocalizedDescriptionKey: "Could not find an existing store URL."
+            ])
+        }
+        
+        let existingStoreURL = coordinator.url(for: existingStore)
+
+        // Remove store from coordinator
+        try coordinator.remove(existingStore)
+
+        // Destroy on disk
+        if #available(iOS 10, macOS 10.12, *) {
+            try coordinator.destroyPersistentStore(at: existingStoreURL,
+                                                   ofType: existingStore.type,
+                                                   options: existingStore.options)
+        } else {
+            try FileManager.default.removeItem(at: existingStoreURL)
+        }
+
+        // Copy the bundle to that existing store URL
+        try FileManager.default.copyItem(at: url, to: existingStoreURL)
+
+        // Re-add
+        if #available(iOS 10, macOS 10.12, *) {
+            try coordinator.addPersistentStore(
+                ofType: existingStore.type,
+                configurationName: nil,
+                at: existingStoreURL,
+                options: existingStore.options
+            )
+        } else {
+            try coordinator.addPersistentStore(
+                ofType: NSSQLiteStoreType,
+                configurationName: nil,
+                at: existingStoreURL,
+                options: existingStore.options
+            )
+        }
+
+        // Reset context
+        context.reset()
+    }
+    
     // MARK: - Helper methods
 
     fileprivate func entityDescription(for type: Any.Type) throws -> NSEntityDescription {
