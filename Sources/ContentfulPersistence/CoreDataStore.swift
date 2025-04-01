@@ -200,7 +200,9 @@ public class CoreDataStore: PersistenceStore {
             try coordinator.destroyPersistentStore(at: existingStoreURL,
                                                    ofType: existingStore.type,
                                                    options: existingStore.options)
-        } else {
+        }
+        
+        if FileManager.default.fileExists(atPath: existingStoreURL.path) {
             try FileManager.default.removeItem(at: existingStoreURL)
         }
 

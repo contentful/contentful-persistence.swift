@@ -11,6 +11,9 @@
 		02E58FA22535C9E30039F3A5 /* RelationshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E58FA02535C9E30039F3A5 /* RelationshipData.swift */; };
 		02E58FA32535C9E30039F3A5 /* RelationshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E58FA02535C9E30039F3A5 /* RelationshipData.swift */; };
 		02E58FA42535C9E30039F3A5 /* RelationshipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E58FA02535C9E30039F3A5 /* RelationshipData.swift */; };
+		403DF3F32D9C63F100FDDFAE /* CoreDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403DF3F22D9C63E800FDDFAE /* CoreDataStoreTests.swift */; };
+		403DF3F42D9C63F100FDDFAE /* CoreDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403DF3F22D9C63E800FDDFAE /* CoreDataStoreTests.swift */; };
+		403DF3F52D9C63F100FDDFAE /* CoreDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403DF3F22D9C63E800FDDFAE /* CoreDataStoreTests.swift */; };
 		403F22B42B90F5DE003964E8 /* BatchSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403F22B32B90F5DE003964E8 /* BatchSyncTests.swift */; };
 		403F22B52B90F5DE003964E8 /* BatchSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403F22B32B90F5DE003964E8 /* BatchSyncTests.swift */; };
 		403F22B62B90F5DE003964E8 /* BatchSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403F22B32B90F5DE003964E8 /* BatchSyncTests.swift */; };
@@ -305,6 +308,7 @@
 
 /* Begin PBXFileReference section */
 		02E58FA02535C9E30039F3A5 /* RelationshipData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationshipData.swift; sourceTree = "<group>"; };
+		403DF3F22D9C63E800FDDFAE /* CoreDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStoreTests.swift; sourceTree = "<group>"; };
 		403F22B32B90F5DE003964E8 /* BatchSyncTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchSyncTests.swift; sourceTree = "<group>"; };
 		403F22B72B90F5F7003964E8 /* batch-page.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "batch-page.json"; sourceTree = "<group>"; };
 		403F22B82B90F5F7003964E8 /* batch-page2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "batch-page2.json"; sourceTree = "<group>"; };
@@ -733,6 +737,7 @@
 				ED25D7DC1F166B7300A6BA9A /* ComplexTestModels */,
 				ED25D7F61F17900900A6BA9A /* ComplexTestStubs */,
 				ED25D7D71F16654A00A6BA9A /* ComplexSyncTests.swift */,
+				403DF3F22D9C63E800FDDFAE /* CoreDataStoreTests.swift */,
 				ED4023E520EA5858001C6BDD /* UnresolvedRelationshipCacheTests.swift */,
 				ED10E8A71E48AC870061741F /* SynchronizationManagerTests.swift */,
 				EDBDBFD31F28B23B00649F5A /* LocalizationTest.xcdatamodeld */,
@@ -1226,6 +1231,7 @@
 				403F22B42B90F5DE003964E8 /* BatchSyncTests.swift in Sources */,
 				ED10E8B71E48ACBD0061741F /* Asset.swift in Sources */,
 				6F388F5D22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
+				403DF3F42D9C63F100FDDFAE /* CoreDataStoreTests.swift in Sources */,
 				ED10E8BA1E48ACBD0061741F /* Author+CoreDataProperties.swift in Sources */,
 				ED10E8BE1E48ACBD0061741F /* Post+CoreDataProperties.swift in Sources */,
 				6FCA36BB22C65731004F9A5E /* RecordWithNonOptionalRelation.swift in Sources */,
@@ -1328,6 +1334,7 @@
 				403F22B52B90F5DE003964E8 /* BatchSyncTests.swift in Sources */,
 				EDD8F51B1F5402200000D3BB /* Post.swift in Sources */,
 				6F388F5E22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
+				403DF3F52D9C63F100FDDFAE /* CoreDataStoreTests.swift in Sources */,
 				EDD8F4EB1F5401EF0000D3BB /* TestHelpers.swift in Sources */,
 				EDD8F4E51F5401E50000D3BB /* SynchronizationManagerTests.swift in Sources */,
 				6FCA36BC22C65731004F9A5E /* RecordWithNonOptionalRelation.swift in Sources */,
@@ -1373,6 +1380,7 @@
 				403F22B62B90F5DE003964E8 /* BatchSyncTests.swift in Sources */,
 				EDD8F5251F5402200000D3BB /* Post.swift in Sources */,
 				6F388F5F22E73FE60080585F /* RichTextDocumentRecord.swift in Sources */,
+				403DF3F32D9C63F100FDDFAE /* CoreDataStoreTests.swift in Sources */,
 				EDD8F4EC1F5401EF0000D3BB /* TestHelpers.swift in Sources */,
 				EDD8F4E61F5401E50000D3BB /* SynchronizationManagerTests.swift in Sources */,
 				6FCA36BD22C65731004F9A5E /* RecordWithNonOptionalRelation.swift in Sources */,
@@ -1487,7 +1495,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1544,7 +1552,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1619,6 +1627,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED86952A1EFA8C93004693BA /* Config.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XC5THGQJVR;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "${SRCROOT}/Tests/ContentfulPersistenceTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1630,6 +1642,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulPersistenceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1638,6 +1651,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED86952A1EFA8C93004693BA /* Config.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XC5THGQJVR;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "${SRCROOT}/Tests/ContentfulPersistenceTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1649,6 +1666,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulPersistenceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
