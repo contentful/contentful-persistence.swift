@@ -88,6 +88,10 @@ public protocol PersistenceStore {
     
     /// Deletes all the data in the database
     func wipe() throws
+    
+    /// Replaces the current store file with a bundled .sqlite file.
+    /// Should remove the old store, destroy it on disk, copy the file, re-add the store, and reset context.
+    func replaceStoreWithBundledDatabase(url: URL) throws
 
     func performBlock(block: @escaping () -> Void)
 

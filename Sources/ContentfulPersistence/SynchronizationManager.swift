@@ -136,6 +136,7 @@ public class SynchronizationManager: PersistenceIntegration {
     ///     This must not be `.all`.
     ///   - limit: An optional limit for the number of records to synchronize in one batch. Defaults to `nil`, indicating no limit.
     ///   - dbVersion: The database version targeted for synchronization. Defaults to the application's default database version.
+    ///   - fromBundledDatabase: A URL to a pre-bundled Core Data .sqlite file. If provided and your local DB is out of date, it replaces the local DB.
     ///   - onInitialCompletion: A closure called upon completion of the initial synchronization phase, with a `Result` containing either the `SyncSpace` or an error.
     ///   - onFinalCompletion: A closure called upon completion of the final synchronization phase, with a `Result` containing either the `SyncSpace` or an error.
     /// - Throws: An assertion failure if `initialLocalizationScheme` is `.all`.
@@ -149,6 +150,7 @@ public class SynchronizationManager: PersistenceIntegration {
         initialLocalizationScheme: LocalizationScheme,
         limit: Int? = nil,
         dbVersion: Int = DBVersions.default.rawValue,
+        fromBundledDatabase: URL? = nil,
         onInitialCompletion: @escaping ResultsHandler<SyncSpace>,
         onFinalCompletion: @escaping ResultsHandler<SyncSpace>
     ) throws where SSP: SyncSpacePersistable  {
@@ -198,11 +200,18 @@ public class SynchronizationManager: PersistenceIntegration {
      Execute queries on your local data store in the callback for this method.
 
      - parameter limit: Number of elements per page. See documentation for details.
+     - parameter dbVersion: The database version targeted for synchronization. Defaults to the application's default database version.
+     - parameter fromBundledDatabase: A URL to a pre-bundled Core Data .sqlite file. If provided and your local DB is out of date, it replaces the local DB.
+     - parameter then: A closure called upon completion of the synchronization phase, with a `Result` containing either the `SyncSpace` or an error.
      */
-    public func sync(limit: Int? = nil, dbVersion: Int = DBVersions.default.rawValue, then completion: @escaping ResultsHandler<SyncSpace>) {
+    public func sync(limit: Int? = nil,
+                     dbVersion: Int = DBVersions.default.rawValue,
+                     fromBundledDatabase: URL? = nil,
+                     then completion: @escaping ResultsHandler<SyncSpace>
+    ) {
         persistentStore.performAndWait { [weak self] in
             // If the migration is required - it will be performed before any new changed takes affect
-            self?.migrateDbIfNeeded(dbVersion: dbVersion)
+            self?.migrateDbIfNeeded(dbVersion: dbVersion, fromBundledDatabase: fromBundledDatabase)
         }
         
         resolveCachedRelationships { [weak self] in
@@ -277,32 +286,35 @@ public class SynchronizationManager: PersistenceIntegration {
         }
     }
     
-    private func migrateDbIfNeeded(dbVersion: Int) {
+    private func migrateDbIfNeeded(dbVersion: Int, fromBundledDatabase: URL?) {
         do {
-            // Get current sync space persistable with the db information
             let space = fetchSpace()
 
-            guard
-                let dbVersionNumber = space.dbVersion?.intValue,
-                dbVersionNumber > 0 // Core data bug where optional integers default to 0
-            else {
-                saveNewDbVersion(version: dbVersion) // No version was stored yet, save given version
+            guard let currentVersion = space.dbVersion?.intValue, currentVersion > 0 else {
+                // No version stored yet, just set and return
+                saveNewDbVersion(version: dbVersion)
                 return
             }
-            
-            // If current version lower than the new one - set the new db version number as the current one
-            if dbVersionNumber < dbVersion {
-                try persistentStore.wipe()
+
+            if currentVersion < dbVersion {
+                if let bundledURL = fromBundledDatabase {
+                    // Now we call the store's method instead of a local method:
+                    try persistentStore.replaceStoreWithBundledDatabase(url: bundledURL)
+                } else {
+                    // Wipe the local data if no bundle was provided
+                    try persistentStore.wipe()
+                }
+                
                 relationshipsManager.wipe()
                 relationshipsToResolve = [String: [FieldName: Any]]()
                 cachedPropertyMappingForContentTypeId = [ContentTypeId: [FieldName: String]]()
                 cachedRelationshipMappingForContentTypeId = [ContentTypeId: [FieldName: String]]()
-
+                
+                // Update the version in SyncSpacePersistable
                 saveNewDbVersion(version: dbVersion)
             }
-        }
-        catch {
-            print("Error. Could not migrate the database:\n\n\n \(error)")
+        } catch {
+            print("Error migrating DB: \(error)")
         }
     }
 
