@@ -213,6 +213,37 @@ for product in products {
 }
 ```
 
+## Preseeding from bundled database
+
+You can provide preseeded database to be copied and used as the end storage. The following example will be for core data, but there can be any custom implementation. Database will be coppied on two conditions: there is no database in the container folder initially or there is one, but dbVersion value is less than the currently provided one.
+
+Follow the steps to provide the custom preseeded database when initializing SDK:
+
+1. Lets say you have Test.sqlite preseeded database in your main bundle.
+
+2. 
+   Follow the usual SDK initialization but use a new SynchronizationManager constructor method parameter:
+
+   ```swift
+   let sqliteContainerFolderPath = <path to final folder where the sqlite would be initialized by core data>
+   let preseedConfig = PreseedConfiguration(resourceName: "Test", // preseeded db name in bundle
+                                            resourceExtension: "sqlite", // preseeded db extension in bundle
+                                            sqliteContainerPath: sqliteContainerFolderPath, // Folder that core data creates to store sqlite
+                                            dbVersion: 2) // New version of the database (should be more than in existing one if app has sqlite db already)
+   
+   self.syncManager = SynchronizationManager(
+       client: self.client,
+       localizationScheme: LocalizationScheme.all, // Save data for all locales your space supports.
+       persistenceStore: self.store,
+       persistenceModel: persistenceModel,
+       preseedConfig: preseedConfig
+   )
+   ```
+
+3. On SDK initialization it will check if the sqlite file already exists in the folder profided, if not - it will copy the bundled db to that location and set the db version on it. Also, if file already exists but version is lower - the same will happen.
+
+If you were using custom database implementation there is additional parameter on SDK initializer called `preseedStrategy` where you can pass an object defining how the migration of the databases would happen. By default it uses the file manager.
+
 ## Installation
 
 ### SPM installation
