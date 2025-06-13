@@ -92,4 +92,10 @@ public protocol PersistenceStore {
     func performBlock(block: @escaping () -> Void)
 
     func performAndWait(block: @escaping () -> Void)
+    
+    /// Called **before** the main `.sqlite` is swapped. Gives you the full file URL.
+    func onStorePreseedingWillBegin(at storeFileURL: URL) throws
+    
+    /// Called **after** the main file is in place.
+    func onStorePreseedingCompleted(at seededFileURL: URL) throws
 }

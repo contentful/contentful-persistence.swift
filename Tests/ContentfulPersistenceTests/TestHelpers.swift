@@ -37,4 +37,51 @@ class TestHelpers {
         managedObjectContext.persistentStoreCoordinator = psc
         return managedObjectContext
     }
+    
+    /// Spins up a file-backed Core Data stack for testing.
+    ///
+    /// - Parameter momName: The `.momd` name in your test bundle.
+    /// - Returns: A tuple `(context, sqliteURL)` where `context` is
+    ///   an `NSManagedObjectContext` backed by the sqlite at `sqliteURL`.
+    static func sqliteBackedContext(forMOMInTestBundleNamed momName: String)
+        throws
+    -> (context: NSManagedObjectContext, sqliteURL: URL, storeContainerPath: URL)
+    {
+        let bundle   = Bundle(for: TestHelpers.self)
+        guard
+            let modelURL = bundle.url(forResource: momName, withExtension: "momd"),
+            let mom      = NSManagedObjectModel(contentsOf: modelURL)
+        else {
+            XCTFail("Couldn’t load model \(momName).momd from test bundle")
+            fatalError()
+        }
+
+        let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        context.persistentStoreCoordinator = psc
+
+        // Create a unique temp directory for the sqlite file
+        let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(
+            at: tempDir,
+            withIntermediateDirectories: true,
+            attributes: nil
+        )
+
+        let sqliteURL = tempDir.appendingPathComponent("\(momName).sqlite")
+        do {
+            let store = try psc.addPersistentStore(
+                ofType: NSSQLiteStoreType,
+                configurationName: nil,
+                at: sqliteURL,
+                options: nil
+            )
+            XCTAssertNotNil(store, "Failed to add SQLite store at \(sqliteURL)")
+        } catch {
+            XCTFail("Error adding SQLite store: \(error)")
+        }
+        
+        return (context, sqliteURL, tempDir)
+    }
 }

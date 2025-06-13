@@ -114,6 +114,27 @@ public class SynchronizationManager: PersistenceIntegration {
             self.client = client
         }
     }
+    
+    public convenience init(client: Client? = nil,
+                localizationScheme: LocalizationScheme,
+                persistenceStore: PersistenceStore,
+                persistenceModel: PersistenceModel,
+                preseedConfig: PreseedConfiguration,
+                preseedStrategy: PreseedStrategy = FilePreseedManager()) throws {
+        
+        self.init(client: client,
+             localizationScheme:localizationScheme,
+             persistenceStore: persistenceStore,
+             persistenceModel: persistenceModel)
+        
+        try preseedStrategy.apply(
+            to: persistenceStore,
+            with: preseedConfig,
+            spaceType: persistenceModel.spaceType
+        )
+        
+        self.saveNewDbVersion(version: preseedConfig.dbVersion)
+    }
 
     fileprivate var localeCodes: [LocaleCode]
 

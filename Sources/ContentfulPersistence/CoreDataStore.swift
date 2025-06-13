@@ -15,7 +15,7 @@ enum Errors: Error {
 
 /// Implementation fo the `PersistenceStore` protocol using CoreData
 public class CoreDataStore: PersistenceStore {
-    fileprivate let context: NSManagedObjectContext
+    internal let context: NSManagedObjectContext
 
     /**
      Initialize a new CoreData persistence store
