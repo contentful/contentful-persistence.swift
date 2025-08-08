@@ -9,7 +9,7 @@ let package = Package(
             targets: ["ContentfulPersistence"])
     ],
     dependencies: [
-        .package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "5.5.13"))
+        .package(url: "https://github.com/contentful/contentful.swift", .upToNextMajor(from: "5.5.14"))
     ],
     targets: [
         .target(
