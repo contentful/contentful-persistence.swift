@@ -100,7 +100,10 @@ public class CoreDataStore: PersistenceStore {
     ) throws -> T {
         let request = try fetchRequest(for: type, predicate: predicate)
         request.fetchLimit = 1
-        return try context.fetch(request).first as! T
+        guard let result = try context.fetch(request).first as? T else {
+            throw Errors.invalidType(type: T.self)
+        }
+        return result
     }
 
     /**

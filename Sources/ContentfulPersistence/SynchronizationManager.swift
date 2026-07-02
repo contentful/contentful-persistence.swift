@@ -416,7 +416,7 @@ public class SynchronizationManager: PersistenceIntegration {
 
         for relationship in filteredRelationships {
             guard let parent = cache.entry(for: DataCache.cacheKey(for: relationship.parentId, localeCode: entry.localeCode)) else {
-                return
+                continue
             }
 
             switch relationship.children {
@@ -480,7 +480,7 @@ public class SynchronizationManager: PersistenceIntegration {
                 persistable.title = asset.title
                 persistable.assetDescription = asset.description
                 persistable.updatedAt = asset.sys.updatedAt
-                persistable.createdAt = asset.sys.updatedAt
+                persistable.createdAt = asset.sys.createdAt
                 persistable.urlString = asset.urlString
                 persistable.fileName = asset.file?.fileName
                 persistable.fileType = asset.file?.contentType
@@ -604,7 +604,7 @@ public class SynchronizationManager: PersistenceIntegration {
             persistable.title = asset.title
             persistable.assetDescription = asset.description
             persistable.updatedAt = asset.sys.updatedAt
-            persistable.createdAt = asset.sys.updatedAt
+            persistable.createdAt = asset.sys.createdAt
             persistable.urlString = asset.urlString
             persistable.fileName = asset.file?.fileName
             persistable.fileType = asset.file?.contentType
@@ -887,11 +887,11 @@ public class SynchronizationManager: PersistenceIntegration {
                 if let targets = linkedValue as? [Link] {
                     // One-to-many.
                     relationships[propertyName] = targets.map { $0.id + "_" + entry.currentlySelectedLocale.code }
-                } else {
+                } else if let link = linkedValue as? Link {
                     // One-to-one.
-                    assert(linkedValue is Link)
-                    relationships[propertyName] = (linkedValue as! Link).id + "_" + entry.currentlySelectedLocale.code
+                    relationships[propertyName] = link.id + "_" + entry.currentlySelectedLocale.code
                 }
+                // Non-Link values (e.g. after a schema change) are silently skipped.
             } else if entry.fields[relationshipName] == nil {
                 relationships[propertyName] = deletedRelationshipSentinel
             }
