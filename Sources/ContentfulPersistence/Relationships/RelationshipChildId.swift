@@ -33,7 +33,7 @@ private extension String {
 
     func splitToIdAndLocaleCode() -> (String, String?) {
 
-        if let index = self.firstIndex(of: "_") {
+        if let index = self.lastIndex(of: "_") {
             let localeCodeStartIndex = self.index(index, offsetBy: 1)
             return (String(self[self.startIndex..<index]), String(self[localeCodeStartIndex..<self.endIndex]))
         } else {
