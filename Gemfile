@@ -8,3 +8,4 @@ gem 'dotenv'
 
 gem 'rb-readline'
 gem "fastlane"
+gem "multi_json"
