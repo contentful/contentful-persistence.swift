@@ -1,69 +1,286 @@
-# contentful-persistence.swift
+<p align="center">
+  <a href="https://www.contentful.com/slack/">
+    <img src="https://img.shields.io/badge/-Join%20Community%20Slack-2AB27B.svg?logo=slack&maxAge=31557600" alt="Join Contentful Community Slack">
+  </a>
+  &nbsp;
+  <a href="https://www.contentfulcommunity.com/">
+    <img src="https://img.shields.io/badge/-Join%20Community%20Forum-3AB2E6.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MiA1OSI+CiAgPHBhdGggZmlsbD0iI0Y4RTQxOCIgZD0iTTE4IDQxYTE2IDE2IDAgMCAxIDAtMjMgNiA2IDAgMCAwLTktOSAyOSAyOSAwIDAgMCAwIDQxIDYgNiAwIDEgMCA5LTkiIG1hc2s9InVybCgjYikiLz4KICA8cGF0aCBmaWxsPSIjNTZBRUQyIiBkPSJNMTggMThhMTYgMTYgMCAwIDEgMjMgMCA2IDYgMCAxIDAgOS05QTI5IDI5IDAgMCAwIDkgOWE2IDYgMCAwIDAgOSA5Ii8+CiAgPHBhdGggZmlsbD0iI0UwNTM0RSIgZD0iTTQxIDQxYTE2IDE2IDAgMCAxLTIzIDAgNiA2IDAgMSAwLTkgOSAyOSAyOSAwIDAgMCA0MSAwIDYgNiAwIDAgMC05LTkiLz4KICA8cGF0aCBmaWxsPSIjMUQ3OEE0IiBkPSJNMTggMThhNiA2IDAgMSAxLTktOSA2IDYgMCAwIDEgOSA5Ii8+CiAgPHBhdGggZmlsbD0iI0JFNDMzQiIgZD0iTTE4IDUwYTYgNiAwIDEgMS05LTkgNiA2IDAgMCAxIDkgOSIvPgo8L3N2Zz4K&maxAge=31557600"
+      alt="Join Contentful Community Forum">
+  </a>
+</p>
 
-[![Version](https://img.shields.io/cocoapods/v/ContentfulPersistenceSwift.svg?style=flat)](http://cocoadocs.org/docsets/ContentfulPersistenceSwift)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![License](https://img.shields.io/cocoapods/l/ContentfulPersistenceSwift.svg?style=flat)](http://cocoadocs.org/docsets/ContentfulPersistenceSwift)
-[![Platform](https://img.shields.io/cocoapods/p/ContentfulPersistenceSwift.svg?style=flat)](http://cocoadocs.org/docsets/ContentfulPersistenceSwift)
-[![Build Status](https://img.shields.io/travis/contentful/contentful-persistence.swift/master.svg?style=flat)](https://travis-ci.org/contentful/contentful-persistence.swift)
-[![Coverage Status](https://img.shields.io/coveralls/contentful/contentful-persistence.swift.svg)](https://coveralls.io/github/contentful/contentful-persistence.swift)
+# contentful-persistence.swift - Core Data Offline Persistence for Contentful
 
-> An integration to simplify persisting data from [Contentful][1] to a local CoreData database; built on top of the official Contentful [Swift Library][2]. This library specifically uses the [`/sync` endpoint][7] of the Content Delivery API to synchronize all content in a Contentful space to a device.
+> An integration to simplify persisting data from [Contentful](https://www.contentful.com/) to a local Core Data database, built on top of the official [contentful.swift](https://github.com/contentful/contentful.swift) library. It uses the [Sync API](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization) of the Content Delivery API to synchronize all content in a Contentful space to a device and keep it up to date with delta updates.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Maintained-green.svg" alt="This repository is actively maintained" />
+  &nbsp;
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License" />
+  </a>
+  &nbsp;
+  <a href="https://app.circleci.com/pipelines/github/contentful/contentful-persistence.swift">
+    <img src="https://img.shields.io/circleci/build/github/contentful/contentful-persistence.swift/master?style=flat" alt="Build Status">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://cocoapods.org/pods/ContentfulPersistenceSwift">
+    <img src="https://img.shields.io/cocoapods/v/ContentfulPersistenceSwift.svg?style=flat" alt="Version">
+  </a>
+  &nbsp;
+  <a href="https://github.com/Carthage/Carthage">
+    <img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible">
+  </a>
+  &nbsp;
+  <a href="https://swift.org/package-manager/">
+    <img src="https://rawgit.com/jlyonsmith/artwork/master/SwiftPackageManager/swiftpackagemanager-compatible.svg" alt="Swift Package Manager compatible">
+  </a>
+  &nbsp;
+  <a href="https://swift.org/package-manager/">
+    <img src="https://img.shields.io/cocoapods/p/ContentfulPersistenceSwift.svg?style=flat" alt="iOS | macOS | watchOS | tvOS">
+  </a>
+  &nbsp;
+</p>
 
 **What is Contentful?**
 
-[Contentful][1] provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enables developers and content creators to ship digital products faster.
+[Contentful](https://www.contentful.com/) provides content infrastructure for digital teams to power websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship their products faster.
 
-## Getting Started
+<details>
+<summary>Table of contents</summary>
+<!-- TOC -->
 
-### Prerequisites
+- [contentful-persistence.swift - Core Data Offline Persistence for Contentful](#contentful-persistenceswift---core-data-offline-persistence-for-contentful)
+  - [Core Features](#core-features)
+  - [Getting started](#getting-started)
+    - [Requirements](#requirements)
+    - [Installation](#installation)
+      - [Swift Package Manager](#swift-package-manager)
+      - [CocoaPods](#cocoapods)
+      - [Carthage](#carthage)
+    - [Your first sync](#your-first-sync)
+  - [Using the SDK](#using-the-sdk)
+    - [Define your Core Data model](#define-your-core-data-model)
+    - [SpaceType and AssetType](#spacetype-and-assettype)
+    - [Relationships](#relationships)
+    - [Rich text](#rich-text)
+    - [Localization](#localization)
+  - [Advanced configuration](#advanced-configuration)
+    - [Preseeding from a bundled database](#preseeding-from-a-bundled-database)
+    - [Preseeding from bundled JSON](#preseeding-from-bundled-json)
+    - [Database migrations](#database-migrations)
+    - [Custom persistence stores](#custom-persistence-stores)
+    - [Privacy manifest](#privacy-manifest)
+  - [Documentation & References](#documentation--references)
+  - [Reach out to us](#reach-out-to-us)
+    - [Have questions about how to use this library?](#have-questions-about-how-to-use-this-library)
+    - [You found a bug or want to propose a feature?](#you-found-a-bug-or-want-to-propose-a-feature)
+    - [You need to share confidential information or have other questions?](#you-need-to-share-confidential-information-or-have-other-questions)
+  - [Get involved](#get-involved)
+    - [Development setup](#development-setup)
+  - [License](#license)
+  - [Code of Conduct](#code-of-conduct)
 
-Before getting started, it is highly recommended that you familiarize yourself with Apple's CoreData framework as many issues encountered during development may be CoreData specific. Read the [CoreData Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/index.html) and check out other (non-Contentful) examples.
+<!-- /TOC -->
 
-### Usage
+</details>
 
-The `SynchronizationManager` manages the state of your CoreData database and keeps it in sync with the data from your Contentful Space:
+## Core Features
+
+- Keeps a local Core Data database in sync with a Contentful space using the [Sync API](https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization), fetching only what changed since the last sync.
+- Maps Contentful entries and assets onto your own `NSManagedObject` subclasses via the `EntryPersistable` and `AssetPersistable` protocols, with automatic or custom field mapping.
+- Resolves relationships between entries — including to-one and to-many links — as pages arrive, deferring and caching any links that can't yet be resolved so they complete once the target syncs in (even across app launches).
+- [Localization support](https://www.contentful.com/developers/docs/concepts/locales/) via `LocalizationScheme`: persist only the default locale, a single locale, or every locale your space supports.
+- Two ways to seed a database before the first network sync: bundling exported Contentful JSON, or shipping a pre-built SQLite file.
+- Database versioning with automatic wipe-and-reseed when your bundled schema version increases.
+- [Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/) fields decode into `RichTextDocument`, which conforms to `NSCoding` so it can be stored directly in a Core Data Transformable attribute.
+- Zero additional third-party runtime dependencies — the SDK only relies on `Foundation`, `CoreData`, and [contentful.swift](https://github.com/contentful/contentful.swift).
+- Ships with a [privacy manifest](PrivacyInfo.xcprivacy) for App Store submissions.
+
+## Getting started
+
+In order to get started with `contentful-persistence.swift`, it's highly recommended that you're already familiar with the [contentful.swift](https://github.com/contentful/contentful.swift) SDK, and with Apple's Core Data framework, since many issues encountered during development are Core Data specific. Read the [Core Data Programming Guide](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CoreData/index.html) if you're new to it.
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Your first sync](#your-first-sync)
+
+### Requirements
+
+| Requirement | Version |
+| --- | --- |
+| Swift | 5.0 or later |
+| Xcode | 15.x recommended (CI builds against Xcode 15.4) |
+| iOS | 12.0+ |
+| macOS | 10.13+ |
+| tvOS | 12.0+ |
+| watchOS | 4.0+ |
+
+The SDK depends only on [contentful.swift](https://github.com/contentful/contentful.swift) at runtime; it has no other third-party dependencies.
+
+### Installation
+
+#### Swift Package Manager
+
+[Swift Package Manager](https://swift.org/package-manager/) is the recommended way to integrate the SDK. In Xcode, choose **File > Add Package Dependencies…** and enter `https://github.com/contentful/contentful-persistence.swift`, or add the dependency to your `Package.swift` manifest:
 
 ```swift
-// Tell the library which of your `NSManagedObject` subclasses that conform to `EntryPersistable` should be used when mapping API responses to CoreData entities.
-let entryTypes = [Author.self, Category.self, Post.self]
+.package(url: "https://github.com/contentful/contentful-persistence.swift", .upToNextMajor(from: "0.18.2"))
+```
 
-// Initialize the data store and it's schema.
-let store = CoreDataStore(context: self.managedObjectContext)
+Then add the product to the targets that need it:
+
+```swift
+.target(
+    name: "MyApp",
+    dependencies: [
+        .product(name: "ContentfulPersistence", package: "contentful-persistence.swift")
+    ]
+)
+```
+
+#### CocoaPods
+
+```ruby
+platform :ios, '12.0'
+use_frameworks!
+pod 'ContentfulPersistenceSwift', '~> 0.18.2'
+```
+
+To learn more about operators for dependency versioning within a Podfile, see the [CocoaPods doc on the Podfile](https://guides.cocoapods.org/using/the-podfile.html).
+
+#### Carthage
+
+Add the following to your `Cartfile`:
+
+```
+github "contentful/contentful-persistence.swift" ~> 0.18.2
+```
+
+Then build the XCFrameworks:
+
+```bash
+carthage update --use-xcframeworks
+```
+
+### Your first sync
+
+The `SynchronizationManager` manages the state of your Core Data database and keeps it in sync with the data from your Contentful space:
+
+```swift
+import Contentful
+import ContentfulPersistence
+
+// Tell the library which of your `NSManagedObject` subclasses conforming to `EntryPersistable`
+// should be used when mapping API responses to Core Data entities.
+let entryTypes: [EntryPersistable.Type] = [Author.self, Category.self, Post.self]
+
+// Initialize the data store and its schema.
+let store = CoreDataStore(context: managedObjectContext)
 let persistenceModel = PersistenceModel(spaceType: SyncInfo.self, assetType: Asset.self, entryTypes: entryTypes)
 
-// Initialize the Contentful.Client with a persistenceIntegration which will receive messages about changes when calling `sync methods`
-self.client = Client(spaceId: "<YOUR_SPACE_ID>", accessToken: "<YOUR_ACCESS_TOKEN>")
+// Initialize the Contentful.Client. Passing it to the manager below wires up the
+// `persistenceIntegration` so that sync responses are reported automatically.
+let client = Client(spaceId: "<YOUR_SPACE_ID>", accessToken: "<YOUR_DELIVERY_ACCESS_TOKEN>")
 
 // Create the manager.
-self.syncManager = SynchronizationManager(
-    client: self.client,
-    localizationScheme: LocalizationScheme.all, // Save data for all locales your space supports.
-    persistenceStore: self.store,
+let syncManager = SynchronizationManager(
+    client: client,
+    localizationScheme: .all, // Save data for all locales your space supports.
+    persistenceStore: store,
     persistenceModel: persistenceModel
 )
 
-// Sync with the API.
-self.syncManager.sync { _ in
-  do {
-    // Fetch all `Posts` from CoreData
-    let post: Post? = try self.store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
-  } catch {
-    // Handle error thrown by CoreData fetches.
-  }
+// Sync with the API. The callback fires once every page of the sync has been persisted.
+syncManager.sync { result in
+    switch result {
+    case .success:
+        do {
+            let posts: [Post] = try store.fetchAll(type: Post.self, predicate: NSPredicate(value: true))
+            print(posts)
+        } catch {
+            // Handle error thrown by Core Data fetches.
+        }
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+
+To continue syncing from where you left off, simply call `syncManager.sync(then:)` again later — the manager persists and reuses the sync token from your `SyncSpacePersistable` (`SyncInfo` above) automatically.
+
+## Using the SDK
+
+### Define your Core Data model
+
+To integrate your model classes with `contentful-persistence.swift`, conform to `AssetPersistable` for Contentful Assets, or `EntryPersistable` for your own content types. Both protocols extend `ContentSysPersistable`, which requires a non-optional `id` property, plus optional `localeCode`, `createdAt`, and `updatedAt` properties.
+
+Next, create the corresponding entity in your project's `xcdatamodel` file.
+
+**NOTE:** Optionality in Core Data entities differs from Swift optionality. For a Core Data entity, optionality means that a property may be absent when saving to the database. To configure a property's optionality, open the "Data Model Inspector" in Xcode's "Utilities" right sidebar and toggle the "Optional" checkbox.
+
+![](Screenshots/CoreDataOptionality.png)
+
+The mapping of Contentful fields to your entity's properties is derived automatically from matching names, but you can customize it by implementing `static func fieldMapping() -> [FieldName: String]` on your `EntryPersistable` type. This should not include metadata from the `sys` object (e.g. `id`, `createdAt`).
+
+```swift
+import Foundation
+import CoreData
+import ContentfulPersistence
+import Contentful
+
+// The following @objc attribute is only necessary if your xcdatamodel Default configuration doesn't have your module
+// name prepended to the Swift class. To enable removing the @objc attribute, change the Class for your entity to `ModuleName.Post`.
+@objc(Post)
+class Post: NSManagedObject, EntryPersistable {
+
+    // The identifier of the corresponding content type in Contentful.
+    static let contentTypeId = "post"
+
+    // Properties derived from the `sys` object of Contentful resources.
+    @NSManaged var id: String
+    @NSManaged var localeCode: String?
+    @NSManaged var createdAt: Date?
+    @NSManaged var updatedAt: Date?
+
+    // Custom fields on the content type.
+    @NSManaged var body: String?
+    @NSManaged var comments: NSNumber?
+    // NOTE: Unlike date fields in the `sys` object, this library can't store `Date` for custom fields.
+    // Use `String` and map to `Date` after fetching from Core Data.
+    @NSManaged var customDateField: String?
+    @NSManaged var date: Date?
+    @NSManaged var slug: String?
+    @NSManaged var tags: Data?
+    @NSManaged var title: String?
+    @NSManaged var authors: NSOrderedSet?
+    @NSManaged var category: NSOrderedSet?
+    @NSManaged var theFeaturedImage: Asset?
+
+    // Define the mapping from the fields on your Contentful.Entry to your model class.
+    // In the example below, only the `title`, `date`, `author`, and `featuredImage` fields are populated.
+    static func fieldMapping() -> [FieldName: String] {
+        return [
+            "title": "title",
+            "featuredImage": "theFeaturedImage",
+            "author": "authors",
+            "date": "date"
+        ]
+    }
 }
 ```
 
 ### SpaceType and AssetType
 
-The `PersistenceModel` requires both a `spaceType` and an `assetType` to be specified. These correspond to Core Data entities used for storing `SyncInfo` and `Asset` objects, respectively.
+`PersistenceModel` requires both a `spaceType` and an `assetType`. These correspond to Core Data entities used for storing sync-token metadata (`SyncSpacePersistable`) and Contentful Assets (`AssetPersistable`), respectively.
 
-To function correctly, these objects must:
+To function correctly, these types must:
 
-- Be of type `NSManagedObject`.
-- Conform to the `SyncSpacePersistable` and `AssetPersistable` protocols, as appropriate.
-- Be defined within the Core Data `xcdatamodel` file.
-
-#### Example Implementation
+- Be `NSManagedObject` subclasses.
+- Conform to `SyncSpacePersistable` and `AssetPersistable`, respectively.
+- Be defined as entities in your Core Data `xcdatamodel` file.
 
 ```swift
 class SyncInfo: NSManagedObject, SyncSpacePersistable {
@@ -89,71 +306,11 @@ class Asset: NSManagedObject, AssetPersistable {
 ```
 
 And then in the `xcdatamodeld` file:
+
 ![](Screenshots/Asset.png)
 ![](Screenshots/SyncInfo.png)
 
-## Define Your `CoreData` Model
-
-To integrate your model classes with `contentful-persistence.swift`, you must conform to either the `AssetPersistable` protocol for Contentful Assets or the `EntryPersistable` protocol for Contentful entry types.
-
-Next, you'll need to create the corresponding model in your project's `xcdatamodel` file. Both `EntryPersistable` and `AssetPersistable` types require a _non-optional_ `id` property, as well as optional `localeCode`, `createdAt`, and `updatedAt` properties.
-
-**NOTE:** Optionality in Core Data entities differs from Swift optionality. For Core Data entities, optionality means that a property may be absent during a save-to-database operation. To configure a property's optionality, open the "Data Model Inspector" in Xcode's "Utilities" right sidebar and toggle the "Optional" checkbox.
-![](Screenshots/CoreDataOptionality.png)
-
-The mapping of Contentful fields to your data model entities will be derived automatically, but you can also customize it by implementing the `static func fieldMapping() -> [FieldName: String]?` on your class.
-
-Below is an example of a model class.
-
-```swift
-import Foundation
-import CoreData
-import ContentfulPersistence
-import Contentful
-
-// The following @objc attribute is only necessary if your xcdatamodel Default configuration doesn't have your module
-// name prepended to the Swift class. To enable removing the @objc attribute, change the Class for your entity to `ModuleName.Post`
-@objc(Post)
-class Post: NSManagedObject, EntryPersistable {
-
-    // The identifier of the corresponding Content Type in Contentful.
-    static let contentTypeId = "post"
-
-    // Properties of the `sys` object of Contentful resources.
-    @NSManaged var id: String
-    @NSManaged var localeCode: String?
-    @NSManaged var createdAt: Date?
-    @NSManaged var updatedAt: Date?
-
-    // Custom fields on the content type.
-    @NSManaged var body: String?
-    @NSManaged var comments: NSNumber?
-    // NOTE: Unlike date fields in sys properties, this library can't store `Date` for custom fields.
-    // Use `String` and map to date after fetching from CoreData
-    @NSManaged var customDateField: String?
-    @NSManaged var date: Date?
-    @NSManaged var slug: String?
-    @NSManaged var tags: Data?
-    @NSManaged var title: String?
-    @NSManaged var authors: NSOrderedSet?
-    @NSManaged var category: NSOrderedSet?
-    @NSManaged var theFeaturedImage: Asset?
-
-    // Define the mapping from the fields on your Contentful.Entry to your model class.
-    // In the below example, only the `title`, `date` and `author` fields and `featuredImage` link will be populated.
-    // IMPORTANT: This should not include metadata from the `sys` object (e.g. id, createdAt, etc.)
-    static func fieldMapping() -> [FieldName: String] {
-        return [
-            "title": "title",
-            "featuredImage": "theFeaturedImage",
-            "author": "authors"
-            "date": "date"
-        ]
-    }
-}
-```
-
-## Relationships
+### Relationships
 
 Let's say we have the following content model in our Contentful space:
 
@@ -163,145 +320,238 @@ Product
 - relatedProducts: [Product]
 ```
 
-It represents a product with a name and related products.
-This would be translated into our Swift model as follows:
+It represents a product with a name and a list of related products. This translates into a Swift model as follows:
 
 ```swift
 class Product: NSManagedObject {
-    // Contentful metadata
+    // Contentful metadata.
     @NSManaged var id: String
     @NSManaged var localeCode: String?
     @NSManaged var createdAt: Date?
     @NSManaged var updatedAt: Date?
 
-    // Defined properties in Contentful
-    @NSManaged public var name: String?
-    @NSManaged public var relatedProducts: NSOrderedSet?
+    // Fields defined on the content type.
+    @NSManaged var name: String?
+    @NSManaged var relatedProducts: NSOrderedSet?
 }
 
 extension Product: EntryPersistable {
-    public static var contentTypeId = "product"
-    public static func fieldMapping() -> [FieldName: String] {
+    static var contentTypeId = "product"
+
+    static func fieldMapping() -> [FieldName: String] {
         return [
             "name": "name",
-            "relatedProducts": "relatedProducts",
+            "relatedProducts": "relatedProducts"
         ]
     }
 }
 ```
 
-The corresponding CoreData entity would look like this:
+The corresponding Core Data entity looks like this — note the type and the arrangement set to `Ordered`:
+
 ![](Screenshots/Product.png)
 
-Note the type and the arrangement set to `ordered`.
-
-After fetching products from the DB, related products could be accessed like this:
+After fetching products from the database, related products can be accessed like this:
 
 ```swift
 for product in products {
-  if let relatedProductsSet = product.relatedProducts,
-      let productsArray = relatedProductsSet.array as? [Product]
-  {
-      // productsArray is now [Product]
-      for product in productsArray {
-          // Access product properties here, e.g., product.name
-          print("Related product:", product.id, product.name)
-      }
-  } else {
-      print("No related products or unable to cast")
-  }
+    guard let relatedProductsSet = product.relatedProducts,
+          let relatedProducts = relatedProductsSet.array as? [Product] else {
+        continue
+    }
+
+    for relatedProduct in relatedProducts {
+        print("Related product:", relatedProduct.id, relatedProduct.name as Any)
+    }
 }
 ```
 
-## Preseeding from bundled database
+Relationships that can't be resolved yet — because the target entry hasn't synced down in an earlier page, or belongs to a future sync — are cached to disk and resolved automatically once the target becomes available, including across app launches.
 
-You can provide preseeded database to be copied and used as the end storage. The following example will be for core data, but there can be any custom implementation. Database will be coppied on two conditions: there is no database in the container folder initially or there is one, but dbVersion value is less than the currently provided one.
+### Rich text
 
-Follow the steps to provide the custom preseeded database when initializing SDK:
+Rich text fields decode into a `RichTextDocument`. Since `RichTextDocument` is an `NSObject` conforming to `NSCoding`, it can be stored directly in a `Transformable` Core Data attribute:
 
-1. Lets say you have Test.sqlite preseeded database in your main bundle.
+```swift
+import CoreData
+import Contentful
+import ContentfulPersistence
 
-2. 
-   Follow the usual SDK initialization but use a new SynchronizationManager constructor method parameter:
+@objc(Article)
+class Article: NSManagedObject, EntryPersistable {
+    static let contentTypeId = "article"
 
-   ```swift
-   let sqliteContainerFolderPath = <path to final folder where the sqlite would be initialized by core data>
-   let preseedConfig = PreseedConfiguration(resourceName: "Test", // preseeded db name in bundle
-                                            resourceExtension: "sqlite", // preseeded db extension in bundle
-                                            sqliteContainerPath: sqliteContainerFolderPath, // Folder that core data creates to store sqlite
-                                            dbVersion: 2) // New version of the database (should be more than in existing one if app has sqlite db already)
-   
-   self.syncManager = SynchronizationManager(
-       client: self.client,
-       localizationScheme: LocalizationScheme.all, // Save data for all locales your space supports.
-       persistenceStore: self.store,
-       persistenceModel: persistenceModel,
-       preseedConfig: preseedConfig
-   )
-   ```
+    @NSManaged var id: String
+    @NSManaged var localeCode: String?
+    @NSManaged var createdAt: Date?
+    @NSManaged var updatedAt: Date?
+    @NSManaged var body: RichTextDocument?
 
-3. On SDK initialization it will check if the sqlite file already exists in the folder profided, if not - it will copy the bundled db to that location and set the db version on it. Also, if file already exists but version is lower - the same will happen.
-
-If you were using custom database implementation there is additional parameter on SDK initializer called `preseedStrategy` where you can pass an object defining how the migration of the databases would happen. By default it uses the file manager.
-
-## Installation
-
-### SPM installation
-
-You can also use the Swift Package Manager which is bundled with your XCode (Swift 3.0+) to add Contentful Persistence as a dependency to your project. In order to do so, select your project, change tabs to 'Package Dependencies' and add the following URL:
-
+    static func fieldMapping() -> [FieldName: String] {
+        return [
+            "body": "body"
+        ]
+    }
+}
 ```
 
-https://github.com/contentful/contentful-persistence.swift
+Set the attribute's type to `Transformable` in the Core Data model editor. To render the stored document into native views, use [rich-text-renderer.swift](https://github.com/contentful/rich-text-renderer.swift).
 
+### Localization
+
+Configure `SynchronizationManager` with a `LocalizationScheme` to control which locales are persisted:
+
+- `.default` — save entities only for the default locale of your space.
+- `.one(localeCode)` — save entities for a single, specific locale.
+- `.all` — save entities for every locale your space supports. Remember to include `localeCode` when building predicates against your `Persistable` model classes.
+
+```swift
+let syncManager = SynchronizationManager(
+    client: client,
+    localizationScheme: .one("de-DE"),
+    persistenceStore: store,
+    persistenceModel: persistenceModel
+)
 ```
 
-You need to use "master" branch.
+If you need to switch from a lightweight initial sync (e.g. `.default`) to persisting every locale afterwards, use the two-phase sync helper, which resets the sync token between phases so all locales are captured on the follow-up pass:
 
-### CocoaPods installation
-
-[CocoaPods][5] is the dependency manager for Objective-C and Swift, which automates and simplifies the process of using 3rd-party libraries like the ContentfulPersistence in your projects.
-
-```ruby
-platform :ios, '9.3'
-use_frameworks!
-
-target :MyApp do
-  pod 'ContentfulPersistenceSwift', '~> 0.13.0'
-end
+```swift
+try syncManager.sync(
+    syncSpacePersistable: SyncInfo.self,
+    initialLocalizationScheme: .default,
+    onInitialCompletion: { result in
+        // Called once the default-locale sync finishes.
+    },
+    onFinalCompletion: { result in
+        // Called once the follow-up sync for all locales finishes.
+    }
+)
 ```
 
-### Carthage installation
+## Advanced configuration
 
-You can also use [Carthage][6] for integration by adding the following to your `Cartfile`:
+### Preseeding from a bundled database
 
+You can ship a pre-built SQLite database in your app bundle to avoid an initial network sync entirely. The database is copied into place on two conditions: no database currently exists in the target container folder, or the existing one has a `dbVersion` lower than the one you're providing.
+
+1. Bundle your preseeded database (for example `Test.sqlite`) in your app's main bundle.
+2. Use the `SynchronizationManager` initializer that accepts a `PreseedConfiguration`:
+
+    ```swift
+    let sqliteContainerFolderPath = <path to the folder where Core Data stores its SQLite files>
+
+    let preseedConfig = PreseedConfiguration(
+        resourceName: "Test",                          // Preseeded db name in bundle.
+        resourceExtension: "sqlite",                    // Preseeded db extension in bundle.
+        sqliteContainerPath: sqliteContainerFolderPath,  // Folder Core Data creates to store the sqlite file.
+        dbVersion: 2                                     // New version (must be greater than the existing one, if any).
+    )
+
+    let syncManager = try SynchronizationManager(
+        client: client,
+        localizationScheme: .all,
+        persistenceStore: store,
+        persistenceModel: persistenceModel,
+        preseedConfig: preseedConfig
+    )
+    ```
+
+3. On initialization, the SDK checks whether the SQLite file already exists at the target path. If it doesn't — or if it exists but its `dbVersion` is lower than `preseedConfig.dbVersion` — the bundled file is copied into place and the new version is recorded.
+
+If you're using a custom `PersistenceStore` implementation, pass your own `preseedStrategy` parameter (conforming to `PreseedStrategy`) to control exactly how the swap happens; it defaults to `FilePreseedManager`, which uses `FileManager`.
+
+### Preseeding from bundled JSON
+
+Alternatively, seed a database from a directory of exported Contentful JSON files — generated with the [ContentfulBundleSync](https://www.contentful.com/developers/docs/references/content-delivery-api/) command line interface — rather than a SQLite file:
+
+```swift
+try syncManager.seedDBFromJSONFiles(in: "ContentfulExport", in: Bundle.main)
 ```
-github "contentful/contentful.swift" ~> 0.13.0
+
+Bundled media referenced by your assets can be retrieved with:
+
+```swift
+let data = SynchronizationManager.bundledData(for: asset, inDirectoryNamed: "ContentfulExport", in: Bundle.main)
 ```
 
-## Documentation
+### Database migrations
 
-For further information, check out the [Developer Documentation][4] or browse the [API documentation][3]. The latter can also be loaded into Xcode as a Docset.
+Both preseeding mechanisms rely on the same `dbVersion` stored on your `SyncSpacePersistable` type. Independently of preseeding, calling `sync(dbVersion:then:)` with a higher version number than what's currently stored wipes the entire persistence store (and any cached relationships) before syncing again — useful when you ship a breaking Core Data model change:
 
-## Contributing and development
+```swift
+syncManager.sync(dbVersion: SynchronizationManager.DBVersions.default.rawValue) { result in
+    // ...
+}
+```
 
-To get started contributing, clone the project, `cd` into the root directory and run the following: `make setup_env`.
+### Custom persistence stores
+
+`CoreDataStore` is the default `PersistenceStore` implementation, but you can provide your own by conforming to the `PersistenceStore` protocol. If you also want your custom store to support SQLite bundle preseeding, implement `onStorePreseedingWillBegin(at:)` and `onStorePreseedingCompleted(at:)`, which are called immediately before and after the bundled file is swapped in.
+
+### Privacy manifest
+
+The SDK ships [`PrivacyInfo.xcprivacy`](PrivacyInfo.xcprivacy), declaring that it collects no data, performs no tracking, and uses file-timestamp, user-defaults, and system-boot-time APIs only for the reasons Apple permits. When installed via Swift Package Manager or CocoaPods, the manifest is bundled automatically and folds into your app's privacy report.
+
+## Documentation & References
+
+For further information about the underlying REST API, check out the [Content Delivery API Reference Documentation](https://www.contentful.com/developers/docs/references/content-delivery-api/), or browse the [API reference documentation](https://contentful.github.io/contentful-persistence.swift/docs/index.html) for this library, which can also be loaded into Xcode as a Docset.
+
+This library is a companion to [contentful.swift](https://github.com/contentful/contentful.swift); consult its README for details on `Client`, `EntryDecodable`, queries, and the rest of the Content Delivery API surface.
+
+Every released change is recorded in the [CHANGELOG.md](CHANGELOG.md).
+
+## Reach out to us
+
+### Have questions about how to use this library?
+
+* Reach out to our community forum: [![Contentful Community Forum](https://img.shields.io/badge/-Join%20Community%20Forum-3AB2E6.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MiA1OSI+CiAgPHBhdGggZmlsbD0iI0Y4RTQxOCIgZD0iTTE4IDQxYTE2IDE2IDAgMCAxIDAtMjMgNiA2IDAgMCAwLTktOSAyOSAyOSAwIDAgMCAwIDQxIDYgNiAwIDEgMCA5LTkiIG1hc2s9InVybCgjYikiLz4KICA8cGF0aCBmaWxsPSIjNTZBRUQyIiBkPSJNMTggMThhMTYgMTYgMCAwIDEgMjMgMCA2IDYgMCAxIDAgOS05QTI5IDI5IDAgMCAwIDkgOWE2IDYgMCAwIDAgOSA5Ii8+CiAgPHBhdGggZmlsbD0iI0UwNTM0RSIgZD0iTTQxIDQxYTE2IDE2IDAgMCAxLTIzIDAgNiA2IDAgMSAwLTkgOSAyOSAyOSAwIDAgMCA0MSAwIDYgNiAwIDAgMC05LTkiLz4KICA8cGF0aCBmaWxsPSIjMUQ3OEE0IiBkPSJNMTggMThhNiA2IDAgMSAxLTktOSA2IDYgMCAwIDEgOSA5Ii8+CiAgPHBhdGggZmlsbD0iI0JFNDMzQiIgZD0iTTE4IDUwYTYgNiAwIDEgMS05LTkgNiA2IDAgMCAxIDkgOSIvPgo8L3N2Zz4K&maxAge=31557600)](https://support.contentful.com/)
+* Jump into our community slack channel: [![Contentful Community Slack](https://img.shields.io/badge/-Join%20Community%20Slack-2AB27B.svg?logo=slack&maxAge=31557600)](https://www.contentful.com/slack/)
+
+### You found a bug or want to propose a feature?
+
+* File an issue here on GitHub: [![File an issue](https://img.shields.io/badge/-Create%20Issue-6cc644.svg?logo=github&maxAge=31557600)](https://github.com/contentful/contentful-persistence.swift/issues/new). Make sure to remove any credential from your code before sharing it.
+
+### You need to share confidential information or have other questions?
+
+* File a support ticket at our Contentful Customer Support: [![File support ticket](https://img.shields.io/badge/-Submit%20Support%20Ticket-3AB2E6.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MiA1OSI+CiAgPHBhdGggZmlsbD0iI0Y4RTQxOCIgZD0iTTE4IDQxYTE2IDE2IDAgMCAxIDAtMjMgNiA2IDAgMCAwLTktOSAyOSAyOSAwIDAgMCAwIDQxIDYgNiAwIDEgMCA5LTkiIG1hc2s9InVybCgjYikiLz4KICA8cGF0aCBmaWxsPSIjNTZBRUQyIiBkPSJNMTggMThhMTYgMTYgMCAwIDEgMjMgMCA2IDYgMCAxIDAgOS05QTI5IDI5IDAgMCAwIDkgOWE2IDYgMCAwIDAgOSA5Ii8+CiAgPHBhdGggZmlsbD0iI0UwNTM0RSIgZD0iTTQxIDQxYTE2IDE2IDAgMCAxLTIzIDAgNiA2IDAgMSAwLTkgOSAyOSAyOSAwIDAgMCA0MSAwIDYgNiAwIDAgMC05LTkiLz4KICA8cGF0aCBmaWxsPSIjMUQ3OEE0IiBkPSJNMTggMThhNiA2IDAgMSAxLTktOSA2IDYgMCAwIDEgOSA5Ii8+CiAgPHBhdGggZmlsbD0iI0JFNDMzQiIgZD0iTTE4IDUwYTYgNiAwIDEgMS05LTkgNiA2IDAgMCAxIDkgOSIvPgo8L3N2Zz4K&maxAge=31557600)](https://www.contentful.com/support/)
+
+## Get involved
+
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?maxAge=31557600)](http://makeapullrequest.com)
+
+We appreciate any help on our repositories. For more details about how to contribute, see the [contributing guide](https://github.com/contentful/contentful.swift/blob/master/Contributing.md) for our Swift SDKs.
+
+### Development setup
+
+Development happens in Xcode on macOS, since iOS, macOS, tvOS, and watchOS all have to stay supported. [Homebrew](https://brew.sh/) is a prerequisite.
 
 ```bash
-make setup_env
-carthage bootstrap --platform all
+make setup_env                      # Install or update the required brew packages.
+bundle install                      # Install the Ruby gems used for linting, docs, and coverage.
+carthage update --use-xcframeworks  # Resolve the test-only dependencies.
+make open                           # Open ContentfulPersistence.xcworkspace.
 ```
 
-This command will install all the development dependencies necessary to build the project, and execute the tests. To run the tests from the command line, execute `make test`. Tests should also all run directly from the Xcode app.
+Common tasks:
+
+| Command | Purpose |
+| --- | --- |
+| `make test` | Run the test suite on macOS. |
+| `bundle exec fastlane test_ios` | Run the test suite on iOS (also `test_macos`, `test_tvos`). |
+| `bundle exec fastlane build` | Verify the package builds with `swift build`. |
+| `make lint` | Run SwiftLint and the CocoaPods podspec linter. |
+| `make coverage` | Generate a code-coverage report with Slather. |
+| `make carthage` | Build the framework with Carthage across all platforms. |
+
+Pull requests are validated on CircleCI against Xcode 15.4.
 
 ## License
 
-Copyright (c) 2018 Contentful GmbH. See [LICENSE](LICENSE) for further details.
+This repository is published under the [MIT](LICENSE) license.
 
-[1]: https://www.contentful.com
-[2]: https://github.com/contentful/contentful.swift
-[3]: http://cocoadocs.org/docsets/ContentfulPersistenceSwift/
-[4]: https://www.contentful.com/developers/docs/references/content-delivery-api/
-[5]: https://cocoapods.org/
-[6]: https://github.com/Carthage/Carthage
-[7]: https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/synchronization
+## Code of Conduct
+
+We want to provide a safe, inclusive, welcoming, and harassment-free space and experience for all participants, regardless of gender identity and expression, sexual orientation, disability, physical appearance, socioeconomic status, body size, ethnicity, nationality, level of experience, age, religion (or lack thereof), or other identity markers.
+
+[Read our full Code of Conduct](https://github.com/contentful-developer-relations/community-code-of-conduct).
