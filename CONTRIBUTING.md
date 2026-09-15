@@ -181,5 +181,5 @@ deployment target, your `LocalizationScheme`, and the relevant part of your
 reproductions hinge on model configuration, so a screenshot of the Data Model
 Inspector is more useful than prose.
 
-The repository is owned by `@contentful/team-developer-experience`
+The repository is owned by `@contentful/group-applied-ai-solutions`
 (`.github/CODEOWNERS`).
