@@ -1,8 +1,22 @@
 #!/bin/bash
+# Sets the library version in every file that carries it.
+#   .env             -> read by ContentfulPersistenceSwift.podspec (dotenv) and by the release/docs scripts
+#   Config.xcconfig  -> base configuration of ContentfulPersistence.xcodeproj (CONTENTFUL_PERSISTENCE_VERSION)
+#
+# Usage: ./Scripts/set-version.sh X.Y.Z
 
+set -euo pipefail
 
-echo "CONTENTFUL_PERSISTENCE_VERSION=$1" > Config.xcconfig
-echo "CONTENTFUL_PERSISTENCE_VERSION=$1" > .env
-echo "export CONTENTFUL_PERSISTENCE_VERSION=$1" > .envrc
-direnv allow
+cd "$(dirname "$0")/.."
 
+VERSION="${1:-}"
+if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "usage: $0 X.Y.Z" >&2
+  exit 1
+fi
+
+for file in .env Config.xcconfig; do
+  echo "CONTENTFUL_PERSISTENCE_VERSION=$VERSION" > "$file"
+done
+
+echo "Persistence version set to $VERSION in .env and Config.xcconfig"

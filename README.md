@@ -112,7 +112,7 @@ In order to get started with `contentful-persistence.swift`, it's highly recomme
 | Requirement | Version |
 | --- | --- |
 | Swift | 5.0 or later |
-| Xcode | 15.x recommended (CI builds against Xcode 15.4) |
+| Xcode | 26.2+ recommended (CI builds against Xcode 26.2) |
 | iOS | 12.0+ |
 | macOS | 10.13+ |
 | tvOS | 12.0+ |
@@ -142,6 +142,9 @@ Then add the product to the targets that need it:
 ```
 
 #### CocoaPods
+
+> [!IMPORTANT]
+> **CocoaPods is frozen at version 0.18.2.** The [CocoaPods trunk becomes read-only on December 2, 2026](https://blog.cocoapods.org/CocoaPods-Specs-Repo/), so new versions of this library are no longer published to CocoaPods. Existing versions stay installable, and the snippet below keeps working. New releases ship through [Swift Package Manager](#swift-package-manager) and [Carthage](#carthage) only, so please migrate to one of them to get future fixes and features.
 
 ```ruby
 platform :ios, '12.0'
@@ -529,7 +532,7 @@ Development happens in Xcode on macOS, since iOS, macOS, tvOS, and watchOS all h
 ```bash
 make setup_env                      # Install or update the required brew packages.
 bundle install                      # Install the Ruby gems used for linting, docs, and coverage.
-carthage update --use-xcframeworks  # Resolve the test-only dependencies.
+carthage bootstrap --use-xcframeworks  # Build the dependencies pinned in Cartfile.resolved.
 make open                           # Open ContentfulPersistence.xcworkspace.
 ```
 
@@ -542,9 +545,12 @@ Common tasks:
 | `bundle exec fastlane build` | Verify the package builds with `swift build`. |
 | `make lint` | Run SwiftLint and the CocoaPods podspec linter. |
 | `make coverage` | Generate a code-coverage report with Slather. |
-| `make carthage` | Build the framework with Carthage across all platforms. |
+| `make carthage` | Build and zip `ContentfulPersistence.xcframework` across all platforms. |
+| `./Scripts/set-version.sh 0.18.3` | Update the version in `Config.xcconfig` and `.env` together. |
 
-Pull requests are validated on CircleCI against Xcode 15.4.
+Pull requests are validated on CircleCI against Xcode 26.2.
+
+Releases are cut from `master` by CircleCI when a maintainer triggers the release pipeline. See [RELEASING.md](RELEASING.md).
 
 ## License
 

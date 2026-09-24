@@ -16,3 +16,5 @@ Carthage/Build/
 *.xcscmblueprint
 
 .envrc
+# Bundler (see .bundle/config)
+vendor

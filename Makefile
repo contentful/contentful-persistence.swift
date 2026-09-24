@@ -1,7 +1,7 @@
 PROJECT=ContentfulPersistence.xcodeproj
 WORKSPACE=ContentfulPersistence.xcworkspace
 
-.PHONY: test setup lint coverage carthage clean open release
+.PHONY: test setup lint coverage carthage clean open release release_dry_run trigger_release docs
 
 open:
 	open $(WORKSPACE)
@@ -35,8 +35,17 @@ coverage:
 	bundle exec slather coverage -s $(PROJECT)
 
 carthage:
-	carthage build ContentfulPersistence --no-skip-current --platform all --use-xcframeworks
+	./Scripts/release.sh xcframework
+
+docs:
+	./Scripts/reference-docs.sh
 
 release:
-	./Scripts/release.sh
+	./Scripts/release.sh all
+
+release_dry_run:
+	DRY_RUN=1 ./Scripts/release.sh all
+
+trigger_release:
+	./Scripts/trigger-release.sh
 

@@ -1698,7 +1698,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.17.7;
+				MARKETING_VERSION = "$(CONTENTFUL_PERSISTENCE_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulPersistence;
 				PRODUCT_NAME = ContentfulPersistence;
 				SKIP_INSTALL = YES;
@@ -1729,7 +1729,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.17.7;
+				MARKETING_VERSION = "$(CONTENTFUL_PERSISTENCE_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.contentful.ContentfulPersistence;
 				PRODUCT_NAME = ContentfulPersistence;
 				SKIP_INSTALL = YES;
@@ -1798,7 +1798,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.17.7;
+				MARKETING_VERSION = "$(CONTENTFUL_PERSISTENCE_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-tvOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = appletvos;
@@ -1829,7 +1829,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.17.7;
+				MARKETING_VERSION = "$(CONTENTFUL_PERSISTENCE_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-tvOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = appletvos;
@@ -1862,7 +1862,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.17.7;
+				MARKETING_VERSION = "$(CONTENTFUL_PERSISTENCE_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-watchOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = watchos;
@@ -1894,7 +1894,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.17.7;
+				MARKETING_VERSION = "$(CONTENTFUL_PERSISTENCE_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-watchOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = watchos;
@@ -1929,7 +1929,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.17.7;
+				MARKETING_VERSION = "$(CONTENTFUL_PERSISTENCE_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-macOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = macosx;
@@ -1961,7 +1961,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 0.17.7;
+				MARKETING_VERSION = "$(CONTENTFUL_PERSISTENCE_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.contentful.ContentfulPersistence-macOS";
 				PRODUCT_NAME = ContentfulPersistence;
 				SDKROOT = macosx;

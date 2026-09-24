@@ -2,6 +2,9 @@
 
 require 'dotenv/load'
 
+# CocoaPods trunk becomes read-only on 2026-12-02 and this library is frozen there at 0.18.2.
+# This podspec is kept for existing users, and new versions are not pushed (see RELEASING.md).
+
 Pod::Spec.new do |spec|
   spec.name             = "ContentfulPersistenceSwift"
   spec.version          = ENV['CONTENTFUL_PERSISTENCE_VERSION']
