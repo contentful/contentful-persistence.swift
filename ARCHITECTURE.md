@@ -144,20 +144,21 @@ The same `Sources/**/*.swift` is exposed four ways, and all four must agree:
 | System | File | Notes |
 | --- | --- | --- |
 | Swift Package Manager | `Package.swift` | `swift-tools-version:4.0`. One `ContentfulPersistence` library target, one dependency: `contentful.swift` `.upToNextMajor(from: "5.5.13")`. No test target is declared — SPM builds the library only, which is what the `build` fastlane lane checks (`swift build`). |
-| CocoaPods | `ContentfulPersistenceSwift.podspec` | Pod name `ContentfulPersistenceSwift`, module name `ContentfulPersistence`. Version comes from `ENV['CONTENTFUL_PERSISTENCE_VERSION']` via `require 'dotenv/load'`. Deployment targets: iOS 12.0, macOS 10.13, watchOS 4.0, tvOS 12.0. |
+| CocoaPods | `ContentfulPersistenceSwift.podspec` | Pod name `ContentfulPersistenceSwift`, module name `ContentfulPersistence`. Version comes from `ENV['CONTENTFUL_PERSISTENCE_VERSION']` via `require 'dotenv/load'`. Deployment targets: iOS 12.0, macOS 10.13, watchOS 4.0, tvOS 12.0. Frozen at 0.18.2: kept for existing users, and new versions are not pushed to trunk. |
 | Carthage | `Cartfile`, `Cartfile.private` | `Cartfile` declares `contentful.swift ~> 5.5.1`; `Cartfile.private` adds the `mariuskatcontentful/OHHTTPStubs` fork used only by tests. Both are also `.gitmodules` submodules under `Carthage/Checkouts/`. |
 | Xcode | `ContentfulPersistence.xcodeproj` / `.xcworkspace` | Four shared schemes: `ContentfulPersistence_iOS`, `_macOS`, `_tvOS`, `_watchOS`. The test bundles live here, not in SPM. |
 
 Version is single-sourced: `Scripts/set-version.sh <version>` writes the same
-value into `Config.xcconfig` (read by the Xcode targets), `.env` (read by the
-podspec and `Scripts/release.sh`), and `.envrc` (for `direnv`). `.env` is
-tracked and holds only that one variable; `.envrc` is gitignored.
+value into `Config.xcconfig` (read by the Xcode targets) and `.env` (read by the
+podspec and the release/docs scripts). `.env` is tracked and holds only that one
+variable. `Scripts/release.sh validate` fails if the two disagree.
 
 ## CI
 
-`.circleci/config.yml` runs four jobs in parallel on `macos` / `xcode: 15.4`,
-each of them: `brew install carthage`, `carthage update --use-xcframeworks`,
-`bundle install`, then one fastlane lane — `test_ios`, `test_macos`, `test_tvos`,
+`.circleci/config.yml` runs four jobs in parallel on `macos` / `xcode: 27.0.0`,
+each of them: select the Ruby from `.ruby-version`, `bundle install`, install
+Carthage, `carthage bootstrap --use-xcframeworks` (the versions pinned in
+`Cartfile.resolved`), then one fastlane lane — `test_ios`, `test_macos`, `test_tvos`,
 or `build`. The three test lanes are `scan` invocations against the matching
 scheme; `build` is `swift build`. The `_watchOS` scheme is not exercised by CI.
 
@@ -171,9 +172,10 @@ badges in `README.md` are likewise stale.
 
 ## Release
 
-`make release` runs `Scripts/release.sh`, which is a local, manual process:
-source `.env` for the version, tag, push tags, `pod trunk push`,
-`make carthage` to build xcframeworks, then check out `gh-pages`, rebase onto
-`master`, regenerate the Jazzy docs via `Scripts/reference-docs.sh`, amend, and
-force-push. `CHANGELOG.md` is hand-written. There is no semantic-release and no
-CI-driven publish in this repository.
+Releases run in CircleCI when a maintainer triggers a pipeline on `master` with
+`run-release = true`: tests, `Scripts/release.sh validate`, build and zip
+`ContentfulPersistence.xcframework` (with library evolution enabled for the
+release build), then tag, create the GitHub release with the zip attached, and
+regenerate the Jazzy docs onto `gh-pages`. `make release` runs the same script
+locally. Nothing is pushed to CocoaPods trunk any more. `CHANGELOG.md` is
+hand-written. See `RELEASING.md`.
