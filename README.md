@@ -112,7 +112,7 @@ In order to get started with `contentful-persistence.swift`, it's highly recomme
 | Requirement | Version |
 | --- | --- |
 | Swift | 5.0 or later |
-| Xcode | 27.x recommended (CI builds against Xcode 27.0) |
+| Xcode | 26.2+ recommended (CI builds against Xcode 26.2) |
 | iOS | 12.0+ |
 | macOS | 10.13+ |
 | tvOS | 12.0+ |
@@ -548,7 +548,7 @@ Common tasks:
 | `make carthage` | Build and zip `ContentfulPersistence.xcframework` across all platforms. |
 | `./Scripts/set-version.sh 0.18.3` | Update the version in `Config.xcconfig` and `.env` together. |
 
-Pull requests are validated on CircleCI against Xcode 27.0.
+Pull requests are validated on CircleCI against Xcode 26.2.
 
 Releases are cut from `master` by CircleCI when a maintainer triggers the release pipeline. See [RELEASING.md](RELEASING.md).
 
